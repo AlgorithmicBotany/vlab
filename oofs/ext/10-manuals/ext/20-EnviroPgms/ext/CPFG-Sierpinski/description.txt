@@ -1,0 +1,21 @@
+Open L-system implementation of the Sierpinski gasket
+
+This is a simple example of a model that interacts with
+an environment
+
+The axiom initiates two branches, terminated by apices A.
+The second branch is repositioned (rotated and reflected
+with respect to the first one) by symbol r.  An apex is 
+decomposed into two 'tentacles', f, each terminated by 
+communication module ?E(VIGOR).  The environment (handled 
+by process honda81) returns value 1 (grow) if there is no 
+collision, and 0 (don't grow) if there is a collision.  
+A tentacle that does not collide is replaced by a permanent 
+line terminated by apex, which issues new tentacles.  
+A tentacle that has collided is displayed as a gray line 
+and does not produce an apex.
+
+To see the values going to and coming from the environmental program,
+look for the files .to_field* and .from_field* on the lab table.
+
+2021-11-02

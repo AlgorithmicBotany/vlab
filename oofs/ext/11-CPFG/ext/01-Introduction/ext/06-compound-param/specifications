@@ -1,0 +1,35 @@
+leaf.l
+leaf.v
+leaf.a
+leaf.map
+description.txt
+LSspecifications
+view.pnl
+ignore:
+*.swp
+*
+Image:
+	generate:
+		cpfg -m leaf.map leaf.l leaf.v leaf.a
+
+L-system:
+	EDIT leaf.l
+
+View:
+	EDIT leaf.v
+
+Animation:
+	EDIT leaf.a
+
+Colormap:
+	palette:
+		palette leaf.map
+
+Description:
+	EDIT description.txt
+
+L-studio:
+	LSspecifications:
+		EDIT LSspecifications
+	ViewPanel:
+		EDIT view.pnl

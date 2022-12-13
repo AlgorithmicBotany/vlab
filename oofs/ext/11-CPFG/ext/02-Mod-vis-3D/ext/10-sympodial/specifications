@@ -1,0 +1,34 @@
+plant.l
+plant.v
+plant.a
+material.mat
+internode.func
+flower.func
+description.txt
+ignore:
+*
+model:
+	generate:
+		cpfg -M material.mat plant.l plant.v plant.a
+
+L-system:
+	EDIT plant.l
+
+viewfile:
+	EDIT plant.v
+
+animation:
+	EDIT plant.a
+
+materials:
+	MEDIT material.mat
+
+growth_functions:
+	internode:
+		funcedit internode.func
+	flower:
+		funcedit flower.func
+
+description:
+	EDIT description.txt
+

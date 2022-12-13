@@ -1,0 +1,7 @@
+This is a demo object illustrating generalized cylinders and their texturing
+in cpfg. 
+
+Many parameters can be changed via panels associated with the L-system
+and the view file. 
+
+PWP 2022-11-16.

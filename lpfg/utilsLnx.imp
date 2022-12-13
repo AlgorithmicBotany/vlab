@@ -1,0 +1,145 @@
+#include <unistd.h>
+#include <iostream>
+#include <limits.h>
+#include <sys/types.h>
+#include <sys/wait.h>
+#include <signal.h>
+
+#include <qapplication.h>
+#include <qcursor.h>
+
+#include <pwd.h>
+#include <unistd.h>
+#include <string.h>
+#include <stdlib.h>
+#include <stdio.h>
+
+
+// on Unix-based systems, execute should return 'int' not 'unsigned int'
+// bet on Windows it may be different
+unsigned int Utils::Execute(const char *cmnd, int ) {
+  // parse command line; setup args
+  char cmd[128], arg1[128], arg2[128];
+  sscanf(cmnd, "%s %s %s\n", cmd, arg1, arg2);
+  char *args[4] = {cmd, arg1, arg2, NULL};
+
+  // tell child process to wait after finishing, so parent process can get its
+  // status
+  signal(SIGCHLD, SIG_DFL);
+
+  // fork the child process
+  pid_t pid = fork();
+  if (pid < 0) {
+    Utils::Message("Error cannot fork to execute command: %s\n", cmnd);
+    return -1;
+  } else if (pid == 0) {
+    // execute the command
+    execvp(cmd, args);
+    // if execvp returns, this call has failed!
+    Utils::Message("Error cannot execute command as child process: %s\n", cmnd);
+    exit(EXIT_FAILURE);
+  } else {
+    // wait for the child to terminate
+    int status = -1;
+    pid_t wpid;
+    wpid = waitpid(pid, &status, 0);
+    // for debugging, uncomment error code checking...
+    //    if (wpid > 0) {
+    //      if (WIFEXITED(status))
+    //        fprintf(stderr,"Exit Code: %d\n", WEXITSTATUS(status));
+    //      else
+    //        fprintf(stderr,"Exit Status: 0x%.4X\n", status);
+    //    }
+    //    else if (wpid == 0)
+    //      fprintf(stderr,"Child process still running\n");
+    //    else {
+    //      if (errno == ECHILD)
+    //        fprintf(stderr,"Error ECHILD\n");
+    //      else if (errno == EINTR)
+    //        fprintf(stderr,"Error EINTR\n");
+    //      else
+    //        fprintf(stderr,"Error EINVAL\n");
+    //    }
+    return status;
+  }
+}
+
+void Utils::ExecuteDetached(const char *cmnd) {
+  std::string cmd(cmnd);
+  cmd.append(" &");
+  system(cmnd);
+}
+
+void Utils::Sleep(int seconds) { sleep(seconds); }
+
+void Utils::SetEnv(const char *lpth) {
+  // add $LPFGPATH/bin to PATH
+  // and create INCLUDE and LIB to be
+  // $LPFGPATH/include and $LPFGPATH/lib respectively
+  static char path[2 * PATH_MAX + 1];
+  path[0] = 0;
+  static char *var = 0;
+  if (0 != lpth[0]) {
+    strcpy(path, lpth);
+    setenv("LPFGPATH", lpth, 1);
+  }
+#ifndef MAKE_BUNDLE
+  else if (0 == getenv("LPFGPATH")) {
+    if (0 == getenv("LPFGINCLUDE"))
+      Message("LPFGPATH not set! Unlikely to work\n");
+    return;
+  } else {
+    const char *lp = getenv("LPFGPATH");
+    strcpy(path, lp);
+  }
+  int l = strlen(path);
+  if (path[l - 1] != '/') {
+    strcat(path, "/");
+    ++l;
+  }
+  strcpy(path + l, "bin");
+#else
+  else if (0 == getenv("LPFGRESOURCES")) {
+    if (0 == getenv("LPFGINCLUDE"))
+      Message("LPFGRESOURCES not set! Unlikely to work\n");
+    return;
+  } else {
+    const char *lp = getenv("LPFGRESOURCES");
+    strcpy(path, lp);
+  }
+  int l = strlen(path);
+  if (path[l - 1] != '/') {
+    strcat(path, "/");
+    ++l;
+  }
+  strcpy(path + l, "lpfg.app/Contents/MacOSX");
+#endif
+  char *old_path = getenv("PATH");
+  if (!strstr(old_path, path)) {
+    int cnt = strlen(path) + strlen(old_path) + 2;
+    var = (char *)malloc(cnt);
+    strcpy(var, path);
+    strcat(var, ":");
+    strcat(var, old_path);
+    setenv("PATH", var, 1);
+    free(var);
+  }
+  strcpy(path + l, "include");
+  setenv("INCLUDE", path, 1);
+  strcpy(path + l, "lib");
+  setenv("LIB", path, 1);
+}
+
+void Utils::RemoveFile(const char *fname) { remove(fname); }
+
+Utils::WaitCursor::WaitCursor() {
+  QApplication::setOverrideCursor(QCursor(Qt::WaitCursor));
+}
+
+Utils::WaitCursor::~WaitCursor() { QApplication::restoreOverrideCursor(); }
+
+Utils::ProcessTimer::ProcessTimer() {}
+
+void Utils::ProcessTimer::Stop() {}
+
+long unsigned int Utils::ProcessTimer::msecElapsed() const { return 0; }

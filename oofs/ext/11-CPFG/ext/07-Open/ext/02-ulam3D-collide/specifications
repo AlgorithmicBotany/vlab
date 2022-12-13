@@ -1,0 +1,34 @@
+fractal.l
+fractal.v
+fractal.a
+material.mat
+fractal.e
+density.spec
+description.txt
+ignore:
+*
+model:
+	generate:
+		cpfg -M material.mat -e fractal.e fractal.l fractal.v fractal.a
+
+materials:
+	MEDIT material.mat
+
+L-system:
+	EDIT fractal.l
+
+viewfile:
+	EDIT fractal.v
+
+animation:
+	EDIT fractal.a
+
+environment:
+	commfile:
+		EDIT fractal.e
+	parameters:
+		EDIT density.spec
+
+description:
+	EDIT description.txt
+

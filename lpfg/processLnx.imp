@@ -1,0 +1,78 @@
+#include <string.h>
+#include <stdlib.h>
+
+#include <sys/wait.h>
+#include <signal.h>
+#include <unistd.h>
+#include <ctype.h>
+
+Process::Process() { _pid = 0; }
+
+Process::~Process() {
+  if (0 != _pid)
+    kill(_pid, SIGKILL);
+}
+
+void Process::WaitAndClose(int w) {
+  if (0 == _pid)
+    return;
+  sleep(w / 1000);
+  if (IsRunning())
+    kill(_pid, SIGKILL);
+  _pid = 0;
+}
+
+bool Process::IsRunning() const {
+  if (0 == _pid)
+    return false;
+  int st;
+  pid_t res = waitpid(_pid, &st, WNOHANG);
+  if (res == _pid)
+    return false;
+  else
+    return true;
+}
+
+void Process::Start(const char *cmndline) {
+  char *cl = strdup(cmndline);
+  const int MaxArgs = 16;
+  typedef char *pchar;
+  pchar arr[MaxArgs];
+  int ix = 0;
+  arr[ix] = cl;
+  ++ix;
+  for (int i = 0; cl[i] != 0 && ix < MaxArgs - 1; ++i) {
+    if (isspace(cl[i])) {
+      cl[i] = 0;
+      if (!isspace(cl[i + 1])) {
+        arr[ix] = cl + i + 1;
+        ++ix;
+      }
+    }
+  } 
+  arr[ix] = 0;
+
+  for (int i = 0;; ++i) {
+    if (arr[i] == 0)
+      break;
+  }
+
+  pid_t pid = vfork();
+  if (0 == pid) // this is child
+  {
+    execvp(arr[0], arr);
+    _exit(0);
+  }
+  if (pid == -1) {
+    _pid = 0;
+    throw Exception("Error creating process: %s\n", cmndline);
+  }
+
+  _pid = pid;
+  free(cl);
+
+  if (!IsRunning()) {
+    _pid = 0;
+    throw Exception("Error starting process: %s\n", cmndline);
+  }
+}

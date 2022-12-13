@@ -1,0 +1,12 @@
+An inverse model of Pellaea falcata
+
+This model uses ideas similar to the 'fern-leaf'.  The objective
+was to construct a model visually similar to a photograph of 
+a Pellaea falcata leaf.  This objective was met, but the model
+probably could be simplified.
+
+Based on P. Prusinkiewicz, L. Muendermann, R. Karwowski and 
+B. Lane, "The use of positional information in the 
+modeling of plants", Proceedings of Siggraph 2001.
+
+

@@ -1,0 +1,291 @@
+\chapter {Texturing}
+
+Textures are used to modify the appearance of an object through the
+use of procedural functions.  A texture may modify any surface characteristic,
+such as diffuse color, reflectivity, or transparency, or it may 
+modify the surface normal (``bump mapping'') in order to give the
+appearance of a rough surface.
+
+Any number of textures may be associated with an object.  If more than
+one texture is specified, they are applied in the order given.  This allows
+one to compose texturing functions and create, for example
+a tiled marble ground plane using the {\em checker} and {\em marble}
+textures.
+
+Textures are associated with objects by following the object specification
+by a number of lines of the form:
+
+\begin{center}
+{\tt texture} {\em name} $<${\em Texturing Arguments}$>$ [{\em Transformations}]
+\end{center}
+
+Transformations may be applied to the texture in order to, for example,
+shrink or grow feature size, change the orientation of features, and
+change the position of features.
+
+Several of the texturing functions take the name of a colormap as an
+argument.  A colormap is 256-line ASCII file, with each line containing
+three space-separated values ranging from 0 to 255.  Each line gives
+the red, green, and blue values for a single entry in the colormap.
+
+\section {Texturing Functions}
+
+\begin{defkey}{blotch}{{\em BlendFactor surface}}
+Produces a mildly interesting blotchy-looking surface.
+{\em BlendFactor} is used to control the interpolation between
+the default surface characteristics and the characteristics of
+the given surface.  A value of 0 results in a roughly 50-50 mix
+of the two surfaces.  Higher values result in a great portion of
+the default surface characteristics.
+\end{defkey}
+
+\begin{defkey}{bump}{{\em scale}}
+Apply a random bump map.  The point of intersection is passed to
+{\em DNoise()}.
+The returned normalized vector is weighted by {\em scale}
+and the result is added to the normal vector at the point of intersection.
+\end{defkey}
+Using an image texture applied to the ``bump'' component offers a more
+direct way to control the modification of surface normals (see below).
+
+\begin{defkey}{checker}{$<${\em Surface}$>$}
+Applies a 3D checkerboard texture.  Every point that falls within an
+``even'' unit cube will be assigned the characteristics of the named surface
+applied to it, while points that fall within ``odd'' cubes will have
+its usual surface characteristics.  Be wary of strange effects due
+to roundoff error that occur when a planar checkered surface lies
+in a plane of constant integral value (e.g., $z=0$) in texture space.
+In such cases,
+simply translate the texture to ensure that the planar surface is not
+coincident with an integral plane in texture space
+(e.g., {\tt translate 0 0 0.1}).
+\end{defkey}
+
+\begin{defkey}{cloud}{{\em scale H $\lambda$ octaves cthresh lthresh tscale}}
+	This texture is a variant on Geoff Gardner's ellipsoid-texturing
+	algorithm.  It should be applied to unit spheres centered
+	at the origin.  These spheres may, of course, be transformed
+	at will to form the appropriately-shaped cloud or tree.
+
+	A sample of normalized {\em fBm} (see the {\em fbm} texture) is
+	generated
+	at the point of intersection.  This sample is used to
+	modulate the surface transparency.  The final transparency
+	if a function of the sample value, the
+	the proximity of the point of intersection to the edge of
+	the sphere (as seen from the ray origin), and three parameters
+	to control the overall ``density.''  The proximity of the point
+	to the sphere edge is determined by evaluating a {\em limb} function,
+	which varies from 0 on the limb to 1 at the center of the sphere.
+\[
+transp = 1. - \frac{fBm - cthresh - (lthresh - cthresh)(1 - limb)}{tscale}
+\]
+\end{defkey}
+
+\begin{defkey}{fbm}{{\em offset scale H $\lambda$ octaves thresh}
+[{\em colormap}]}
+Generate a sample of discretized fractional Brownian motion (fBm) and
+uses it to scale the diffuse and ambient component of an object's surface.
+{\em Scale} is used to scale the value
+returned by the fBm function.  {\em Offset} allows one to control the minimum
+value of the fBm function.  {\em H} is the {\em Holder exponent}
+used in the fBm function (a value of 0.5 works well).  $\lambda$ is
+used to control {\em lacunarity}, and specifies the the frequency
+difference between successive samples of the fBm basis function (a
+value of 2.0 will suffice).  {\em Octaves} specifies the number of
+octaves (samples) to take of the fBm basis function (in this case, Noise()).
+Between five and seven octaves usually works well.  {\em Thresh} is used
+to specify a lower bound onthe output of the fBm function.  Any
+value lower than {\em thresh} is set to zero.
+
+If a {\em colormap} is named, a 256-entry colormap is read from the named
+file, and the sample of fBm is scaled by 255 and is used as an index into
+the colormap.  The resulting colormap entry
+is used to scale the ambient and diffuse components of the
+object's surface.
+\end{defkey}
+
+\begin{defkey}{fbmbump}{{\em offset scale H $\lambda$ octaves}}
+Similar to the {\em fbm} texture.  Rather than modifying the color of
+a surface, this texture acts as a bump map.
+\end{defkey}
+
+\begin{defkey}{gloss}{{\em glossiness}}
+Gives reflective surfaces a glossy appearance. This texture perturbs
+the object's surface normal such that the normal ``samples'' a cone of
+unit height with radius $1. - glossiness$.  A value of 1 results
+in perfect mirror-like reflections, while a value of 0 results
+in extremely fuzzy reflections.  For best results, jittered sampling
+should be used to render scenes that make use of this texture.
+\end{defkey}
+
+\begin{defkey}{marble}{[{\em colormap}]}
+Gives a surface a marble-like appearance.  The texture is implemented as
+roughly parallel alternating veins of marble, each of which is
+separated by 1/7 of a unit and runs perpendicular to the Z axis.
+If a colormap is named, the surface's ambient and diffuse colors
+will be scaled using the RGB values in the colormap.  If no colormap is
+given, the diffuse and ambient components are simply scaled by the
+value of the marble function.  One may transform the texture to
+control the density and orientation of the marble veins.
+\end{defkey}
+
+\begin{defkey}{sky}{{\em scale H $\lambda$ octaves cthresh ltresh}}
+	Similar to the {\em fbm} texture.  Rather than modifying the
+	color of a surface, this texture modulates its transparency.
+	{\em cthresh} is the value of the {\em fBm} function above
+	which the surface is totally opaque.  Below {\em lthresh},
+	the surface is totally transparent.
+\end{defkey}
+
+\begin{defkey}{stripe}{$<${\em Surface}$>$ {\em size bump} $<$Mapping$>$}
+	Apply a ``raised'' stripe pattern to the surface.
+	The surface properties used to color the stripe are those
+	of the given surface.  The width of the stripe, as compared
+	to the unit interval, is given by {\em size}.  The magnitude
+	of {\em bump} controls the extent to which the bump appears
+	to be displaced from the rest of the surface.  If negative,
+	the stripe will appear to
+	sink into the surface; if positive, it will appear to stand
+	out of the surface.
+\end{defkey}
+Mapping functions are described below.
+
+\begin{defkey}{wood}{}
+Gives a surface a wood-like appearance.  The feature size of this texture
+is approximately $0.01$ of a unit, making it often necessary to
+scale the texture in order to achieve the desired appearance.
+\end{defkey}
+
+\section {Image Texturing}
+
+{\Rayshade} also supports an {\tt image} texture.  This texture
+allows you to use images to modify the characteristics of a surface.  You
+can use three-channel images to modify the any or all of
+the ambient, diffuse, and specular colors of a surface.
+If you are using the Utah Raster Toolkit,
+you can also use single-channel images to modify surface reflectance,
+transparency, and the specular exponent.  You can also use a single-channel
+image to apply a bump map to a surface.
+
+In all but the bump-mapping case,
+a component is modified by multiplying the given value by the value
+computed by the texturing function.  When using the Utah Raster Toolkit,
+surface characteristics are modified in proportion to the value of
+the {\em alpha} channel in the image.  If there is no {\em alpha} channel,
+or you are not using the Utah Raster Toolkit, {\em alpha} is assumed to be
+everywhere
+equal to $1$.
+
+\begin{defkey}{component}{$<${\em Component}$>$}
+	The named component will be modified.
+\end{defkey}
+Possible surface components are:
+{\tt ambient} (modify ambient color),
+{\tt diffuse} (modify diffuse color),
+{\tt specular} (modify specular color),
+{\tt specpow}, (modify specular exponent),
+{\tt reflect},	(modify reflectivity),
+{\tt transp} (modify transparency),
+{\tt bump}, (modify surface normal).
+The {\tt specpow}, {\tt reflect}, {\tt transp}, and {\tt bump}
+components require the use of a single-channel image.
+
+\begin{defkey}{range}{{\em high low}}
+	Specify the range of values to which the values in the
+	image should be mapped.  An value of $1$ will
+	be mapped {\em high}, $0$ to {\em low}.  Intermediate
+	values will be linearly interpolated.
+\end{defkey}
+
+\begin{defkey}{smooth}{}
+	When given, pixel averaging will be performed in order
+	to smooth the sampled image.  If not specified, no averaging
+	will occur.
+\end{defkey}
+
+\begin{defkey}{textsurf}{$<${\em Surface Specification}$>$}
+	For use when modifying surface colors, this keyword specifies
+	that the given surface should be used as the base
+	to be modified when the {\em alpha} value in the image
+	is non-zero.  When {\em alpha} is zero, the object's
+	unmodified default surface characteristics are retained.
+\end{defkey}
+The usual behavior is for the object's default surface properties to
+be used.
+
+\begin{defkey}{tile}{{\em un vn}}
+	Specify how the image should be tiled (repeated) along the
+	$u$ and $v$ axes.
+	If positive, the value of {\em un} gives the number of
+	times the image should be repeated along the $u$ axis, starting
+	from the origin of the texture, and positive {\em vn} gives the
+	number of times it
+	should be repeated along the $v$ axis.  If either value is zero,
+	the image is repeated infinitely along the appropriate axis.
+\end{defkey}
+Tiling is usually only a concern when planar mapping is being used,
+though it may also be used if image textures are being scaled.  By default
+{\em un} and {\em vn} are both zero.
+ 
+
+A mapping function may also be associated with an image texture.
+
+\section {Mapping Functions}
+
+Mapping functions are used to apply two-dimensional textures to
+surfaces.  Each mapping functions defines a different method of transforming
+a three dimensional point of intersection to a two dimensional $u-v$ pair
+termed texturing coordinates.
+Typically, the arguments to a mapping method define a center of
+a projection and two non-parallel axes that define a local coordinate system.
+
+The default mapping method is termed $u-v$ mapping or {\em inverse mapping}.
+Normally, there is a different inverse mapping method for each primitive type
+(see chapter 5).
+When inverse mapping is used, the point of intersection is passed to
+the $uv$ method for the primitive that was hit.
+
+\begin{defkey}{map}{{\tt uv}}
+	Use the $uv$ (inverse mapping) method associated with the
+	object that was intersected in order to map from 3D to determine
+	texturing coordinates.
+\end{defkey}
+The inverse mapping method for each primitive is described in Chapter 5.
+
+\begin{defkey}{map}{{\tt planar} [\evec{origin} \evec{vaxis} \evec{uaxis}]}
+	Use a planar mapping method. The 2D texture is transformed
+	so that its $u$ axis is given by \evec{uaxis} and its $v$
+	axis by $vaxis$.  The texture is projected along the vector
+	defined by the cross product of the $u$ and $v$ axes, with
+	the (0,0) in texture space mapped to \evec{origin}.
+\end{defkey}
+
+\begin{defkey}{map}{{\tt cylindrical} [\evec{origin} \evec{vaxis} \evec{uaxis}]}
+	Use a cylindrical mapping method.  The point of intersection
+	is projected onto an imaginary cylinder, and the location
+	of the projected point is used to determine the texture coordinates.
+	If given, \evec{origin} and
+	\evec{vaxis} define the cylinder's axis, and \evec{uaxis} defines
+	where $u=0$ is located.
+\end{defkey}
+See the description of the inverse mapping method for the 
+cylinder in Chapter 5.  By default, the point of intersection is
+projected onto a cylinder that runs through the origin along the $z$
+axis, with \evec{uaxis} equal to the $x$ axis.
+
+\begin{defkey}{map}{{\tt spherical} [\evec{origin} \evec{vaxis} \evec{uaxis}]}
+	Use a spherical mapping method.  The intersection point is
+	projected onto an imaginary sphere, and the location of the
+	projected point	 is used to determine the texturing coordinates
+	in a manner identical to that used in the inverse mapping method
+	for the sphere primitive.
+	If given, the center of
+	the projection is \evec{origin}, \evec{vaxis} defines
+	the sphere axis, and the point where the
+	non-parallel \evec{uaxis} intersects the sphere
+	defines where $u=0$ is located.
+\end{defkey}
+By default, a spherical mapping projects points towards the origin,
+with \evec{vaxis} defined to be the $z$ axis and
+\evec{uaxis} defined to be the $x$ axis.

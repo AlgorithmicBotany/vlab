@@ -1,0 +1,30 @@
+fractal.l
+fractal.v
+fractal.a
+panel.l
+fractal.map
+description.txt
+rmode: cont
+ignore:
+*
+model:
+	generate:
+		cpfg -m fractal.map fractal.l fractal.v fractal.a
+
+L-system:
+	panel:
+		panel panel.l | awkped fractal.l
+	EDIT fractal.l
+
+view:
+	EDIT fractal.v
+
+animation:
+	EDIT fractal.a
+
+colormap:
+	palette:
+		palette fractal.map
+
+description:
+	EDIT description.txt

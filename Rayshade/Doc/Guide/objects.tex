@@ -1,0 +1,412 @@
+\chapter{Object Definition}
+
+Objects in {\rayshade} are composed of relatively simple {\em primitive}
+objects.  These primitives may be used by themselves, or they
+may be combined to form more complex objects known as {\em aggregates}.
+A special family of aggregate objects,
+{\em Constructive Solid Geometry} or CSG
+objects, are the result of a boolean operations applied to
+primitive, aggregate, or CSG objects.
+
+This chapter describes objects from a strictly geometric point of
+view.  Later chapters on surfaces, textures, and shading describe
+how object appearances are defined.
+
+An {\em instance} is an object that has optionally been transformed
+and
+textured.  They are the entities that are actually rendered by
+{\rayshade}; when you specify that, for example, a textured
+sphere is to be rendered, you are said to be instantiating
+the textured sphere.
+An instance
+is specified as a primitive, aggregate, or CSG object that
+is followed by optional transformation and texturing information.
+Transformations and textures are described in Chapters 7 and 8 respectively.
+
+\section{The World Object}
+
+Writing a {\rayshade} input file is principally
+a matter of defining a special aggregate object, the World object,
+which is a list of the objects in the scene.  When writing a {\rayshade}
+input file, all objects that are instantiated outside of object-definition
+blocks are added to the World object; you need not (nor should you)
+define the World object explicitly in the input file.
+
+\section{Primitives}
+
+Primitive objects are the building box with which other objects are
+created.  Each primitive type has associated with it specialized
+methods for
+creation,
+intersection with a ray,
+bounding box calculation,
+surface normal calculation,
+ray enter/exit classification,
+and for the computation 2D texture coordinates termed {\em u-v}
+coordinates.
+This latter method is often referred to as the {\em inverse mapping}
+method.
+
+While most of these methods should be of little concern to you, the
+inverse mapping methods
+will affect the way in which certain textures are applied to primitives.
+Inverse mapping is a matter of computing normalized $u$ and $v$ coordinates
+for a given point on the surface of the primitive.  For planar objects,
+the $u$ and $v$ coordinates of a point are computed
+by linear interpolation based upon the $u$ and $v$ coordinates assigned
+to vertices or other known points on the primitive.  For non-planar
+objects, $uv$ computation can be considerably more involved.
+
+This section briefly describes each primitive and
+the syntax that should be used to create an instance of the primitive.
+It also describes the inverse mapping method, if any, for each type.
+
+\begin{defprim}{blob}{{\em thresh st r} \evec{p} [{\em st r} \evec{p} \ldots]}
+	Defines a blob with consisting of a threshold equal to {\em thresh},
+	and a
+	group of one or more metaballs.  Each metaball is defined by 
+	its position \evec{p}, radius {\em r}, and strength {\em st}.
+\end{defprim}
+The metaballs affect each other according to a superimposed
+density distribution:
+\[
+F(x,y,z) = \sum_{i=0}^n b_{i}e^{-d_{i}} - T = 0
+\]
+There is no inverse mapping method for blobs.
+
+\begin{defprim}{box}{\evec{corner1} \evec{corner2}}
+	Creates an axis-aligned box
+	which has \evec{corner1} and \evec{corner2} as
+	opposite corners.
+\end{defprim}
+Transformations may be applied to the box if a non-axis-aligned instance
+is required.  There is no inverse mapping method for boxes.
+
+\begin{defprim}{sphere}{{\em radius} \evec{center}}
+	Creates a sphere with the given {\em radius} and centered at the
+	given position.
+\end{defprim}
+Note that ellipsoids may be created by applying the proper scaling
+to a sphere.  Inverse mapping on the sphere is accomplished
+by computing the longitude and latitude of the point on the sphere,
+with the $u$ value corresponding to longitude and $v$ to latitude.
+On an untransformed sphere, the $z$ axis defines the poles, and the
+$x$ axis intersects the sphere at $u = 0$, $v = 0.5$.  There are
+degeneracies at the poles: the south pole contains all points of
+latitude 0., the north all points of latitude 1.
+
+\begin{defprim}{torus}{{\em rmajor rminor} \evec{center} \evec{up}}
+	Creates a torus centered at \evec{center} by rotating
+	a circle with the given minor radius around the center
+	point at a distance equal to the major radius. 
+\end{defprim}
+In tori inverse mapping,
+the $u$ value is computed using the angle of rotation about the
+up vector, and the $v$ value is computing the angle of rotation
+around the tube, with $v=0$ occuring on the innermost point of the tube.
+
+\begin{defprim}{triangle}{\evec{p1} \evec{p2} \evec{p3}}
+	Creates a triangle with the given vertices.
+\end{defprim}
+
+\begin{defprim}{triangle}{\evec{p1} \evec{n1} \evec{p2} \evec{n2}
+	\evec{p3} \evec{n3}}
+	Creates a Phong-shaded triangle with the given vertices and
+	vertex normals.
+\end{defprim}
+For both Phong- and flat-shaded triangles, the $u$ axis is the
+vector from \evec{p1} to \evec{p2}, and the $v$ axis the vector
+from \evec{p1} to \evec{p3}.  There is a degeneracy at
+\evec{p3}, which contains all points with $v = 1.0$.  This default
+mapping may be modified using the {\tt triangleuv} primitive described
+below.
+
+\begin{defprim}{triangleuv}{\evec{p1} \evec{n1} \evec{uv1}
+  \evec{p2} \evec{n2} \evec{uv2}
+  \evec{p3} \evec{n3} \evec{uv3}}
+	Creates a Phong-shaded triangle with the given vertices,
+	vertex normals.  When performing texturing, the
+	{\em uv} given for each vertex are used instead of the
+	default values.
+\end{defprim}
+When computing $uv$ coordinates within the interior of the
+triangle, linear interpolation of the coordinates associated with
+each triangle vertex is used.
+
+\begin{defprim}{poly}{\evec{p1} \evec{p2} \evec{p3} [\evec{p4} \ldots ]}
+	Creates a polygon with the given vertices. The vertices
+	should be given in counter-clockwise order as one is
+	looking at the ``front'' side of the polygon.  The number of
+	vertices in a polygon is limited only by available memory.
+\end{defprim}
+Inverse mapping for arbitrary polygons is problematical.
+{\Rayshade}
+punts and equates $u$ with the $x$ coordinate of the point of intersection,
+and $v$ with the $y$ coordinate.
+
+\begin{defprim}{heightfield}{{\em file}}
+	Creates a height field defined by the altitude data stored
+	in the named {\em file}.  The height field is based upon
+	perturbations of the unit square in the $z=0$ plane, and is
+	rendered as a surface tessellated by right isosceles triangles.
+\end{defprim}
+See Appendix C for a discussion of the format of a height field file.
+Height field inverse mapping is straight-forward:  $u$ is the
+$x$ coordinate of the point of intersection, $v$ the $y$ coordinate.
+
+\begin{defprim}{plane}{\evec{point} \evec{normal}}
+	Creates a plane that passes through the given point and
+	has the specified normal.
+\end{defprim}
+Inverse mapping on the plane is identical to polygonal inverse mapping.
+
+\begin{defprim}{cylinder}{{\em radius} \evec{bottom} \evec{top}}
+	Creates a cylinder that extends from \evec{bottom} to \evec{top}
+	and has the indicated {\em radius}.  Cylinders are rendered
+	{\em without} endcaps.
+\end{defprim}
+The cylinder's axis defines the $v$ axis.  The $u$ axis wraps around the
+cylinder, with $u=0$ dependent upon the orientation of the cylinder.
+
+
+\begin{defprim}{cone}{$rad_{bottom}$ \evec{bottom} $rad_{top}$ \evec{top}}
+	Creats a (truncated) cone that extends from \evec{bottom} to
+	\evec{top}.  The cone will have a radius of $rad_{bottom}$ at
+	\evec{bottom} and a radius of $rad_{top}$ at \evec{top}.
+	Cones are rendered {\em without} endcaps.
+\end{defprim}
+Cone inverse mapping is analogous to cylinder mapping.
+
+\begin{defprim}{disc}{{\em radius} \evec{pos} \evec{normal}}
+	Creates a disc centered at the given position and with the
+	indicated surface normal.
+\end{defprim}
+Discs are useful for placing
+endcaps on cylinders and cones.
+Inverse mapping for the disc is based on the computation of the
+normalized polar coordinates of the point of intersection.  The
+normalized radius
+of the point of intersection is assigned to $u$, while the normalized angle
+from a reference vector is assigned to $v$.
+
+\section{Aggregate Objects}
+
+An aggregate is a collection of primitives, aggregate, and CSG
+objects.  An aggregate, once defined, may be instantiated at will,
+which means that
+copies that are optionally transformed and textured may be made.
+If a scene calls for the presence of many geometrically identical
+objects, only one such object need be defined; the one defined object
+may then be instantiated many times.
+
+An aggregate is one of several possible types.  These aggregate types
+are differentiated by the type of ray/aggregate intersection algorithm
+(often termed an {\em acceleration technique} or {\em efficiency scheme})
+that is used.
+
+Aggregates are defined by giving a keyword that defines the
+type of the aggregate, followed by
+a series of object instantiations and
+surface definitions, and terminated using the {\tt end} keyword.
+If a defined object contains no instantiations, a warning message
+is printed.
+
+The most basic type of aggregate, the {\em list}, performs
+intersection testing in the simplest possible way:  Each object in the
+list is tested for intersection with the ray in turn, and the closest
+intersection is returned.
+
+\begin{defkey}{list}{\ldots {\tt end}}
+	Create a List object containing those objects instantiated between
+	the {\tt list}/{\tt end} pair.
+\end{defkey}
+
+The {\em grid} aggregate
+divides the region of space it occupies into a number of discrete
+box-shaped
+voxels.  Each of these voxels contains a list of the objects that
+intersect the voxel.  This discretization makes it possible to
+restrict the objects
+tested for intersection to those that are likely to hit the ray,
+and to test
+the objects in nearly ``closest-first'' order.
+
+\begin{defkey}{grid}{{\em xvox yvox zvox} \ldots {\tt end}}
+	Create a Grid objects composed of {\em xvox} by {\em yvox} by
+	{\em zvox} voxels containing those objects
+	instantiated between the {\tt grid}/{\tt end} pair.
+\end{defkey}
+It is usually only worthwhile to ``engrid'' rather large,
+complex collections of objects.  Grids also use a great deal more
+memory than List objects.
+
+\section {Constructive Solid Geometry}
+
+Constructive Solid Geometry is
+the process of building solid objects from other solids.
+The three CSG
+operators are Union, Intersection, and Difference.  Each operator
+acts upon two objects and produces a single object result.
+By combining multiple levels of CSG operators, complex
+objects can be produced from simple primitives.
+
+The union of two objects results in an
+object that encloses the space occupied by the two given objects.
+Intersection results in an object that encloses the space where the two
+given objects overlap.  Difference is an order dependent operator; it
+results in the
+first given object minus the space where the second intersected
+the first.
+
+\subsection{CSG in {\Rayshade}}
+
+CSG in {\rayshade} will generally operate properly when applied to
+conjunction with
+on boxes, spheres,
+tori, and blobs.
+These primitives are by nature consistent, as they all
+enclose a portion of space (no hole from the ``inside'' to the
+``outside''), have surface normals which point outward (they
+are not ``inside-out''), and do not have any extraneous surfaces.
+
+CSG objects may also be constructed from aggregate objects.
+These aggregates contain
+whatever is listed inside, and may therefore be inconsistent.
+For example, an object which contains a single triangle will not
+produce correct results in CSG models, because the triangle does not enclose
+space.  However, a collection of four triangles which form a pyramid
+does enclose space, and if the triangle normals
+are oriented correctly,
+the CSG operators should work correctly on the pyramid.
+
+CSG objects are specified by surrounding the objects upon
+which to operate, as well as any associated surface-binding commands,
+by the operator verb on one side and the {\tt end}
+keyword on the other:
+
+\begin{defkey}{union}{$<${\em Object}$>$ $<${\em Object}$>$
+[$<${\em Object}$>$ \ldots] {\tt end}}
+	Specify a new object defined as the union of the
+	given objects.
+\end{defkey}
+
+\begin{defkey}{difference}{$<${\em Object}$>$ $<${\em Object}$>$ 
+[$<${\em Object}$>$ \ldots] {\tt end}}
+	Specify a new object defined as the difference of the
+	given objects.
+\end{defkey}
+
+\begin{defkey}{intersect}{$<${\em Object}$>$ $<${\em Object}$>$
+[$<${\em Object}$>$ \ldots] {\tt end}}
+	Specify a new object defined as the intersection of the
+	given objects.
+\end{defkey}
+
+Note that the current implementation does not support more that two
+objects in a CSG list (but it is planned for a future version).
+
+% The following aren simple CSG objects using the four consistent
+% primitives:
+% 
+% union box ... difference ...
+
+\subsection{Potential CSG Problems}
+
+A consistent CSG model is one which is made
+up of solid objects with no dangling surfaces.  In {\rayshade},
+it is quite easy to construct inconsistent models, which will usually
+appear incorrect in the final images.
+In {\rayshade}, CSG is implemented by maintaining
+the tree structure of the CSG operations.  This tree is traversed,
+and the operators therein applied, on a per-ray basis.
+It is therefore difficult to verify the consistency of
+the model ``on the fly.''
+
+One class of CSG problems occur when
+surfaces of objects being operated upon
+coincide.  For example, when subtracting a box from another box to make a
+square cup, the result will be wrong if the tops of the two boxes
+coincide.  To correct this, the inner box should be made
+slightly taller than the outer box.
+A related problem that must be
+avoided occurs when two coincident surfaces are assigned
+different surface properties.
+
+It may seem that the union operator is unnecessary, since
+listing two objects together in an aggregate results
+in an image that appears to be the same.
+While the result of such a short-cut
+may appear the same on the exterior, the interior
+of the resulting object will contain
+extraneous surfaces.
+The following examples show this quite clearly.
+
+\begin{verbatim}
+    difference
+      box -2 0 -3  2 3 3
+      union  /* change to list; note bad internal surfaces */
+        sphere 2 1 0 0
+        sphere 2 -1 0 0
+      end
+    end rotate 1 0 0 -40  rotate 0 0 1 50
+\end{verbatim}
+
+The visual evidence of an inconsistent CSG object varies depending
+upon the operator being used.
+When subtracting a consistent object from and
+inconsistent one, the resulting object will appear to be
+the union of the two objects, but the shading will be incorrect.
+It will appear to be inside-out in places, while correct
+in other places.  The inside-out sections indicate the areas
+where the problems occur.
+Such problems are often caused by
+polygons with incorrectly specified
+normals, or by surfaces that exactly coincide (which
+appear as partial ``Swiss cheese'' objects).
+
+The following example illustrates an attempt to subtract a sphere from
+a pyramid defined using an incorrectly facing triangle.  Note
+that the resulting image obviously points to which triangle is
+reversed.
+
+\begin{verbatim}
+    name pyramid list
+        triangle 1 0 0  0 1 0  0 0 1
+        triangle 1 0 0  0 0 0  0 1 0
+        triangle 0 1 0  0 0 0  0 0 1
+        triangle 0 0 1  1 0 0  0 0 0  /* wrong order */
+    end
+
+    difference
+        object pyramid scale 3 3 3 rotate 0 0 1 45
+            rotate 1 0 0 -30 translate 0 -3.5 0
+        sphere 2.4 0 0 0
+    end
+\end{verbatim}
+
+By default, cylinders and cones do not have end caps, and thus
+are not consistent primitives.  One must usually
+add endcaps by listing the
+cylinder or cone with (correctly-oriented) endcap discs in an aggregate.
+
+\section {Named Objects}
+
+A name may be associated with any primitive, aggregate, or CSG
+object through the use of the {\tt name}
+keyword:
+
+\begin{defkey}{name}{{\em objname} $<${\em Instance\/}$>$}
+	Associate {\em objname} with the given object.  The
+	specified object is not actually instantiated; it
+	is only stored under the given name.
+\end{defkey}
+
+An object thus named may then be instantiated (with possible
+additional transforming and texturing) via the {\tt object} keyword:
+
+\begin{defkey}{object}{{\em objname} [$<$Transformations$>$] [$<$Textures$>$]}
+	Instantiate a copy of the object associated with {\em objname}.
+	If given, the transformations and textures are composed
+	with any already associated with
+	the object being instantiated.
+\end{defkey}

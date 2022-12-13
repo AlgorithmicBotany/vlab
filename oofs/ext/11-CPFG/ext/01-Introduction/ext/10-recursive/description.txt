@@ -1,0 +1,11 @@
+FRACTAL FERN LEAF - RECURSIVE DECOMPOSITION
+
+At a limit, the entire structure at a certain time can 
+be obtained by recursive application of decomposition 
+rules and/or interpretation rules.  This constitutes 
+a link between  developmental and structural models.  
+This example illustrates recursive application 
+of the interpretation rules.
+
+Models can be constructed this way only if no
+context-sensitive productions are used.

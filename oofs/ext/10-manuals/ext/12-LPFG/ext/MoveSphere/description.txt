@@ -1,0 +1,21 @@
+MouseStatus example.
+
+Select Run from the Animate menu.
+Hold Shift+Command keys and left click to place a vertex.
+Shift+Command and left click on the vertex to move it.
+
+-----------------------
+
+Reminder regarding MouseStatus: 
+
+struct MouseStatus
+{
+  int viewNum;                 // currently active view
+  int viewX,viewY;             // x,y pixel positions of mouse cursor
+  V3d atFront,atRear,atMiddle; // intersection of cursor ray with
+                               // front/back viewplane and
+                               // halfway between them
+  bool lbDown;                 // left button currently down
+  bool lbPushed, lbReleased;   // left button pressed or released
+                               // since last call to GetMouseStatus
+};

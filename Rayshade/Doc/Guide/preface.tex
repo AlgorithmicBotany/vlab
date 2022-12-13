@@ -1,0 +1,70 @@
+\chapter*{Preface}
+\addcontentsline{toc}{chapter}{Preface}
+
+{\Rayshade} is a program for creating ray-traced images.
+It reads a description of a scene to be
+rendered and produces a color image corresponding to the
+description.
+{\Rayshade} was designed to make it easy to
+create nice pictures.
+It was also meant to be flexible, easy to modify,
+and relatively fast.
+
+The first version of {\rayshade} was written in 1987-1988 at
+Princeton University with help and encouragement from David Dobkin
+and David Hoffman.  That version was heavily based on a public-domain
+``introductory'' ray tracer written by Roman Kuchkuda.
+Changes to {\rayshade} from that point until version 4.0 were
+evolutionary in nature.
+The current version is to a large extent a re-write,
+and an attempt has been made to remove some of the fundamental
+problems present in previous incarnations.
+
+I wish to thank the many people who have made
+contributions to the development of {\rayshade} during the past four years.
+Thanks to Marc Andreessen, Ray Bellis, Dominique Boisvert, William Bouma,
+Allen Braunsdorf, Jeff Butterworth, Nick Carriero, Nancy Everson, Tom Friedel,
+Robert Funchess, David Gelernter, Mike Gigante, Ed Herderick, John Knuston,
+Raphael Manfredi, Lee Moore, Dietmar Saupe, Brian Wyvill,
+and the hundreds of others who have provided
+bug-fixes, suggestions, input files,
+encouragement, support, and other feedback.
+
+David Dobkin first suggested that an extensible
+ray tracer would be a worthwhile project.  Gavin Bell, David
+Hoffman, Lefteris Koutsofios, and Steven North
+were the first users of the original {\rayshade}, and their feedback
+showed that the project might indeed have a future.
+In the Fall of 1988,
+Przemyslaw Prusinkiewicz encouraged me
+to develop {\rayshade} further, and was, as always, full of ``insanely
+great'' ideas.  The resulting version of {\rayshade} was released
+on Usenet in 1989.  Allan Snider was particularly helpful in
+finding bugs in version 3.0 and in making valuable suggestions
+as to how the program might be improved.
+
+{\Rayshade} version 4.0
+was written by Craig Kolb and Rod Bogart during 1990-1991, with contributions
+of ideas and code made by many others.
+Pat Hanrahan's {\em OOGL} provided the spirit, if not the letter, of the
+modularity of the version 4.0.  Thanks to Pat and to Mark VandeWettering
+for the ``net tracer'' conversations and for the inspiration to do something
+to clean up {\rayshade}.
+Eric Haines saved the day on more than one occasion by suggesting
+improvements, finding bugs, and saying nice things about {\rayshade}
+when I was all but ready to throw in the towel.
+Robert Skinner was kind enough to provide the {\em Noise()}, {\em DNoise()},
+and other texturing functions and to allow them to be redistributed.
+Mark Podlipec provided the blob object and torus object, which uses
+Jochen Schwarze's cubic and quartic root-finding functions.
+Major Thanks to Rod Bogart for being willing to take the plunge and
+play such a large role in the development of version 4.0.
+I am most grateful to Benoit Mandelbrot for his support of this
+project and the inspiration he provided.
+
+\begin{flushright}
+\parbox[t]{1.5in}{
+C. Kolb \\
+January 10, 1992
+}
+\end{flushright}

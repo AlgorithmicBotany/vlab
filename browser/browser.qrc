@@ -1,0 +1,9 @@
+<RCC>
+  <qresource>
+    <file>Images/Right3Green.png</file>
+    <file alias="default-icon.png">./Images/default-icon.png</file>
+    <file alias="hourglass.png">./Images/hourglass.png</file>
+    <file alias="logo-small.png">./Images/logo.png</file>
+    <file alias="linux-icon.png">./Images/linux-icon.png</file>
+   </qresource>
+</RCC>

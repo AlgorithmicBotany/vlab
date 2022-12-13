@@ -1,0 +1,12 @@
+A simple monopodial structure showing the increase of 
+branch width as postulated by the pipe model.  
+
+The information about the pipes coming from above 
+is carried by basipetal signals (which in this case 
+carry quantitative information).
+
+It is assumed that each stem segment uses some 
+photosynthates produced by the leaves.  The colors 
+of the stem indicate the surplus (or deficit) of 
+photosynthates at a given level.
+

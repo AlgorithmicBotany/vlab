@@ -1,0 +1,22 @@
+#
+# Windows makefile for libray
+# C. Kolb 1/91
+#
+# $Id: Makefile.vc,v 1.1.1.1 2005/01/07 20:51:06 laneb Exp $
+#
+MAKE = nmake -nologo -f Makefile.vc
+STUFF = libcommon libobj libimage liblight libsurf libtext
+
+default:
+	for %i in ($(STUFF)) do \
+		cd %i && (($(MAKE) && cd ..) || cd ..)
+
+#
+# Have to keep clean/depend separete so
+# Configure will work
+#
+
+clean:
+	for %i in ($(STUFF)) do \
+		cd %i && (($(MAKE) clean && cd ..) || cd ..)
+	del libray.lib

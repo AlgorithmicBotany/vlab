@@ -1,0 +1,26 @@
+plant.l
+plant.v
+plant.a
+plant.map
+description.txt
+ignore:
+*
+image:
+	generate:
+		cpfg -m plant.map plant.l plant.v plant.a
+
+L-system:
+	EDIT plant.l
+
+viewfile:
+	EDIT plant.v
+
+animation:
+	EDIT plant.a
+
+colormap:
+	PALETTE plant.map
+
+description:
+	EDIT description.txt
+

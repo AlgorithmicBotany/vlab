@@ -1,0 +1,3 @@
+Objects in this directory illustrate the use of open l-sysems
+and environemntal programs. Most objects in this directory 
+are translations of the corresponding objects in the cpfg directory.

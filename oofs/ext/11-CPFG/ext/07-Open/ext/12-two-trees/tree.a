@@ -1,0 +1,9 @@
+double buffer: on
+clear between frames: on
+scale between frames: on
+new view between frames: off
+swap interval: 5
+first frame: 0
+last frame: 183
+step: 1
+frame intervals: 183-275

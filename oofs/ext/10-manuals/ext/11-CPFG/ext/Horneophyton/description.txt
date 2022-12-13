@@ -1,0 +1,19 @@
+A model of the paleobotanic plant, Horneopython ligneri
+
+As shown in Stewart and Rothwell, Paleobotany and 
+evolution of plants, p. 92, Fig 9.6.
+
+Greenish-yellow color inspired by the reconstructions 
+of Cooksonia and Zosterophyllum in White, 
+Greening of Gondwana, pp. 64-65.
+
+The whole plant also has rhizoids, not shown in this model.
+
+This model illustrates the use of:
+- directional information
+- generalized cylinders
+- panels
+- rendering with shadows
+
+---
+PWP, updated 2022-11-23

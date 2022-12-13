@@ -1,0 +1,21 @@
+Syringa vulgaris Congo 3
+
+A variant of the L-system for Congo 3, based on the generic model of a 
+polypodial branching structure.
+
+The model uses the following information for each order of branching:
+
+- the sequence of internode lengths on the axis with the largest
+  number of internodes.
+- the number of internodes in the axes of order o+1 as a function of
+  index i of their position on the supporting axis (of order o).
+
+History:
+
+Modeled on May 26, 1994 in Morden, Manitoba according to the raw data 
+for Congo 3.  
+
+Reimplemented using recursive decomposition and homomorphisms December 17, 1996.
+
+Rendered with materials, December 13, 2020.
+

@@ -1,0 +1,26 @@
+fractal.l
+fractal.v
+fractal.a
+fractal.map
+description.txt
+ignore:
+*
+model:
+	generate:
+		cpfg -m fractal.map fractal.l fractal.v fractal.a
+
+L-system:
+	EDIT fractal.l
+
+viewfile:
+	EDIT fractal.v
+
+animate:
+	EDIT fractal.a
+
+colormap:
+	PALETTE fractal.map
+
+description:
+	EDIT description.txt
+

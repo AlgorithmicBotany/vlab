@@ -1,0 +1,34 @@
+plant.l
+plant.v
+plant.a
+plant.map
+panel.l
+panel.a
+description.txt
+ignore:
+rmode: cont
+*
+model:
+	generate:
+		cpfg -m plant.map plant.l plant.v plant.a
+
+L-system:
+	panel:
+		panel panel.l | awkped plant.l
+	EDIT plant.l
+
+view:
+	EDIT plant.v
+
+animate:
+	panel:
+		panel panel.a | ped plant.a
+	EDIT plant.a
+
+colormap:
+	palette:	
+		palette plant.map
+
+description:
+	EDIT description.txt
+

@@ -1,0 +1,2 @@
+Objects in this directory are sample context-sensitive L-systems
+that use signals t ocarry quantitative information.

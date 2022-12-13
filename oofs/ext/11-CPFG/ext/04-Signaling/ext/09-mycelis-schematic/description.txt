@@ -1,0 +1,7 @@
+Mycelis muralis - model II
+
+Model of a basipetal flowering sequence controlled 
+by an upward moving signal initiating the flowering
+('florigen'), and a downward moving signal lifting
+apical dominance.  Based on L-system 3.2 in the
+"Algorithmic Beauty of Plants", p. 88.

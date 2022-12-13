@@ -1,0 +1,43 @@
+%
+% Rayshde User's Guide
+%
+% $Id: guide.tex,v 1.1.1.1 2005/01/07 20:51:06 laneb Exp $
+%
+% Keyword definition
+\newenvironment{defkey}[2]{\begin{description} \item[] {\tt #1\/} #2 \\}{\end{description}}
+% Primitive definition
+\newenvironment{defprim}[2]{\begin{description} \item[] {\tt #1\/} #2 \\}{\end{description}}
+% Tokens
+\newcommand{\evec}[1]{$\overrightarrow{\em {#1}}$}
+% example environment
+\newenvironment{example}{\begin{verbatim}}{\end{verbatim}}
+
+\documentstyle[11pt]{report}
+
+\newcommand{\Rayshade}{\mbox{{\em Rayshade}\/}}
+\newcommand{\rayshade}{\mbox{{\em rayshade}\/}}
+
+\title{Rayshade User's Guide and Reference Manual}
+\author{Craig E. Kolb}
+\date{Draft 0.4 \\
+January 10, 1992}
+\begin{document}
+\maketitle
+\pagenumbering{roman}
+
+\tableofcontents
+\parskip=0.1in
+\input{preface}
+\input{intro}
+\input{running}
+\input{camera}
+\input{lights}
+\input{objects}
+\input{surfaces}
+\input{transform}
+\input{texture}
+\appendix
+\input{options}
+\input{animate}
+\input{height}
+\end{document}

@@ -1,0 +1,14 @@
+<!DOCTYPE RCC><RCC version="1.0">
+<qresource>
+   <file>icons/hLeft.png</file>
+   <file>icons/hCenter.png</file>
+   <file>icons/hRight.png</file>
+   <file>icons/vBottom.png</file>
+   <file>icons/vCenter.png</file>
+   <file>icons/vTop.png</file>
+   <file>icons/dHorizontal.png</file>
+   <file>icons/dVertical.png</file>
+   <file>images/icon.png</file>
+
+</qresource>
+</RCC>

@@ -1,0 +1,5 @@
+Visualization of the Holttum architectural tree model
+
+This example also illustrates a typical application of the cut symbol (%): shedding of leaves or branches.
+
+Updated 2021-10-11.

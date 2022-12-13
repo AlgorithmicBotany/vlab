@@ -1,0 +1,8 @@
+An articulated lamp model illustrating turtle geometry
+
+Use the menu item, L-system > panel, to change parameter values, 
+and L-system > edit to view the L-system file and see the #define
+statements changing as sliders are moved on the panel.
+
+---
+PWP, updated 2022-11-22

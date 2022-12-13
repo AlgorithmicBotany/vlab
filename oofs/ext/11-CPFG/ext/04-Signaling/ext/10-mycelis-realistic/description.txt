@@ -1,0 +1,5 @@
+A 3D version of the development of Mycelis muralis.
+This model is very old, and it should be possible to
+significantly clean it up.
+
+! Cleaned and tested under Mac Os 10.6 on May, 1st 2012 !

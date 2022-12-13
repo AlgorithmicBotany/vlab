@@ -1,0 +1,419 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="WinInterface">
+      <UniqueIdentifier>{1f67b130-f43b-4f42-b3de-37c9e3c58d8c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Cpfg code">
+      <UniqueIdentifier>{ad4b4af8-cf73-489d-8471-f0352e65748e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Resources">
+      <UniqueIdentifier>{24d53197-f6ed-4b83-bec9-4ccb1c6911c9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Generated">
+      <UniqueIdentifier>{97dfc954-d5d3-4a18-9ad3-0f560c823b8e}</UniqueIdentifier>
+      <SourceControlFiles>False</SourceControlFiles>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="App.cpp">
+      <Filter>WinInterface</Filter>
+    </ClCompile>
+    <ClCompile Include="Canvas.cpp">
+      <Filter>WinInterface</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Lstudio\cmndefs.cpp">
+      <Filter>WinInterface</Filter>
+    </ClCompile>
+    <ClCompile Include="dummies.c">
+      <Filter>WinInterface</Filter>
+    </ClCompile>
+    <ClCompile Include="file.cpp">
+      <Filter>WinInterface</Filter>
+    </ClCompile>
+    <ClCompile Include="Main.cpp">
+      <Filter>WinInterface</Filter>
+    </ClCompile>
+    <ClCompile Include="mainwindow.cpp">
+      <Filter>WinInterface</Filter>
+    </ClCompile>
+    <ClCompile Include="msglogwnd.cpp">
+      <Filter>WinInterface</Filter>
+    </ClCompile>
+    <ClCompile Include="msgrow.cpp">
+      <Filter>WinInterface</Filter>
+    </ClCompile>
+    <ClCompile Include="myexception.cpp">
+      <Filter>WinInterface</Filter>
+    </ClCompile>
+    <ClCompile Include="platformmenuWin.c">
+      <Filter>WinInterface</Filter>
+    </ClCompile>
+    <ClCompile Include="platformWin.c">
+      <Filter>WinInterface</Filter>
+    </ClCompile>
+    <ClCompile Include="View.cpp">
+      <Filter>WinInterface</Filter>
+    </ClCompile>
+    <ClCompile Include="wininterface.cpp">
+      <Filter>WinInterface</Filter>
+    </ClCompile>
+    <ClCompile Include="Wndproc.cpp">
+      <Filter>WinInterface</Filter>
+    </ClCompile>
+    <ClCompile Include="animparam.c">
+      <Filter>Cpfg code</Filter>
+    </ClCompile>
+    <ClCompile Include="background.c">
+      <Filter>Cpfg code</Filter>
+    </ClCompile>
+    <ClCompile Include="blackbox.c">
+      <Filter>Cpfg code</Filter>
+    </ClCompile>
+    <ClCompile Include="compactor.cpp">
+      <Filter>Cpfg code</Filter>
+    </ClCompile>
+    <ClCompile Include="control.c">
+      <Filter>Cpfg code</Filter>
+    </ClCompile>
+    <ClCompile Include="curveXYZ.cpp">
+      <Filter>Cpfg code</Filter>
+    </ClCompile>
+    <ClCompile Include="curveXYZa.cpp">
+      <Filter>Cpfg code</Filter>
+    </ClCompile>
+    <ClCompile Include="curveXYZc.cpp">
+      <Filter>Cpfg code</Filter>
+    </ClCompile>
+    <ClCompile Include="environment.c">
+      <Filter>Cpfg code</Filter>
+    </ClCompile>
+    <ClCompile Include="general.c">
+      <Filter>Cpfg code</Filter>
+    </ClCompile>
+    <ClCompile Include="generate.c">
+      <Filter>Cpfg code</Filter>
+    </ClCompile>
+    <ClCompile Include="hash.c">
+      <Filter>Cpfg code</Filter>
+    </ClCompile>
+    <ClCompile Include="interpret.c">
+      <Filter>Cpfg code</Filter>
+    </ClCompile>
+    <ClCompile Include="irisGL.c">
+      <Filter>Cpfg code</Filter>
+    </ClCompile>
+    <ClCompile Include="log.c">
+      <Filter>Cpfg code</Filter>
+    </ClCompile>
+    <ClCompile Include="matrix.c">
+      <Filter>Cpfg code</Filter>
+    </ClCompile>
+    <ClCompile Include="mesh.c">
+      <Filter>Cpfg code</Filter>
+    </ClCompile>
+    <ClCompile Include="movements.c">
+      <Filter>Cpfg code</Filter>
+    </ClCompile>
+    <ClCompile Include="object.c">
+      <Filter>Cpfg code</Filter>
+    </ClCompile>
+    <ClCompile Include="outputgls.c">
+      <Filter>Cpfg code</Filter>
+    </ClCompile>
+    <ClCompile Include="patches.c">
+      <Filter>Cpfg code</Filter>
+    </ClCompile>
+    <ClCompile Include="point.cpp">
+      <Filter>Cpfg code</Filter>
+    </ClCompile>
+    <ClCompile Include="postscript.c">
+      <Filter>Cpfg code</Filter>
+    </ClCompile>
+    <ClCompile Include="quaternions.c">
+      <Filter>Cpfg code</Filter>
+    </ClCompile>
+    <ClCompile Include="rayshade.c">
+      <Filter>Cpfg code</Filter>
+    </ClCompile>
+    <ClCompile Include="rle.c">
+      <Filter>Cpfg code</Filter>
+    </ClCompile>
+    <ClCompile Include="sphere.c">
+      <Filter>Cpfg code</Filter>
+    </ClCompile>
+    <ClCompile Include="splinearr.cpp">
+      <Filter>Cpfg code</Filter>
+    </ClCompile>
+    <ClCompile Include="splinefun.cpp">
+      <Filter>Cpfg code</Filter>
+    </ClCompile>
+    <ClCompile Include="targa.c">
+      <Filter>Cpfg code</Filter>
+    </ClCompile>
+    <ClCompile Include="test_malloc.c">
+      <Filter>Cpfg code</Filter>
+    </ClCompile>
+    <ClCompile Include="textures.c">
+      <Filter>Cpfg code</Filter>
+    </ClCompile>
+    <ClCompile Include="tsurfaces.c">
+      <Filter>Cpfg code</Filter>
+    </ClCompile>
+    <ClCompile Include="turtle.c">
+      <Filter>Cpfg code</Filter>
+    </ClCompile>
+    <ClCompile Include="userfiles.cpp">
+      <Filter>Cpfg code</Filter>
+    </ClCompile>
+    <ClCompile Include="utility.c">
+      <Filter>Cpfg code</Filter>
+    </ClCompile>
+    <ClCompile Include="viewVol.c">
+      <Filter>Cpfg code</Filter>
+    </ClCompile>
+    <ClCompile Include="writergb.c">
+      <Filter>Cpfg code</Filter>
+    </ClCompile>
+    <ClCompile Include="lsys_input_lex.c">
+      <Filter>Generated</Filter>
+    </ClCompile>
+    <ClCompile Include="lsys_input_yacc.c">
+      <Filter>Generated</Filter>
+    </ClCompile>
+    <ClCompile Include="..\libs\glew-1.5.4\src\glew.c">
+      <Filter>WinInterface</Filter>
+    </ClCompile>
+    <ClCompile Include="shaders.c">
+      <Filter>Cpfg code</Filter>
+    </ClCompile>
+    <ClCompile Include="lodepng.c">
+      <Filter>Cpfg code</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="App.h">
+      <Filter>WinInterface</Filter>
+    </ClInclude>
+    <ClInclude Include="Canvas.h">
+      <Filter>WinInterface</Filter>
+    </ClInclude>
+    <ClInclude Include="classnames.h">
+      <Filter>WinInterface</Filter>
+    </ClInclude>
+    <ClInclude Include="file.h">
+      <Filter>WinInterface</Filter>
+    </ClInclude>
+    <ClInclude Include="mainwindow.h">
+      <Filter>WinInterface</Filter>
+    </ClInclude>
+    <ClInclude Include="msglogwnd.h">
+      <Filter>WinInterface</Filter>
+    </ClInclude>
+    <ClInclude Include="msgrow.h">
+      <Filter>WinInterface</Filter>
+    </ClInclude>
+    <ClInclude Include="myexception.h">
+      <Filter>WinInterface</Filter>
+    </ClInclude>
+    <ClInclude Include="View.h">
+      <Filter>WinInterface</Filter>
+    </ClInclude>
+    <ClInclude Include="warningset.h">
+      <Filter>WinInterface</Filter>
+    </ClInclude>
+    <ClInclude Include="wininterface.h">
+      <Filter>WinInterface</Filter>
+    </ClInclude>
+    <ClInclude Include="Wndproc.h">
+      <Filter>WinInterface</Filter>
+    </ClInclude>
+    <ClInclude Include="animparam.h">
+      <Filter>Cpfg code</Filter>
+    </ClInclude>
+    <ClInclude Include="background.h">
+      <Filter>Cpfg code</Filter>
+    </ClInclude>
+    <ClInclude Include="blackbox.h">
+      <Filter>Cpfg code</Filter>
+    </ClInclude>
+    <ClInclude Include="comlineparam.h">
+      <Filter>Cpfg code</Filter>
+    </ClInclude>
+    <ClInclude Include="compactmesh.h">
+      <Filter>Cpfg code</Filter>
+    </ClInclude>
+    <ClInclude Include="compactor.h">
+      <Filter>Cpfg code</Filter>
+    </ClInclude>
+    <ClInclude Include="control.h">
+      <Filter>Cpfg code</Filter>
+    </ClInclude>
+    <ClInclude Include="curveXYZ.h">
+      <Filter>Cpfg code</Filter>
+    </ClInclude>
+    <ClInclude Include="curveXYZa.h">
+      <Filter>Cpfg code</Filter>
+    </ClInclude>
+    <ClInclude Include="curveXYZc.h">
+      <Filter>Cpfg code</Filter>
+    </ClInclude>
+    <ClInclude Include="drawparam.h">
+      <Filter>Cpfg code</Filter>
+    </ClInclude>
+    <ClInclude Include="environment.h">
+      <Filter>Cpfg code</Filter>
+    </ClInclude>
+    <ClInclude Include="general.h">
+      <Filter>Cpfg code</Filter>
+    </ClInclude>
+    <ClInclude Include="generate.h">
+      <Filter>Cpfg code</Filter>
+    </ClInclude>
+    <ClInclude Include="geometry.h">
+      <Filter>Cpfg code</Filter>
+    </ClInclude>
+    <ClInclude Include="hash.h">
+      <Filter>Cpfg code</Filter>
+    </ClInclude>
+    <ClInclude Include="..\libs\image\image.h">
+      <Filter>Cpfg code</Filter>
+    </ClInclude>
+    <ClInclude Include="indices.h">
+      <Filter>Cpfg code</Filter>
+    </ClInclude>
+    <ClInclude Include="interpret.h">
+      <Filter>Cpfg code</Filter>
+    </ClInclude>
+    <ClInclude Include="irisGL.h">
+      <Filter>Cpfg code</Filter>
+    </ClInclude>
+    <ClInclude Include="log.h">
+      <Filter>Cpfg code</Filter>
+    </ClInclude>
+    <ClInclude Include="material.h">
+      <Filter>Cpfg code</Filter>
+    </ClInclude>
+    <ClInclude Include="matrix.h">
+      <Filter>Cpfg code</Filter>
+    </ClInclude>
+    <ClInclude Include="maxpth.h">
+      <Filter>Cpfg code</Filter>
+    </ClInclude>
+    <ClInclude Include="mesh.h">
+      <Filter>Cpfg code</Filter>
+    </ClInclude>
+    <ClInclude Include="movements.h">
+      <Filter>Cpfg code</Filter>
+    </ClInclude>
+    <ClInclude Include="object.h">
+      <Filter>Cpfg code</Filter>
+    </ClInclude>
+    <ClInclude Include="outputgls.h">
+      <Filter>Cpfg code</Filter>
+    </ClInclude>
+    <ClInclude Include="patch.h">
+      <Filter>Cpfg code</Filter>
+    </ClInclude>
+    <ClInclude Include="platform.h">
+      <Filter>Cpfg code</Filter>
+    </ClInclude>
+    <ClInclude Include="platformmenu.h">
+      <Filter>Cpfg code</Filter>
+    </ClInclude>
+    <ClInclude Include="polygon.h">
+      <Filter>Cpfg code</Filter>
+    </ClInclude>
+    <ClInclude Include="postscript.h">
+      <Filter>Cpfg code</Filter>
+    </ClInclude>
+    <ClInclude Include="quaternions.h">
+      <Filter>Cpfg code</Filter>
+    </ClInclude>
+    <ClInclude Include="..\libs\rand48\rand.h">
+      <Filter>Cpfg code</Filter>
+    </ClInclude>
+    <ClInclude Include="rayshade.h">
+      <Filter>Cpfg code</Filter>
+    </ClInclude>
+    <ClInclude Include="rle.h">
+      <Filter>Cpfg code</Filter>
+    </ClInclude>
+    <ClInclude Include="server.h">
+      <Filter>Cpfg code</Filter>
+    </ClInclude>
+    <ClInclude Include="sphere.h">
+      <Filter>Cpfg code</Filter>
+    </ClInclude>
+    <ClInclude Include="splinearr.h">
+      <Filter>Cpfg code</Filter>
+    </ClInclude>
+    <ClInclude Include="splinefun.h">
+      <Filter>Cpfg code</Filter>
+    </ClInclude>
+    <ClInclude Include="splinefunC.h">
+      <Filter>Cpfg code</Filter>
+    </ClInclude>
+    <ClInclude Include="targa.h">
+      <Filter>Cpfg code</Filter>
+    </ClInclude>
+    <ClInclude Include="test_malloc.h">
+      <Filter>Cpfg code</Filter>
+    </ClInclude>
+    <ClInclude Include="textures.h">
+      <Filter>Cpfg code</Filter>
+    </ClInclude>
+    <ClInclude Include="tsurfaces.h">
+      <Filter>Cpfg code</Filter>
+    </ClInclude>
+    <ClInclude Include="turtle.h">
+      <Filter>Cpfg code</Filter>
+    </ClInclude>
+    <ClInclude Include="turtleDrawDispatcher.h">
+      <Filter>Cpfg code</Filter>
+    </ClInclude>
+    <ClInclude Include="userfiles.h">
+      <Filter>Cpfg code</Filter>
+    </ClInclude>
+    <ClInclude Include="utility.h">
+      <Filter>Cpfg code</Filter>
+    </ClInclude>
+    <ClInclude Include="viewparam.h">
+      <Filter>Cpfg code</Filter>
+    </ClInclude>
+    <ClInclude Include="viewVol.h">
+      <Filter>Cpfg code</Filter>
+    </ClInclude>
+    <ClInclude Include="writergb.h">
+      <Filter>Cpfg code</Filter>
+    </ClInclude>
+    <ClInclude Include="resource.h">
+      <Filter>Resources</Filter>
+    </ClInclude>
+    <ClInclude Include="lsys_input_yacc.h">
+      <Filter>Generated</Filter>
+    </ClInclude>
+    <ClInclude Include="shaders.h">
+      <Filter>Cpfg code</Filter>
+    </ClInclude>
+    <ClInclude Include="lodepng.h">
+      <Filter>Cpfg code</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="todo.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="Resources\cpfg.rc">
+      <Filter>Resources</Filter>
+    </ResourceCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <CustomBuild Include="lsys_input.l">
+      <Filter>Cpfg code</Filter>
+    </CustomBuild>
+    <CustomBuild Include="lsys_input.y">
+      <Filter>Cpfg code</Filter>
+    </CustomBuild>
+  </ItemGroup>
+</Project>

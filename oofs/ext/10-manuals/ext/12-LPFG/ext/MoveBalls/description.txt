@@ -1,0 +1,27 @@
+Example illustrating the use of MouseStatus and InsPos module
+
+Hold Key 1 (or Shift+Alt, Shift+Command, or all three),
+and left click to select and move an existing ball or 
+create a new one. 
+
+A reminder regarding the MouseStatus structure.
+
+struct MouseStatus
+{
+  int viewnum;                 // currently active view
+  int viewx,viewy;             // x,y pixel positions of mouse cursor
+			       
+  V3d atFront,atRear,atMiddle; // intersection of cursor ray with
+                               // front/back viewplane and
+                               // halfway between them
+			       // calculated when mouse status is called,
+			       // independently of any keys
+
+  bool lbDown;                 // left button currently down
+
+
+  bool lbPushed, lbReleased;   // left button pressed or released
+                               // since last call to GetMouseStatus
+};
+
+Updated by PWP 2022-12-11

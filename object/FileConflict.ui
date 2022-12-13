@@ -1,0 +1,205 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>FileConflict</class>
+ <widget class="QDialog" name="FileConflict">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>445</width>
+    <height>535</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>Dialog</string>
+  </property>
+  <layout class="QGridLayout" name="gridLayout">
+   <item row="0" column="0" colspan="3">
+    <widget class="QGroupBox" name="groupBox_2">
+     <property name="title">
+      <string>Resolution Options</string>
+     </property>
+     <layout class="QVBoxLayout" name="verticalLayout">
+      <item>
+       <widget class="QLabel" name="label_2">
+        <property name="text">
+         <string>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
+&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
+p, li { white-space: pre-wrap; }
+&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:'Lucida Grande'; font-size:13pt; font-weight:400; font-style:normal;&quot;&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; color:#008e12;&quot;&gt;Green&lt;/span&gt; - Skip file&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; color:#ff0000;&quot;&gt;Red&lt;/span&gt; - Overwrite Files / Merge Directories&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Black - No conflict&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+        </property>
+       </widget>
+      </item>
+     </layout>
+    </widget>
+   </item>
+   <item row="1" column="0">
+    <widget class="QLabel" name="label">
+     <property name="text">
+      <string>New target name</string>
+     </property>
+    </widget>
+   </item>
+   <item row="2" column="0" colspan="3">
+    <widget class="QLineEdit" name="lineEdit"/>
+   </item>
+   <item row="3" column="0" colspan="3">
+    <widget class="QTreeWidget" name="treeWidget"/>
+   </item>
+   <item row="4" column="0">
+    <spacer name="horizontalSpacer">
+     <property name="orientation">
+      <enum>Qt::Horizontal</enum>
+     </property>
+     <property name="sizeHint" stdset="0">
+      <size>
+       <width>259</width>
+       <height>20</height>
+      </size>
+     </property>
+    </spacer>
+   </item>
+   <item row="4" column="1">
+    <widget class="QPushButton" name="pushButton_2">
+     <property name="maximumSize">
+      <size>
+       <width>80</width>
+       <height>16777215</height>
+      </size>
+     </property>
+     <property name="text">
+      <string>Cancel</string>
+     </property>
+     <property name="autoDefault">
+      <bool>false</bool>
+     </property>
+    </widget>
+   </item>
+   <item row="4" column="2">
+    <widget class="QPushButton" name="pushButton">
+     <property name="maximumSize">
+      <size>
+       <width>80</width>
+       <height>16777215</height>
+      </size>
+     </property>
+     <property name="text">
+      <string>Done</string>
+     </property>
+     <property name="autoDefault">
+      <bool>false</bool>
+     </property>
+    </widget>
+   </item>
+  </layout>
+ </widget>
+ <resources/>
+ <connections>
+  <connection>
+   <sender>pushButton</sender>
+   <signal>clicked()</signal>
+   <receiver>FileConflict</receiver>
+   <slot>accept()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>438</x>
+     <y>590</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>388</x>
+     <y>484</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>pushButton_2</sender>
+   <signal>clicked()</signal>
+   <receiver>FileConflict</receiver>
+   <slot>reject()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>361</x>
+     <y>590</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>305</x>
+     <y>495</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>treeWidget</sender>
+   <signal>itemSelectionChanged()</signal>
+   <receiver>FileConflict</receiver>
+   <slot>treeSelectionChanged()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>147</x>
+     <y>301</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>7</x>
+     <y>315</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>lineEdit</sender>
+   <signal>textEdited(QString)</signal>
+   <receiver>FileConflict</receiver>
+   <slot>lineEditChanged(QString)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>67</x>
+     <y>168</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>10</x>
+     <y>169</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>lineEdit</sender>
+   <signal>editingFinished()</signal>
+   <receiver>FileConflict</receiver>
+   <slot>lineEditLostFocus()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>327</x>
+     <y>168</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>437</x>
+     <y>146</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>treeWidget</sender>
+   <signal>itemClicked(QTreeWidgetItem*,int)</signal>
+   <receiver>FileConflict</receiver>
+   <slot>refreshTree(QTreeWidgetItem*)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>47</x>
+     <y>433</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>4</x>
+     <y>430</y>
+    </hint>
+   </hints>
+  </connection>
+ </connections>
+ <slots>
+  <slot>treeSelectionChanged()</slot>
+  <slot>radioSelectionChanged()</slot>
+  <slot>lineEditChanged(QString)</slot>
+  <slot>lineEditLostFocus()</slot>
+  <slot>refreshTree(QTreeWidgetItem*)</slot>
+ </slots>
+</ui>

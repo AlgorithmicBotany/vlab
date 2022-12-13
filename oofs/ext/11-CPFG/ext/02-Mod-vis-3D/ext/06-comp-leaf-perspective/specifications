@@ -1,0 +1,44 @@
+leaf.l
+leaf.v
+leaf.a
+material.mat
+leaf-length.func
+internode.func
+leaf.s
+leaft.png
+description.txt
+ignore:
+*
+model:
+	generate:
+		cpfg -M material.mat leaf.l leaf.v leaf.a
+
+L-system:
+	EDIT leaf.l
+
+viewfile:
+	EDIT leaf.v
+
+animation:
+	EDIT leaf.a
+
+materials:
+	MEDIT material.mat
+
+functions:
+	internode:
+		funcedit internode.func
+	leaf_length:
+		funcedit leaf-length.func
+
+leaf surface:
+	surface:
+		bezieredit leaf.s
+	surface + texture:
+		stedit -both leaf.s leaft.png
+	texture only:
+		stedit -warp leaft.png
+
+description:
+	EDIT description.txt
+

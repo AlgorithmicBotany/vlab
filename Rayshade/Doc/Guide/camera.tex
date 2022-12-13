@@ -1,0 +1,170 @@
+\chapter{Specifying a View}
+
+When designing a {\rayshade} input file, there are two main
+issues that must be considered.  The first and more complex
+is the selection of the objects to be rendered and the appearances
+they should be assigned.  The second and usually easier issue is
+the choice of viewing parameters.  This chapter deals with the
+latter problem; the majority of the following chapters
+discuss aspects of objects and their appearances.
+
+{\Rayshade} uses a camera model to describe
+the geometric relationship between the objects to be rendered
+and the image that is produced.  This relationship describes
+a perspective projection from world space onto the image plane.
+
+The geometry of the perspective projection
+may be thought of as an
+infinite pyramid, known as the viewing {\em frustum}.
+The apex of the frustum is defined by the camera's position,
+and the main axis of the frustum by a ``look'' vector.
+The four sides of
+the pyramid are differentiated by their relationship to a
+reference ``up'' vector from the camera's position.
+
+The image
+ultimately produced by {\rayshade} may then be thought of as
+the projection of the objects closest to the eye onto
+a rectangular screen formed by the intersection of the pyramid with
+a plane orthogonal to the pyramid's axis.  The overall shape
+of the frustum (the lengths of the top and bottom sides compared
+to left and right)
+is described by the horizontal and vertical fields
+of view.
+
+\section{Camera Position}
+
+The three basic camera properties are its position, the direction
+in which it is pointing, and its orientation.  The keywords for
+specifying these values are described below.
+The default values
+are designed to provide a reasonable view of a sphere of radius 2
+located at origin.  If these default values are used,
+the origin is projected onto the center of the image plane, with
+the world $x$ axis  running left-to-right, the $z$ axis bottom-to-top,
+and the $y$ axis going ``into'' the screen.
+
+\begin{defkey}{eyep}{\evec{pos}}
+	Place the virtual camera at the given position.
+\end{defkey}
+The default camera position is (0, -8, 0).
+
+\begin{defkey}{lookp}{\evec{pos}}
+	Point the virtual camera toward the given position.
+\end{defkey}
+The default look point is the origin (0, 0, 0).  The look point
+and camera position must not be coincident.
+
+\begin{defkey}{up}{\evec{direction}}
+	The ``up'' vector from the camera point is set to the
+	given direction.
+\end{defkey}
+This up vector need not be orthogonal to
+the view vector, nor need it be normalized.  The default up
+direction is (0, 0, 1).
+
+Another popular standard viewing geometry, with the $x$ axis running
+left-to-right,
+the $y$ axis bottom-to-top, and the $z$ axis pointing out of the screen,
+may be obtained by setting the up vector to (0, 1, 0) and by placing
+the camera on the positive $z$ axis.
+
+\section{Field of View}
+
+Another important choice to be made is that of the 
+field of view of the camera.  The size of this field describes
+the angles between the left and right sides and top and bottom sides
+of the frustum.
+
+\begin{defkey}{fov}{{\em hfov} [{\em vfov}]}
+	Specify
+	the horizontal and vertical field of view, in degrees.
+\end{defkey}
+The default horizontal field of view is 45 degrees.
+If {\em vfov} is omitted, as is the general practice,
+the vertical field of view is computed using the horizontal
+field of view, the output image resolution, and the assumption
+that a pixel samples a square area.  Thus,
+the values passed via the
+{\tt screen} keyword define the shape of the final image.
+If you are
+displaying on a non-square pixeled device,
+you must set the vertical field of view
+to compensate for the ``squashing'' that will result.
+
+\section{Depth of Field}
+
+Under many circumstances,
+it is desirable to render
+objects in the image such that they are in sharp
+focus on the image plane.  This is achieved by using the default
+``pinhole' camera.  In this mode, the camera's aperture is a single
+point, and all light rays are focused on the image plane.
+
+Alternatively, one may widen the aperture in order to
+simulate depth of field. In this case, rays are cast from various places on
+the aperture disk towards a point whose distance from the
+camera is equal to the
+{\em focus distance}.  Objects that lay in the focal plane will be
+in sharp focus.  The farther an object is from the image plane,
+the more out-of-focus it will appear to be.
+A wider aperture will lead to a greater blurring of
+objects that do not lay in the focal plane.
+When using a non-zero aperture radius, it is best to use jittered
+sampling in order to reduce aliasing.
+
+\begin{defkey}{aperture}{{\em radius}}
+	Use an aperture with the given {\em radius}.
+\end{defkey}
+The default radius is zero, resulting in a pinhole camera model.
+
+\begin{defkey}{focaldist}{{\em distance}}
+	Set the focal plane to be {\em distance} units from the camera.
+\end{defkey}
+By default, the focal distance is equal to the distance from the
+camera to the look point.
+
+\section{Stereo Rendering}
+
+Producing a stereo pair is a relatively simple process; rather than
+simply rendering a single image, one creates two related images which
+may then be viewed on a stereo monitor, in a stereo slide viewer, or
+by using colored glasses and an appropriate display filter.
+
+{\Rayshade} facilitates the rendering of stereo pairs by allowing you
+to specify the distance between the camera positions used in
+creating the two images.  The camera position given in the
+{\rayshade} input file
+defines
+the midpoint between the two camera positions used to generate the
+images.
+Generally, the remainder of the viewing parameters are kept constant.
+
+\begin{defkey}{eyesep}{{\em separation}}
+	Specifies the camera separation to be used in rendering stereo
+	pairs.
+\end{defkey}
+There is no default value.
+The separation may also be specified on the command line through
+the {\em -E} option.
+The view to be rendered (left or right)
+must be specified on the command line by using
+the {\tt -l} or {\tt -r} options.
+
+There are several things to keep in mind when generating stereo
+pairs.  Firstly, those objects that lie in from of the focal plane will
+appear to protrude from the screen when viewed in stereo, while objects
+farther
+than the focal plane will recede into the screen.  As it is usually
+easier to look at stereo images that recede into the screen, you will
+usually
+want to place the look point closer to the camera than the object
+of primary interest.
+
+The degree of stereo effect is a
+function of the camera separation and the distance from the camera
+to the look point. Too large a separation will result in a hyperstereo
+effect that will be hard to resolve, while too little a value will result
+in no stereo effect
+at all.  A separation equal to one tenth the distance from the
+camera to the look point is often a good choice.

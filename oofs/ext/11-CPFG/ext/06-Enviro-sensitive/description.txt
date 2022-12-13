@@ -1,0 +1,3 @@
+Objects in this directory illustrated the use of 
+environmentally-sensitive L-systems.
+

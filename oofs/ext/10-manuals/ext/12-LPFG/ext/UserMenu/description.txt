@@ -1,0 +1,8 @@
+LPFG example model
+
+Demonstrates the use of user menus.
+
+Run the model and right-click while holding two of Shift, Alt, and Control
+(Command-option-shift on a Mac).
+This will bring up the user-specified context menu.  Choosing a shape from
+the menu will display that shape.

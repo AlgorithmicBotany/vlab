@@ -1,0 +1,20 @@
+OPTIMIZE = 
+CCFLAGS = -nologo
+RANLIB = 
+CC = cl
+
+LIBRAY = ../libray.lib
+URTINC = 
+INC = -I.. -I../.. $(URTINC)
+CFLAGS = $(CCFLAGS) $(INC) $(OPTIMIZE)
+
+CFILES = atmosphere.c fog.c fogdeck.c mist.c surface.c surfshade.c
+OFILES = $(CFILES:.c=.obj)
+
+$(LIBRAY): $(OFILES)
+	if EXIST $(LIBRAY) (lib -out:$(LIBRAY) $(LIBRAY) $(OFILES)) ELSE (lib -out:$(LIBRAY) $(OFILES))
+
+clean:
+	del $(OFILES)
+
+# DO NOT DELETE THIS LINE

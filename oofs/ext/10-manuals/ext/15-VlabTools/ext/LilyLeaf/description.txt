@@ -1,0 +1,10 @@
+A leaf modeled as a generalized cylinder
+
+Uses numbers to refer to specific functions in the 
+functions.fset file. 
+
+xyz.func is an extra function for testing the gallery.
+
+Based on P. Prusinkiewicz, L. Muendermann, R. Karwowski and 
+B. Lane, "The use of positional information in the 
+modeling of plants", Proceedings of Siggraph 2001.

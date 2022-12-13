@@ -1,0 +1,73 @@
+sedge.l
+sedge.v
+sedge.a
+female.l
+female.v
+female.a
+male.l
+male.v
+male.a
+leaf.l
+leaf.v
+leaf.a
+sedge.map
+sedge.map2
+nmale.s
+female.s
+chaff.s
+description.txt
+ignore:
+*
+whole plant:
+	generate:
+		cpfg -m1 sedge.map -m2 sedge.map2 sedge.l sedge.v sedge.a
+	L-system:
+		EDIT sedge.l
+	view:
+		EDIT sedge.v
+	animation:
+		EDIT sedge.a
+
+female spike:
+	generate:
+		cpfg -m2 sedge.map2 female.l female.v female.a
+	L-system:
+		EDIT female.l
+	view:
+		EDIT female.v
+	animation:
+		EDIT female.a
+
+male spike:
+	generate:
+		cpfg -m2 sedge.map2 male.l male.v male.a
+	L-system:
+		EDIT male.l
+	view:
+		EDIT male.v
+	animation:
+		EDIT male.a
+
+leaf:
+	generate:
+		cpfg -m sedge.map leaf.l leaf.v leaf.a
+	L-system:
+		EDIT leaf.l
+	view:
+		EDIT leaf.v
+	animation:
+		EDIT leaf.a
+
+colormap:
+	PALETTE -m1 sedge.map -m2 sedge.map2
+
+surfaces:
+	female:
+		SURFACE female.s 
+	nmale:
+		SURFACE nmale.s 
+	chaff:
+		SURFACE chaff.s 
+
+description:
+	EDIT description.txt

@@ -1,0 +1,59 @@
+Code notes for LPFG
+
+1. Adding a new module
+
+- Add an entry for the module in include/stdmods.h. Add it
+  at the end so as not to lose track of ID numbers.
+- Run l2c with the following arguments: "l2c include/stdmods.h StdModulesStruct.h -ModulesOnly"
+  This will (re)generate file StdModulesStruct.h. For every module this file contains:
+    * constant of type __lc_ModuleIdType named ParameterName_id. 
+      You will use this constant in LEngine::InterpretModule.
+    * union __ParameterName_ParamsStruct_ which contains structure Data containing the actual parameters.
+      Other members of this union are there to ensure proper padding of the union in memory.
+- Add an entry in the big case statement in LEngine::InterpretModule
+  (lengine.h).  Use the "PARAMS" macro defined right before the switch statement to 
+  extract parameters. If the new module can be expressed in terms of already
+  existing modules, use calls to those methods of the Turtle
+  class. Otherwise,...
+- Add a new virtual method to the Turtle class in turtle.h. Implement it
+  once in the base class (with an empty implementation, if you like), then
+  in whichever turtle types are appropriate. **If the new module moves the
+  turtle, it's strongly recommended that that is done in the base class,
+  as that will have to be used in every other turtle.**
+  - ViewVolTurtle calculates the view volume: if the new module
+    represents a visible object, add in a method here to adjust the
+    view volume to include it.
+  - The various ScreenTurtles do the actual OpenGL drawing on the
+    screen. Implement in the ScreenTurtle class if it's general to all
+    of them (like most drawing functions), and in one of the
+    subclasses if it's specific.
+  - The other Turtles are more specialized. I'd recommend at least adding
+    modules with numeric parameters to NumericCheckTurtle (it's used with
+    the -cn command line switch to check if the parameters are OK - not
+    infinite, NaNs, or other such badness).
+- Document the new module in the manual.
+
+
+2. Adding a new userspace function
+
+- To make things easier on yourself, make sure there's a typedef in
+  lintrfc.h describing the type of your function. (For example, a
+  pointer to a function taking an int and returning nothing is of type
+  pfVoidInt.) Add in a typedef if there isn't an appropriate type.
+- Declare a function pointer in the structure __lc_ExportedFromLpfg
+  (lintrfc.h). The standard is to use the same name as the function
+  you want to add, with a lower-case f prepended. Note that it's
+  inside __lc_ExportedFromLpfg, so it won't collide with any other
+  names, e.g.
+        pfMyFunctionType fMyFunction;
+- Declare the function as a global of type pfVoidInt (or whatever)
+  in lsys.h, e.g.
+        pfMyFunctionType MyFunction = 0;
+- In the function __lc_SetExported (in lsys.h) add a line of the form
+        MyFunction = pExp->fMyFunction;
+- Add a line to LEngine::ConnectToLsys (lengine.cpp) of the form
+        exported.fMyFunction = MyFunctionImplementation;
+- Implement MyFunctionImplementation. It'll have to be of the same
+  type as MyFunction. Most implementations are functions in the
+  Interface namespace (interface.h/cpp), but you may want to point to
+  an implementation elsewhere.

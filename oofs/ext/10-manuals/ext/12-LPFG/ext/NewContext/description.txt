@@ -1,0 +1,7 @@
+Pipe model implemented using fast information transfer.
+Uses the New Context construct (>>).
+
+This example is described in:
+Radoslaw Karwowski and Przemyslaw Prusinkiewicz [2003]: 
+Design and implementation of the L+C modeling language. 
+Electronic Notes in Theoretical Computer Science 86 (2), 19 pp.

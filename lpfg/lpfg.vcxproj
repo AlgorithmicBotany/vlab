@@ -1,0 +1,456 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|Win32">
+      <Configuration>Debug</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Debug|x64">
+      <Configuration>Debug</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|Win32">
+      <Configuration>Release</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|x64">
+      <Configuration>Release</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <ProjectGuid>{669F872B-9F5B-423D-8A23-0A611B8E8F1D}</ProjectGuid>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseOfMfc>false</UseOfMfc>
+    <CharacterSet>MultiByte</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseOfMfc>false</UseOfMfc>
+    <CharacterSet>MultiByte</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseOfMfc>false</UseOfMfc>
+    <CharacterSet>MultiByte</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseOfMfc>false</UseOfMfc>
+    <CharacterSet>MultiByte</CharacterSet>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+    <Import Project="$(VCTargetsPath)Microsoft.CPP.UpgradeFromVC71.props" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+    <Import Project="$(VCTargetsPath)Microsoft.CPP.UpgradeFromVC71.props" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+    <Import Project="$(VCTargetsPath)Microsoft.CPP.UpgradeFromVC71.props" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+    <Import Project="$(VCTargetsPath)Microsoft.CPP.UpgradeFromVC71.props" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup>
+    <_ProjectFileVersion>10.0.30319.1</_ProjectFileVersion>
+    <OutDir Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">.\Release\</OutDir>
+    <OutDir Condition="'$(Configuration)|$(Platform)'=='Release|x64'">.\Release\</OutDir>
+    <IntDir Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">.\Release\</IntDir>
+    <IntDir Condition="'$(Configuration)|$(Platform)'=='Release|x64'">.\Release\</IntDir>
+    <LinkIncremental Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">false</LinkIncremental>
+    <LinkIncremental Condition="'$(Configuration)|$(Platform)'=='Release|x64'">false</LinkIncremental>
+    <OutDir Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">.\Debug\</OutDir>
+    <OutDir Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">.\Debug\</OutDir>
+    <IntDir Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">.\Debug\</IntDir>
+    <IntDir Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">.\Debug\</IntDir>
+    <LinkIncremental Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</LinkIncremental>
+    <LinkIncremental Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</LinkIncremental>
+  </PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <Midl>
+      <PreprocessorDefinitions>NDEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <MkTypLibCompatible>true</MkTypLibCompatible>
+      <SuppressStartupBanner>true</SuppressStartupBanner>
+      <TargetEnvironment>Win32</TargetEnvironment>
+      <TypeLibraryName>.\Release/lpfg.tlb</TypeLibraryName>
+    </Midl>
+    <ClCompile>
+      <InlineFunctionExpansion>OnlyExplicitInline</InlineFunctionExpansion>
+      <FavorSizeOrSpeed>Speed</FavorSizeOrSpeed>
+      <OmitFramePointers>true</OmitFramePointers>
+      <AdditionalIncludeDirectories>..\libs;..\libs\shapes;..\libs\input;..\libs\glew-1.5.4\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>GLEW_STATIC;NDEBUG;WIN32;_WINDOWS;STRICT;WIN32_LEAN_AND_MEAN;%(PreprocessorDefinitions);_CRT_SECURE_NO_WARNINGS</PreprocessorDefinitions>
+      <StringPooling>true</StringPooling>
+      <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
+      <BufferSecurityCheck>false</BufferSecurityCheck>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <RuntimeTypeInfo>true</RuntimeTypeInfo>
+      <PrecompiledHeaderOutputFile>.\Release/lpfg.pch</PrecompiledHeaderOutputFile>
+      <AssemblerListingLocation>.\Release/</AssemblerListingLocation>
+      <ObjectFileName>.\Release/</ObjectFileName>
+      <ProgramDataBaseFileName>.\Release/</ProgramDataBaseFileName>
+      <WarningLevel>Level3</WarningLevel>
+      <SuppressStartupBanner>true</SuppressStartupBanner>
+      <CompileAs>Default</CompileAs>
+    </ClCompile>
+    <ResourceCompile>
+      <PreprocessorDefinitions>NDEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <Culture>0x0409</Culture>
+    </ResourceCompile>
+    <Link>
+      <AdditionalOptions>/MACHINE:I386 %(AdditionalOptions)</AdditionalOptions>
+      <AdditionalDependencies>opengl32.lib;glu32.lib;image.lib;rand48.lib;shapes.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <OutputFile>$(OutDir)lpfg.exe</OutputFile>
+      <SuppressStartupBanner>true</SuppressStartupBanner>
+      <AdditionalLibraryDirectories>..\libs\image\Release;..\libs\rand48\Release;..\libs\shapes\Release;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <SubSystem>Windows</SubSystem>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <Midl>
+      <PreprocessorDefinitions>NDEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <MkTypLibCompatible>true</MkTypLibCompatible>
+      <SuppressStartupBanner>true</SuppressStartupBanner>
+      <TypeLibraryName>.\Release/lpfg.tlb</TypeLibraryName>
+    </Midl>
+    <ClCompile>
+      <InlineFunctionExpansion>OnlyExplicitInline</InlineFunctionExpansion>
+      <FavorSizeOrSpeed>Speed</FavorSizeOrSpeed>
+      <OmitFramePointers>true</OmitFramePointers>
+      <AdditionalIncludeDirectories>..\libs;..\libs\shapes;..\libs\input;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>NDEBUG;WIN32;_WINDOWS;STRICT;WIN32_LEAN_AND_MEAN;%(PreprocessorDefinitions);_CRT_SECURE_NO_WARNINGS</PreprocessorDefinitions>
+      <StringPooling>true</StringPooling>
+      <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
+      <BufferSecurityCheck>false</BufferSecurityCheck>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <RuntimeTypeInfo>true</RuntimeTypeInfo>
+      <PrecompiledHeaderOutputFile>.\Release/lpfg.pch</PrecompiledHeaderOutputFile>
+      <AssemblerListingLocation>.\Release/</AssemblerListingLocation>
+      <ObjectFileName>.\Release/</ObjectFileName>
+      <ProgramDataBaseFileName>.\Release/</ProgramDataBaseFileName>
+      <WarningLevel>Level3</WarningLevel>
+      <SuppressStartupBanner>true</SuppressStartupBanner>
+      <CompileAs>Default</CompileAs>
+    </ClCompile>
+    <ResourceCompile>
+      <PreprocessorDefinitions>NDEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <Culture>0x0409</Culture>
+    </ResourceCompile>
+    <Link>
+      <AdditionalOptions>/MACHINE:I386 %(AdditionalOptions)</AdditionalOptions>
+      <AdditionalDependencies>opengl32.lib;glu32.lib;image.lib;rand48.lib;shapes.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <OutputFile>$(OutDir)lpfg.exe</OutputFile>
+      <SuppressStartupBanner>true</SuppressStartupBanner>
+      <AdditionalLibraryDirectories>..\libs\image\Release;..\libs\rand48\Release;..\libs\shapes\Release;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <SubSystem>Windows</SubSystem>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <Midl>
+      <PreprocessorDefinitions>_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <MkTypLibCompatible>true</MkTypLibCompatible>
+      <SuppressStartupBanner>true</SuppressStartupBanner>
+      <TargetEnvironment>Win32</TargetEnvironment>
+      <TypeLibraryName>.\Debug/lpfg.tlb</TypeLibraryName>
+    </Midl>
+    <ClCompile>
+      <Optimization>Disabled</Optimization>
+      <AdditionalIncludeDirectories>..\libs\glew-1.5.4\include;..\libs;..\libs\shapes;..\libs\input;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>GLEW_STATIC;_DEBUG;WIN32;_WINDOWS;STRICT;WIN32_LEAN_AND_MEAN;%(PreprocessorDefinitions);_CRT_SECURE_NO_WARNINGS</PreprocessorDefinitions>
+      <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
+      <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
+      <PrecompiledHeaderOutputFile>.\Debug/lpfg.pch</PrecompiledHeaderOutputFile>
+      <AssemblerListingLocation>.\Debug/</AssemblerListingLocation>
+      <ObjectFileName>.\Debug/</ObjectFileName>
+      <ProgramDataBaseFileName>.\Debug/</ProgramDataBaseFileName>
+      <WarningLevel>Level3</WarningLevel>
+      <SuppressStartupBanner>true</SuppressStartupBanner>
+      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
+      <CompileAs>Default</CompileAs>
+    </ClCompile>
+    <ResourceCompile>
+      <PreprocessorDefinitions>_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <Culture>0x0409</Culture>
+    </ResourceCompile>
+    <Link>
+      <AdditionalOptions>/MACHINE:I386 %(AdditionalOptions)</AdditionalOptions>
+      <AdditionalDependencies>opengl32.lib;glu32.lib;image.lib;rand48.lib;shapes.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <OutputFile>.\Debug/lpfg.exe</OutputFile>
+      <SuppressStartupBanner>true</SuppressStartupBanner>
+      <AdditionalLibraryDirectories>..\libs\image\Debug;..\libs\rand48\Debug;..\libs\shapes\Debug;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <ProgramDatabaseFile>.\Debug/lpfg.pdb</ProgramDatabaseFile>
+      <SubSystem>Windows</SubSystem>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <Midl>
+      <PreprocessorDefinitions>_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <MkTypLibCompatible>true</MkTypLibCompatible>
+      <SuppressStartupBanner>true</SuppressStartupBanner>
+      <TypeLibraryName>.\Debug/lpfg.tlb</TypeLibraryName>
+    </Midl>
+    <ClCompile>
+      <Optimization>Disabled</Optimization>
+      <AdditionalIncludeDirectories>..\libs;..\libs\shapes;..\libs\input;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>_DEBUG;WIN32;_WINDOWS;STRICT;WIN32_LEAN_AND_MEAN;%(PreprocessorDefinitions);_CRT_SECURE_NO_WARNINGS</PreprocessorDefinitions>
+      <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
+      <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
+      <PrecompiledHeaderOutputFile>.\Debug/lpfg.pch</PrecompiledHeaderOutputFile>
+      <AssemblerListingLocation>.\Debug/</AssemblerListingLocation>
+      <ObjectFileName>.\Debug/</ObjectFileName>
+      <ProgramDataBaseFileName>.\Debug/</ProgramDataBaseFileName>
+      <WarningLevel>Level3</WarningLevel>
+      <SuppressStartupBanner>true</SuppressStartupBanner>
+      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
+      <CompileAs>Default</CompileAs>
+    </ClCompile>
+    <ResourceCompile>
+      <PreprocessorDefinitions>_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <Culture>0x0409</Culture>
+    </ResourceCompile>
+    <Link>
+      <AdditionalOptions>/MACHINE:I386 %(AdditionalOptions)</AdditionalOptions>
+      <AdditionalDependencies>opengl32.lib;glu32.lib;image.lib;rand48.lib;shapes.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <OutputFile>.\Debug/lpfg.exe</OutputFile>
+      <SuppressStartupBanner>true</SuppressStartupBanner>
+      <AdditionalLibraryDirectories>..\libs\image\Debug;..\libs\rand48\Debug;..\libs\shapes\Debug;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <ProgramDatabaseFile>.\Debug/lpfg.pdb</ProgramDatabaseFile>
+      <SubSystem>Windows</SubSystem>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <ClCompile Include="..\libs\glew-1.5.4\src\glew.c" />
+    <ClCompile Include="..\Lstudio\cmndefs.cpp" />
+    <ClCompile Include="ContextScanner.cpp" />
+    <ClCompile Include="fg_geometry.c" />
+    <ClCompile Include="lpfg.cpp" />
+    <ClCompile Include="lpfgparams.cpp" />
+    <ClCompile Include="mainWin.cpp" />
+    <ClCompile Include="interface.cpp" />
+    <ClCompile Include="lderive.cpp" />
+    <ClCompile Include="lengine.cpp" />
+    <ClCompile Include="linterpret.cpp" />
+    <ClCompile Include="lstring.cpp" />
+    <ClCompile Include="lstriter.cpp" />
+    <ClCompile Include="lsysdll.cpp" />
+    <ClCompile Include="mempool.cpp" />
+    <ClCompile Include="PerformanceMonitor.cpp" />
+    <ClCompile Include="psout.cpp" />
+    <ClCompile Include="rayshadeturtle.cpp" />
+    <ClCompile Include="succstor.cpp" />
+    <ClCompile Include="ActiveFileMonitor.cpp" />
+    <ClCompile Include="ddb.cpp" />
+    <ClCompile Include="delay.cpp" />
+    <ClCompile Include="dynlib.cpp" />
+    <ClCompile Include="exception.cpp" />
+    <ClCompile Include="file.cpp" />
+    <ClCompile Include="glutils.cpp" />
+    <ClCompile Include="lock.cpp" />
+    <ClCompile Include="pipepair.cpp" />
+    <ClCompile Include="rect.cpp" />
+    <ClCompile Include="TextFileTurtle.cpp" />
+    <ClCompile Include="utils.cpp" />
+    <ClCompile Include="animparam.cpp" />
+    <ClCompile Include="comlineparam.cpp" />
+    <ClCompile Include="configfile.cpp" />
+    <ClCompile Include="drawparam.cpp" />
+    <ClCompile Include="envparams.cpp" />
+    <ClCompile Include="winparams.cpp" />
+    <ClCompile Include="colormap.cpp" />
+    <ClCompile Include="envturtle.cpp" />
+    <ClCompile Include="gencyldata.cpp" />
+    <ClCompile Include="gencyltrtl.cpp" />
+    <ClCompile Include="glenv.cpp" />
+    <ClCompile Include="glturtle.cpp" />
+    <ClCompile Include="lightsrc.cpp" />
+    <ClCompile Include="material.cpp" />
+    <ClCompile Include="materialset.cpp" />
+    <ClCompile Include="mesh.cpp" />
+    <ClCompile Include="numchecktrtl.cpp" />
+    <ClCompile Include="objout.cpp" />
+    <ClCompile Include="objturtle.cpp" />
+    <ClCompile Include="polygon.cpp" />
+    <ClCompile Include="povrayturtle.cpp" />
+    <ClCompile Include="psturtle.cpp" />
+    <ClCompile Include="turtle.cpp" />
+    <ClCompile Include="view.cpp" />
+    <ClCompile Include="viewtask.cpp" />
+    <ClCompile Include="vvturtle.cpp" />
+    <ClCompile Include="texture.cpp" />
+    <ClCompile Include="texturearr.cpp" />
+    <ClCompile Include="povmesh.cpp" />
+    <ClCompile Include="povray.cpp" />
+    <ClCompile Include="povtrngl.cpp" />
+    <ClCompile Include="funcs.cpp" />
+    <ClCompile Include="function.cpp" />
+    <ClCompile Include="projection.cpp" />
+    <ClCompile Include="vector3d.cpp" />
+    <ClCompile Include="volume.cpp" />
+    <ClCompile Include="contour.cpp" />
+    <ClCompile Include="contourarr.cpp" />
+    <ClCompile Include="b_wrapper.cpp" />
+    <ClCompile Include="bsurfarr.cpp" />
+    <ClCompile Include="patch.cpp" />
+    <ClCompile Include="surface.cpp" />
+    <ClCompile Include="surfarr.cpp" />
+    <ClCompile Include="tropism.cpp" />
+    <ClCompile Include="tropismarr.cpp" />
+    <ClCompile Include="tropismdata.cpp" />
+    <ClCompile Include="environment.cpp" />
+    <ClCompile Include="process.cpp" />
+    <ClCompile Include="semaphore.cpp" />
+    <ClCompile Include="terrain.cpp" />
+    <ClCompile Include="terrainPatch.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="fg_geometry.h" />
+    <ClInclude Include="include\lparams.h" />
+    <ClInclude Include="lpfg.h" />
+    <ClInclude Include="lpfgparams.h" />
+    <ClInclude Include="gillespie.h" />
+    <ClInclude Include="interface.h" />
+    <ClInclude Include="lengine.h" />
+    <ClInclude Include="include\lintrfc.h" />
+    <ClInclude Include="lstring.h" />
+    <ClInclude Include="lstriter.h" />
+    <ClInclude Include="lsysdll.h" />
+    <ClInclude Include="mempool.h" />
+    <ClInclude Include="PerformanceMonitor.h" />
+    <ClInclude Include="psout.h" />
+    <ClInclude Include="succstor.h" />
+    <ClInclude Include="ActiveFileMonitor.h" />
+    <ClInclude Include="asrt.h" />
+    <ClInclude Include="canvas.h" />
+    <ClInclude Include="ddb.h" />
+    <ClInclude Include="delay.h" />
+    <ClInclude Include="dynlib.h" />
+    <ClInclude Include="exception.h" />
+    <ClInclude Include="file.h" />
+    <ClInclude Include="glutils.h" />
+    <ClInclude Include="lock.h" />
+    <ClInclude Include="maxpath.h" />
+    <ClInclude Include="pipepair.h" />
+    <ClInclude Include="point.h" />
+    <ClInclude Include="rect.h" />
+    <ClInclude Include="utils.h" />
+    <ClInclude Include="animparam.h" />
+    <ClInclude Include="clipping.h" />
+    <ClInclude Include="comlineparam.h" />
+    <ClInclude Include="configfile.h" />
+    <ClInclude Include="drawparam.h" />
+    <ClInclude Include="envparams.h" />
+    <ClInclude Include="winparams.h" />
+    <ClInclude Include="colormap.h" />
+    <ClInclude Include="gencyldata.h" />
+    <ClInclude Include="glenv.h" />
+    <ClInclude Include="lightsrc.h" />
+    <ClInclude Include="material.h" />
+    <ClInclude Include="materialset.h" />
+    <ClInclude Include="mesh.h" />
+    <ClInclude Include="objout.h" />
+    <ClInclude Include="polygon.h" />
+    <ClInclude Include="turtle.h" />
+    <ClInclude Include="view.h" />
+    <ClInclude Include="viewtask.h" />
+    <ClInclude Include="texture.h" />
+    <ClInclude Include="texturearr.h" />
+    <ClInclude Include="povray.h" />
+    <ClInclude Include="resource.h" />
+    <ClInclude Include="funcs.h" />
+    <ClInclude Include="function.h" />
+    <ClInclude Include="matrix.h" />
+    <ClInclude Include="projection.h" />
+    <ClInclude Include="quaternion.h" />
+    <ClInclude Include="vector3d.h" />
+    <ClInclude Include="volume.h" />
+    <ClInclude Include="contour.h" />
+    <ClInclude Include="contourarr.h" />
+    <ClInclude Include="b_wrapper.h" />
+    <ClInclude Include="BsurfaceObj.h" />
+    <ClInclude Include="bsurfarr.h" />
+    <ClInclude Include="patch.h" />
+    <ClInclude Include="surface.h" />
+    <ClInclude Include="surfarr.h" />
+    <ClInclude Include="uvprecision.h" />
+    <ClInclude Include="tropism.h" />
+    <ClInclude Include="tropismarr.h" />
+    <ClInclude Include="tropismdata.h" />
+    <ClInclude Include="environment.h" />
+    <ClInclude Include="process.h" />
+    <ClInclude Include="semaphore.h" />
+    <ClInclude Include="quadTree.h" />
+    <ClInclude Include="terrain.h" />
+    <ClInclude Include="terrainPatch.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <CustomBuild Include="StdModulesStruct.h">
+      <Message Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Generating StdModulesStruct</Message>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Generating StdModulesStruct</Message>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">..\l2c\Debug\l2c.exe include\stdmods.h StdModulesStruct.h -ModulesOnly
+</Command>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">..\l2c\Debug\l2c.exe include\stdmods.h StdModulesStruct.h -ModulesOnly
+</Command>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">StdModulesStruct.h;%(Outputs)</Outputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">StdModulesStruct.h;%(Outputs)</Outputs>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Generating StdModulesStruct</Message>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Generating StdModulesStruct</Message>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">..\l2c\Release\l2c.exe include\stdmods.h StdModulesStruct.h -ModulesOnly
+</Command>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Release|x64'">..\l2c\Release\l2c.exe include\stdmods.h StdModulesStruct.h -ModulesOnly
+</Command>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">StdModulesStruct.h;%(Outputs)</Outputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Release|x64'">StdModulesStruct.h;%(Outputs)</Outputs>
+    </CustomBuild>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="lpfgWin.imp" />
+    <None Include="dynlibWin.imp" />
+    <None Include="shaders\main_fshader.glsl" />
+    <None Include="shaders\main_vshader.glsl" />
+    <None Include="shaders\shadow_fshader.glsl" />
+    <None Include="shaders\shadow_vshader.glsl" />
+    <None Include="utilsWin.imp" />
+    <None Include="viewWin.imp" />
+    <None Include="processWin.imp" />
+    <None Include="semaphoreWin.imp" />
+    <None Include="todo.txt" />
+    <None Include="tofix.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="Resources\lpfg.rc" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\libs\image\image.vcxproj">
+      <Project>{fe34fd43-7dd2-4b13-9532-0cd918ad9b0e}</Project>
+      <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
+    </ProjectReference>
+    <ProjectReference Include="..\libs\input\WinTablet\WinTablet.vcxproj">
+      <Project>{41050f28-1c74-4cbf-996d-f8441aedea03}</Project>
+      <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
+    </ProjectReference>
+    <ProjectReference Include="..\libs\rand48\rand48.vcxproj">
+      <Project>{08349937-831b-45cb-842c-00fbaeacbe7b}</Project>
+      <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
+    </ProjectReference>
+    <ProjectReference Include="..\libs\shapes\shapes.vcxproj">
+      <Project>{7fce795d-818e-4c0f-9b50-25e40a15451b}</Project>
+      <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
+</Project>

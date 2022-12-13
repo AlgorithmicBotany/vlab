@@ -1,0 +1,33 @@
+ring.l
+ring.v
+ring.a
+panel.l
+panel.a
+colormap.map
+description.txt
+ignore:
+*.swp
+rmode: trig
+*
+model:
+	generate:
+		cpfg -m colormap.map ring.l ring.v ring.a
+
+L-system:
+	panel:
+		panel panel.l | awkped ring.l
+	EDIT ring.l
+
+view:
+	EDIT ring.v
+
+animation:
+	panel:
+		panel panel.a | ped ring.a
+	EDIT ring.a
+
+colormap:
+	PALETTE colormap.map
+
+description:
+	EDIT description.txt

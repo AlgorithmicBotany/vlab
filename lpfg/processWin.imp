@@ -1,0 +1,71 @@
+#include "asrt.h"
+
+Process::StartupInfo::StartupInfo() {
+  cb = sizeof(STARTUPINFO);
+  lpReserved = 0;
+  lpDesktop = 0;
+  lpTitle = 0;
+  dwX = dwY = 0;
+  dwXSize = dwYSize = 0;
+  dwXCountChars = dwYCountChars = 0;
+  dwFillAttribute = 0;
+  dwFlags = 0;
+  wShowWindow = SW_SHOWNORMAL;
+  cbReserved2 = 0;
+  lpReserved2 = NULL;
+  hStdInput = hStdOutput = hStdError = 0;
+}
+
+Process::ProcessMaker::ProcessMaker(const char *cmndln)
+    : _cmndLn(cmndln), _inherit(FALSE), _flags(0), _pEnv(0) {
+  _ProcessSecurity.nLength = sizeof(SECURITY_ATTRIBUTES);
+  _ProcessSecurity.lpSecurityDescriptor = 0;
+  _ProcessSecurity.bInheritHandle = TRUE;
+
+  _ThreadSecurity.nLength = sizeof(SECURITY_ATTRIBUTES);
+  _ThreadSecurity.lpSecurityDescriptor = 0;
+  _ThreadSecurity.bInheritHandle = TRUE;
+
+  _pi.hProcess = 0;
+  _pi.hThread = 0;
+}
+
+HANDLE Process::ProcessMaker::Create() {
+  ASSERT(!_cmndLn.empty());
+  BOOL res = CreateProcess(
+      0, //_appName.empty() ? 0 : _appName.c_str(),
+      const_cast<char *>(_cmndLn.data()), &_ProcessSecurity, &_ThreadSecurity,
+      _inherit, _flags, _pEnv, _Directory.empty() ? 0 : _Directory.c_str(),
+      _si.Data(), &_pi);
+  if (!res) {
+    DWORD error = ::GetLastError();
+    throw Exception("Error creating process: %s\nLast error: %d",
+                    _cmndLn.c_str(), error);
+  }
+  CloseHandle(_pi.hThread);
+  return _pi.hProcess;
+}
+
+Process::Process() { _hProcess = 0; }
+
+Process::~Process() { WaitAndClose(5000); }
+
+void Process::Start(const char *cmndline) {
+  ProcessMaker maker(cmndline);
+  _hProcess = maker.Create();
+}
+
+void Process::WaitAndClose(DWORD timeout) {
+  if (NULL != _hProcess) {
+    if (WaitForSingleObject(_hProcess, timeout) == WAIT_TIMEOUT)
+      TerminateProcess(_hProcess, 1);
+    CloseHandle(_hProcess);
+    _hProcess = 0;
+  }
+}
+
+bool Process::IsRunning() const {
+  if (0 == _hProcess)
+    return false;
+  return (WAIT_TIMEOUT == WaitForSingleObject(_hProcess, 0));
+}

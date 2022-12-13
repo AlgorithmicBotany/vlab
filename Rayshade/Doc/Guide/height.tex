@@ -1,0 +1,43 @@
+\chapter{Height Field Files}
+
+This appendix describes the format of the files that store data
+for the height field primitive.
+The format is an historical relic; a better format is needed.
+
+Height field data is stored in binary form.
+The first record in the file is a
+32-bit integer giving the square root of number of data
+points in the file.
+We'll call this number
+the size of the height field.
+
+The size is
+followed by altitude ($z$) values stored as 32-bit
+floating point values.  The 0th value in the file specifies the $z$
+coordinate
+of the lower-left corner of the height field (0, 0).
+The next
+specifies the Z coordinate for $(1/(size-1), 0)$.  The last specifies the
+coordinate for $(1., 1.)$.  In other words, the $i^{th}$ value 
+in the heightfield file specifies the $z$ coordinate for the point
+whose $x$ coordinate is
+$(i \% size) / (size -1)$, and whose
+$y$ coordinate is $(i / size) / (size -1)$.
+Non-square height fields may be rendered by specifying altitude values
+less than or equal to the magic value
+$-1000$.  Triangles that have any vertex less than
+or equal in altitude to this value are not rendered.
+
+While this file format is compact, it sacrifices portability for
+ease of use.  While creating and handling height field files is
+simple, transporting a height field from one machine to another
+is problematical due to the fact that differences in byte order
+and floating-point format between machines is not taken into
+account.
+
+These problems could be circumvented by writing the height field file
+in a fixed-point format, taking care to write the bytes that
+encode a given value in a consistent way from machine to machine.
+An even better idea would be to write a set of tools for
+manipulating arbitrary 2D arrays of floating-point values in a compact,
+portable way, allowing for comments and the like in the file\ldots

@@ -1,0 +1,25 @@
+/*
+ * Simple demo of how uv texturing and bump mapping works.
+ * You'll need to define the pathname of an image you want to slap
+ * on the cylinder.
+ *
+ * To run, say something like:
+ * 	rayshade -v -C -DIMAGEFILE=mandrill.rle stripe.ray > stripe.rle
+ *
+ * C. Kolb 12/90
+ */
+#ifndef IMAGEFILE
+#define IMAGEFILE /usr/u/utah/img/mandrill.rle
+#endif
+
+surface white ambient .1 .1 .1  diffuse .6 .6 .6
+
+cylinder 1  -3 0 0  3 0 0
+	texture stripe white 0.1 3 /* add ten stripes per, rotated */
+		scale .1 .1 1.
+		rotate 0 0 1 45
+	texture image		/* and smack on 25 copies of the image */
+		IMAGEFILE
+		textsurf white
+		scale .2 .2 1.
+screen 500 160

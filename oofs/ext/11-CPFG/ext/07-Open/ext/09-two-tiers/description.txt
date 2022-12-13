@@ -1,0 +1,11 @@
+Two branch tiers competing for space.
+
+Based on a model by H. Honda, P. Tomlinson, and J. B. Fisher,
+"Computer simulation of branch interaction and regulation 
+by unequal flow rates in botanical trees". American Journal 
+of Botany 68 (1981), 569–585.
+
+The L-system implementation is described in the paper "Visual 
+models of plants interacting with their environment", by R. Mech 
+and P. Prusinkiewicz, Proceedings of Siggraph 96, pp. 397-410.
+

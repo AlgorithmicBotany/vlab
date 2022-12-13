@@ -1,0 +1,14 @@
+version: 1.4
+contact: 0 0 0
+end: 0 0 0
+heading: 0 1 0
+up: 0 0 -1
+size: 1
+points: 4
+range: 0.0 1.0
+dimension: 4
+type: bspline
+0.269398 -0.447751 0 3
+0.274471 -0.109864 0 1
+0.165305 0.175183 0 1
+-0.001478 0.202475 0 3

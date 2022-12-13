@@ -1,0 +1,6 @@
+COMPOUND LEAF
+
+Example of a very simple L-system generating a compound
+branching structure.  Apices are not visualized, because
+symbols A do not have a predefined turtle interpretation.
+

@@ -1,0 +1,51 @@
+/*
+ * Rayshade animation example.
+ * Copperish coin flipping on ground plane.
+ *
+ * Craig Kolb and Rod Bogart
+ * March, 1991
+ *
+ * $Id: coin.ray,v 1.1.1.1 2005/01/07 20:51:06 laneb Exp $
+ *
+ * $Log: coin.ray,v $
+ * Revision 1.1.1.1  2005/01/07 20:51:06  laneb
+ * Initial import, straight port to Windows/Linux
+ *
+ * Revision 4.0  91/07/17  14:25:52  kolb
+ * Initial version.
+ * 
+ *
+ */
+surface copper ambient 0.2 0.05 0.05 diffuse 0.7 0.3 0.2
+	specular 0.8 0.4 0.4
+sample 4 jitter
+plane 0 0 0 0 0 1
+
+name coin list
+	cylinder 1  0 0 0  0 0 0.2
+	disc 1 0 0 0  0 0 -1
+	disc 1 0 0 .2  0 0 1
+end
+
+frames 32
+define length 30	/* # of frames of movement */
+define flips 4		/* # of flips performed by coin */
+define zenith 7		/* height at top of flip */
+
+define spin (linear(0, 0, length, 360 * flips))	 /* theta */
+define ground (linear(0, 2, length, -2))	 /* translation */
+
+define shift (linear(0,0,length,length) - length / 2)
+define height (zenith * ( 1 - shift * shift / (length * length / 4) ))
+
+object copper coin
+	rotate 1 -1 0  (spin)
+	translate (ground) (ground) (height)
+
+eyep 0 -9 4
+lookp 0 0 (zenith / 2)
+fov 55
+screen 400 400
+shutter 1
+framelength 1
+starttime -1

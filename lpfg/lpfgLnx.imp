@@ -1,0 +1,339 @@
+/* ******************************************************************** *
+   Copyright (C) 1990-2022 University of Calgary
+  
+   This program is free software: you can redistribute it and/or modify
+   it under the terms of the GNU General Public License as published by
+   the Free Software Foundation, either version 3 of the License, or
+   (at your option) any later version.
+  
+   This program is distributed in the hope that it will be useful,
+   but WITHOUT ANY WARRANTY; without even the implied warranty of
+   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+   GNU General Public License for more details.
+  
+   You should have received a copy of the GNU General Public License
+   along with this program.  If not, see <https://www.gnu.org/licenses/>.
+ * ******************************************************************** */
+
+#include <QApplication>
+#include <QMenu>
+#include <QCursor>
+#include <QEvent>
+#include "resources.h"
+#include <QDesktopServices>
+#include <QDir>
+#include <QUrl>
+#include "viewLnx.h"
+#include "glwidget.h"
+
+using namespace Qt;
+
+LPFG::LPFG() {
+  _RecordingOn = false;
+  _recording = false;
+  _mAMode = amStill;
+  _mainWindow = 0;
+  Interface::pLpfg = this;
+  _BatchMode = false;
+  _lastTabletEvent = NULL;
+  _userMenuChoice = -1;
+  _displayFrame = false;
+  _outputFrame = false;
+  /******** timer to run idle function ********/
+
+  // create and set up the timer for the IdleFunction
+}
+
+int LPFG::Run(QApplication &a) {
+
+ // QApplication::setAttribute(Qt::AA_ShareOpenGLContexts);
+ // share opengl contexts must be set before creating the application
+
+  if (CreateWindow()) {
+    //a.setAttribute(Qt::AA_ShareOpenGLContexts);
+
+    // The call to show() is made in _mainWindow's constructor,
+    // so there is no need to call it here.
+    //_mainWindow->show();
+    // we want to save the image and then quit the application
+
+    if (comlineparam.OutputfileSpecified()) {
+      QTimer::singleShot(500, &a, SLOT(quit()));
+
+      std::string fileName = comlineparam.Outputfile();
+      // get rid of the extension
+      size_t lastindex = fileName.find_last_of(".");
+      string fileNameWithoutExtension = fileName.substr(0, lastindex);
+      string extension = fileName.substr(lastindex + 1);
+      _mainWindow->setImageName(fileNameWithoutExtension);
+      PixFormat pix_format;
+      if (!extension.compare("bmp"))
+        pix_format = BMP;
+      if (!extension.compare("jpg"))
+        pix_format = JPG;
+      if (!extension.compare("jpeg"))
+        pix_format = JPG;
+      if (!extension.compare("png"))
+        pix_format = PNG;
+      if (!extension.compare("GIF"))
+        pix_format = GIF;
+      if (!extension.compare("gif"))
+        pix_format = GIF;
+      if (!extension.compare("tiff"))
+        pix_format = TIFF;
+      if (!extension.compare("pdf"))
+        pix_format = PDF;
+      if (!extension.compare("pbm"))
+        pix_format = PBM;
+
+      switch (comlineparam.OutputType()) {
+      case oOBJ:
+        OutputObj();
+        break;
+      case oImage:
+        a.exec();
+        _mainWindow->setOutputFormat(0);
+        _mainWindow->setFormat(pix_format);
+        _mainWindow->SaveFrame(fileName.c_str(), _mainWindow->getFilenameId());
+        break;
+      case oPostscript:
+        _mainWindow->OutputPostscript();
+        break;
+      default:
+        std::cout << "this output type is "
+                     "not handled"
+                  << std::endl;
+        break;
+      }
+      return 0;
+    }
+    return a.exec();
+  } else
+    return 0; // This happens if compilation fails. Should really be nonzero.
+}
+
+void LPFG::_CreateView(int id) {
+     Rect ir;
+     //     std::cerr<<"Create View: "<<id<<std::endl;
+    if (drawparams.IsValidViewId(id)) {
+      const WindowParams &wp = drawparams.GetView(id);
+      
+      if (wp.Left() < 0) {
+	ir.left = 0;
+	Utils::Message("Warning Windows parameters are non positive, set to 0\n");
+      } else if (wp.Left() > 1) {
+	ir.left = 1;
+	Utils::Message("Warning Windows parameters are greater than 1, set to 1\n");
+      } else
+	ir.left = static_cast<int>(100 * wp.Left());
+      
+      if (wp.Top() < 0) {
+	ir.left = 0;
+	Utils::Message("Warning Windows parameters are non positive, set to 0\n");
+      } else if (wp.Top() > 1) {
+	ir.left = 1;
+	Utils::Message("Warning Windows parameters are greater than 1, set to 1\n");
+      } else
+	ir.top = static_cast<int>(100 * wp.Top());
+      
+      if (wp.Width() < 0) {
+	ir.left = 0;
+	Utils::Message("Warning Windows parameters are non positive, set to 0\n");
+      } else if (wp.Width() > 1) {
+	ir.left = 1;
+	Utils::Message("Warning Windows parameters are greater than 1, set to 1\n");
+      } else
+	ir.right = static_cast<int>(100 * wp.Width());
+      
+      if (wp.Height() < 0) {
+	ir.left = 0;
+	Utils::Message("Warning Windows parameters are non positive, set to 0\n");
+      } else if (wp.Height() > 1) {
+	ir.left = 1;
+	Utils::Message("Warning Windows parameters are greater than 1, set to 1\n");
+      } else
+	ir.bottom = static_cast<int>(100 * wp.Height());
+    } else {
+      ir.left = 0;
+      ir.top = 0;
+      ir.right = 1;
+      ir.bottom = 1;
+    }
+
+  
+    std::string title;
+    if (drawparams.IsValidViewId(id))
+      title = drawparams.ViewName(id);
+    else {
+      std::ostringstream ttl;
+      ttl << "view " << id;
+      title = ttl.str();
+    }
+    if (_mainWindow == 0) {
+      // This branch never gets called...
+      // And if it did, as far as I can tell,
+      // a GLWidget will not be created.
+      _mainWindow = new View(title, ir, this, id);
+    } else {
+      _mainWindow->addDockWindows(title, ir, id);
+    }
+    if (_aView.size() < static_cast<size_t>(id + 1))
+      _aView.resize(id + 1,NULL);
+    _aView[id] = _mainWindow->getGLWidget(id);
+    //  _aView[id]->setVisible(false);
+}
+
+bool LPFG::CreateWindow() {
+
+  const int InitPosX = 300;
+  const int InitPosY = 300;
+  const int InitSizeX = 320;
+  const int InitSizeY = 240;
+
+  Rect r = comlineparam.WindowRect();
+  if (!comlineparam.PosSpecified()) {
+    r.left = InitPosX;
+    r.top = InitPosY;
+  }
+  if (!comlineparam.SizeSpecified()) {
+    r.right = InitSizeX;
+    r.bottom = InitSizeY;
+  }
+
+  if (_mainWindow == 0)
+    _mainWindow = new View(comlineparam.Lsystemfile(), r, this, 0);
+
+
+  return Initialize();
+}
+
+void LPFG::initializeMultiView(){
+  for (int id = 0; id < drawparams.multiViewSize(); ++id){
+
+  }
+}
+
+bool LPFG::Initialize() {
+  //  std::cerr<<"Initialize"<<std::endl;
+  _lengine.StartEnvironment();
+  if (_lengine.NewLsystem(comlineparam.Lsystemfile())) {
+    if (!drawparams.IsMultiView()) {
+      _CreateView(0);
+    }
+    if (comlineparam.StartInAnimMode())
+      _lengine.Rewind();
+    else {
+      _lengine.DeriveString();
+    }
+    return true;
+  } else
+    return false;
+}
+
+void LPFG::SaveFrame(int ) const {
+
+  const int BfSize = 256;
+  char fmt[BfSize];
+  strcpy(fmt, comlineparam.Lsystemfile());
+  char *dot = strrchr(fmt, '.');
+  *dot = 0;
+  strcat(fmt, "%05d");
+  _mainWindow->save();
+}
+
+void LPFG::_Exit() { QApplication::exit(); }
+
+void LPFG::StartTimer() { _mainWindow->StartTimer(); }
+
+void LPFG::StopTimer() { _mainWindow->StopTimer(); }
+
+void LPFG::HandleTabletEvent(QTabletEvent *event) {
+  if (_lastTabletEvent == NULL)
+    _lastTabletEvent = new QTabletEvent(*event);
+
+  *_lastTabletEvent = *event;
+  if (comlineparam.TabletMode())
+    event->accept();
+  else
+    event->ignore(); // send back to be interpreted as mouse
+}
+
+MouseStatus LPFG::GetMouseStatus(void) {
+
+  static MouseStatus msOld;
+  MouseStatus ms;
+  QPoint qpos(QCursor::pos());
+
+  // The following code was used to find the active window
+  // in the old-style, multi-view version of lpfg
+  // It no longer works with the dock-style lpfg
+  // because isActiveWindow() returns true for all views
+  //QWidget *myWindow = _mainWindow;
+  //ms.viewNum = -1; // no view is active
+  //if (ViewExist()) {
+  //  for (unsigned int i = 0; i < _aView.size(); i++) 
+  //    if (_aView[i] != NULL && _aView[i]->isActiveWindow()) {
+  //      myWindow = _aView[i];
+  //      ms.viewNum = int(i);
+  //      break;  
+  //    }
+  //}
+
+  // instead, get the view id of the window that was clicked
+  ms.viewNum = _mainWindow->getGLWidgetClicked();
+  if (ms.viewNum >= 0) {
+    qpos = _aView[ms.viewNum]->mapFromGlobal(qpos);
+    ms.viewX = qpos.x();
+    ms.viewY = qpos.y();
+    _aView[ms.viewNum]->FillMouseStatus(ms);
+  }
+  else // No view is active => ignore button presses
+  {
+    ms.lbDown = false;
+  }
+
+  ms.lbPushed = ms.lbReleased = false;
+  if (!msOld.lbDown && ms.lbDown)
+    ms.lbPushed = true;
+  else if (msOld.lbDown && !ms.lbDown)
+    ms.lbReleased = true;
+
+  msOld = ms;
+  return ms;
+}
+
+TabletStatus LPFG::GetTabletStatus(void) {return TabletStatus();}
+
+void LPFG::helpCB() const {
+  QDir helpDir(getHelpDirectory());
+  QDesktopServices::openUrl(
+      QUrl::fromLocalFile(helpDir.filePath("LPFGManual.htm")));
+}
+
+void LPFG::pdfHelpCB() const {
+  QDir helpDir(getHelpDirectory());
+  QDesktopServices::openUrl(
+      QUrl::fromLocalFile(helpDir.filePath("LPFGManual.pdf")));
+}
+
+void LPFG::about_lpfg_cb() {
+  QMessageBox box(NULL);
+  std::string msg =
+      "<p align=\"center\">\n"
+      "<b><font size=\"+4\"><font "
+      "color=\"#0000f5\">LPFG</font></font></b><br>\n"
+      "<br>\n"
+      "http://algorithmicbotany.org/virtual_laboratory/<br>\n"
+      "<br>\n"
+      "Developed at the University of Calgary<br>\n"
+      "Department of Computer Science<br>\n"
+      "<br>\n"
+      "<font size=\"-1\">Copyright (C) 1990-2018 P. Prusinkiewicz,\n"
+      "University of Calgary</font>\n"
+      "</p>\n";
+
+  box.setText(QString(msg.c_str()));
+  box.setIconPixmap(QPixmap::fromImage(QImage(":/images/logo1.png")));
+  box.show();
+  box.exec();
+}

@@ -1,0 +1,5 @@
+lsys.dll: lsys.obj 
+	link /nologo /DLL /RELEASE /OUT:lsys.dll lsys.obj
+
+lsys.obj: lsys.i
+	cl /nologo /EHsc /W3 /O2 /c /TP lsys.i

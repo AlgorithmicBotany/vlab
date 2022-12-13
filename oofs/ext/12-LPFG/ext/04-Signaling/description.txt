@@ -1,0 +1,7 @@
+Introducton to programming using context-sensitive L-systems
+in lpfg.  In these examples, information is caried by the presence 
+or absence of signals, rather than numerical values associated with
+the signals.
+
+ Most objects in this directory are translations 
+of the corresponding objects in the cpfg directory.

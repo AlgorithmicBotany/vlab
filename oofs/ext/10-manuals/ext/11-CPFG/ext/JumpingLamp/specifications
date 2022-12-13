@@ -1,0 +1,38 @@
+lamp.l
+view.v
+anim.a
+panel.a
+materials.mat
+functions.fset
+description.txt
+ignore:
+*.swp
+*
+model:
+	generate:
+		cpfg -a -M materials.mat lamp.l view.v anim.a
+
+L-system:
+	EDIT lamp.l
+
+view:
+	EDIT view.v
+
+animation:
+	panel:
+		display:
+			panel panel.a | ped anim.a
+		EDIT panel.a
+	EDIT anim.a
+
+materials:
+	material-editor:
+		medit -rmode cont materials.mat
+
+functions:
+	gallery: 
+		gallery -rmode cont functions.fset
+
+description:
+	EDIT description.txt
+

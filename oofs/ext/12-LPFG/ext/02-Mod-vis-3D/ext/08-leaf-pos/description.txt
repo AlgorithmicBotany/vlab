@@ -1,0 +1,8 @@
+Organized variation
+
+Metamer parameters may depend not only on random factors,
+but also on the position of metamers on the stem.  This
+results in organized variation of organs.  In this model,
+the final sizes of internodes and leaves are functions
+of the metamer number.
+

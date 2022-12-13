@@ -1,0 +1,1 @@
+This directory contain the example object used in the vlab Getting Started manual.

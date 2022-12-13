@@ -1,0 +1,24 @@
+Customization file for Browser 3.0
+IconSize 41
+BackgroundColor 17 17 17
+LineColor 255 247 59
+SelectionColor 158 97 178
+TextColor 255 248 251
+BoxBorderColor 0 164 0
+BoxInsideColor 0 63 0
+HBoxBorderColor 240 240 0
+HBoxInsideColor 40 0 250
+LinkColor 0 255 255
+Compacting True
+Dither False
+LinesType Comb
+ParentPosition Centered
+ZoomType Customized
+BoxHeight 15
+BoxWidth 20
+HorizontalDistance 30
+BoxTextDistance 3
+TextLineDistance 1
+VerticalDistance 1
+TextIconDistance 3
+End

@@ -1,0 +1,8 @@
+A simple demo of an environmentally-sensitive L-system 
+(a toy example of pruning to an ellipse)
+
+See also:
+Przemyslaw Prusinkiewicz, Mark James, and Radomir Mech. Synthetic topiary.
+Proceedings of SIGGRAPH 94, pp. 351-358.
+
+PWP 2022-11-20

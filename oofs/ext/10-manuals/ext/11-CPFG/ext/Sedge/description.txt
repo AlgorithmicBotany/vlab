@@ -1,0 +1,9 @@
+A sedge model
+
+The model illustrates the use of sub L-systems, predefined surfaces,
+multiple (two) colormaps, and shading in colormap mode.
+
+Created bu Jim Hanana ~1989
+Updated by pwp 2021-10-15
+
+Still works!

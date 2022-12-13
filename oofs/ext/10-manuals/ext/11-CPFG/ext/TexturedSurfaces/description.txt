@@ -1,0 +1,16 @@
+Monopodial structure with spiral phyllotaxis
+
+The model illustrates the used of bicubic surfaces scaled
+separately in different directions, and the use of 
+textures with transparency to model leaves with complex shapes.
+
+This model also uses graphically defined functions of time
+to control:
+- the elongation of internodes,
+- the growth of leaves in length and width,
+- the branching angles between the stem and the leaves, and
+- the gradual changes of leaf colors.
+
+Slight orthotropism improves the appearance of the model.
+
+PWP last update 2022-11-17

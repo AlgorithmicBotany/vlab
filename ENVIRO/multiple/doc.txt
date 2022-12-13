@@ -1,0 +1,37 @@
+
+   Environmental process enabling execution of multiple environmental
+	processes
+-----------------------------------------------------------------------
+
+Name of the executable: multiple
+
+Necessary command line parameters: 
+   multiple [-k semaphore_key] [-ext comm_files_extension] 
+	    -e environment_file specification_file
+
+
+Commands in specification file:
+  verbose:   on/off
+
+  field communication file: field_dot_e_file
+	   specification file for a particular environmental process.
+
+
+Communication:
+ Turtle parameters sent to the field: as required by subfields
+ Communication symbol:
+   n parameters
+     to field: 
+	1) the index of the field process (according to the order of
+	   commands 'field communication file')
+	2-n) the rest is send to the specific process (without the first one)
+
+     from field:
+	1) stays the same
+	2-n) the results coming from the environmental process
+        
+
+
+Algorithm:
+  Basically, multiple.c contains slightly modified code from cpfg
+(communication.c). 

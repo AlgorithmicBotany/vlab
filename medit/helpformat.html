@@ -1,0 +1,264 @@
+<!doctype html public "-//w3c//dtd html 4.0 transitional//en">
+<html>
+<head>
+   <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+   <meta name="GENERATOR" content="Mozilla/4.75 [en] (X11; U; Linux 2.2.17-21mdk i686) [Netscape]">
+</head>
+<body>
+
+<h2>
+Quick Help for VLAB Material Editor</h2>
+
+<h2>
+<b><i>1 Medit Execution</i></b></h2>
+Execute the VLAB Material Editor using the following arguments:
+<p><b>>&nbsp; medit</b>
+<br>Open an empty gallery for up to 256 materials.
+<p><b>>&nbsp; medit [file.mat] ...</b>
+<br>Opens the specified material file(s).
+<br>If the file does not exist, creates new file.
+<br>If a list of material files is specified, each is open in a separate
+application window.
+<p><b>>&nbsp; medit ... -w [width] [height]</b>
+<br>Opens medit with specified dimensions
+<br><i></i>&nbsp;
+<h2>
+<i>2 Display and Selection</i></h2>
+
+<ul>
+<li>
+When the program starts, 16 of the 256 spheres are displayed, beginning
+on the first page. Index 0 is in the upper left corner, with consecutive
+entries vertically, top to bottom.&nbsp; To display more or less spheres
+per page, select <b><i>Display</i></b> from the <b>menu bar </b>at the
+top of the window, then select the desired <b>page size</b> (1, 4x4, 8x8,
+16x16).</li>
+
+<li>
+A <b>material index may be selected </b>by clicking the <b>left mouse</b>
+button on the entry, or by entering the index in the first spinbox in the
+lower right corner.</li>
+
+<li>
+A <b>range of indices</b> can be selected by clicking the left mouse on
+the lesser index, and dragging to the greater index.&nbsp; A range can
+also be selected by selecting <b><i>Edit</i></b> from the menu bar, and
+then selecting <b><i>Select Range...</i></b>, which opens a dialog box
+to input the start index and end index or number selected.</li>
+
+<li>
+All materials on the current page, or all materials in the gallery, can
+be selected by selecting <b><i>Edit </i></b>from the menu bar, then <b><i>Select
+All in Page</i></b> or <b><i>Select All in Gallery</i></b>.</li>
+
+<li>
+Selected indices are <b>outlined</b> in red.</li>
+
+<li>
+A <b>page may be jumped to </b>by entering the page number in the second
+spinbox in the lower right corner, or by selecting <b><i>Display</i></b>
+from the menu bar and then selecting <b><i>Next Page, Previous Page</i></b>
+or <b><i>First Page</i></b>.&nbsp; The number of pages, as well as the
+page a particular material falls on, depends on the page size.&nbsp; The
+indices materials that are displayed on the current page are shown in the
+upper right corner of the window.&nbsp; When a page is changed, the current
+selection is not affected.</li>
+
+<li>
+The background is black by default.&nbsp; To show transparency, it is useful
+to <b>change the background to a checkerboard pattern</b>.&nbsp; To do
+this, select <b><i>Display </i></b>from the menu bar, then select <b><i>Show
+Background</i></b>.&nbsp; To return to a solid black background, select
+this option again.</li>
+
+<li>
+The spheres are rendered as a polygon mesh between vertices.&nbsp; The
+rendering speed varies inversely to the smoothness of the spheres.&nbsp;
+To <b>adjust the smoothness</b>, and to set the auto-adjustment of the
+smoothness, select <b><i>Display</i></b> from the menu bar, then select
+<b><i>Image Quality...</i></b> to edit the smoothenss parameters.&nbsp;
+Once the display is satisfactory, the parameters may be written to the
+configuration file by clicking the button marked <b><i>Save</i></b>.</li>
+</ul>
+<b><u></u></b>
+<p><br><b><u>2.1 Actions on Selection</u></b>
+<p>The <b>Popup Menu</b> is activated by clicking the <b>right mouse</b>
+button anywhere on the material gallery.&nbsp; The popup menu contains
+actions to be performed on the selection.
+<br>The same options are available by selecting <b><i>Edit</i></b> from
+the menu bar.
+<br>&nbsp;
+<p><b>Cut, Copy, Paste, Insert</b>
+<li>
+Cut, Copy, Paste, and Insert can be invoked by <b>activating the popup
+menu</b> or by selecting <b><i>Edit </i></b>from the menu bar, and then
+selecting the desired option.</li>
+
+<ul>
+<li>
+If a selection is <b>cut</b>, all following entries are shuffled up, and
+the gallery is padded with default materials.</li>
+
+<li>
+If a selection is <b>inserted</b>, all following entries (<i>including
+the current selection</i>) are shuffled down, and extra entries are pushed
+out.</li>
+
+<li>
+If the selection that is <b>inserted or pasted</b> is larger than the space
+remaing in the gallery, the extra entries are ignored.</li>
+</ul>
+<b></b>
+<p><br><b>Interpolation</b>
+<br>All material properties can be&nbsp; interpolated over&nbsp; a selected
+a range of indices by <b>activating the popup menu</b> or by selecting
+<b><i>Edit </i></b>from the menu bar, and then selecting <b><i>Interpolate.</i></b>
+<br><b><i></i></b>&nbsp;<b></b>
+<p><b>Set to Default</b>
+<br>A selected index or range of selected indices can be set to the OpenGL
+default&nbsp; material by <b>activating the popup menu</b> or by selecting
+<b><i>Edit </i></b>from the menu bar, and then selecting <b><i>Set to Default.</i></b>
+<br>This can also be done through the <b>M-Edit Dialog</b> (<i>described
+below</i>) by clicking the button marked <b><i>Default.</i></b>
+<br>&nbsp;<b></b>
+<p><b>M-Edit</b>
+<br>A material editing dialog (<i>see below</i>) is opened for the selected
+material (or a range of materials) by <b>activating the popup menu</b>
+by right clicking on the gallery, or by selecting <b><i>Edit </i></b>from
+the menu bar, and then selecting <b><i>M-Edit.</i></b>
+<br>&nbsp;<b><u></u></b>
+<p><b><u>2.2 Material Edit Dialog</u></b>
+<p>A preview of the selected sphere is displayed on the left of the dialog.
+<br>The material properties ambient, diffuse, specular, emissive, shininess,
+and transparency can be edited using the sliders or by entering a value
+in the edit boxes to the right of the sliders (the <b><i>return key </i></b>must
+be pressed after editing in the boxes).
+<br>&nbsp;<b></b>
+<p><b>Material Properties</b>
+<ul>
+<li>
+<b>Ambient</b>, <b>diffuse</b>,&nbsp; <b>specular </b>and <b>emissive</b>
+are values between 0 (none) and 1 (full).</li>
+
+<li>
+<b>Shininess</b> is a value between 0(non-shiny) and 128(max-shiny).&nbsp;
+If a material has a specular property, for best effect modify shininess
+as well.</li>
+
+<li>
+<b>Transparency</b> is a value between 0(opaque) and 1(transparent).</li>
+</ul>
+<b></b>
+<p><br><b>Colour Swatches</b>
+<ul>
+<li>
+The colour swatch <b>popup menu</b> is activated by pressing the <b>right
+mouse</b> button.</li>
+
+<li>
+The colour of ambient, diffuse,&nbsp; specular and emissive can be <b>edited</b>
+by pressing the left mouse button over the colour swatch to the left of
+the property labels, or by activating the popup menu and&nbsp; selecting
+the option <b><i>Edit</i></b> from the popup menu.&nbsp; <b>The HSV Colour
+Picker</b> is opened to edit the colour.</li>
+
+<li>
+The left side of the colour swatch displays the actual colour at the current
+value of the material property.&nbsp; The smaller section on the right
+displays the full intensity of the colour.</li>
+
+<li>
+The full intensity of the colour can be <b>copied and pasted</b> to another
+colour swatch on the dialog.</li>
+
+<li>
+If the material property has a value of 0, the full intensity is white,
+and the actual colour is black.</li>
+</ul>
+<b></b>
+<p><br><b>Modifications and Action Buttons</b>
+<ul>
+<li>
+If the selected material has been modified, the user cannot select another
+material index in the gallery until the modification has been applied or
+undone by clicking the button marked <b><i>Apply</i></b> or the one marked
+<b><i>Undo.</i></b></li>
+
+<li>
+A label displays <b><i>Modified</i></b> below the preview if the dialog
+material has been modified.</li>
+
+<li>
+If the button marked <b><i>Default</i></b> is clicked, the material is
+set to the OpenGL default material.</li>
+
+<li>
+If the dialog is closed by clicking the button marked <b><i>Close</i></b>,
+the material remains as it appears in the gallery.</li>
+</ul>
+<b><u></u></b>
+<p><br><b><u>2.3 HSV Colour Picker</u></b>
+<ul>
+<li>
+The <b>HSV Colour Picker</b> is invoked by pressing the <b>left mouse</b>
+over a colour swatch, or by <b>activating the popup menu</b> and&nbsp;
+selecting the option <b><i>Edit</i></b> from the popup menu.</li>
+
+<li>
+The colour being selected is the <b>actual colour</b> (rather than the
+full intensity).&nbsp; The intensity of the material property can be adjusted
+by moving the slider labelled <b><i>V </i></b>on the left, or by moving
+the <b>colour value slider</b> on the right of the colour wheel, or by
+moving the slider associated with the material property on the <b>M-Edit
+Dialog</b>.</li>
+
+<li>
+The colours <b>HSV or RGB</b> values can be adjusted using the <b>sliders</b>
+on the left side of the dialog, or by entering the value in the edit boxes
+to the right of the sliders (the <b><i>return key </i></b>must be pressed
+after editing in the boxes).</li>
+
+<li>
+The <b>hue and saturation</b> of the colour can be selected on the rainbow
+colour wheel with the mouse by pressing the <b>left mouse</b> button to
+select a colour, and <b>moving the mouse</b> to adjust the selection.&nbsp;
+The hue line and saturation circle are drawn to aid in the selection.</li>
+
+<li>
+The <b>large box</b> below the colour wheel shows the <b>current selection</b>.&nbsp;
+The selection is automatically applied.</li>
+
+<li>
+The <b>smaller box</b> below the colour value slider shows the <b>original
+colour</b>.&nbsp; To <b>revert</b> to this colour, <b>left click</b> inside
+this box.</li>
+
+<li>
+If the colour picker is closed by clicking the button marked <b><i>Close</i></b>,
+the material property colour remains as it appears in the colour swatch
+on the <b>M-Edit Dialog</b>.</li>
+</ul>
+
+<h2>
+<i></i></h2>
+
+<h2>
+<i>3 File Options</i></h2>
+<b>New </b>Opens a new material gallery in the current VLAB Material Editor.
+<br><b>New Window </b>Opens a new material gallery in a newVLAB Material
+Editor application window.
+<br><b>Load...</b> Opens a file dialog in which the user can select an
+existing file to load in the current VLAB Material Editor.
+<br><b>Load Window... </b>Opens a file dialog in which the user can select
+an existing file to load in a newVLAB Material Editor application window.
+<br><b>Save </b>Saves the current material file.&nbsp; If no file has been
+specified, a file dialog is opened.
+<br><b>Save as... </b>Opens a file dialog in which the user can specify
+a new file to save the current material file as.
+<br><b>Revert to Saved </b>Rereads the material file as it was last saved
+and restores the materials in the gallery.
+<br>&nbsp;
+<br><b></b>&nbsp;
+<br><b></b>&nbsp;
+</body>
+</html>

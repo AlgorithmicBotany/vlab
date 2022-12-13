@@ -1,0 +1,186 @@
+#ifdef WIN32
+#include <windows.h>
+
+#include "pipepair.h"
+#endif
+
+static SECURITY_ATTRIBUTES sa = {sizeof(SECURITY_ATTRIBUTES), NULL, TRUE};
+
+bool Utils::IsWinNT() {
+  static OSVERSIONINFO osv = {0, 0, 0, 0, 0, ""};
+  if (0 == osv.dwOSVersionInfoSize) {
+    osv.dwOSVersionInfoSize = sizeof(OSVERSIONINFO);
+    GetVersionEx(&osv);
+  }
+  return (VER_PLATFORM_WIN32_NT == osv.dwPlatformId);
+}
+
+unsigned int Utils::Execute(const char *cmnd, int envsize) {
+  PipePair Stdin(&sa);
+  PipePair Stdout(&sa);
+  PipePair Stderr(&sa);
+  STARTUPINFO si;
+  {
+    si.cb = sizeof(STARTUPINFO);
+    si.lpReserved = NULL;
+    si.lpDesktop = NULL;
+    si.lpTitle = NULL;
+    si.dwX = si.dwY = si.dwXSize = si.dwYSize = 0;
+    si.dwXCountChars = si.dwYCountChars = 0;
+    si.dwFillAttribute = 0;
+    si.dwFlags = STARTF_USESHOWWINDOW | STARTF_USESTDHANDLES;
+    si.wShowWindow = SW_HIDE;
+    si.cbReserved2 = 0;
+    si.lpReserved2 = NULL;
+    si.hStdInput = Stdin.ReadEnd();
+    si.hStdOutput = Stdout.WriteEnd();
+    si.hStdError = Stderr.WriteEnd();
+  }
+
+  char cmndln[1024];
+  if (envsize > 0 && !IsWinNT())
+    sprintf(cmndln, "command.com /E:%d /C ", envsize);
+  else
+    cmndln[0] = 0;
+
+  strcat(cmndln, cmnd);
+
+  PROCESS_INFORMATION pi;
+  BOOL res =
+      CreateProcess(NULL, cmndln, NULL, NULL, TRUE, 0, NULL, NULL, &si, &pi);
+  DWORD ret = 0;
+  if (!res) {
+    ret = GetLastError();
+    Message("Couldn't execute %s\n", cmndln);
+    return ret;
+  }
+
+  // do not let the output pipes get stuck --
+  // clear the contents on the fly
+  do {
+    char line[256];
+    while (Stdout.GetLine(line, 256)) {
+      if (!comlineparam.SilentMode())
+        Message(line);
+    }
+    while (Stderr.GetLine(line, 256))
+      Message(line);
+  } while (WaitForSingleObject(pi.hProcess, 100) == WAIT_TIMEOUT);
+
+  GetExitCodeProcess(pi.hProcess, &ret);
+  CloseHandle(pi.hProcess);
+  CloseHandle(pi.hThread);
+
+  {
+    char line[256];
+    memset(line, 0, 256);
+    while (Stdout.GetLine(line, 256)) {
+      if (!comlineparam.SilentMode())
+        Message(line);
+    }
+    while (Stderr.GetLine(line, 255))
+      Message(line);
+  }
+
+  return ret;
+}
+
+void Utils::ExecuteDetached(const char *cmnd) {
+  STARTUPINFO si;
+  {
+    si.cb = sizeof(STARTUPINFO);
+    si.lpReserved = NULL;
+    si.lpDesktop = NULL;
+    si.lpTitle = NULL;
+    si.dwX = si.dwY = si.dwXSize = si.dwYSize = 0;
+    si.dwXCountChars = si.dwYCountChars = 0;
+    si.dwFillAttribute = 0;
+    si.dwFlags = 0;
+    si.wShowWindow = 0;
+    si.cbReserved2 = 0;
+    si.lpReserved2 = NULL;
+    si.hStdInput = 0;
+    si.hStdOutput = 0;
+    si.hStdError = 0;
+  }
+
+  char cmndln[1024];
+  if (!IsWinNT())
+    sprintf(cmndln, "command.com /C ");
+  else
+    cmndln[0] = 0;
+
+  strcat(cmndln, cmnd);
+
+  PROCESS_INFORMATION pi;
+  BOOL res =
+      CreateProcess(NULL, cmndln, NULL, NULL, TRUE, 0, NULL, NULL, &si, &pi);
+  if (!res)
+    Message("Couldn't execute %s\n", cmndln);
+  else {
+    CloseHandle(pi.hProcess);
+    CloseHandle(pi.hThread);
+  }
+}
+
+void Utils::SetEnv(const char *lpth) {
+  // add $LPFGPATH/bin to PATH
+  // and add $LPFGPATH/include and $LPFGPATH/lib
+  // to INCLUDE and LIB respectively
+  static char path[_MAX_PATH + 1];
+  static char var[4096];
+  if (0 != lpth[0]) {
+    strcpy(path, lpth);
+    SetEnvironmentVariable("LPFGPATH", lpth);
+  } else if (0 == GetEnvironmentVariable("LPFGPATH", path, _MAX_PATH)) {
+    Message("LPFGPATH not set! Unlikely to work\n");
+    return;
+  }
+  GetShortPathName(path, path, _MAX_PATH + 1);
+
+  size_t l = strlen(path);
+  if (path[l - 1] != '\\') {
+    strcat(path, "\\");
+    ++l;
+  }
+  strcpy(path + l, "bin");
+  GetEnvironmentVariable("PATH", var, 4096);
+  strcat(var, ";");
+  strcat(var, path);
+  SetEnvironmentVariable("PATH", var);
+
+  strcpy(path + l, "include");
+  GetEnvironmentVariable("INCLUDE", var, 4096);
+  if (strlen(var) > 0)
+    strcat(var, ";");
+  strcat(var, path);
+  SetEnvironmentVariable("INCLUDE", var);
+
+  strcpy(path + l, "lib");
+  GetEnvironmentVariable("LIB", var, 4096);
+  if (strlen(var) > 0)
+    strcat(var, ";");
+  strcat(var, path);
+  SetEnvironmentVariable("LIB", var);
+}
+
+void Utils::RemoveFile(const char *fname) { ::DeleteFile(fname); }
+
+void Utils::Sleep(int seconds) { ::Sleep(seconds * 1000); }
+
+Utils::WaitCursor::WaitCursor() { SetCursor(LoadCursor(0, IDC_WAIT)); }
+
+Utils::WaitCursor::~WaitCursor() { SetCursor(LoadCursor(0, IDC_ARROW)); }
+
+Utils::ProcessTimer::ProcessTimer() {
+  startTime = GetTickCount();
+  endTime = startTime;
+}
+
+void Utils::ProcessTimer::Stop() { endTime = GetTickCount(); }
+
+long unsigned int Utils::ProcessTimer::msecElapsed() const {
+  // The times returned from GetTickCount will wrap every ~50 days.
+  // This should really be checked for this eventually...
+  return (endTime - startTime);
+}

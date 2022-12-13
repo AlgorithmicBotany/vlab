@@ -1,0 +1,4 @@
+Everything is supported except the #if directives.  This includes:
+	#if
+	#ifdef
+

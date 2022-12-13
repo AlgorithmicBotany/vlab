@@ -1,0 +1,291 @@
+
+  Environmental process simulating diffusion processes in the soil
+	together with a simple obstacle avoiding mechanism
+-----------------------------------------------------------------------
+
+Name of the executable: soil
+
+Necessary command line parameters: 
+   soil [-k semaphore_key] [-ext comm_files_extension] 
+	-e environment_file specification_file
+
+
+Commands in specification file:
+ GENERAL:
+ domain size: xrange yrange zrange  (numbers can be delimited also by , ; or x)
+                         specifies the range of the grid in world coorninates
+
+ position: xpos ypos zpos   (numbers can be delimited also by , ; or x)
+                         specifies the position of the lower front left corner
+                         of the grid
+
+ verbose: on/off         switches on or off verbose mode
+
+
+ INPUT:
+ image: min max input_image [output_image]
+			 specifies an rgb image file from which all input
+			 values are read and converted into a range (min,max).
+			 The values of the field (in this case 2-dimentional)
+			 can be output into image specified as output_image.
+			 Size of the grid is (image_xsize x image_ysize x 1).
+
+ array: xsize ysize zsize  min max [output_image] \newline
+    float float float ........
+			 specifies grid size, its minimal and maximal value,
+			 optional output image name, and a list of values
+			 (xsize*ysize*zsize values).
+
+ layer thicknesses: th1 + th2 ...
+			 defines specific layers (by thicknesses - along axis
+			 y) of different geotropic angle.
+
+ geotropic angles: a1 a2 ...
+			 Should be AFTER 'layer thicknesses'!
+			 Specifies geotropic angle for each layer (see [1])
+
+ 3D primitives: xsize x ysize x zsize  min max  filename1 [filename2 ...]
+		output_filename     
+			 specifies the size of the grid in voxels, values min
+			 and max, the set of input files (in GLS format - see
+			 below), and an output filename (also in GLS format).
+			 Regardless of 'obstacles and sources', opaque objects
+			 represent obstacles and transparent objects define
+			 areas of concentration equal to 1-alpha. Alpha 0 means
+			 source.
+			 A special case is a rectangle, which is used for
+			 2d output (ectangular sections). In such case 
+			 (rectangle size is a x b), rectangles 1x1 are output,
+			 each with third value specifying the concentration
+			 withing range (min,max). 
+			 	
+
+ DIFFUSION CONTROL:
+ diffusion: step [tolerance]
+			 if step is -1, difusion is simulated until all values
+			 in one step are not changed by more than the given
+			 tolerance.
+			 Otherwise perform 'step' steps of diffusion. Diffusion
+			 can be switched off by setting step to 0.
+
+ depletion: on/off
+			 if on, a root can actually reduce a concentration in
+			 a particular voxel.
+
+ relaxation factor: omega
+			 controls the speed of diffusion (see [2]).
+
+ keep depleted cells: on/off (default off)
+			 It is more correct (as found later) to keep values
+			 of the depleted cells constant througout the
+		         diffusion. 
+
+ obstacles and sources: on/off (default off)
+	                 Influences only 2d mode, when the field is input using
+			 command 'image' or 'array'. 
+
+			 If on, white color specifies sources (they have always
+			 concentration 1), color (40,55,70) represents
+			 obstacles. Otherwise green part of a color specifies
+			 concentration levels. In the case of 'array', voxels
+			 with values equal to min are obstacles, and those
+			 equal to max are sources.
+	
+			 If off, each color is converted to grey and its
+			 intensity specifies the concentration.
+
+ OUTPUT:
+ frame intervals: {n| n1-n2| n3-n4 step n5}*
+		        to save time consuming output of a contour after each
+			step, specific frames can be selected. The step number
+			is obtained from cpfg.
+
+ output normals: on/off (default off)
+		         in case of triangle output normals may be included
+			 for Gouraud shading
+
+ 3D output: polygons/triangles   (default polygons:)
+                         the contour is output either as a collection of
+	                 triangles aproximating the surface or polygons
+			 representing voxel faces close to the surface 
+
+ concentration contour value: val alpha
+                         - val defines the value of the implicit field on the
+			  output surface
+			 - alpha specifies the aplha value of the dafault
+			  contour material (woody looking)
+	                    ambient 0.1 0.1 0.1 alpha
+			    diffuse 0.1 0.6 0 alpha
+			    specular 0.5 0.5 0.5 alpha
+			    emissive 0 0 0 alpha
+			    spec exponent 25
+ 
+ contour material: 17 floats  specifies the contour material (in the order
+			as the example above)
+
+ source material:  17 floats  specifies the material of a source (because
+			sources are specified with alpha 0)
+
+ section material: 17 floats  material of the rectangular sections (2d output
+			along given rectangles).
+
+
+
+Communication:
+ Turtle parameters sent to the field: position (2d or 3d), heading (only
+			if there are more than 4 parameters - avoiding).
+ Communication symbol:
+  - 1,3(2d),4(3d), or 6(2d),7(3d)  parameters
+     to field: 
+	1) desired amount of nutrients
+	2) geotropic weight (0,1)
+	3) geotropic weight (0,1)
+	4) internode length (necessary only for obstacle avoiding)
+	5)-7) ignored
+
+     from field:
+        1)  obtained amount of nutrients
+	2)-3,4) sum of weighted geotropic and gradient vector
+	5)-6,7) returns the new heading vector to avoid obstacles or (0,0,0)
+		if such a vector is not found.
+
+Algorithm:
+  Each query is answered immediately.
+
+  At first, the position of the point in the grid is determined. Then,
+according to the value of 'depletion' parameter, either the amount of 
+nutrients present in the voxel is returned or the lower of the desired amount
+of nutrients and the amount in the voxel.
+
+ According to the actual geotropic layer, the desired geotropic direction is
+determined and added to the weighted field gradient in the given point. This
+vector (note that the grdient in not normalized!) is returned as parameters
+2)-3)or4).
+
+ If zsize is 1, 2d obstacle avoiding is applied. The endpoint of the internode
+segment (the length must be sent to the environment as 4-th param) is checked
+whether it is inside or outside of an obstacle. If it is inside is is rotated
+by increasing angles to find the first available posittion. The angles are
++2,-2,+4,-4 etc up to +180,-180 degrees. Unfortunately, this step angle is
+fixed. Moreover, some longer segments may intersect corners of obstacles.
+
+ If zsize is >1, 3d obstacle avoiding is applied. It works the same as 2d
+avoiding where the plane of rotation is given by the heading vector and the
+surface normal closest to the end point (which is inside, otherwise the segment
+is found free).
+
+
+ Diffusion is simulated according to [2].
+
+
+Tips:
+- use 'frame intervals' command to save only those contours you need (e.g
+  the last one).
+
+
+
+---------------------------------------------------------------------------
+            GLS format
+
+Author: Radomir Mech
+
+This file format was created to facilitate visualization of the output from 
+a field process. In addition, it can be used to display obstacles and other
+objects, generally considered as a "background scene", in cpfg. It contains
+simple OpenGL-like commands.
+
+The file is preprocessed, thus macros or comments can be part of the text.
+
+Commands:
+
+PRIMITIVES:
+polygon    /* set of points specifying a polygon */
+x1 y1 z1
+x2 y2 z2
+...
+xn yn zn   /* where n>=3 */
+	  
+
+polygonuv  /* set of points with their normals specifying a polygon */
+x1 y1 z1 n1x n1y n1z 
+x2 y2 z2 n2x n2y n2z 
+...
+xn yn zn nnx nny nnz  /* where n>=3 */
+
+
+rectangle a b [x y] [val]
+	   /* rectangle with one vertex in (x,y,0) (dafault (0,0,0)) and 
+	      sizes a,b along the positive axes x,y, respectively.
+	      If val is specified, the current emissive color is multiplied
+	      by val. */
+
+mesh       /* rectangular mesh: points 2k,2k+1,2k+3,2k+2 specify a rectangle */
+x1 y1 z1   /* to be drawn */
+x2 y2 z2
+...
+xn yn zn   /* where n=4+2k k>=0 */
+
+
+prism a b c   /* prism with one vertex in (0,0,0) and sizes a,b,c along
+		 the positive axes x,y,z, respectively */
+
+cone r1 r2 h  /* cone along y axis with radii r1 and r2 and height h */
+
+cylinder r h  /* cylinder along y axis with radius r and height h */
+
+sphere r      /* radius r, centre is (0,0,0)*/
+
+
+LIGHTING:
+material ar ag ab aa    /* ambient red, green, blue, and alpha */
+	 dr dg db da    /* diffuse color */
+	 sr sg sb sa    /* specular color */
+	 er eg eb ea    /* emmisive color */
+	 se		/* specular exponent 0-128 */
+
+clear red green blue    /* clears the window and sets the background to
+			   given color */
+
+light posx posy posz posw  /* homogenious coordinates of light position.
+			      If posw==0 the light is directional.
+			      Color is the default OpenGL (white) */
+
+
+PROJECTION:
+ortho  minx maxx miny maxy front_dist back_dist
+
+perspective  viewing_angle front_dist back_dist
+
+lookat posx posy posz refx refy refz [upx upy upz] 
+		
+
+MATRICES AND TRANSFORMATIONS:
+matrixmode 0/1   /* 0 modelview matrix, 1 projection matrix */
+
+loadidentity     /* sets current matrix to identity */
+
+loadmatrix 16 values  /* sets current matrix - column-wise */
+
+pushmatrix       
+
+popmatrix
+
+translate tx ty tz
+
+rotate angle vx vy vz  /* rotate around vector (vx,vy,vz) by angle degrees */
+
+scale sx sy sz 
+
+multmatrix 
+a11 a12 a13 a14
+a21 a22 a23 a24
+a31 a32 a33 a34
+a41 a42 a43 a44
+
+
+---------------------------------------------------------------------------
+[1] V.Clausnitzer and J.W.Hopmans, Simultaneous modeling of transient
+    three-dimentional root growth and soil water flow. 
+    Plant and Soil 164:299-314, 1994.
+
+[2] J. Kaandorp. Fractals ....

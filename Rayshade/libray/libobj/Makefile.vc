@@ -1,0 +1,22 @@
+OPTIMIZE = 
+CCFLAGS =  -nologo
+RANLIB = 
+CC = cl
+
+LIBRAY = ../libray.lib
+URTINC = 
+INC = -I.. -I../.. $(URTINC)
+CFLAGS = $(CCFLAGS) $(INC) $(OPTIMIZE)
+
+CFILES = blob.c bounds.c box.c cone.c csg.c cylinder.c disc.c grid.c \
+	 hf.c instance.c list.c intersect.c geom.c plane.c poly.c \
+	 roots.c sphere.c torus.c triangle.c
+OFILES = $(CFILES:.c=.obj)
+
+$(LIBRAY): $(OFILES)
+	if EXIST $(LIBRAY) (lib -out:$(LIBRAY) $(LIBRAY) $(OFILES)) ELSE (lib -out:$(LIBRAY) $(OFILES))
+
+clean:
+	del $(OFILES)
+
+# DO NOT DELETE THIS LINE

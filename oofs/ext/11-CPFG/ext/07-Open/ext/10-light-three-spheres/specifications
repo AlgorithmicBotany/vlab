@@ -1,0 +1,29 @@
+balls.l
+balls.v
+material.mat
+balls.e
+light.spec
+description.txt
+*
+model:
+	generate:
+		cpfg -M material.mat -e balls.e balls.l balls.v
+
+L-system:
+	EDIT balls.l
+
+viewfile:
+	EDIT balls.v
+
+material:
+	MEDIT material.mat
+
+environment:
+	commfile:
+		EDIT balls.e
+	parameters:
+		EDIT light.spec
+
+description:
+	EDIT description.txt
+

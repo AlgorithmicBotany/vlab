@@ -1,0 +1,32 @@
+spiral.l
+spiral.v
+material.mat
+rho.func
+profile.con
+description.txt
+refresh mode: cont
+*
+model:
+	generate:
+		cpfg -M material.mat spiral.l spiral.v 
+
+L-system:
+	EDIT spiral.l
+
+view:
+	EDIT spiral.v
+
+materials:
+	material-editor:
+		medit material.mat
+
+function:
+	primordium size:
+		funcedit rho.func
+
+contour:
+	receptacle shape:
+		cuspy profile.con
+
+description:
+	EDIT description.txt

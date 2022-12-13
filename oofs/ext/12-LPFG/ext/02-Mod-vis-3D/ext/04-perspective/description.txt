@@ -1,0 +1,5 @@
+Perspective projection
+
+Lpfg also supports perspective viewing, although
+it is more difficult to properly set parameter values.
+

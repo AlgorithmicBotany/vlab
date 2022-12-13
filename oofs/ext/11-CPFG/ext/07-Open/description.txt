@@ -1,0 +1,2 @@
+Objects in this directory illustrate the use of open l-sysems
+and environemntal programs.

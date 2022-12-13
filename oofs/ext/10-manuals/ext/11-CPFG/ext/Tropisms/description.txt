@@ -1,0 +1,7 @@
+Illustration of basic tropisms: orthotropism, plagiotropism, and 
+"twist tropism".  As both orthotropism and plagiotropism act 
+on the heading vector, they are not affected by the 
+orientation of the up and left vectors.  For the same reason,
+the "twist tropism" does not affect the course of the axis.  
+
+PWP last update 2022-11-18

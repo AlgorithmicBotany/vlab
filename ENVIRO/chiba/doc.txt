@@ -1,0 +1,94 @@
+
+  Environment according to Chiba, Ohkawa, Muraoka, and Miura's paper
+        Visual Simulation of Botanical Trees Based on Virtual 
+                  Heliotropism and Dormancy Break*
+--------------------------------------------------------------------------
+
+Name of the executable: chiba
+
+Necessary command line parameters: 
+   chiba [-k semaphore_key] [-ext comm_files_extension] 
+	 -e environment_file specification_file
+
+
+Commands in specification file:
+
+ grid size: x y z (numbers can be delimited also by , ; or x)
+			 size of the grid in voxels (the range in world 
+		         coordinates is determined according to the queries so
+			 it tightly encloses them)
+
+ verbose: on/off         switches on or off erbose mode
+
+ number of samples: n   (integer)
+			 number of samples of the light sphere. The closest
+                         higher 8*power of 4 is taken. 128 is usually enough.
+
+ lower to upper ratio: U (0.0 - 1.0)
+                         ratio of intesities of lower and upper hemisphere.
+                         0.7-0.9 are good values. 0.7 default
+
+ source direction: x y z intensity
+			 defines a ligth source with a specific intensity.
+			 This overrides previous 3 commands.
+			 After all sources are defined their intensities are
+			 normalized so that their sum is 1. Also the direction
+			 is normalized.
+
+ transmittance: t (float)
+			 transmittance of the leaf balls (0.0-1.0). 0.6 default
+
+ radius: rad             leaf ball radius. Default 25.
+
+ beam radius: rad        radius of a ray when tested for a leaf ball 
+			 intersection (values 0-1). Default 0.
+
+ estimate intersection area: on/off (default off)
+
+
+Communication:
+ Turtle parameters sent to the field: position.
+ Communication symbol:
+  - 1 or 4 parameters
+     to field: 
+        1) if zero, radius defined in specification file is taken, otherwise 
+	   (when the param is >0) it specifies the radius
+	2)-4)  zeros (or whatever)
+
+     from field:
+        1) percentage of light perceived by the centre of the leaf ball (0-1)
+        2)-4) brightest direction (unit length)
+
+
+Algorithm:
+  Program stores all incoming queries in a dynamically allocated array.
+After all queries are in a regular grid (usually 64x64x64) is built 
+to speed up ray casting.
+
+  The environment then determines the amount of incoming light and the
+brightest direction (if there are 4 parameters of comm. symbol) for all
+queries. 
+The amount of light is computed by shooting "number of samples" (in the case of
+hemisphere) or "number of light sources" (when fixed amount of soursec is
+specified) rays from the leaf ball centre. Each intersected leaf reduces
+the perceived light intensity. The brightest direction is the sum of all sample
+rays multiplied by their intensities.
+
+
+With 'estimate intersection area' off, the ray is tested agains a sphere
+with radius (leaf->radius + beam_radius) and the function returns the length
+of the line segment inside this sphere. The reduction coefficient (equal to
+transmittance is modified by:
+pow(reduction_coef, returned_length/2.0*leaf->radius)
+
+Not only is the power computation iffy (at least it should be:
+pow(reduction_coef, returned_length/2.0*(leaf->radius+beam_radius)), 
+but also the fixed beam_radius shouldn't be used with variable size leaf balls.
+
+
+With 'estimate intersection area' on, the intersection function returns ratio
+of intersection area to the tested leaf area (the one from whose center the ray
+is casted).
+
+--------------------------------------------------------------------------
+* The Journal of Visualization and Computed Animation, vol. 5: 3-15 (1994)

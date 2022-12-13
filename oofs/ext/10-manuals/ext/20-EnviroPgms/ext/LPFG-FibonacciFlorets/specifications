@@ -1,0 +1,51 @@
+plant.l
+plant.v
+plant.a
+plant.map
+petal.s
+plant.e
+density.spec
+description.txt
+ignore:
+lsys.so
+lpfg.log
+lsys.ii
+lsysinp.cpp
+lsys.o
+input.i
+*.swp
+.to*
+.from*
+*
+model:
+	generate:
+		lpfg -w 500 300 plant.map plant.l plant.v plant.a plant.e
+
+L-system:
+	EDIT plant.l
+
+viewfile:
+	EDIT plant.v
+
+animation:
+	EDIT plant.a
+
+colormap:
+	PALETTE plant.map
+
+surfaces:
+	petal:
+		bezieredit:
+			bezieredit petal.s
+		stedit:
+			stedit -bezier petal.s
+
+environment:
+	commfile:
+		EDIT tree.e
+	parameters:
+		EDIT density.spec
+
+description:
+	EDIT description.txt
+

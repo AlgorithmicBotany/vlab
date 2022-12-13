@@ -1,0 +1,31 @@
+
+   Environmental process - skeleton of the documentation file
+-----------------------------------------------------------------
+
+Name of the executable: ???
+
+Necessary command line parameters: 
+   skeleton [-k semaphore_key] [-ext comm_files_extension] 
+	-e environment_file  ???
+
+
+Commands in specification file:
+
+
+Communication:
+ Turtle parameters sent to the field: ???
+ Communication symbol:
+  - ??? parameters
+     to field: 
+	1) ???
+	...
+
+     from field:
+	1) ???
+	...
+        
+
+
+Algorithm:
+
+ ???

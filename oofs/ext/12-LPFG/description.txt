@@ -1,0 +1,3 @@
+This directory contains sample objects using the L-system-based 
+modeling and simulation program LPFG.
+

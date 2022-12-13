@@ -1,0 +1,100 @@
+/* changes by Mik:
+  1. I added a check to see if 'union semun' is defined in 'sys/sem.h', and if
+  it isn't, I defined it.
+  2. In the 'SemaphorePair' destructor, I've added code specific to Linux and
+  Mac, which I took straight from the communication library.
+  3. I've added error checks to all semaphore calls and printed the error
+  message contained in 'errno'.
+  4. In SemaphorePair::Create, I've changed the last parameter of each of the
+  calls to 'semctl()' from a reference, &su,  to a *(union semun *)&su.  This is
+  the way it is done in the communication library and the original way generated
+  an error on the first call.
+  5. In SemaphorePair::Create instead of setting 'su.val' based on the 'bool'
+  parameters s1 and s2, I've set 'su.val=0' for the first call to semctl() and
+  'su.val=1' for the second call to semctl().  This is also the way it is done
+  in the communication library, but it may be better to change the call to
+  'Semaphore::Create(semId,false,true)' in 'environment.cpp' to
+  'Semaphore::Create(semId,true,false)'.
+  6. What is the reason for not using the communication library in lpfg?
+*/
+
+#include <sys/sem.h>
+#include <errno.h>
+#include <string.h>
+#include "utils.h"
+
+#if (defined(__GNU_LIBRARY__) && !defined(_SEM_SEMUN_UNDEFINED)) ||            \
+    defined(__MACH__)
+/* union semun is defined by including <sys/sem.h> */
+#else
+/* according to X/OPEN we have to define it ourselves */
+union semun {
+  int val;                   /* value for SETVAL */
+  struct semid_ds *buf;      /* buffer for IPC_STAT, IPC_SET */
+  unsigned short int *array; /* array for GETALL, SETALL */
+  struct seminfo *__buf;     /* buffer for IPC_INFO */
+};
+#endif
+
+SemaphorePair::SemaphorePair() { _semid = -1; }
+
+SemaphorePair::~SemaphorePair() {
+  if (_semid != -1) {
+    Release(0);
+    Release(1);
+
+    /* release semaphores */
+#ifdef VLAB_LINUX
+    semctl(_semid, 0, IPC_RMID, 0);
+#else
+#ifdef VLAB_MACX
+    union semun empty;
+    semctl(_semid, 0, IPC_RMID, empty);
+#else
+    semctl(_semid, 0, IPC_RMID);
+#endif /* VLAB_MACX */
+#endif /* VLAB_LINUX */
+    _semid = -1;
+  }
+}
+
+void SemaphorePair::Create(int id, bool s1, bool s2) {
+  if ((_semid = semget(id, 2, IPC_CREAT | 0600)) == -1)
+    Utils::Message("semget: %s\n", strerror(errno));
+
+  union semun su;
+
+  if (s1)
+    su.val = 1;
+  else
+    su.val = 0;
+
+  if (semctl(_semid, 0, SETVAL, su) == -1)
+    Utils::Message("semctl 1: %s\n", strerror(errno));
+
+  if (s2)
+    su.val = 1;
+  else
+    su.val = 0;
+
+  if (semctl(_semid, 1, SETVAL, su) == -1)
+    Utils::Message("semctl 2: %s\n", strerror(errno));
+}
+
+void SemaphorePair::Release(int id) {
+  sembuf sops;
+  sops.sem_num = id;
+  sops.sem_op = 1;
+  sops.sem_flg = 0;
+  if (semop(_semid, &sops, 1) == -1)
+    Utils::Message("semop; op = %d: %s\n", strerror(errno));
+}
+
+void SemaphorePair::Wait(int id) {
+  sembuf sops;
+  sops.sem_num = id;
+  sops.sem_op = -1;
+  sops.sem_flg = 0;
+  if (semop(_semid, &sops, 1) == -1)
+    Utils::Message("semop; op = %d: %s\n", strerror(errno));
+}

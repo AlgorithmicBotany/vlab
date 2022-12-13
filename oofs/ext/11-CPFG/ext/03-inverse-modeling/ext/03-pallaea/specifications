@@ -1,0 +1,75 @@
+plant.l
+plant.v
+plant.mat
+color.func
+width.func
+lwidth.func
+lenscale.func
+torque.func
+leaflet_width.func
+asym.func
+bend.func
+lbend.func
+bang.func
+turn.func
+lturn.func
+ldensity.func
+density.func
+stem_width.func
+leaf.con
+description.txt
+ignore:
+*
+model:
+	generate:
+		cpfg -M plant.mat plant.l plant.v
+
+L-system:
+	EDIT plant.l
+
+view file:
+	EDIT plant.v
+
+material:
+	MEDIT plant.mat
+
+functions:
+	width:
+		funcedit width.func
+	density:
+		funcedit density.func
+	asym:
+		funcedit asym.func
+	turn:
+		funcedit turn.func
+	bend:
+		funcedit bend.func
+	torque:
+		funcedit torque.func
+	br_angle:
+		funcedit bang.func
+	leaflet_width:
+		funcedit leaflet_width.func
+	stem_width:
+		funcedit stem_width.func
+	length_scale:
+		funcedit lenscale.func
+	color:
+		funcedit color.func
+
+	leaf:
+		lwidth:
+			funcedit lwidth.func
+		ldensity:
+			funcedit ldensity.func
+		lturn:
+			funcedit lturn.func
+		lbend:
+			funcedit lbend.func
+
+contour:
+	leaf:
+		cuspy leaf.con
+
+description:
+	EDIT description.txt

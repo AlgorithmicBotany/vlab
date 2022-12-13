@@ -1,0 +1,9 @@
+An L-system implementation of a combinatorial tree model.
+Developed with Paul Kruszewski
+
+Model features:
+
+Beta distribution of node numbers between the branches. 
+Parameters (including tropisms) nicely affect the structure.
+
+Updated 2021-10-11

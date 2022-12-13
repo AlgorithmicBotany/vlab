@@ -1,0 +1,74 @@
+timeEdit 1 2
+items: 4
+start: 0
+end: 18.4376
+name: INTERNODE_LENGTH
+color: 91,115,229
+startLabel: 
+endLabel: 
+timelineFunceditFileStart:
+fver 1 1
+name: INTERNODE_LENGTH
+samples: 20
+flip: off
+points: 4
+0.000000 0.000000
+0.156957 0.004764
+0.310631 0.994505
+1.000000 1.000541
+timelineFunceditFileEnd:
+start: 0.07
+end: 36.9635
+name: LEAF_LENGTH
+color: 102,102,153
+startLabel: 
+endLabel: 
+timelineFunceditFileStart:
+fver 1 1
+name: LEAF_LENGTH
+samples: 100
+flip: off
+points: 7
+0.000000 0.000000
+0.115366 0.009862
+0.299490 0.629233
+0.299490 0.991171
+0.608486 0.981309
+0.830390 0.808717
+1.000000 0.823510
+timelineFunceditFileEnd:
+start: 0.0796045
+end: 30.62
+name: CALYX_LENGTH
+color: 102,102,153
+startLabel: 
+endLabel: 
+timelineFunceditFileStart:
+fver 1 1
+name: CALYX_LENGTH
+samples: 100
+flip: off
+points: 5
+0.000000 0.018539
+0.015329 0.274559
+0.382584 0.366372
+0.936998 0.410514
+1.000000 0.406982
+timelineFunceditFileEnd:
+start: 15.4362
+end: 23.2721
+name: AGING
+color: 102,102,153
+startLabel: BR_END
+endLabel: SIM_END
+timelineFunceditFileStart:
+fver 1 1
+name: AGING
+samples: 20
+flip: off
+points: 4
+0.000000 0.000000
+0.333333 0.000000
+0.666667 0.000000
+1.000000 0.000000
+timelineFunceditFileEnd:

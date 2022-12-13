@@ -1,0 +1,8 @@
+Model of coordinated development of the shoot and the root
+
+The shoot receives nuterients and water from the root.
+The root receives products of photosynthesis from the shoot.
+
+X causes pruning.
+
+Based on the work by Borchert and Honda.

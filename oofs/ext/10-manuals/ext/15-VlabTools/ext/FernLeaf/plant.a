@@ -1,0 +1,8 @@
+double buffer: on
+clear between frames: on
+scale between frames: off
+new view between frames: off
+swap interval: 0
+first frame: 1
+last frame: -1
+step: 1

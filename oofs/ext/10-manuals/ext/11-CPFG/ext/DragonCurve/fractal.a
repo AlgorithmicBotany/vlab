@@ -1,0 +1,6 @@
+double buffer: on
+clear between frames: on
+scale between frames: on
+swap interval: 0
+first frame: 0
+last frame: 12

@@ -1,0 +1,14 @@
+
+Delay::Delay() { gettimeofday(&_startTime, 0); }
+
+void Delay::Wait(int ) const {
+  timeval now;
+  gettimeofday(&now, 0);
+  timeval diff;
+  diff.tv_sec = now.tv_sec - _startTime.tv_sec;
+  diff.tv_usec = now.tv_usec - _startTime.tv_usec;
+  if (_startTime.tv_usec > now.tv_usec) {
+    diff.tv_usec -= 1000000;
+    --diff.tv_sec;
+  }
+}

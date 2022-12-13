@@ -1,0 +1,179 @@
+\chapter{Light Sources}
+
+The lighting in a scene is determined by the number, type, and nature
+of the light sources defined in the input file.  Available light sources
+range from simple directional sources to more realistic but computationally
+costly quadrilateral area light sources.  Typically, you will want to use
+point or directional light sources while developing images.  When
+final renderings are made, these simple light sources may be replaced by
+the more complex ones.
+
+No matter what kind of light source you use, you will need to
+specify its intensity.
+In this chapter, an {\em Intensity\/} is either a red-green-blue triple
+indicating the color of the light source, or a single value that is
+interpreted as the intensity of a ``white'' light.
+In the current version of {\rayshade}, the intensity of a light does
+not decrease as
+one moves farther from it.
+
+If you do not define a light source, {\rayshade} will create a directional
+light source of intensity 1.0 defined by the vector (1., -1., 1.).
+This default light source is designed to work well when default
+viewing parameters and surface values are being used.
+
+You may define any number of light sources, but keep in mind that
+it will require more time to render images that include many
+light sources.  It should also be noted that the light sources themselves
+will not appear in the image, even if they are placed in frame.
+
+\section{Light Source Types}
+
+The amount of ambient light present in a scene is controlled by a
+pseudo light source of type {\em ambient}.
+
+\begin{defkey}{light}{{\em Intensity\/} ambient}
+	Define the amount of ambient light present in the entire
+	scene.
+\end{defkey}
+
+There is only one ambient light source; its default intensity is
+{1, 1, 1}.  If more than one ambient light source is defined,
+only the last instance is used.  A surface's ambient color
+is multiplied by the intensity of the ambient source to give the
+total ambient light reflected from the surface.
+
+Directional sources are described by a direction alone, and are useful
+for modeling light sources that are effectively infinitely far away
+from the objects they illuminate.   
+
+\begin{defkey}{light}{{\em Intensity\/} {\tt directional} \evec{direction}}
+	Define a light source with the given intensity that is
+	defined to be in the given direction from every point
+	it illuminates.  The direction need not be normalized.
+\end{defkey}
+
+Point sources are defined as a single point in space.  They produce
+shadows with sharp edges and are a good replacement for extended
+and other computationally expensive light source.
+
+\begin{defkey}{light}{{\em Intensity\/} {\tt point} \evec{pos}}
+	Place a point light source with the given intensity at the
+	given position.
+\end{defkey}
+
+Spotlights are useful for creating dramatic localized lighting effects.
+They are defined by their position, the direction in which they
+are pointing, and the width of the beam of light they produce.
+
+\begin{defkey}{light}{{\em Intensity\/} {\tt spot} \evec{pos} \evec{to}
+    {$\alpha$} [ $\theta_{in}$ $\theta_{out}$ ]}
+	Place a spotlight at \evec{pos}, oriented as to be pointing at
+	\evec{to}.  The intensity of the light falls off as
+	$(cosine \theta)^{\alpha}$, where $\theta$ is the angle between the
+	spotlight's main axis and the vector from the spotlight to the
+	point being illuminated.  $\theta_{in}$ and
+	$\theta_{out}$ may be used to control the radius of the cone of light
+	produced by the spotlight.
+\end{defkey}
+$\theta_{in}$ is the the angle at which
+the light source begins to be attenuated.  At $\theta_{out}$,
+the spotlight intensity is zero.
+This affords control
+over how ``fuzzy'' the edges of the spotlight are.  If neither angle
+is given, they both are effectively set to 180 degrees.
+
+Extended sources are meant to model spherical light sources.  Unlike
+point sources, extended sources actually possess a radius, and as such
+are capable or producing shadows with fuzzy edges ({\em penumbrae}).  If
+you do not specifically desire penumbrae in your image, use a point
+source instead.
+
+\begin{defkey}{light}{{\em Intensity\/} {\tt extended} {\em radius} \evec{pos} }
+	Create an extended light source at the given position and with
+	the given {\em radius}.
+\end{defkey}
+The shadows cast by
+extended sources are modeled by taking samples of the source at
+different locations on its surface.  When the source is partially
+hidden from a given point in space, that point is in partial shadow
+with respect to the extended source, and the sampling process is
+usually able to determine this fact.
+
+Quadrilateral light sources are computationally more expensive than extended
+light sources, but are more flexible and produce more realistic results.
+This is due to the fact that an area source is approximated by a
+number of point sources whose positions are jittered to reduce aliasing.
+Because each of these point sources has shading calculations performed
+individually, area sources may be placed relatively close to the
+objects it illuminates, and a reasonable image will result.
+
+\begin{defkey}{light}{{\em Intensity\/} {\tt area} \evec{p1} \evec{p2} {\em usamp}
+	\evec{p3} {\em vsamp}}
+	Create a quadrilateral area light source.
+	The $u$ axis
+	is defined by the vector from \evec{p1} to \evec{p2}.  Along
+	this axis a total of {\em usamp} samples will be taken.
+	The $v$ axis of the light source is defined by the vector
+	from \evec{p1} to \evec{p3}.  Along this axis a total of
+	{\em vsamp} samples will be taken.
+\end{defkey}
+The values of {\em usamp} and {\em vsamp} are usually chosen to be
+proportional to the lengths of the $u$ and $v$ axes.  Choosing a
+relatively high number of samples will result in a good approximation
+to a ``real'' quadrilateral source.  However, because complete
+lighting calculations are performed for each sample,
+the computational cost is directly proportional to the product
+of {\em usamp} and {\em vsamp}.
+
+\section{Shadows}
+
+In order to determine the color of a point on the surface
+of any object, it is necessary
+to determine if that point is in shadow with respect to each
+defined light source.  If the point is totally in shadow with respect to
+a light source, then the light source makes no contribution to the
+point's final color.
+
+This shadowing determination is made by tracing rays from the point
+of intersection to each light source.  These ``shadow feeler'' rays
+can add substantially to the overall rendering time.  This is especially
+true if extended or area light sources are used.  If at any point you
+wish to disable shadow determination on a global scale, there is
+a command-line option ({\tt -n}) that allows you to do so.  It is also
+possible
+to disable the casting of shadows onto given objects through the use
+of the {\tt noshadow} keyword in surface descriptions.  In addition,
+the {\tt noshadow} keyword may be given following the definition
+of a light source, causing the light source to cast no shadows onto
+any surface.
+
+Determining if a point is in shadow with respect to a light source
+is relatively simple if all the objects in a scene are opaque.  In
+this case, one simply traces a ray from the point to the light source.
+If the ray hits an object before it reaches the light source, then
+the point is in shadow.
+
+Shadow determination
+becomes more complicated if there are one or more objects with
+non-zero transparency between the point and the light source.
+Transparent objects may not completely block the light from a source,
+but merely attenuate it. In such cases, it is necessary to compute the
+amount of attenuation at each intersection and to continue
+the shadow ray until it either reaches the light source or until
+the light is completely attenuated.
+
+By default, {\rayshade} computes shadow attenuation by assuming
+that the index of refraction of the transparent object is the
+same as that of the medium through which the ray is traveling.
+To disable
+partial shadowing due to transparent objects, the {\tt shadowtransp}
+keyword should be given somewhere in the input file.
+
+\begin{defkey}{shadowtransp}{}
+	The intensity of light striking a point is {\em not} affected by
+	intervening transparent objects.
+\end{defkey}
+If you enclose an object behind a transparent surface, and you wish
+the inner object to be illuminated, you must not use the {\tt shadowtransp}
+keyword or the {\tt -o} option.

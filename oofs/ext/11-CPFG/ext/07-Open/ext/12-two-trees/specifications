@@ -1,0 +1,35 @@
+tree.l
+tree.v
+tree.a
+tree.mat
+tree.e
+light.spec
+description.txt
+ignore:
+*
+
+model:
+	generate:
+		cpfg -M tree.mat -e tree.e tree.l tree.v tree.a
+
+L-system:
+	EDIT tree.l
+
+viewfile:
+	EDIT tree.v
+
+animation:
+	EDIT tree.a
+
+material:
+	MEDIT tree.mat
+
+environment:
+	commfile:
+		EDIT tree.e
+	parameters:
+		EDIT light.spec
+
+description:
+	EDIT description.txt
+

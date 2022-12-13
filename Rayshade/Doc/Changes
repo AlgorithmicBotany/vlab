@@ -1,0 +1,30 @@
+Major changes since 3.0
+-----------------------
+Addition of CSG.  "union", "intersect" and "difference" types.
+
+Animation support.  Multi-frame image files, use of expressions, animated
+transformations, new keywords, including: shutter, frames, framelength,
+define, starttime.  "linear" function, "time" and "frame" variables.
+
+Aggregate syntax changed.  Rather than "define .... defend" with
+the aggregate type buried inbetween, syntax is "type ... end", where type
+is one of: grid, list, union, intersect, difference.  Object naming
+is now accomplished by preceding one of the above with the "name" keyword
+followed by the name to assign to the aggregate.
+
+Torus, blob primitives added, courtesy of Mark Podlipec and Jochen Schwarze.
+Buggy superquadric primitive removed.
+
+Surface definition syntax and binding changed.  Surface definition is now keyword-
+based.  Note that the specular color of a surface is used to modify the color of
+reflected rays in 4.0.  When converting 3.0 scripts to 4.0, the specular component
+and/or reflectivity may need to be modified.
+
+Improved antialiasing.  Rather than using an adaptive scheme or nonadaptive
+"distributed" ray tracing, an adaptive jittered algorithm is used.
+
+Additional textures and light source types.
+
+Vastly improved performance when using many texturing functions.
+
+Many minor and not-so-minor bugfixes.

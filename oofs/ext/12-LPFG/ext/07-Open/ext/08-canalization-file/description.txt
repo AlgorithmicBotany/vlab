@@ -1,0 +1,18 @@
+Canalization of the number of organs in spiral phyllotaxis
+(+ how to output simulation results to a file)
+
+The model creates a sequence of flowerheads with an increasing
+number of organs, and outputs the number of ray florets ("petals")
+to the file output.txt for a subsequent analysis.  This file
+can be viewed using the "Text file" tab. Observe that the numbers
+of ray florets usually are Fibonacci numbers.
+
+For each number of organs, the entire phyllotactic pattern 
+is created at once, using a decomposition rule. 
+Consecutive primordia are assigned increasing vigor values.  
+The environment compares vigors of colliding primordia.  The
+primordium with a lower vigor is dominated by the primordium 
+of a higher vigor.  The only primordia that are not dominated 
+are situated on the circumference of the capitulum (disk). These 
+primordia form ray florets ("petals"), while the remaining
+primordia form disk florets.   

@@ -1,0 +1,291 @@
+// Microsoft Visual C++ generated resource script.
+//
+#include "resource.h"
+
+#define APSTUDIO_READONLY_SYMBOLS
+/////////////////////////////////////////////////////////////////////////////
+//
+// Generated from the TEXTINCLUDE 2 resource.
+//
+#include "windows.h"
+
+/////////////////////////////////////////////////////////////////////////////
+#undef APSTUDIO_READONLY_SYMBOLS
+
+/////////////////////////////////////////////////////////////////////////////
+// English (U.S.) resources
+
+#if !defined(AFX_RESOURCE_DLL) || defined(AFX_TARG_ENU)
+#ifdef _WIN32
+LANGUAGE LANG_ENGLISH, SUBLANG_ENGLISH_US
+#pragma code_page(1252)
+#endif //_WIN32
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Icon
+//
+
+// Icon with lowest ID value placed first to ensure application icon
+// remains consistent on all systems.
+IDI_LPFG                ICON                    "icon1.ico"
+IDI_RUN                 ICON                    "ico00001.ico"
+IDI_STEP                ICON                    "icon2.ico"
+IDI_STOP                ICON                    "ico00002.ico"
+IDI_FOREVER             ICON                    "ico00003.ico"
+IDI_REWIND              ICON                    "ico00004.ico"
+IDI_GENSTATIC           ICON                    "ico00005.ico"
+IDI_ICON1               ICON                    "icon.ico"
+IDI_ICON3               ICON                    "icon3.ico"
+IDI_ICON4               ICON                    "Flower06.ico"
+IDI_ICON5               ICON                    "Flower04.ico"
+IDI_ICON6               ICON                    "Flower03.ico"
+
+#ifdef APSTUDIO_INVOKED
+/////////////////////////////////////////////////////////////////////////////
+//
+// TEXTINCLUDE
+//
+
+1 TEXTINCLUDE 
+BEGIN
+    "resource.h\0"
+END
+
+2 TEXTINCLUDE 
+BEGIN
+    "#include ""afxres.h""\r\n"
+    "\0"
+END
+
+3 TEXTINCLUDE 
+BEGIN
+    "\r\n"
+    "\0"
+END
+
+#endif    // APSTUDIO_INVOKED
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Menu
+//
+
+IDR_MAINMENU MENU 
+BEGIN
+    POPUP "ContextMenu"
+    BEGIN
+        MENUITEM "Step\tCtrl+F",                ID_CONTEXTMENU_ANIMATE_STEP
+        MENUITEM "Run\tCtrl+R",                 ID_CONTEXTMENU_ANIMATE_RUN
+        MENUITEM "Forever\tCtrl+V",             ID_CONTEXTMENU_FOREVER
+        MENUITEM "Stop\tCtrl+S",                ID_CONTEXTMENU_ANIMATE_STOP
+        MENUITEM "Rewind\tCtrl+W",              ID_CONTEXTMENU_ANIMATE_REWIND
+
+        MENUITEM SEPARATOR
+        MENUITEM "Don't animate",               ID_CONTEXTMENU_GENERATESTATIC
+
+        MENUITEM SEPARATOR
+        MENUITEM "Exit",                        ID_CONTEXTMENU_EXIT
+    END
+    POPUP "Hidden"
+    BEGIN
+        POPUP "ContextMenu"
+        BEGIN
+            MENUITEM "Step",                        ID_CONTEXTMENU_ANIMATE_STEP
+
+            MENUITEM "Run",                         ID_CONTEXTMENU_ANIMATE_RUN
+
+            MENUITEM "Forever",                     ID_CONTEXTMENU_FOREVER
+            MENUITEM "Stop",                        ID_CONTEXTMENU_ANIMATE_STOP
+
+            MENUITEM "Rewind",                      ID_CONTEXTMENU_ANIMATE_REWIND
+
+            MENUITEM SEPARATOR
+            MENUITEM "Restore view",                ID_CONTEXTMENU_RESTOREVIEW
+            MENUITEM "Clear",                ID_CONTEXTMENU_CLEAR
+
+            POPUP "Reset "
+            BEGIN
+                MENUITEM "Rotation",                    ID_CONTEXTMENU_RESET_ROTATION
+
+                MENUITEM "Zoom",                        ID_CONTEXTMENU_RESET_ZOOM
+
+                MENUITEM "Pan",                         ID_CONTEXTMENU_RESET_PAN
+
+            END
+            MENUITEM "Show axis",                   ID_CONTEXTMENU_SHOWAXIS
+            POPUP "String"
+            BEGIN
+                MENUITEM "Output",			ID_SIMULATION_OUTPUTSTRING
+                MENUITEM "Input",			ID_SIMULATION_LOADSTRING
+            END
+            MENUITEM SEPARATOR
+            POPUP "Output"
+            BEGIN
+                MENUITEM "BMP",                         ID_CONTEXTMENU_OUTPUT_BMP
+
+                MENUITEM "POV-Ray",                     ID_CONTEXTMENU_OUTPUT_POVRAY
+
+                MENUITEM "Postscript",                  ID_CONTEXTMENU_OUTPUT_POSTSCRIPT
+
+            END
+            MENUITEM SEPARATOR
+            MENUITEM "Exit",                        ID_CONTEXTMENU_EXIT
+        END
+        MENUITEM "RereadColors",                ID_HIDDEN_REREADCOLORS
+        MENUITEM "New model",                   ID_CONTEXTMENU_NEWMODEL
+        MENUITEM "New L-system",                ID_CONTEXTMENU_NEWLSYSTEM
+        MENUITEM "Reread environment",          ID_HIDDEN_REREADENVIRONMENT
+        MENUITEM "Reset view",                  ID_CONTEXTMENU_RESETVIEW
+        MENUITEM "Don't animate",               ID_CONTEXTMENU_GENERATESTATIC
+
+        MENUITEM "Recording",                   ID_CONTEXTMENU_ANIMATE_RECORDING
+
+        MENUITEM "New homomorphism",            ID_HIDDEN_NEWHOMOMORPHISM
+        MENUITEM "New projection",              ID_HIDDEN_NEWPROJECTION
+        MENUITEM "New render",                  ID_HIDDEN_NEWRENDER
+        MENUITEM "New animate",                 ID_HIDDEN_NEWANIMATE
+        MENUITEM "Rerun",                       ID_HIDDEN_RERUN
+        MENUITEM "Reread surfaces",             ID_HIDDEN_REREADSURFACES
+        MENUITEM "RereadCurveXYZ",              ID_HIDDEN_REREADCURVEXYZ
+        MENUITEM "RereadContours",              ID_HIDDEN_REREADCONTOURS
+        MENUITEM "RereadFunctions",             ID_HIDDEN_REREADFUNCTIONS
+    END
+    POPUP "View"
+    BEGIN
+        MENUITEM "Step\tCtrl+F",                ID_CONTEXTMENU_ANIMATE_STEP
+        MENUITEM "Run\tCtrl+R",                 ID_CONTEXTMENU_ANIMATE_RUN
+        MENUITEM "Forever\tCtrl+V",             ID_CONTEXTMENU_FOREVER
+        MENUITEM "Stop\tCtrl+S",                ID_CONTEXTMENU_ANIMATE_STOP
+        MENUITEM "Rewind\tCtrl+W",              ID_CONTEXTMENU_ANIMATE_REWIND
+
+        MENUITEM SEPARATOR
+        MENUITEM "Don't animate",               ID_CONTEXTMENU_GENERATESTATIC
+
+        MENUITEM SEPARATOR
+        MENUITEM "Restore view",                ID_CONTEXTMENU_RESTOREVIEW
+        MENUITEM "Clear",                ID_CONTEXTMENU_CLEAR
+        POPUP "Reset "
+        BEGIN
+            MENUITEM "Rotation",                    ID_CONTEXTMENU_RESET_ROTATION
+
+            MENUITEM "Zoom",                        ID_CONTEXTMENU_RESET_ZOOM
+
+            MENUITEM "Pan",                         ID_CONTEXTMENU_RESET_PAN
+            MENUITEM "Roll",                        ID_CONTEXTMENU_RESET_ROLL
+
+            MENUITEM "Frustum",                     ID_CONTEXTMENU_RESET_FRUSTUM
+
+        END
+        MENUITEM "Show axis",						ID_CONTEXTMENU_SHOWAXIS
+        MENUITEM "Recording to BMP",               ID_CONTEXTMENU_RECORDING
+		MENUITEM "Recording to POV-Ray",			ID_CONTEXTMENU_POVRAY_RECORD
+	POPUP "String"
+	BEGIN
+		MENUITEM "Output",			ID_SIMULATION_OUTPUTSTRING
+		MENUITEM "Load",			ID_SIMULATION_LOADSTRING
+	END
+        MENUITEM SEPARATOR
+        POPUP "Output"
+        BEGIN
+            MENUITEM "BMP",                         ID_CONTEXTMENU_OUTPUT_BMP
+
+            MENUITEM "POV-Ray",                     ID_CONTEXTMENU_OUTPUT_POVRAY
+
+            MENUITEM "Postscript",                  ID_CONTEXTMENU_OUTPUT_POSTSCRIPT
+
+            MENUITEM "Obj",                         ID_OUTPUT_OBJECT
+            MENUITEM "View",                        ID_OUTPUT_VIEW
+
+        END
+        MENUITEM SEPARATOR
+        MENUITEM "Exit",                        ID_CONTEXTMENU_EXIT
+    END
+END
+
+IDR_MENU1 MENU 
+BEGIN
+    POPUP "&Simulation"
+    BEGIN
+        MENUITEM "Step\tCtrl+F",                40005
+        MENUITEM "Run\tCtrl+R",                 40006
+        MENUITEM "Forever\tCtrl+V",             40011
+        MENUITEM "Stop\tCtrl+S",                40007
+        MENUITEM "Rewind\tCtrl+W",              40004
+        MENUITEM SEPARATOR
+        MENUITEM "Don't animate",               40010
+        MENUITEM SEPARATOR
+        MENUITEM "Output string",               ID_SIMULATION_OUTPUTSTRING
+        MENUITEM "Load string",                 ID_SIMULATION_LOADSTRING
+        MENUITEM "Exit",                        40012
+    END
+    POPUP "&View"
+    BEGIN
+        MENUITEM "Restore view",                40015
+        MENUITEM "Clear",                ID_CONTEXTMENU_CLEAR
+        POPUP "Reset "
+        BEGIN
+            MENUITEM "Rotation",                    40019
+            MENUITEM "Zoom",                        40020
+            MENUITEM "Pan",                         40021
+            MENUITEM "Roll",                        40024
+            MENUITEM "Frustum",                     40025
+        END
+        MENUITEM "Show axis",                   40017
+        MENUITEM SEPARATOR
+        MENUITEM "Save arrangement",            ID_VIEW_SAVEARRANGEMENT
+    END
+    POPUP "&Window"
+    BEGIN
+        MENUITEM "&Cascade",                    ID_WINDOW_CASCADE40036
+        MENUITEM "Tile &horizontally",          ID_WINDOW_TILEHORIZONTALLY
+        MENUITEM "&Tile vertically",            ID_WINDOW_TILEVERTICALLY
+        MENUITEM "&Default",                    ID_WINDOW_DEFAULT
+        MENUITEM SEPARATOR
+        MENUITEM "Views",                       65535
+    END
+END
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Accelerator
+//
+
+IDR_ACCELERATOR1 ACCELERATORS 
+BEGIN
+    "F",            ID_CONTEXTMENU_ANIMATE_STEP, VIRTKEY, CONTROL, NOINVERT
+    "L",            ID_CONTEXTMENU_NEWLSYSTEM, VIRTKEY, CONTROL, NOINVERT
+    "R",            ID_CONTEXTMENU_ANIMATE_RUN, VIRTKEY, CONTROL, NOINVERT
+    "S",            ID_CONTEXTMENU_ANIMATE_STOP, VIRTKEY, CONTROL, NOINVERT
+    "V",            ID_CONTEXTMENU_FOREVER, VIRTKEY, CONTROL, NOINVERT
+    "W",            ID_CONTEXTMENU_ANIMATE_REWIND, VIRTKEY, CONTROL, 
+                                                    NOINVERT
+END
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Cursor
+//
+
+IDC_ZOOM                CURSOR                  "cur00011.cur"
+IDC_PAN                 CURSOR                  "cur00017.cur"
+IDC_ROTATE              CURSOR                  "rotate.cur"
+IDC_FOV                 CURSOR                  "fov.cur"
+#endif    // English (U.S.) resources
+/////////////////////////////////////////////////////////////////////////////
+
+
+
+#ifndef APSTUDIO_INVOKED
+/////////////////////////////////////////////////////////////////////////////
+//
+// Generated from the TEXTINCLUDE 3 resource.
+//
+
+
+/////////////////////////////////////////////////////////////////////////////
+#endif    // not APSTUDIO_INVOKED
+

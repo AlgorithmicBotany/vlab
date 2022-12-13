@@ -1,0 +1,37 @@
+#include "utils.h"
+
+DynLibrary::DynLibrary() : _hDll(NULL) {}
+
+DynLibrary::~DynLibrary() {
+  if (Connected())
+    Disconnect();
+}
+
+DynLibrary::Proc DynLibrary::GetProc(const std::string &name) const {
+  ASSERT(Connected());
+  return GetProcAddress(_hDll, name.c_str());
+}
+
+void DynLibrary::Connect(const std::string &libname) {
+  _hDll = LoadLibrary(libname.c_str());
+  if (Connected()) {
+    if (!_Map())
+      Disconnect();
+  } else
+  // Output error message
+  {
+    char msg[1024];
+    FormatMessage(FORMAT_MESSAGE_FROM_SYSTEM, 0, GetLastError(), 0, msg, 1024,
+                  NULL);
+    Utils::Message((std::string("DLL error: ") + msg).c_str());
+  }
+}
+
+void DynLibrary::Disconnect() {
+  ASSERT(Connected());
+  _Unmap();
+  FreeLibrary(_hDll);
+  _hDll = NULL;
+}
+
+bool DynLibrary::Connected() const { return NULL != _hDll; }

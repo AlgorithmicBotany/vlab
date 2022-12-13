@@ -1,0 +1,16 @@
+Perspective projection
+
+Cpfg also supports perspective viewing, although
+it is more difficult to properly set parameter values.
+
+The model can be saved in 'rayshade' format using the Save As.. menu item
+on the cpfg menu, to create leaf.ray
+
+The resulting file (leaf.ray) is raytraced from the object menu:
+
+	raytrace > rayshade
+
+This will create a PNG file, leaf.png, which can be viewed using:
+
+	raytrace > display
+

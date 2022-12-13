@@ -1,0 +1,62 @@
+shadowpyramid: Environmental program for shadow pyramid light model described in
+Palubicki et al., "Self-organizing tree models for image synthesis", SIGRAPH 2009.
+
+Name of the executable: shadowpyramid
+
+Command line parameters:
+   shadowpyramid -e environment_file specification_file
+
+
+Communication:
+	sent to environmental program:
+		1) if greater than zero, a shadow is cast from the turtle location
+		   if zero, no shadow is cast
+
+	received from environmental program:
+		1) quality of light at turtle location
+		2-4) (if present) direction of greatest light (i.e., gradient of light field)
+
+
+Commands in specification file:
+	
+verbose: on / off				Switches on or off verbose output (default: off)
+
+grid size: N					Number of voxels to each side of the voxel cube; default 201.
+
+grid span: X					Length of each side of the voxel cube, default 200.
+							The cube will cover the volume [-X/2,X/2] x [0,X] x [-X/2,X/2]
+
+shadow spread: slope			Slope of the side of the shadow pyramid; default 1 (45 degree angle).
+							Values greater than one result in wider pyramids, values
+							less than one in narrower pyramids.
+
+shadow depth: depth			Number of vertical tiers of voxels which will be shaded by a single
+							element; default 6.
+
+shadow weight: weight			Maximum density of a single shadow; this is the amount of shadow
+							generated immediately adjacent to the shading element. Default 0.58
+
+shadow dissipation: diss			The shadow density falls off with distance from the shading element;
+	 	 	 	 	 	 	diss controls this exponential falloff. Default 6.9
+
+light randomness: ran 			The initial amount of light in a voxel is controlled by ran and vbias;
+light vertical bias: vbias 			vbias introduces a vertical gradient of light, with more at the top of the
+							space, while ran introduces a random variation in the amount of light.
+							Both default to zero.
+
+sample radius: srad				The radius of voxels sampled when computing the direction of light
+							at a point.
+
+
+Algorithm:
+
+The volume [-X/2,X/2] x [0,X] x [-X/2,X/2] is filled with a cube of voxels, N to a side.  At each iteration,
+the voxels are initialized with a light value; normally 1, but with possible randomness or vertical bias.
+For each shadowing object, we find its corresponding voxel, then construct the shadow pyramid beneath
+that voxel.  The pyramid descends [depth] tiers, and at each level i a kxk square of voxels is shaded,
+where k = 1 + 2 * floor(slope * i).  A voxel is shaded by calculating its distance d to the shading element,
+then multiplying its light value by (1 - weight * (diss ^ -d)).
+
+When all shading has been applied to the voxels, the light values are read off for each queried point.  If
+the query module has at least 4 arguments, then the gradient of the light field is estimated at that point
+by differencing the light values at points a distance of srad in both directions along the x, y, and z axes.

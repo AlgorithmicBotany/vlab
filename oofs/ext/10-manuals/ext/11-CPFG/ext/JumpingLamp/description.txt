@@ -1,0 +1,17 @@
+Kinematic model of a jumping articulated lamp inspired by "Luxo Junior"
+
+The model provides a simple example of the application of 
+graphically defined functions to control an animation. 
+The L-system is similar to that of the static ArticulatedLamp
+object; the main difference is that angles are controlled 
+by functions of time rather than a control panel. 
+
+Moreover, two of the joint angles are controlled by differences 
+of the angle values returned by the functions, rather than these
+functions directly. This makes the lamp's posture easier 
+to manipulate, as changes in the argument values now preserve 
+the orientation of the lamp head, as would be the case in a real
+articulated lamp. 
+
+---
+PWP, updated 2022-11-22.

@@ -1,0 +1,70 @@
+# build files
+/config_cache.sh
+/.binaries/
+/.libraries/
+.moc/
+.obj/
+.uic/
+.qmake.stash
+qrc_*.cpp
+a.out
+
+# ignore generated Makefiles
+Makefile
+!/Distribution/**/Makefile
+!/libs/glew-1.5.4/**/Makefile
+!/lpfg/bin/**/Makefile
+!/lpfg/scripts/**/Makefile
+
+# ignore yacc and lex generated files
+/cpfg/lsys_input_lex.cpp
+/cpfg/lsys_input_yacc.cpp
+/cpfg/lsys_input_yacc.h
+/PreProc/scanline_lex.cpp
+/Rayshade/libshade/lex.c
+/Rayshade/libshade/yacc.c
+/Rayshade/libshade/y.tab.c
+/Rayshade/libshade/y.tab.h
+/l2c/l2c_lex.cpp
+/l2c/l2c_yacc.cpp
+/l2c/l2c_yacc.h
+
+# macOS files
+.DS_Store
+.AppleDouble
+.LSOverride
+._*
+Icon
+
+# macOS network files
+.AppleDB
+.AppleDesktop
+Network Trash Folder
+Temporary Items
+.apdisk
+
+# Windows files
+[Dd]esktop.ini
+Thumbs.db
+
+# editor files
+*.swp
+/.ycm_extra_conf.py*
+
+# Qt Creator files
+*.creator.user*
+*.pro.user*
+CMakeLists.txt.user*
+
+# other files
+.#file_list
+
+#Distribution files
+Distribution/vlab-5*
+
+#comments
+*/comments
+libs/*/comments
+
+#test files
+

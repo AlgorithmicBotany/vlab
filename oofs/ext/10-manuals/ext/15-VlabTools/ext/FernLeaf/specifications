@@ -1,0 +1,50 @@
+plant.l
+plant.v
+plant.a
+plant.mat
+brangle.func
+curvature.func
+leaf_length.func
+leaf_width.func
+int_width.func
+int_length.func
+leaf.con
+description.txt
+ignore:
+*
+model:
+	generate:
+		cpfg -M plant.mat plant.l plant.v plant.a
+
+L-system:
+	EDIT plant.l
+
+view:
+	EDIT plant.v
+
+animate:
+	EDIT plant.a
+
+materials:
+	MEDIT plant.mat
+
+functions:
+	int_length:
+		funcedit int_length.func
+	int_width:
+		funcedit int_width.func
+	curvature:
+		funcedit curvature.func
+	leaf_length:
+		funcedit leaf_length.func
+	leaf_width:
+		funcedit leaf_width.func
+	branch_angle:
+		funcedit brangle.func
+
+contour:
+	leaf:
+		cuspy leaf.con
+
+description:
+	EDIT description.txt

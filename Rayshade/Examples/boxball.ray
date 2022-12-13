@@ -1,0 +1,58 @@
+/*
+ * White diffuse sphere with wooden box-shaped regions removed.
+ * Rod Bogart 11/90
+ */
+eyep  4 3 5
+fov 15
+light 1 directional 1 0.5 2
+sample 1	/* Increase this value for less noisy image */
+report verbose
+screen 320 256
+
+plane 0. 0. -5. 0. 0. 1 texture marble scale 2 2 1
+
+difference
+	sphere  0.65 0 0 0
+	grid 3 3 3	
+		applysurf ambient .2 .05 .05
+			  diffuse .8 .1 .05
+			  specular .05 .05 .05
+	  		  specpow 20
+
+		box 0.3 0.3 -0.7 0.7 0.7 -0.3 
+		box -0.2 0.3 -0.7 0.2 0.7 -0.3 
+		box -0.7 0.3 -0.7 -0.3 0.7 -0.3 
+
+		box 0.3 0.3 -0.2 0.7 0.7 0.2 
+		box -0.2 0.3 -0.2 0.2 0.7 0.2 
+		box -0.7 0.3 -0.2 -0.3 0.7 0.2 
+
+		box 0.3 0.3 0.3 0.7 0.7 0.7 
+		box -0.2 0.3 0.3 0.2 0.7 0.7 
+		box -0.7 0.3 0.3 -0.3 0.7 0.7 
+
+		box 0.3 -0.2 -0.7 0.7 0.2 -0.3 
+		box -0.2 -0.2 -0.7 0.2 0.2 -0.3 
+		box -0.7 -0.2 -0.7 -0.3 0.2 -0.3 
+
+		box 0.3 -0.2 -0.2 0.7 0.2 0.2 
+		box -0.2 -0.2 -0.2 0.2 0.2 0.2 
+		box -0.7 -0.2 -0.2 -0.3 0.2 0.2 
+
+		box 0.3 -0.2 0.3 0.7 0.2 0.7 
+		box -0.2 -0.2 0.3 0.2 0.2 0.7 
+		box -0.7 -0.2 0.3 -0.3 0.2 0.7 
+
+		box 0.3 -0.7 -0.7 0.7 -0.3 -0.3 
+		box -0.2 -0.7 -0.7 0.2 -0.3 -0.3 
+		box -0.7 -0.7 -0.7 -0.3 -0.3 -0.3 
+
+		box 0.3 -0.7 -0.2 0.7 -0.3 0.2 
+		box -0.2 -0.7 -0.2 0.2 -0.3 0.2 
+		box -0.7 -0.7 -0.2 -0.3 -0.3 0.2 
+
+		box 0.3 -0.7 0.3 0.7 -0.3 0.7 
+		box -0.2 -0.7 0.3 0.2 -0.3 0.7 
+		box -0.7 -0.7 0.3 -0.3 -0.3 0.7 
+	end texture wood scale 3 1 1
+end

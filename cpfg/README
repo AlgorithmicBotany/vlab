@@ -1,0 +1,29 @@
+This software is provided without support and without any obligation
+on the part of Silicon Graphics, Inc. to assist in its use, correction,
+modification or enhancement.  There is no guarantee that this software
+will be included in future software releases, and it probably will not
+be included.
+
+THIS SOFTWARE IS PROVIDED "AS IS" WITH NO WARRANTIES OF ANY KIND
+INCLUDING THE WARRANTIES OF DESIGN, MERCHANTIBILITY AND FITNESS FOR A
+PARTICULAR PURPOSE, OR ARISING FROM A COURSE OF DEALING, USAGE OR TRADE
+PRACTICE.
+
+If you have problems using this account, send electronic mail to
+"postmaster@sgi.com".
+
+shell.sgi.com provides other facilities for anonymous FTP.
+Ftp-europe.sgi.com is closer to Europe.
+
+See the README files in the following directories for details.
+  ~ftp/sgi              various goodies for IRIX and bug fixes.
+  ~ftp/sgi/fax          HylaFAX software.  Includes source.
+  ~ftp/sgi/src          various source, including ttcp, whois, and fax.
+  ~ftp/graphics         GL graphics programs/source from Paul Haeberli et al.
+  ~ftp/comp.sys.sgi     articles and compressed groups of articles
+  ~ftp/comp.sys.mips    articles and compressed groups of articles
+  ~ftp/sgi/opengl       various OpenGL files
+  ~ftp/support          various goodies and bug fixes, unsupported but from
+                          the support organization
+  ~ftp/other            other things from elsewhere
+

@@ -1,0 +1,158 @@
+/* Converted by rsconvert */
+/*
+ * Example rayshade input file
+ *
+ * pool table from "Reds' Nightmare"
+ *
+ * C. Kolb 2/88
+ *
+ * $Id: pool.ray,v 1.1.1.1 2005/01/07 20:51:06 laneb Exp $
+ *
+ * $Log: pool.ray,v $
+ * Revision 1.1.1.1  2005/01/07 20:51:06  laneb
+ * Initial import, straight port to Windows/Linux
+ *
+ * Revision 4.0  91/07/17  14:26:36  kolb
+ * Initial version.
+ * 
+ */
+up 0 0 1 
+fov 45 
+screen 512 512 
+maxdepth 2 
+background 0 0 0 
+light 1.4 point 20 0 66 
+surface blacktile 
+	ambient 0.01 0.01 0.01 
+	diffuse 0.01 0.01 0.01 
+surface s0 
+	ambient 0.862745 0.862745 0.862745 
+	diffuse 0.039216 0.039216 0.039216 
+surface s1 
+		
+	ambient 0.470588 0.156863 0.392157 
+	diffuse 0.470588 0.156863 0.392157 
+	specular 1 1 1
+surface s2 
+		
+	ambient 0.117647 0.117647 0.392157 
+	diffuse 0.117647 0.117647 0.392157 
+surface s3 
+		
+	ambient 0.784314 0.078431 0.078431 
+	diffuse 0.470588 0.039216 0.039216 
+surface s4 
+	ambient 0 0.2235 0.145 
+	diffuse 0 0.2235 0.145 
+surface mirror 
+	ambient 0.04 0.04 0.04 
+	diffuse 0.05 0.05 0.05 
+	specular .8 .8 .8
+	specpow 60 
+	reflect 1.
+surface s5 
+	ambient 0.196078 0.392157 0.117647 
+	diffuse 0.196078 0.392157 0.117647 
+	specular 0.156863 0.156863 0.156863 
+	specpow 7 
+	reflect 1.
+surface s6 
+		
+	ambient 0.588235 0.392157 0.117647 
+	diffuse 0.196078 0.392157 0.117647 
+	specular 0.156863 0.156863 0.156863 
+	specpow 7 
+	reflect 1.
+surface s7 
+	ambient 0.196078 0.392157 0.509804 
+	diffuse 0.196078 0.392157 0.117647 
+	specular 0.156863 0.156863 0.156863 
+	specpow 7 
+	reflect 1.
+surface s8 
+	ambient 0.980392 0.196078 0.117647 
+	diffuse 0.196078 0.392157 0.117647 
+	specular 0.156863 0.156863 0.156863 
+	specpow 7 
+	reflect 1.
+surface s9 
+		
+	ambient 0.196078 0.392157 0.901961 
+	diffuse 0.196078 0 0.117647 
+	specular 0.156863 0.156863 0.156863 
+	specpow 7 
+	reflect 1.
+surface s10 
+	ambient 0.411765 0.411765 0.176471 
+	diffuse 0.411765 0.411765 0.176471 
+surface floor 
+	ambient 0.1 0.1 0.1 
+	diffuse 0.5 0.5 0.45 
+	specular 0.8 0.8 0.8 
+	specpow 18 
+surface s12 
+	ambient 0.313725 0.313725 0.313725 
+	diffuse 0.745098 0.745098 0.745098 
+surface s13 
+	ambient 0.078431 0.862745 0.078431 
+	diffuse 0.039216 0.039216 0.039216 
+	specular 0.156863 0.156863 0.156863 
+	specpow 7 
+surface s14 
+	ambient 0.784314 0.078431 0.078431 
+	diffuse 0.470588 0.039216 0.039216 
+surface s15 
+	ambient 0.392157 0.098039 0.047059 
+	diffuse 0.392157 0.098039 0.047059 
+	specular 0.039216 0.039216 0.039216 
+	specpow 3 
+surface s16 
+	ambient 0.509804 0.509804 0.509804 
+	diffuse 0.509804 0.509804 0.509804 
+	specular 0.156863 0.156863 0.156863 
+	specpow 7 
+	reflect 1.
+sphere s5 1.5 0 	-21 		1.5 
+	sphere s6 1.5 1.5 	-23.598 	1.5 
+	sphere s7 1.5 -1.5 	-23.598 	1.5 
+	sphere s8 1.5 3 	-26.1962 	1.5 
+	sphere s9 1.5 0 	-26.1962 	1.5 
+	sphere s5 1.5 -3 	-26.1962 	1.5 
+	sphere s6 1.5 4.5 	-28.7942 	1.5 
+	sphere s7 1.5 1.5 	-28.7942 	1.5 
+	sphere s8 1.5 -1.5 	-28.7942 	1.5 
+	sphere s9 1.5 -4.5 	-28.7942 	1.5 
+	sphere s5 1.5 6 	-31.3923 	1.5 
+	sphere s6 1.5 3 	-31.3923 	1.5 
+	sphere s7 1.5 0 	-31.3923 	1.5 
+	sphere s8 1.5 -3 	-31.3923 	1.5 
+	sphere s9 1.5 -6 	-31.3923 	1.5 
+
+	box s4 -30 -57 -2 30 57 0 
+	box s15 27 -54 -1.5 33 54 1.5 texture wood scale 15 10 15 
+	box s15 -33 -54 -1.5 -27 54 1.5 texture wood scale 15 10 15 
+	box s15 -33 54 -1.5 33 60 1.5 texture wood scale 10 15 15 
+	box s15 -33 -60 -1.5 33 -54 1.5 texture wood scale 10 15 15 
+	sphere s16 1.5 0 0 0 translate 0 21 1.5 
+	box mirror -11.3333 -144.1 10 31.3333 -143.9 50 	/* was 40. -144 30. */
+	/*
+	 * Walls
+	 */
+	plane s10 					0 -144 0 0 1 0 
+	plane s10 				-180 0 0 1 0 0 
+	plane s10 			180 0 0 -1 0 0 
+	plane s10 			0 144 0 0 -1 0 
+	/*
+	 * Floor
+	 */
+	plane floor 				0 0 -30 0 0 1 
+		texture marble scale 6 6 6 rotate 1 0 0 90 
+				translate 0 0 -4.376 
+		texture checker blacktile scale 12.3 12.3 12.3 
+	/*
+	 * Ceiling
+	 */
+	plane s12 		0 0 72 0 0 -1 
+
+eyep 38 100 43 
+lookp 0 0 0 

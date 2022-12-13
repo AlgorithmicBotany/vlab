@@ -1,0 +1,220 @@
+\chapter{Options}
+
+This appendix describes the command-line arguments accepted by {\rayshade}.
+These options override defaults
+as well as any values or flags given in the input file,
+and are thus useful for generating test and other unusual, ``non-standard''
+renderings.
+
+The general form of a {\rayshade} command line is:
+\begin{quote}
+{\tt rayshade} [{\em Options}] [{\em filename}]
+\end{quote}
+
+If given, the input file is read from {\em filename}.  By default,
+the input file is read from the standard input.
+Recall that, by default, the image file is written to the standard
+output; you will need to redirect the standard output if you have not
+chosen to write the image to a file directly.  The name of the input
+file may be given anywhere on the command line.
+
+Command-line options fall into two broad categories: those that set
+numerical or other values and thus must be followed by further arguments,
+and those that simply turn features on and off.  {\Rayshade}'s
+convention is to denote the value-setting arguments using capital letters,
+and feature-toggling arguments using lower-case letters.
+
+\begin{defkey}{-A}{{\em frame}}
+	Begin rendering (action) on the given frame.
+\end{defkey}
+The default starting frame is number zero.
+
+\begin{defkey}{-a}{}
+	Toggle writing of alpha channel.
+\end{defkey}
+This option is only available when the Utah Raster Toolkit is
+being used.
+
+\begin{defkey}{-C}{{\em R G B}}
+	Set the adaptive ray tree pruning color.  If all
+	channel contributions falls below the given cutoff
+	values, no further rays are spawned.
+\end{defkey}
+Overrides the value specified via the {\tt cutoff} keyword.
+
+\begin{defkey}{-c}{}
+	Continue an interrupted rendering.
+\end{defkey}
+When given, this option indicates that the image file being written
+to contains a partially-completed image.  {\Rayshade} will read the
+image to determine the scanline from which to continue the rendering.
+This option is only available with the Utah Raster Toolkit.
+The {\tt -O} option must also be used.
+
+\begin{defkey}{-D}{{\em depth}}
+	Set maximum ray tree depth.
+\end{defkey}
+Overrides the value specified in the input file via the {\tt maxdepth}
+keyword.
+
+\begin{defkey}{-E}{{\em separation}}
+	Set eye separation for rendering of stereo pairs.
+\end{defkey}
+Overrides the value specified via the {\tt eyesep} keyword.
+
+\begin{defkey}{-e}{}
+	Write exponential RLE file.
+\end{defkey}
+This option is only available for use with the Utah Raster Toolkit.
+See the Utah Raster Toolkit's {\em unexp} manual page for details on
+exponential RLE files.
+
+\begin{defkey}{-F}{{\em freq}}
+	Set frequency of status report.
+\end{defkey}
+Overrides the value given using the {\tt report} keyword.
+
+\begin{defkey}{-f}{}
+	Flip all computed polygon (and triangle) normals.
+\end{defkey}
+This option should be used when rendering polygons defined
+by vertices given in {\em clockwise}
+order, rather than counter-clockwise order as
+expected by {\rayshade}.
+
+\begin{defkey}{-G}{{\em gamma}}
+	Use given gamma correction exponent writing writing
+	color information to the image file.
+\end{defkey}
+The default value for {\em gamma} is 1.0.
+
+\begin{defkey}{-g}{}
+	Use a Gaussian pixel filter.
+\end{defkey}
+Overrides the filter selected through the use of the {\tt filter}
+keyword.
+
+\begin{defkey}{-h}{}
+	Print a short use message.
+\end{defkey}
+
+\begin{defkey}{-j}{}
+	Toggle the use of jittered sampling to perform antialiasing.
+	If disabled, a fixed sampling pattern is used.
+\end{defkey}
+
+\begin{defkey}{-l}{}
+	Render the left stereo pair image.
+\end{defkey}
+
+\begin{defkey}{-m}{}
+	Write a sampling map to the alpha channel.
+\end{defkey}
+Rather than containing coverage information, the alpha channel values
+will be restricted to zero, indicating no supersampling, and full intensity,
+indicating supersampling.  This option is only available if the Utah
+Raster Toolkit is being used.
+
+\begin{defkey}{-N}{{\em frames}}
+	Set the total number of frames to be rendered.
+\end{defkey}
+This option overrides any value specified through the use of the
+{\tt frames} keyword.  By default, a single frame is rendered.
+
+\begin{defkey}{-n}{}
+	Do not render shadows.
+\end{defkey}
+
+\begin{defkey}{-O}{{\em outfile}}
+	Write the image to the named file.
+\end{defkey}
+This option overrides the name given with the {\tt outfile} keyword,
+if any,
+in the input file.
+
+\begin{defkey}{-o}{}
+	Toggle the effect of object opacity on shadows.
+\end{defkey}
+This option is equivalent to specifying {\tt shadowtransp}
+in the input file.  By default, {\rayshade} traces shadow
+rays through non-opaque objects.
+
+\begin{defkey}{-P}{{\em cpp-arguments}}
+	Specify the options that should be passed to the C
+	preprocessor.
+\end{defkey}
+The C preprocessor, if available, is applied to all of the input
+passed to {\em rayshade}.
+
+\begin{defkey}{-p}{}
+	Perform preview-quality rendering.
+\end{defkey}
+This option is equivalent to {\tt -n -S 1 -D 0}.
+
+\begin{defkey}{-q}{}
+	Do not print warning messages.
+\end{defkey}
+
+\begin{defkey}{-R}{{\em xsize ysize}}
+	Produce an image {\em xsize} pixels wide by
+	{\em ysize} pixels high.
+\end{defkey}
+This option overrides any screen size set by use of
+the {\tt screen} keyword.
+
+\begin{defkey}{-r}{}
+	Render the right stereo pair image.
+\end{defkey}
+
+\begin{defkey}{-S}{{\em samples}}
+	Use $samples^2$ jittered samples.
+\end{defkey}
+This option overrides any value set through the use of
+the {\tt samples} keyword in the input file.
+
+\begin{defkey}{-s}{}
+	Disable caching of  shadowing information.
+\end{defkey}
+It should never be necessary to use this option.
+
+\begin{defkey}{-T}{{\em r g b}}
+	Set the contrast threshold in the three
+	color channels for use in adaptive supersampling.
+\end{defkey}
+This option overrides any value given through the use of
+the {\em contrast} keyword.
+
+\begin{defkey}{-u}{}
+	Toggle the use of the C preprocessor.
+\end{defkey}
+{\Rayshade} usually feeds its input through a
+C preprocessor if one is available on your system.
+If this option is given, unadulterated input files will
+be used.
+
+\begin{defkey}{-V}{{\em	filename}}
+	Write verbose output to the named file.
+\end{defkey}
+This option overrides any file named through the use of
+the {\tt report} keyword.
+
+\begin{defkey}{-v}{}
+	Write verbose output.
+\end{defkey}
+When given, this option causes information about the options
+selected and the objects defined to be included in the
+report file.
+
+\begin{defkey}{-W}{{\em minx maxx miny maxy}}
+	Render the specified window.
+\end{defkey}
+The window must be properly contained within the screen.  This
+option overrides any window specified using the {\em window} keyword
+in the input file.
+
+\begin{defkey}{-X}{{\em left right bottom top}}
+	Crop the rendering window using the given normalized values.
+\end{defkey}
+This option is provided to facilitate changing and/or examining a
+small portion of an image without having to re-render the entire
+image.

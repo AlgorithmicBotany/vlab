@@ -1,0 +1,2 @@
+Example of multiple view windows.
+The dimensions of each window are defined in the view file.

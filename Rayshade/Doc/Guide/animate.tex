@@ -1,0 +1,102 @@
+\chapter{Animation}
+
+{\Rayshade}\ provides basic animation animation support by
+allowing time-varying
+transformations to be associated with primitives and aggregate objects.
+Commands are provided for controlling the amount of time between each
+frame, the speed of the camera shutter, and the total number of frames
+to be rendered.
+
+By default, {\rayshade} renders a single frame, with the shutter open for
+an instant (0 units of time, in fact).  The shutter speed in no way
+changes the light-gathering properties of the camera, i.e., frames
+rendered using
+a longer exposure will not appear brighter than those with a shorter
+exposure.  The only change will be in the potential amount of movement
+that the
+frame ``sees'' during the time that the shutter is open.
+
+Each ray cast by {\rayshade} samples a particular moment in time.
+The time value assigned to a ray
+ranges from the starting time of the current frame to the starting
+time plus the amount of time the shutter is open.  When
+a ray encounters an object or texture that possesses an animated
+transformation, the transformed
+entity is moved into whatever position is appropriate
+for the ray's current time value before intersection, shading, or texturing
+computations are performed.
+
+The starting time of the current frame is computed using the
+length of each frame
+the current frame number, and the starting time of the first frame.
+
+\begin{defkey}{shutter}{{\em t}}
+	Specifies that the shutter is open for t units of
+	time for each exposure.
+\end{defkey}
+A larger value of {\em t} will lead to more motion blur in the final
+image.   Note that {\em t} may be greater than the actual length
+of a frame.  By default, {\em t} is zero, which prevents all motion blur.
+
+\begin{defkey}{framelength}{{\em frameinc}}
+	Specifies the time increment between frames.
+\end{defkey}
+The default time between frames is 1 unit.
+
+\begin{defkey}{starttime}{{\em time}}
+	Specifies the starting time of the first frame.
+\end{defkey}
+By default, {\em time} is zero.
+
+Variables may be defined thorugh the use of the {\tt define} keyword:
+
+\begin{defkey}{define}{{\em name value}}
+	Associate {\em name} with the given {\em value}.  Value may
+	be a constant or a parenthesized expression.
+\end{defkey}
+The variable {\em name} may thereafter be used in expressions in the
+input file.
+
+An animated transformation is one for which animated expressions have
+been used to define one or more of its parameters (e.g. the angle through
+which a rotation occurs).  An animated expression is one that makes
+use of a time-varying (``animated'') variable or function.
+
+There are two supported animated variables.
+The first, {\tt time}, is equal to the current time.
+When a ray encounters an animated
+transformation defined using an expression containing {\tt time}, the ray
+substitutes its time value into the expression before evaluation.
+Using the {\tt time} variable in an animated expression is the most
+basic way to create blur-causing motion.
+
+The second animated variable, {\tt frame}, is equal to the current
+frame number.  Unlike the {\tt time} variable, {\tt frame} takes on
+a single value for the duration of each frame.  Thus, transforms
+animated through the use of the {\tt frame} variable will not exhibit
+motion blurring.
+
+Also supported is the {\tt linear} function.  This function uses
+{\tt time} implicitly to interplate between two values.
+
+\begin{defkey}{linear}{{\tt (} {\em Stime, Sval, Etime, Eval} {\tt )}}
+	Linearly interpolate between {\em Sval} at time
+	{\em Stime} and {\em Eval} at time {\em Etime}.
+	If the current time is less than {\em Stime}, the function
+	returns {\em Sval}.  If the current time is greater than
+	{\em Etime}, {\em Eval} is returned.
+\end{defkey}
+
+The following example shows the use of the {\tt time} variable to
+animate a sphere by translating it downwards over five frames.
+Note thet the {\tt shutter} keyword is used to set the shutter duration
+in order to induce motion blurring.
+
+\begin{verbatim}
+    frames 5
+    shutter 1
+    sphere 1 0 0 2 translate 0 0 (-time)
+\end{verbatim}
+
+Further examples of animation may be found in the Examples directory
+of the {\rayshade} distribution.

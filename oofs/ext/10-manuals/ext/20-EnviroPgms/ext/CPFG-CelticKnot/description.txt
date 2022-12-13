@@ -1,0 +1,18 @@
+Celtic knot created by an environmental program checking for obstacles.
+
+Here is how the files are used:
+
+cpfg includes the environment file:  enviro.e
+enviro.e defines the environmental program to be run:  obcheck
+obcheck checks the current position of the turtle against obstacles.dat
+
+cpfg displays the obstacles as a background scene, defined in viewfile.v:
+     background scene: background.dat
+background.dat is created from obstacles.dat using the mkbackground program
+
+Steps to running the simulation
+1.  Create the environmental program
+	environment > enviro program > make
+2.  Run the model:
+	model > generate
+3.  Select Animate, and then Run in the cpfg window

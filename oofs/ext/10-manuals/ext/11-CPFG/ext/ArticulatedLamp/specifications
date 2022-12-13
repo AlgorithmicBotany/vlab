@@ -1,0 +1,28 @@
+lamp.l
+view.v
+panel.l
+materials.mat
+description.txt
+rmode: cont
+ignore:
+*.swp
+*
+model:
+	generate:
+		cpfg -M materials.mat lamp.l view.v
+
+L-system:
+	panel:
+		panel panel.l | awkped lamp.l
+	EDIT lamp.l
+
+view file:
+	EDIT view.v
+
+materials:
+	edit:
+		medit materials.mat
+
+description:
+	EDIT description.txt
+

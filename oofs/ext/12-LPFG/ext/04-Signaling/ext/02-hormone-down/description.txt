@@ -1,0 +1,4 @@
+Context-sensitivity - basipetal flow (down)
+
+An basipetal flow is captured by a right-context-sensitive
+production.

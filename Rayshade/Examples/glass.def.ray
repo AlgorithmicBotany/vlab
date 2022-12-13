@@ -1,0 +1,20 @@
+/*
+ * Drinking glass object.
+ * C. Kolb 12/89
+ */
+name glass
+union
+	torus 0.95 0.06 0 0 2 0 0 1
+	difference
+		list /* outer glass */
+			cone 0.9 0 0 -0.001 1.0 0 0 2
+			disc 1 0 0 2 0 0 1
+			disc 0.9 0 0 -.001 0 0 -1
+		end
+		list /* inner glass */
+			cone 0.7 0 0 0.1   0.9 0 0 2.2
+			disc .9 0 0 2.2 0 0 1
+			disc .7 0 0 0.1 0 0 -1
+		end
+	end
+end

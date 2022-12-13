@@ -1,0 +1,45 @@
+Installing vlab on macOS
+
+Download the DMG disk image. After opening it, you will find:
+
+- browser: the application bundle containing the main vlab programs and tools;
+- oofs: a directory containing sample objects, organized as required by vlab's browser;
+- raserver: the “remote access server”, which lets you share vlab objects over a network;
+- Gifts: files for cpfg/lpfg syntax highlighting in vim.
+
+You can install vlab anywhere you want; in the description below we assume that the browser is in /Applications,
+but copying vlab to another directory, e.g., your home directory, is also possible.
+
+To start vlab, go to the /Applications directory using Finder and click on browser.app.
+If there is a security warning and browser does not open, right click on browser.app and select open.
+When browser starts, a dialog window will be shown, allowing you to open the sample oofs in a local directory
+or connect to a server hosting remote oofs.
+
+You can also run vlab from a Terminal window, by typing the command line
+/Applications/browser.app/Contents/MacOS/dbin/browser
+The debugging, warning and error messages will then be displayed in the Terminal window
+(which is often convenient).
+
+You can add vlab to your system path by executing the following command in a Terminal:
+export PATH=$PATH:/Applications/browser.app/Contents/MacOS/dbin:/Applications/browser.app/Contents/MacOS/bin
+This will allow you to run browser and all other vlab executables directly from the Terminal command line.
+
+Vlab includes two L-system-based simulators: cpfg and lpfg. To run lpfg you will need to have a C++ compiler installed.
+The simplest way is to install Xcode Command Line Tools directly via Terminal with the command: xcode-select -install
+ 
+The current version of vlab was developed and tested under macOS Sierra and High Sierra.  Please note that 
+in newer versions of macOS security features may prevent vlab browser from opening. You may have to grant permission
+to vlab (and its tools) to run on your system.
+
+### Gifts
+
+The Gifts directory contains vim syntax highlighting files.
+To use them, copy the files in ./Gifts/vim/ to your home directory: ~/.vim/
+
+### Contact
+
+The home page for vlab is:
+http://www.algorithmicbotany.org/virtual_laboratory/
+
+Email: vlab.algorithmicbotany@gmail.com
+

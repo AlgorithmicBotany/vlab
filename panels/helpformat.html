@@ -1,0 +1,482 @@
+<!doctype html public "-//w3c//dtd html 4.0 transitional//en">
+<html>
+<head>
+   <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+   <meta name="GENERATOR" content="Mozilla/4.75 [en] (X11; U; Linux 2.2.17-21mdk i686) [Netscape]">
+</head>
+<body>
+
+<h2>
+Quick Help for VLAB Panel Manager</h2>
+
+<h2>
+<b><i>1 Panel Execution</i></b></h2>
+<b><u>1.1 Command Line</u></b>
+<br>Execute Panel Manager using the following arguments:
+<p><b>>&nbsp; panel [optional file name]</b>
+<br>Opens a new panel, with optional file name.
+<p><b>>&nbsp; panel [panel definition file]</b>
+<br>Opens existing panel.
+<p><b>>&nbsp; panel -m [colour palette file] [panel definition file]</b>
+<br>Opens existing panel with specified colour palette.
+<br>(A colour map specification in the panel file overrides the command
+line argument. )<b><u></u></b>
+<p><b><u>1.2 Activating Panel Items</u></b>
+<p><b>Sliders</b>
+<ul>
+<li>
+<b>Select</b> the outlined slider&nbsp; between the title and value labels
+with the <b>left mouse</b> to grab focus.</li>
+
+<li>
+<b>Move</b> the mouse <b>left to decrease</b> the slider value, and <b>right
+to increase</b> the slider value.</li>
+
+<li>
+<b>Release</b> the mouse button to send the message.</li>
+</ul>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Or:
+<ul>
+<li>
+<b>Click</b> the <b>left mouse</b> on the small arrows on either side of
+the slider.&nbsp; Click the <b>left arrow to decrease</b> the slider value,
+and the <b>right arrow to increase</b> the slider value.</li>
+</ul>
+<b>Buttons</b>
+<ul>
+<li>
+<b>Select</b> the button with the <b>left mouse</b> to grab focus.</li>
+
+<li>
+<b>Release</b> the mouse button to send the message.</li>
+
+<li>
+<b>Monostable</b> buttons will change colour while pressed, and return
+to the original colour after release.</li>
+
+<li>
+<b>Toggle</b> buttons will switch between ON and OFF states (and colours)
+each time they are activated.</li>
+</ul>
+<b>Button Groups</b>
+<ul>
+<li>
+Button groups are sets of <b>mutually exclusive</b> toggle buttons.</li>
+
+<li>
+If any button is activated, it becomes ON (even if it was ON previously)
+and the others are turned OFF.</li>
+
+<li>
+It makes little sense to use monostable buttons in groups.</li>
+</ul>
+<b>Menu Items</b>
+<ul>
+<li>
+<b>Press</b> the <b>right mouse</b> anywhere on the panel to activate the
+popup menu.</li>
+
+<li>
+<b>Select</b> the menu item from the popup menu to send the message.</li>
+</ul>
+<b>Pages</b>
+<ul>
+<li>
+<b>Press</b> the <b>right mouse</b> anywhere on the panel to activate the
+popup menu.</li>
+
+<li>
+<b>Select</b> the page title from the popup menu to go to the page.</li>
+
+<li>
+A message is sent to signal the page change.</li>
+</ul>
+<b><u>1.3 Popup Menu</u></b>
+<ul>
+<li>
+<b>Raise</b> always appears at the top of the popup menu. Its function
+is simply to bring the panel window to the front of the other windows on
+the screen.</li>
+
+<li>
+<b>Restore</b> rereads the panel definition file to restore controls to
+their initial values, and sends all messages associated with the controls
+to stdout.</li>
+
+<li>
+<b>Reread</b> rereads the panel definition file and redraws the controls
+in the panel window.</li>
+
+<li>
+<b>Broadcast</b> sends all messages associated with the controls to stdout.</li>
+
+<li>
+<b>Edit</b> opens the panel editor window, and switches to edit mode. A
+different set of menu options are then available.</li>
+
+<li>
+<b>Quit</b> outputs the null character (end-of-file), which terminates
+the parameter editor , and closes the panel.</li>
+</ul>
+
+<p><br><b><u>1.4 Interfacing with an Application</u></b>
+<ul>
+<li>
+The panel manager can be interfaced to <b>any application that has the
+ability to reread its data files</b>.</li>
+
+<li>
+Panel items print messages to standard output when activated with the click
+of the left mouse button.</li>
+
+<li>
+A <b>parameter editor</b> is used to interpret the messages and modify
+the corresponding file. Two parameter editors are commonly used in the
+vlab system, <i>ped</i> and <i>awkped</i>.</li>
+
+<li>
+The following example shows how the command line can be used to interface
+a panel with an application:</li>
+
+<br>&nbsp;
+<p>&nbsp;
+<p><b>> panel </b>[<i>panel definition file</i>] <b>| awkped </b>[<i>program
+file</i>]</ul>
+
+<h2>
+<b><i>2 Panel Editor</i></b></h2>
+In <b>execute mode</b> (default), activate the popup menu by pressing the
+<b>right
+mouse</b> button anywhere on the panel and select<b> <i>Edit </i></b>to
+invoke the Panel Editor.
+<br>The <b>panel editor</b> is a separate window which interacts with the
+<b>panel</b>.&nbsp;
+A 10x10 pixel grid is drawn over the panel, to aid with design and alignment.
+<p><b><u>2.1 Editing the Panel</u></b>
+<p>The panel editor is divided into <b>three main sections</b>: the upper
+section contains buttons to <b>add new items</b> to the panel, the middle
+section contains <b>horizontal and vertical alignment</b> buttons for aligning
+items on the panel, and the lower section contains the <b>editable fields
+of the panel</b>.
+<br>The following panel fields may be edited:
+<ul>
+<li>
+<b><i>Name: </i></b>The panels name can be typed in the edit box.&nbsp;
+The name is displayed in the panel window caption.&nbsp; It is not the
+same as the panel file name.</li>
+
+<li>
+<b><i>Palette:</i></b> A 256-entry RGB palette can be loaded by left clicking
+the button marked <b><i>Load</i></b>.&nbsp; If no palette is loaded, panel
+colours are default.&nbsp; If a palette is edited by left clicking the
+button marked <b><i>Edit</i></b>, the panel definition file must be reread
+by <b>activating the popup menu</b> and <b>selecting
+<i>Reread</i> </b>from
+<b><i>File.</i></b></li>
+
+<li>
+<b><i>Font:</i></b> A font for panel text can be specified by left clicking
+the button marked <b><i>Set</i></b>.</li>
+
+<li>
+<b><i>Width:</i></b> / <b><i>Height: </i></b>The width and height for the
+panel can be entered into the edit boxes, or the panel ca be freely resized.&nbsp;
+When resizing smaller, be cautious that all items on all pages remain within
+the panel bounds.</li>
+</ul>
+
+<p><br><b><u>2.2 Panel Items</u></b>
+<p><b>Labels</b>, <b>sliders</b>, <b>buttons</b> and <b>button groups</b>
+appear on the panel.&nbsp; Their contour is defined by a rectangular border
+around them and their <b>origin</b> is defined as the <b>bottom left</b>
+corner.&nbsp; <b>Pages</b> and <b>menu items</b> appear in the panel's
+popup menu. The <b>panel origin (0,0)</b> is defined as the <b>bottom left</b>
+corner.
+<p><b>Adding New Items to Panel</b>
+<ul>
+<li>
+Select an item from the <b>group of buttons at the top of panel editor</b>.</li>
+
+<li>
+The new item automatically appears at <b>origin (0,0)</b> and is selected.</li>
+
+<li>
+A popup dialog to edit&nbsp; the new item is opened.</li>
+</ul>
+<b>Selecting Items</b>
+<ul>
+<li>
+<b>Press</b> the <b>left mouse</b> button over an item to select.</li>
+
+<li>
+<b>Double click</b> the <b>left mouse</b> over an item to bring up the
+<b>popup
+dialog</b>.</li>
+
+<li>
+The selected item is outlined in a colour contrasting the panel background.</li>
+
+<li>
+The current <b>page</b> is selectable by pressing the <b>left mouse</b>
+on the panel background.&nbsp; To go to another page, <b>activate the popup
+menu</b> by pressing the <b>right mouse</b> anywhere on the panel and <b>select</b>
+the desired page.</li>
+
+<li>
+To select a <b>menu item</b>, <b>activate the popup menu </b>and <b>select
+</b>the desired menu item.&nbsp; The popup dialog for the menu item is
+opened.</li>
+
+<li>
+Once an item is selected, it may be moved, deleted, cloned or edited.</li>
+</ul>
+<b>Moving Items</b>
+<ul>
+<li>
+Once an item is selected, it may be <b>dragged by holding the left mouse</b>
+button while moving the mouse.</li>
+
+<li>
+When the item's popup dialog is open, the <b>origin may be entered</b>
+into the edit boxes marked <b><i>Origin:</i></b>.</li>
+
+<li>
+If a button group is moved, all buttons within it are moved.</li>
+</ul>
+<b>Snap to Grid</b>
+<ul>
+<li>
+To enable <b>Snap to Grid</b> option, <b>activate the popup menu</b> and
+<b>select
+<i>Snap to Grid</i> </b>from <b><i>Edit Options.</i></b></li>
+
+<li>
+When an item is selected or moved by with the <b>left mouse</b>, it will
+snap to grid upon <b>release</b>.&nbsp; <b>The bottom left corner will
+align with the nearest grid intersection</b><i>.</i></li>
+
+<li>
+Buttons in groups cannot be snapped to grid, however the group can be.</li>
+</ul>
+<b>Deleting Items</b>
+<ul>
+<li>
+Once an item is selected, it may be deleted by <b>activating the popup
+menu</b> by pressing the <b>right mouse</b> anywhere on the panel and <b>selecting
+<i>Delete
+Item</i></b> from <b><i>Edit Options.</i></b></li>
+
+<li>
+A <b>menu item</b> may be deleted by clicking the button marked <b><i>Delete</i></b>
+on the menu item popup dialog.</li>
+
+<li>
+A <b>page</b> may be deleted by <b>activating the popup menu</b> and <b>selecting
+<i>Delete Page</i></b> from <b><i>Edit Options.</i></b></li>
+</ul>
+<b>Cloning Items</b>
+<ul>
+<li>
+Once an item is selected, it may be cloned by <b>activating the popup menu</b>
+and <b>selecting
+<i>Clone Item</i></b> from <b><i>Edit Options.</i></b></li>
+
+<li>
+A clone is <i>exactly</i> like the original item, and automatically appears
+at <b>origin (0,0)</b> and is selected.</li>
+</ul>
+<b>Aligning Items on Panel</b>
+<ul>
+<li>
+Once an item is selected, it may be aligned<b> vertically</b> or <b>horizontally</b>
+on the panel.&nbsp; This is useful for panels designed as a single row
+or column.</li>
+
+<li>
+Select an alignment from the <b>groups of buttons in the middle section
+of the panel editor</b>.</li>
+</ul>
+<b><u>2.3 Editing Panel Items</u></b>
+<p>An items popup dialog can be invoked by:
+<ul>
+<li>
+<b>Double click</b> the <b>left mouse</b> over the item.</li>
+
+<li>
+<b>Activate the popup menu</b> by pressing the <b>right mouse</b> anywhere
+on the panel and select <b><i>Edit Item</i></b> from <b><i>Edit Options.</i></b></li>
+
+<li>
+<b>Add</b> a new item to the panel.</li>
+</ul>
+Each type of item has its own dialog.&nbsp; The item type is specified&nbsp;
+at the top of the dialog.&nbsp; The close button is located at the bottom.
+<br>An items editable fields may include the following (not all items include
+all fields):
+<ul>
+<li>
+<b><i>Name: </i></b>The items name can be typed in the edit box<b><i>.</i></b></li>
+
+<li>
+<b><i>Colours: </i></b>If a colour palette has been loaded, the colour
+can be selected by pressing the right mouse button over the colour swatch
+and selecting a colour index on the <b>popup palette</b>.&nbsp; If no palette
+is loaded, or no colour is selected,&nbsp; the label beside the colour
+swatch displays a dash (<b>-</b>).&nbsp; Otherwise, it displays the colour
+index between 0 and 255.&nbsp; The <b>first colour</b> is the <b>outline/text
+colour</b>.&nbsp; The <b>second colour</b> is the <b>activation colour</b>.&nbsp;
+The <b>third colour</b> is the <b>off colour</b>.</li>
+
+<li>
+<b><i>Origin: </i></b>The items (x,y) origin is displayed in spin boxes.&nbsp;
+These values may be edited.</li>
+
+<li>
+<b><i>Min/Max:</i></b> The range of sliders can be defined.&nbsp; <b>Min
+value MUST be less than Max value.</b></li>
+
+<li>
+<b><i>Value: </i></b>The initial state can be defined for buttons and sliders.</li>
+
+<li>
+<b><i>Message:</i></b> The message that is sent upon activation in execute
+mode must be specified.&nbsp; As a reminder, the default message is: <b>d
+&lt;name> %d &lt;scale></b></li>
+</ul>
+<b>Label Dialog</b>
+<br>A labels editable fields include: <b>name</b>, <b>colour</b>, <b>origin</b>
+<p><b>Slider Dialog</b>
+<br>A sliders editable fields include: <b>name</b>, <b>colours </b>(2)<b>,
+origin, min/max, value (</b>between min and max)<b>, message</b>
+<p><b>Button Dialog</b>
+<br>A buttons editable fields include: <b>name</b>, <b>colours </b>(3)<b>,
+origin, value </b>(on,off,monostable)<b>, message</b>
+<p><b>Button Group Dialog</b>
+<br>A button groups editable fields include:&nbsp; <b>colour, origin, buttons
+</b>(list
+of names)
+<br>Buttons can be added to a button group by left clicking the button
+marked <b><i>Add</i></b> and then by selecting the button items on the
+panel.&nbsp; When adding buttons to a group, only button items are selectable
+on the panel.
+<br>Left click the button marked <b><i>Done </i></b>when done adding buttons.
+<br><b>Buttons MUST have unique names, or they cannot be added to a group.</b>
+<p><b>Menu Item Dialog</b>
+<br>A menu items editable fields include: <b>name, message</b>
+<p><b>Page Dialog</b>
+<br>A pages editable fields include: <b>name, page label colour, page label
+origin, message</b>
+<br>A pages name appears in its label.&nbsp; All pages have labels, and
+page labels cannot be deleted, although they can be empty.
+<p><b><u>2.4 Executing the Panel</u></b>
+<p>The panel can return to <b>execute mode</b> in the following two ways:
+<ul>
+<li>
+<b>Activate the popup menu</b> by pressing the <b>right mouse</b> anywhere
+on the panel and select <b><i>Execute</i></b>.</li>
+
+<li>
+<b>Close the panel editor</b> by clicking the large button marked <b><i>Close</i></b>,
+located on the bottom of the panel editor.</li>
+</ul>
+
+<p><br><b><u>2.4 File Options</u></b>
+<ul>
+<li>
+<b>Load</b> opens a file dialog box to browse the users directories for
+the panel to load.</li>
+
+<li>
+<b>Reread&nbsp;</b> rereads the last saved panel definition file.</li>
+
+<li>
+<b>Save</b> saves the panel.&nbsp; If the panel file as not been specified,
+a file dialog will be opened to input the new panel file.</li>
+
+<li>
+<b>Save As</b> opens a file dialog to input another file to save the panel
+as.</li>
+</ul>
+
+<h2>
+<i>3 File Format</i></h2>
+The Panel Manager requires a specific file format.&nbsp; Panel definition
+files may be edited manually, or may be generated using the panel editor.&nbsp;
+Each panel item requires certain specifications in sequence.&nbsp; Each
+line in the file must begin with a <i>heading</i>, followed by a <i>colon</i>
+and a <i>space</i> separation.&nbsp; The only <b>optional</b> specifications
+are the panel <b><i>colour map:</i></b> and the <b><i>font:</i></b>.&nbsp;
+The following shows an example of a panel definition file, including all
+item types:
+<br>&nbsp;
+<table BORDER NOSAVE >
+<tr NOSAVE>
+<td NOSAVE>panel name: Model
+<br>colour map: map1.map
+<br>font: -urw-avantgarde-demibold-r-normal--17-120-100-100-p-0-iso8859-1
+<br>background: 36
+<br>size: 520 610
+<p>type: PAGE
+<br>name: Anabaena
+<br>color: 7
+<br>origin: 200 580
+<br>message: p 1
+<p>type: LABEL
+<br>name: Initial Cell
+<br>color: 7
+<br>origin: 133 555
+<p>type: SLIDER
+<br>name: Initial Conc (1/10)
+<br>colors: 7 1
+<br>origin: 20 340
+<br>min/max: 0 10000
+<br>value: 9225
+<br>message: n 4 1 -1 %d
+<p>type: BUTTON
+<br>name: Image
+<br>colors: 7 1
+<br>origin: 10 520
+<br>value: 1
+<br>message: s 1 image
+<p>type: BUTTON
+<br>name: 1st Split
+<br>colors: 7 1
+<br>origin: 10 460
+<br>value: 0
+<br>message: s 1 split
+<p>type: GROUP
+<br>color: 7
+<br>Image
+<br>L Justify
+<br>1st Split
+<br>ENDGROUP
+<p>type: MENU
+<br>name: Happy Message
+<br>message: happy</td>
+</tr>
+</table>
+
+<br>&nbsp;
+<br>&nbsp;
+<br>&nbsp;
+<br>&nbsp;
+<br>&nbsp;
+<br>&nbsp;
+<br>&nbsp;
+<br>&nbsp;
+<br>&nbsp;
+<br>&nbsp;
+<br>&nbsp;
+<br>&nbsp;
+<br>&nbsp;
+<br>&nbsp;
+<br>&nbsp;
+<br>&nbsp;
+<br>&nbsp;
+<br>&nbsp;
+<br>&nbsp;
+<br>&nbsp;
+<br>&nbsp;
+<br>&nbsp;
+</body>
+</html>

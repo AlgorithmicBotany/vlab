@@ -1,0 +1,11 @@
+FRACTAL FERN LEAF WITH AN ALTERNATING BRANCHING PATTERN
+
+EXERCISE
+
+Modify this leaf with the opposite branching pattern 
+into a leaf with an alternating pattern.  
+
+HINT: Introduce two different apex types A and B
+that produce different metamers M and N.  A metamer M 
+issues a lateral branch to the left, whereas a metamer 
+N issues a lateral branch to the right.

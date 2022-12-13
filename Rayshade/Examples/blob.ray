@@ -1,0 +1,18 @@
+/*
+ * Example blob input file, courtesy of Mark Podlipec
+ */
+eyep  0.0 -6.0 1.0
+lookp 0.0 0.0 0.0
+fov 45. 45.
+screen 240 240
+light 1.4 point 15.  -20. 25.
+light 0.7 point 5. -25. 10.
+surface white ambient .02 .02 .02 diffuse .5 .5 .5 specular .8 .8 .8 specpow 32
+
+blob white  0.6 1.0 1.0  -0.900  0.000  0.000
+                1.0 1.0   0.900  0.000  0.000 
+                1.0 1.0   0.000  0.000 -0.900 
+                1.0 1.0   0.000  0.000  0.900 texture marble 
+
+plane white 0. 0. -3.77   0 0 1
+

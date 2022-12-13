@@ -1,0 +1,46 @@
+#
+# Makefile for raypaint
+#
+# Craig Kolb
+#
+# $Id: Makefile.vc,v 1.1.1.1 2005/01/07 20:51:06 laneb Exp $
+#
+# Bin directory
+#
+OPTIMIZE =
+URTINC = 
+CCFLAGS = -nologo
+URTLIB = 
+LDFLAGS = 
+CC = cl
+
+LIBRAYDIR = ../libray
+LIBSHADEDIR = ../libshade
+INC = -I$(LIBRAYDIR) -I$(LIBSHADEDIR) -I..
+
+GRAPHICSLIB = 
+
+LIBRAY = $(LIBRAYDIR)/libray.lib
+LIBSHADE = $(LIBSHADEDIR)/libshade.lib
+
+CFLAGS = $(CCFLAGS) $(URTINC) $(INC) $(OPTIMIZE)
+
+LIBS = $(LIBSHADE) $(LIBRAY) $(URTLIB)
+
+DRIVE_C =	main.c graphics.c render.c version.c
+
+DRIVE_O = $(DRIVE_C:.c=.obj)
+
+CFILES = $(DRIVE_C)
+
+OBJ = $(DRIVE_O)
+
+DEPENDSRC = $(DRIVE_C)
+
+raypaint: $(OBJ) $(LIBS)
+	$(CC) $(OPTIMIZE) -Feraypaint.exe $(OBJ) $(LIBS) $(LDFLAGS) $(GRAPHICSLIB)
+
+clean:
+	del $(OBJ) raypaint.exe
+
+# DO NOT DELETE THIS LINE

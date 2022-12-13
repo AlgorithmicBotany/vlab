@@ -1,0 +1,2 @@
+This directory contains the example objects used in the vlab manuals.
+There is a section for each manual.

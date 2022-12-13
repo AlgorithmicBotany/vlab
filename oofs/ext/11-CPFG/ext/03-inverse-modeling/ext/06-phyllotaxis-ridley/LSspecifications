@@ -1,0 +1,4 @@
+cpfg -wr 0.488 1.0 -wpr 0.0 0.0 -M material.mat spiral.l spiral.v spiral.a
+continuous mode: on
+active tab: functions
+auto run: off

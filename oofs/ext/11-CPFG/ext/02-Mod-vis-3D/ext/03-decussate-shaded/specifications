@@ -1,0 +1,26 @@
+leaf.l
+leaf.v
+leaf.a
+material.mat
+description.txt
+ignore:
+*
+image:
+	generate:
+		cpfg -M material.mat leaf.l leaf.v leaf.a
+
+L-system:
+	EDIT leaf.l
+
+viewfile:
+	EDIT leaf.v
+
+animation:
+	EDIT leaf.a
+
+materials:
+	MEDIT material.mat
+
+description:
+	EDIT description.txt
+

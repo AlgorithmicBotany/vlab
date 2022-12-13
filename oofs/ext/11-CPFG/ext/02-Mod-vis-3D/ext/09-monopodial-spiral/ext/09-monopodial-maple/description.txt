@@ -1,0 +1,15 @@
+Monopodial structure with spiral phyllotaxis
+
+The main point illustrated by this model is the use of a texture 
+with transparency (maple.png) to model leaves with complex shapes.
+
+This model uses graphically defined functions of time
+to control:
+- the elongation of internodes,
+- the growth of leaves in length and width,
+- the branching angles between the stem and the leaves, and
+- the gradual changes of leaf colors.
+
+Leaves are modeled using cubic patches, and are arranged into 
+a spiral phyllotactic pattern.
+Slight orthotropism improves the appearance of the model.

@@ -1,0 +1,44 @@
+fractal.l
+fractal.v
+fractal.a
+fractal.map
+fractal.e
+density.spec
+description.txt
+ignore:
+lsys.so
+lpfg.log
+lsys.ii
+lsysinp.cpp
+lsys.o
+input.i
+*.swp
+.to*
+.from*
+*
+model:
+	generate:
+		lpfg fractal.map fractal.l fractal.v fractal.a fractal.e
+
+L-system:
+	EDIT fractal.l
+
+viewfile:
+	EDIT fractal.v
+
+animation:
+	EDIT fractal.a
+
+colormap:
+	PALETTE fractal.map
+
+environment:
+	commfile:
+		EDIT fractal.e
+	parameters:
+		EDIT density.spec
+
+description:
+	EDIT description.txt
+
+

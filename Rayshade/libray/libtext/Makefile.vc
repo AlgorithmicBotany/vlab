@@ -1,0 +1,22 @@
+OPTIMIZE = 
+CCFLAGS =  -nologo
+RANLIB = 
+CC = cl
+
+LIBRAY = ../libray.lib
+URTINC = 
+INC = -I.. -I../.. $(URTINC)
+CFLAGS = $(CCFLAGS) $(INC) $(OPTIMIZE)
+
+CFILES = blotch.c bump.c checker.c cloud.c fbm.c fbmbump.c gloss.c \
+	 imagetext.c mapping.c marble.c mount.c noise.c sky.c stripe.c \
+	 textaux.c texture.c windy.c wood.c
+OFILES = $(CFILES:.c=.obj)
+
+$(LIBRAY): $(OFILES)
+	if EXIST $(LIBRAY) (lib -out:$(LIBRAY) $(LIBRAY) $(OFILES)) ELSE (lib -out:$(LIBRAY) $(OFILES))
+
+clean:
+	del $(OFILES)
+
+# DO NOT DELETE THIS LINE

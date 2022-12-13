@@ -1,0 +1,17 @@
+Terrain demo
+
+On the lpfg menu, select Forever. You will notice that the terrain shape
+acquires more detail as you zoom in.
+
+Functionality related to terrain is kept to provide backward compatibility
+with some models that used it, in particular models of plants in the 
+Rhynie chert.
+
+Some functions needed to interface with this code (e.g., to put plants 
+on it) are in the Deprecated section of the lpfg manual. Unfortunately,
+no further documentation (including .patch file format) is available,
+and the terrain editor no longer works. However, different files used
+by this editor are kept in the object, in case the editor is revived
+in the future.
+
+No further documentation is available at this  point (Oct. 2, 2021). 

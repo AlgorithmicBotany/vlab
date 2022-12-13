@@ -1,0 +1,9 @@
+COMPOUND LEAF (USING A HOMOMORPHISM)
+
+Example of a very simple L-system generating a compound
+branching structure.  Ordinary L-system productions
+use intuitive symbols (A for apex, I for internode).
+The graphical interpretation of these symbols is 
+specified using homomorphic rules (after the keyword
+'homomorphism'). 
+

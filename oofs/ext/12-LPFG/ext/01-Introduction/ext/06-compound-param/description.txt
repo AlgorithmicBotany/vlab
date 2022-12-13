@@ -1,0 +1,8 @@
+COMPOUND LEAF - USING A PARAMETRIC PRODUCTION
+
+Example of a very simple L-system, generating a compound
+branching structure.  Ordinary L-system productions
+use intuitive symbols (A for apex, I for internode).
+Elongation of internodes is captured using a parametric
+production.  
+

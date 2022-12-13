@@ -1,0 +1,270 @@
+\chapter{Surfaces and Atmospheric Effects}
+
+Surfaces are used to control the interaction between light sources and
+objects.  A surface specification consists of information
+about how the light interacts with both the exterior and
+interior of an object .
+For non-closed objects, such as polygons,
+the ``interior'' of an object is the ``other side'' of the object's surface
+relative to the origin of a ray.
+
+{\Rayshade} usually ensures that a primitive's surface normal is pointing
+towards the origin of the incident ray when performing shading
+calculations.  Exceptions to this rule are transparent primitives, for
+which {\rayshade} uses the direction of the surface normal to determine if
+the incident ray is entering or exiting the object.
+All non-transparent primitives will, in effect, be double-sided.
+
+\section{Surface Description}
+
+A surface definition consists of a number of component keywords, each
+of which is usually followed by either a single number or a red-green-blue
+color triple.   Each of the values in the color triple are normalized,
+with zero indicating zero intensity, and one indicating full intensity.
+
+If any surface component is left unspecified, its value defaults to zero,
+with the exception of the index of refraction, which is assigned the
+default index of refraction (normally 1.0).
+
+Surface descriptions are used in {\rayshade} to compute the color of a ray
+that strikes the surface at a point \evec{P}. The normal to the surface
+at \evec{P}, \evec{N}, is also computed.
+
+\begin{defkey}{ambient}{\evec{color}}
+	Use the given {\em color} to approximate those surface-surface 
+	interactions (e.g., diffuse interreflection) not modeled by the
+	ray tracing process.
+\end{defkey}
+A surface's ambient color is always applied to a ray.  The color
+applied is computed by multiplying the ambient color by the intensity
+of the ambient light source.
+
+If \evec{P} is in shadow with respect to a given light source,
+that light source makes no contribution to the shading of \evec{P}.
+
+\begin{defkey}{diffuse}{\evec{color}}
+	Specifies the diffuse color.
+\end{defkey}
+The diffuse contribution from each non-shadowed light source at \evec{P}
+is equal to the diffuse color of the surface scaled by the cosine of
+the angle between \evec{N}
+and the vector from \evec{P} to the light source.
+
+\begin{defkey}{specular}{\evec{color}}
+	Specifies the base color of specular reflections.
+\end{defkey}
+
+\begin{defkey}{specpow}{{\em exponent}}
+	Controls the size of the specular highlight. The larger
+	the {\em exponent}, the smoother the apparent finish.
+\end{defkey}
+The intensity of specular highlights from light sources are
+scaled by the specular color of the surface.
+
+\begin{defkey}{reflect}{{\em reflectivity}}
+	Specifies the specular reflectivity of the surface.  If non-zero,
+	reflected rays will be spawned.
+\end{defkey}
+The intensity of specularly reflected rays will be proportional to
+the specular color of the surface scaled by the reflectivity.
+
+\begin{defkey}{transp}{{\em transparency}}
+	Specifies the specular transmissivity of the surface.  If
+	non-zero,
+	transmitted (refracted) rays will be spawned.
+\end{defkey}
+
+\begin{defkey}{body}{\evec{color}}
+	Specifies the body color of the object.  The body color
+	affects the color of rays that are transmitted through the
+	object.
+\end{defkey}
+
+\begin{defkey}{extinct}{{\em coefficient}}
+	Specifies the extinction coefficient of the interior
+	of the object.
+\end{defkey}
+The extinction coefficient is raised to a power equal to the distance
+the transmitted ray travels through the object.
+The overall intensity of specularly transmitted rays will be proportional to
+this factor multiplied by the surface's body color
+multiplied by the transparency of the object.
+
+\begin{defkey}{index}{{\em N}}
+	Specifies the index of refraction.  The default value is equal
+	to the index of refraction of the atmosphere surrounding the eye.
+\end{defkey}
+
+\begin{defkey}{translucency}{{\em translu} \evec{color} {\em stexp}}
+	Specifies the translucency, diffusely transmitted color,
+	and Phong exponent for transmitted specular highlights.
+\end{defkey}
+If a light source illuminates a translucent surface from the side opposite
+that from which a ray approaches, illumination computations are performed,
+using the given color as the surface's diffuse color, and the given
+exponent as the Phong highlight exponent.  The resulting color is then
+scaled by the surface's translucency.
+
+\section{Atmospheric Effects}
+
+Any number of atmospheric effects may be associated with the default
+medium (``air'').
+
+\begin{defkey}{fog}{\evec{color} \evec{thinness}}
+Add exponential fog with the specified {\em thinness} and {\em color}.
+\end{defkey}
+Fog is simulated by blending the color of the fog with the color of
+each ray.  The amount of fog color blended into a ray color is an exponential
+function of the distance from the ray origin to the point of intersection
+divided by the specified {\em thinness} for each color channel.
+If the distance is equal to {\em thinness},
+a ray's new color will be half of the fog color plus half its
+original color.
+
+\begin{defkey}{mist}{\evec{color} \evec{thinness} {\em zero scale}}
+Add global low-altitude mist of the specified color.  The color of
+a ray is modulated by a fog with density that varies linearly with
+the difference in $z$ coordinate\footnote{This all but assumes that
+the default up vector (0, 0, 1) is being used.}
+between the ray origin and
+the point of intersection.  The thinness values specify the transmissivity
+of the fog for each color channel.
+The base altitude of the
+mist is given by {\em zero}, and the apparent height of the mist can
+be modulated using {\em scale}, which scales the difference in
+altitude used to compute the fog.
+\end{defkey}
+
+\begin{defkey}{fogdeck}{{\em altitude} {\em offset} \evec{scale} {\em chaoscale}
+ \evec{color} \evec{thinness}}
+Add low-altitude fog, with transmissivity modulated by
+a chaotic function.
+\end{defkey}
+
+\section {The Default Medium}
+
+The default medium is the medium which surrounds and encompasses
+all of the objects in the scene; it is the ``air'' through which eye
+rays usually travel before hitting an object.  The properties of
+the default medium may be modified through the use of the {\tt atmosphere}
+keyword.
+
+\begin{defkey}{atmosphere}{[{\em N\/}] [{\em atmospheric effects}]}
+If given, {\em N} specifies the index of refraction of the default
+medium.  The default is 1.0.  Any atmospheric effects listed are applied
+to rays that are exterior to every object in the scene (e.g., rays
+emanating from the camera).
+\end{defkey}
+
+\begin{verbatim}
+    /*
+     * Red sphere on a grey plane, with fog.
+     */
+    eyep 0. -10. 2.
+    atmosphere fog  .8 .8 .8 14. 14. 14.
+    plane 0 0 0  0 0 1
+    sphere diffuse 0.8 0 0   1.5  0 0 1.5
+\end{verbatim}
+
+\section {Surface Specification}
+
+{\Rayshade} provides a number of ways to define surfaces and to
+bind these surfaces to objects.  The most straight-forward method
+of surface specification is to simply list the surface properties to
+be used.
+Alternatively, one may associate a name with a given surface.
+This name may subsequently be used to refer to that surface.
+
+\begin{defkey}{surface}{{\em name\/} $<${\em Surface Definition}$>$}
+	Associate the given collection of surface attributes with the
+	given name.
+\end{defkey}
+
+The binding of a collection of surface properties to a given object
+is accomplished in a bottom-up manner; the surface that ``closest''
+in the modeling tree to the primitive being rendered is the one that
+is used to give the primitive its appearance.
+
+An object that has no surface bound to it is assigned a default surface
+that gives the appearance of white plastic.
+
+The
+most direct way to bind a surface to a primitive
+is to specify the surface when the
+the primitive instantiated.
+This is accomplished
+by inserting a list of surface attributes or a surface name after
+the primitive's type keyword and before the actual primitive data.
+
+\begin{verbatim}
+    /*
+     * A red 'mud' colored sphere reseting on a
+     * white sphere. To the right is a sphere with
+     * default surface attributes.
+     */
+    surface mud ambient .03 0. 0.  diffuse .7 .3 0.
+    sphere  ambient .05 .05 .05 diffuse .7 .7 .7   1. 0 0 0
+    sphere mud  1. 0 0 2
+    sphere 1. 1.5 0 0
+\end{verbatim}
+
+Here, we define a red surface named ``mud''.  We then instantiate
+a sphere, which has a diffuse white surface bound to it.  The
+next line instantiates a sphere with the defined ``mud'' surface bound
+to it.  The last line instantiates a sphere with no surface bound to it;
+it is assigned the default surface by {\rayshade}.
+
+The {\tt applysurf} keyword may be used to set the default surface
+characteristics for the aggregate object currently being defined.
+
+\begin{defkey}{applysurf}{$<${\em Surface Specification}$>$}
+The specified surface is applied to all following
+instantiated objects that do not have surfaces associated with them.
+The scope of this keyword is limited to the aggregate currently
+being defined.
+\end{defkey}
+
+\begin{verbatim}
+    /*
+     * Mirrored ball and cylinder sitting on 'default' plane.
+     */
+    surface mirror ambient .01 .01 .01
+            diffuse .05 .05 .05
+            specular .8 .8 .8 specpow 20  reflect 0.95
+    plane 0 0 0  0 0 1
+    applysurf mirror
+    sphere 1 0 0 0
+    cylinder 1  3 0 0  3 0 3
+\end{verbatim}
+
+For convenience, the name {\tt cursurf} may be used to refer to the
+current default surface.
+
+The utility of bottom-up binding of surfaces lies in the fact that
+one may be as adamant or as noncommittal about
+surface binding as one sees fit when defining objects.  For example,
+one could define a king chess piece consisting of triangles that have no
+surface bound to them, save for the cross on top, which has
+a gold-colored surface associated with it.  One may then instantiate
+the king twice, once applying a black surface, and once applying
+a white surface.  The result:  a black king and a white king, each
+adorned with a golden cross.
+
+\begin{verbatim}
+    surface white ...
+    surface black ...
+    surface gold  ...
+    ...
+    define cross
+            box x y z  x y z
+            ...
+    defend
+    define king
+            triangle x y z  x y z  x y z
+            ...
+            object gold cross
+    defend
+
+    object white king translate 1. 0 0
+    object black king
+\end{verbatim}

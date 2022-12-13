@@ -1,0 +1,5 @@
+Quadratic Koch curve
+
+Quadratic Koch curve is one of the fractals discovered
+or popularized by Mandelbrot.  It provides a simple 
+example of a lpfg model (object).

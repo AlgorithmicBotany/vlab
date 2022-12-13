@@ -1,0 +1,85 @@
+/*
+ * Variables shared by the various libraries:
+ */
+
+Float
+RSAbstmp
+
+	Temporary variable used by the fabs() macro to keep
+	expressions from being evaluated twice (e.g.,
+	fabs(cos(x)) is expanded to ((x=cos(x) < 0 ? -x : x)
+	rather than ((x=cos(x) < 0 ? -cos(x) : cos(x))	).
+	Could be removed by making fabs a function or not minding
+	if expressions are evaluated twice.
+
+SampleInfo
+Sampling
+
+	Variables used to control sampling.
+	Used in conjunction with a ray's sample number
+	(ray->sample) to determine how to sample, for example,
+	extended light sources.
+
+/*
+ * Variables shared by modules in the rayshade application:
+ */
+RSCamera
+Camera
+	Camera definition.  Used in viewing, setup, and parsing.
+
+RSScreen
+Screen
+	Screen information.  Used in viewing, setup, and parsing.
+
+RSOptions
+Options
+	
+	Options of all sorts.
+
+RSStats
+Stats
+
+	Statistical information.
+
+Medium
+TopMedium
+
+	"Air" description (index of refraction and atmospheric effects).
+	Used in viewing, parsing, and ShadeRay.
+
+Light *
+Lights
+
+	Array of defined lights.  Used in parsing and in shade().
+
+/*
+ * Application-provided functions:
+ */
+Surface *
+GetShadingSurf(hitlist)
+HitList *hitlist
+
+	Given a hitlist, return the surface to be used in shading.
+
+int
+TraceRay(ray, hitlist, mindist, maxdist)
+Ray *ray;
+HitList *hitlist;
+Float mindist, *maxdist;
+
+	Intersect the top-level object with the given ray.
+	Probably as simple as:
+		return intersect(World, ray, hitlist, mindist, maxdist)
+
+void
+RLerror(level, pattern, arg1, arg2, arg3)
+int level;
+char *pattern, *arg1, *arg2, *arg3;
+
+	Error-reporting function.  'level' indicates the severity of
+	the error (see libcommon/error.h).  'pattern' and the
+	args are suitable for printing via:
+		fprintf(stderr, patter, arg1, arg2, arg3);
+	Note that as the args are cast to char *'s, printing, for
+	example, several doubles, will not work.  (Being more
+	rigorous about it would require varargs or something similar.)

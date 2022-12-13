@@ -1,0 +1,27 @@
+Microsoft Visual Studio Solution File, Format Version 8.00
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "scramble", "scramble.vcproj", "{C73A7219-A344-4021-950B-C08E1C2D28B6}"
+	ProjectSection(ProjectDependencies) = postProject
+	EndProjectSection
+EndProject
+Global
+	GlobalSection(SolutionConfiguration) = preSolution
+		Debug = Debug
+		DebugST = DebugST
+		Release = Release
+		ReleaseST = ReleaseST
+	EndGlobalSection
+	GlobalSection(ProjectConfiguration) = postSolution
+		{C73A7219-A344-4021-950B-C08E1C2D28B6}.Debug.ActiveCfg = Debug|Win32
+		{C73A7219-A344-4021-950B-C08E1C2D28B6}.Debug.Build.0 = Debug|Win32
+		{C73A7219-A344-4021-950B-C08E1C2D28B6}.DebugST.ActiveCfg = DebugST|Win32
+		{C73A7219-A344-4021-950B-C08E1C2D28B6}.DebugST.Build.0 = DebugST|Win32
+		{C73A7219-A344-4021-950B-C08E1C2D28B6}.Release.ActiveCfg = Release|Win32
+		{C73A7219-A344-4021-950B-C08E1C2D28B6}.Release.Build.0 = Release|Win32
+		{C73A7219-A344-4021-950B-C08E1C2D28B6}.ReleaseST.ActiveCfg = ReleaseST|Win32
+		{C73A7219-A344-4021-950B-C08E1C2D28B6}.ReleaseST.Build.0 = ReleaseST|Win32
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+	EndGlobalSection
+	GlobalSection(ExtensibilityAddIns) = postSolution
+	EndGlobalSection
+EndGlobal

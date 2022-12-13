@@ -1,0 +1,70 @@
+
+Environment according to Takenaka's paper A Simulation of Tree Architecture 
+     Development Based on Growth Response to Local Light Environment*
+--------------------------------------------------------------------------
+
+Name of the executable: takenaka
+
+Necessary command line parameters: 
+   takenaka [-k semaphore_key] [-ext comm_files_extension] 
+	    -e environment_file specification_file
+
+
+Commands in specification file:
+
+ grid size: x y z (numbers can be delimited also by , ; or x)
+			 size of the grid in voxels (the range in world 
+		         coordinates is determined according to the queries so
+			 it tightly encloses them)
+
+ verbose: on/off         switches on or off verbose mode
+
+ parameter s: float (default 1.5)
+			 sparsity of leaf distribution on the leaf ball.
+			 If r is the radius of a sphere with surface area 
+			 equal to the leaf area LA, then the radius of the 
+			 leaf ball is (s.r).
+			 
+ transmittance: t (float)  (default 0.1)
+			 transmittance of the leaf balls (0.0-1.0). 
+
+ efficiency: float (default 0.015)
+			 see the paper, but basiccaly multiplicative parameter
+			 influencing the resulting light product.
+
+ source: x y z intensity
+			 defines a ligth source with a specific intensity.
+			 After all sources are defined their intensities are
+			 normalized so that their sum is 1.
+
+
+ beam radius: rad        radius of a ray when tested for a leaf ball 
+			 intersection expressed as a part of the current
+			 leaf ball radius (0-1). Default 0.
+
+Communication:
+ Turtle parameters sent to the field: position.
+ Communication symbol:
+  - 2 parameters
+     to field: 
+        1) leaf area
+	2) weight of product necessary for the leaf maintenance
+
+     from field:
+        1) leaf area stays there
+        2) product of photosynthesis (after the maintenance cost is subtracted)
+
+
+Algorithm:
+  Program stores all incoming queries in a dynamically allocated array.
+After that a grid is build to speed up ray casting.
+
+  At the end, it determines the amount of incoming light for each query.
+The amount of light is computed by shooting rays from the leaf ball centre to
+each light source. Each intersected leaf reduces the perceived light intensity.
+The weight of the final product is computed according to the appendix of the
+paper.
+
+
+--------------------------------------------------------------------------
+* The Journal of Plant Research, vol. 107: 321-330 (1994)

@@ -1,0 +1,8 @@
+ <!DOCTYPE RCC><RCC version="1.0">
+ <qresource>
+     <file alias="logo.png">../browser/Images/logo.png</file>
+     <file alias="hourglass.png">hourglass.png</file>
+     <file alias="qmessagebox-warn.png">qmessagebox-warn.png</file>
+     <file alias="default-icon.png">../browser/Images/default-icon.png</file>
+</qresource>
+ </RCC>

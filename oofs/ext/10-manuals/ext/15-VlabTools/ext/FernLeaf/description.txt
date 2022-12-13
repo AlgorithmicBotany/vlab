@@ -1,0 +1,27 @@
+A symmetric compound leaf
+
+This is a demo object illustrating the use of functions and contours that can be
+specified graphically.  The functions are expressed in terms of the
+relative distance travelled along the main axis (arc length),
+measured from the leaf base.  They control:
+
+- the branching angle at which the leaflets are inserted
+- stem curvature
+- internode length
+- internode width
+- leaf length
+- leaf width
+
+The leaf length function specifies (approximately, i.e., disregarding
+the branching angles) the overall contour of the leaf.  The 
+position of individual leaflets is calculated using the internode 
+length function, which can be viewed as defining the density of 
+leaflet distribution along the axis.  Thus, the length and position
+of leaflets are calculated from more global leaf characteristics.  
+This reverses the usual process of modeling using L-systems, where 
+the leaf countour and the distribution of leaflets are emergent 
+properties of the developmental model.
+
+Based on P. Prusinkiewicz, L. Muendermann, R. Karwowski and 
+B. Lane, "The use of positional information in the 
+modeling of plants", Proceedings of Siggraph 2001.

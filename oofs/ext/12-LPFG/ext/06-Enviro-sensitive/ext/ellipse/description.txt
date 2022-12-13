@@ -1,0 +1,2 @@
+This is a model using environmentally sensitive L-system. 
+It is based on the model from Synthetic Topiary SIGGRAPH '94

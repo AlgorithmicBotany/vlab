@@ -1,0 +1,15 @@
+A generic model of clover growing on a terrain with different 
+intensity of incoming light (darker areas can be thought
+of as being shadowed by the trees above). The model is 
+described in detail in the paper "Visual models of plants 
+interacting with their  environment", by R. Mech and 
+P. Prusinkiewicz, Proceedings of Siggraph 96, pp. 397-410.
+
+Above a light threshold the internodes are shorter and 
+branching angles wider.
+
+The environmental program 'clover' simulates the amount of direct light
+coming from the top, based on the input image 'light.rgb'.  
+A high-resolution version of the same image, 'light08.rgb' is used as a
+background in the model (see the 'texture:' in the viewfile 'plant.v'.
+ 

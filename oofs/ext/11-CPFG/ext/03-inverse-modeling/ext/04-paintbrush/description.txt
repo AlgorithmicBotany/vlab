@@ -1,0 +1,35 @@
+Indian paintbrush
+
+This is a demo object illustrating the use of functions that can be
+specified graphically.  In contrast to the 'symmetric compound leaf',
+also provided as an example, in this case the leaves are arranged in
+a spiral phyllotactic pattern.
+
+The model makes use of three families of functions.  
+
+The first family consists of functions expressed in terms of the 
+relative distance travelled along the main axis (arc length), 
+measured from the leaf base.   These functions control:
+- plant diameter at a given height (i.e. the length of the leaflets)
+- leaf density distribution (i.e. the length of the internodes)
+- local curving of the stem (3 functions)
+- stem width
+- branching angle at which the leaves are inserted
+- overall leaf width
+- leaflet color
+
+The second family consists of functions expressed in terms of the 
+relative distance travelled along the axis (midrib) of the leaves.  
+These functions control:
+- leaf width (at a given position along the midrib)
+- density of "veins" that branch off the midrib to define leaflet shape
+- local curvature of the leaflet (2 functions).
+
+The third family consists of just one function, which determines how
+the distribution of leaves along the main axis scales with the overall
+changes of the stem length.
+
+Based on P. Prusinkiewicz, L. Muendermann, R. Karwowski and 
+B. Lane, "The use of positional information in the 
+modeling of plants", Proceedings of Siggraph 2001.
+

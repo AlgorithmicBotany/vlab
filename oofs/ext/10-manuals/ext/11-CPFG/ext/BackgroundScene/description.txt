@@ -1,0 +1,7 @@
+A simple demonstration of a background scene
+consisting of geometric shapes.
+
+The model is a simple straight line.  All other
+elements are described in the background.dat file.
+
+PWP 2022-11-12

@@ -1,0 +1,43 @@
+lsystem.l
+view.v
+anim.a
+material.mat
+commfile.e
+density.spec
+description.txt
+ignore:
+lsys.so
+lpfg.log
+lsys.ii
+lsysinp.cpp
+lsys.o
+input.i
+*.swp
+.to*
+.from*
+*
+model:
+	generate:
+		lpfg material.mat lsystem.l view.v anim.a commfile.e
+
+L-system:
+	EDIT lsystem.l
+
+viewfile:
+	EDIT view.v
+
+animation:
+	EDIT anim.a
+
+materials:
+	MEDIT material.mat
+
+environment:
+	commfile:
+		EDIT commfile.e
+	parameters:
+		EDIT density.spec
+
+description:
+	EDIT description.txt
+

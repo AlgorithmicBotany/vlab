@@ -1,0 +1,45 @@
+mycelis.l
+mycelis.v
+mycelis.a
+panel.v
+mycelis.map
+bud.s
+petal.s
+fruit.s
+line.s
+calyx.s
+description.txt
+ignore:
+*
+model:
+	generate:
+		cpfg -w 300 500 -m mycelis.map mycelis.l mycelis.v mycelis.a
+
+L-system:
+	EDIT mycelis.l
+
+viewfile:
+	panel:
+		panel panel.v | ped mycelis.v
+	EDIT mycelis.v
+
+animate file:
+	EDIT mycelis.a
+
+colormap:
+	PALETTE mycelis.map
+
+surfaces:
+	bud:
+		bezieredit bud.s
+	calyx:
+		bezieredit calyx.s
+	fruit:
+		bezieredit fruit.s
+	line:
+		bezieredit line.s
+	petal:
+		bezieredit petal.s
+
+description:
+	EDIT description.txt

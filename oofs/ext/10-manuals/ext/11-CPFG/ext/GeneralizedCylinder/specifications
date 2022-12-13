@@ -1,0 +1,47 @@
+fractal.l
+fractal.v
+fractal.a
+panel.l
+panel.v
+fractal.mat
+squares.png
+circles.png
+arrow.png
+text.png
+description.txt
+rmode: cont
+ignore:
+*
+model:
+	generate:
+		cpfg -M fractal.mat fractal.l fractal.v fractal.a
+
+L-system:
+	panel:
+		panel panel.l | awkped fractal.l
+	EDIT fractal.l
+
+View:
+	panel:
+		panel panel.v | awkped fractal.v
+	EDIT fractal.v
+
+Animation:
+	EDIT fractal.e
+
+Materials:
+	material-editor:
+		medit fractal.mat
+
+Textures: 
+	1 - squares:
+		stedit -warp squares.png
+	2 - circles:
+		stedit -warp circles.png
+	3 - arrow:
+		stedit -warp arrow.png
+	4 - text:
+		stedit -warp text.png
+
+Description:
+	EDIT description.txt

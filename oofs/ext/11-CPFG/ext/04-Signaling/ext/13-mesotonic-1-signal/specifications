@@ -1,0 +1,25 @@
+acrobasi.l
+acrobasi.v
+acrobasi.a
+acrobasi.map
+description.txt
+ignore:
+*
+model:
+	Generate:
+		cpfg -w 300 500 -m acrobasi.map acrobasi.l acrobasi.v acrobasi.a
+
+L-system:
+	EDIT acrobasi.l
+
+view file:
+	EDIT acrobasi.v
+
+animate file:
+	EDIT acrobasi.a
+
+colormap:
+	PALETTE acrobasi.map
+
+description:
+	EDIT description.txt

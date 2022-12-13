@@ -1,0 +1,75 @@
+#
+# Makefile for rayshade.
+#
+# Craig Kolb
+#
+# $Id: Makefile.vc,v 1.1.1.1 2005/01/07 20:51:06 laneb Exp $
+#
+# Bin directory
+#
+OPTIMIZE = 
+URTINC = 
+CCFLAGS = -nologo 
+CC = cl
+YACC = bison -y
+LEX = flex -l
+
+LIBRAYDIR = ../libray
+INC = -I.. -I$(LIBRAYDIR)
+YFLAGS = -d
+
+CFLAGS = $(CCFLAGS) $(URTINC) $(INC) $(OPTIMIZE)
+
+LIBSHADE = libshade.lib
+
+SUPPORT_C =	builtin.c symtab.c misc.c lightdef.c objdef.c options.c \
+		stats.c surfdef.c
+
+SUPPORT_H =	../config.h datatypes.h funcdefs.h \
+		../patchlevel.h rayshade.h
+
+PARSE_C =	yacc.c lex.c
+
+DRIVE_C =	setup.c viewing.c shade.c picture.c
+
+DRIVE_H =	y.tab.h defaults.h viewing.h raytrace.h picture.h
+
+SUPPORT_O = $(SUPPORT_C:.c=.obj)
+
+PARSE_O = $(PARSE_C:.c=.obj)
+
+DRIVE_O = $(DRIVE_C:.c=.obj)
+
+HFILES = $(DRIVE_H) $(SUPPORT_H)
+
+CFILES = $(DRIVE_C) $(PARSE_C) $(SUPPORT_C)
+
+OFILES = $(DRIVE_O) $(PARSE_O) $(SUPPORT_O)
+
+DEPENDSRC = $(DRIVE_C) lex.l yacc.y $(SUPPORT_C)
+
+FROM_YACC = yacc.c y.tab.h
+
+FROM_LEX = lex.c
+
+$(LIBSHADE): $(OFILES)
+	lib -out:libshade.lib $(OFILES)
+
+$(FROM_YACC): yacc.y
+	$(YACC) $(YFLAGS) yacc.y
+	move y.tab.c yacc.c
+
+$(FROM_LEX): lex.l
+	$(LEX) lex.l
+	move lex.yy.c lex.c
+
+
+
+#
+# End of configuration section
+#
+
+clean:
+	del $(OFILES) $(LIBSHADE) $(FROM_YACC) $(FROM_LEX)
+
+# DO NOT DELETE THIS LINE

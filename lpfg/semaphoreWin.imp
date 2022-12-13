@@ -1,0 +1,65 @@
+#include "asrt.h"
+#include "utils.h"
+
+#include <sstream>
+
+SemaphorePair::Semaphore::Semaphore() { _hSemaphore = NULL; }
+
+SemaphorePair::SemaphorePair(void) : _sem0(), _sem1() {}
+
+SemaphorePair::Semaphore::~Semaphore() {
+  if (_hSemaphore != NULL)
+    CloseHandle(_hSemaphore);
+}
+
+SemaphorePair::~SemaphorePair() {}
+
+void SemaphorePair::Semaphore::Create(const std::string &name, int initcount,
+                                      int maxcount) {
+  ASSERT(NULL == _hSemaphore);
+  _hSemaphore = CreateSemaphore(NULL, initcount, maxcount, name.c_str());
+  if (NULL == _hSemaphore)
+    throw Exception("Error creating semaphore");
+}
+
+void SemaphorePair::Create(int semId, bool s1, bool s2) {
+  {
+    std::stringstream semnm;
+    semnm << 'a' << semId;
+    _sem0.Create(semnm.str(), s1 ? 1 : 0, 1);
+  }
+
+  {
+    std::stringstream semnm;
+    semnm << 'b' << semId;
+    _sem1.Create(semnm.str(), s2 ? 1 : 0, 1);
+  }
+}
+
+void SemaphorePair::Semaphore::Release() {
+  ASSERT(NULL != _hSemaphore);
+  ReleaseSemaphore(_hSemaphore, 1, NULL);
+}
+
+void SemaphorePair::Release(int id) {
+  if (id == 0)
+    _sem0.Release();
+  else if (id == 1)
+    _sem1.Release();
+  else
+    Utils::Message("Releasing nonexistent semaphore %d\n", id);
+}
+
+void SemaphorePair::Semaphore::Wait() {
+  ASSERT(NULL != _hSemaphore);
+  WaitForSingleObject(_hSemaphore, INFINITE);
+}
+
+void SemaphorePair::Wait(int id) {
+  if (id == 0)
+    _sem0.Wait();
+  else if (id == 1)
+    _sem1.Wait();
+  else
+    Utils::Message("Waiting on nonexistent semaphore %d\n", id);
+}

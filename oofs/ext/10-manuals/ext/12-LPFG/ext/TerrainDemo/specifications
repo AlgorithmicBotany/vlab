@@ -1,0 +1,43 @@
+lsystem.l
+view.v
+anim.a
+material.mat
+Terrain.patch
+Terrain.rgb
+Terrain.surface
+Terrain.layout
+Terrain.blend
+Terrain.offset
+description.txt
+ignore:
+lsys.so
+lpfg.log
+lsys.ii
+lsysinp.cpp
+lsys.o
+input.i
+*.swp
+*
+image:
+	generate:
+		lpfg -a -wp 0 50 -w 900 800 lsystem.l view.v anim.a material.mat 
+
+L-system:
+	EDIT lsystem.l
+
+view file:
+	EDIT view.v
+
+animate file:
+	EDIT anim.a
+
+material:
+	MEDIT material.mat
+
+terrain:
+	edit:	
+		TerrainEditor Terrain.surface
+
+description:
+	EDIT description.txt
+

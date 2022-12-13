@@ -1,0 +1,9 @@
+This directory contains a draft of the Rayshade User's Guide.
+It is written using LaTeX macros.  To create the corresponding
+"dvi" file, run "latex guide" twice from this directory.
+The resulting "guide.dvi" file should be fed to your favorite
+dvi --> readable-format converter.
+
+If you do not have LaTeX, a postscript version of this document
+is available via anonymous ftp from weedeater.math.yale.edu
+(130.132.23.17) in pub/rayshade.4.0/guide.ps.

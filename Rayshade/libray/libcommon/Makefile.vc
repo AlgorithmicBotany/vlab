@@ -1,0 +1,21 @@
+OPTIMIZE = 
+CCFLAGS =  -nologo
+RANLIB = 
+CC = cl
+
+LIBRAY = ../libray.lib
+INC = -I../..
+CFLAGS = $(CCFLAGS) $(INC) $(OPTIMIZE)
+
+CFILES = memory.c expr.c transform.c rotate.c sampling.c scale.c translate.c \
+	vecmath.c xform.c
+OFILES = $(CFILES:.c=.obj)
+
+$(LIBRAY): $(OFILES)
+	if EXIST $(LIBRAY) (lib -out:$(LIBRAY) $(LIBRAY) $(OFILES)) ELSE (lib -out:$(LIBRAY) $(OFILES))
+
+clean:
+	del $(OFILES)
+
+# DO NOT DELETE THIS LINE
+

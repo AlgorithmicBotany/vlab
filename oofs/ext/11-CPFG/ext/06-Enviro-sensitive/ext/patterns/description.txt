@@ -1,0 +1,2 @@
+A simple demo of an environemntally sensitive L-system. 
+A moving agent bounces within a bounding ellipse.  

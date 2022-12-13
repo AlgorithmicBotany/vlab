@@ -1,0 +1,67 @@
+; The 'object' configuration file
+; {where-vlab-was-installed}/vlab-4.5.1/config/object
+; is copied to ~/.vlab/ the first time vlab browser is run. 
+; Changes should be made to ~/.vlab/object
+
+;#define OBJED          xemacs -geometry 80x24
+;#define OBJDEMOED      xemacs -geometry 60x12
+;#define OBJSHELL       xterm -fg yellow -bg black
+
+;#define OBJED          xterm -bg 'black' -fg 'white' -T 'vlab editor' -geometry 80x24 -fa '*bold*18*' -e vi
+;#define OBJDEMOED      xterm -bg 'black' -fg 'white' -T 'vlab editor' -geometry 80x24 -fa '*bold*24*' -e vi
+;#define OBJSHELL       xterm -fg yellow -bg black
+
+#define OBJED          vlabTextEdit
+#define OBJDEMOED      vlabTextEdit
+#define OBJSHELL       x-terminal-emulator
+
+;comments are now supported
+
+EDIT
+edit:
+	OBJED
+demo-edit:
+	OBJDEMOED
+
+MAP
+loadmap:
+	loadmap
+savemap:
+	savemap
+
+PALETTE
+palette:
+	palette
+
+MEDIT
+material-editor:
+	medit
+
+FUNCEDIT
+function-editor:
+	funcedit
+
+TEXT
+display:
+	xless
+edit:
+	OBJED
+print:
+	enscript
+
+HINTS
+display:
+	xwsh -s 40,10 -H -c cat
+edit:
+	OBJED
+
+SURFACE
+bezieredit:
+	bezieredit
+edit:
+	OBJED
+
+GALLERY
+gallery:
+	gallery
+

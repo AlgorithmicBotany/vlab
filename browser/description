@@ -1,0 +1,21 @@
+buildTree.c		- maybe should be merged with tree.c? This code is related
+			  to positioning nodes in XY coordinates
+callbacks.c		- GUI callbacks
+colorChooserTest.c	- test program (not part of browser)
+comm.c			- message handling
+customize.c		- customization (skip for now)
+customizeCB.c		- customization (skip for now)
+drag.c			- drag/drop test (not part of browser)
+dragDrop.c		- drag/drop routines for browser
+drop.c			- drag/drop test (not part of browser)
+find.c			- routines to search through a tree
+findTest.c		- test file
+find_dialog.c		- GUI for find
+font.c			- some font utilities
+graphics.c		- tree rendering
+initX.c			- browser GUI initialization
+layout.c		- tree layout code
+log.c			- probably dead code right now
+main.c			- initialization
+openNode.c		- expands the requested node
+tree.c			- tree reading/traversing/... code

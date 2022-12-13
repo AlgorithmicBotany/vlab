@@ -1,0 +1,78 @@
+plant.l
+plant.v
+plant.a
+panel.l
+material.mat
+functions.fset
+functions.tset
+contours.cset
+aging.vset
+leaf.s
+petal.s
+leafs.png
+flowertexture.png
+description.txt
+rmode: cont
+ignore:
+*.swp
+input.i
+lpfg.log
+lsys.*
+*
+model:
+	generate:
+		lpfg material.mat plant.l plant.v plant.a functions.tset functions.fset contours.cset aging.vset
+
+L-system:
+	panel:
+		display:
+			panel panel.l | awkped plant.l
+		EDIT panel.l
+	EDIT plant.l
+
+
+view file:
+	EDIT plant.v
+
+animate file:
+	EDIT plant.a
+
+materials:
+	MEDIT material.mat
+
+functions:
+	calyx and pod profiles:
+		gallery functions.fset
+
+	timeline:
+		timeline -rmode cont functions.tset | awkped aging.vset
+
+contours:
+	calyx crossection:
+		gallery contours.cset
+
+surfaces:
+	leaf:
+		bezieredit:
+			bezieredit leaf.s
+		stedit:
+			surface:
+				stedit -bezier leaf.s
+			texture:
+				stedit -warp leafs.png
+			surface+texture:
+				stedit -both leaf.s leafs.png
+	petal:
+		bezieredit:
+			bezieredit petal.s
+		stedit:
+			surface:
+				stedit -bezier petal.s
+			texture:
+				stedit -warp flowertexture.png
+			surface+texture:
+				stedit -both petal.s flowertexture.png
+
+description:
+	EDIT description.txt
+

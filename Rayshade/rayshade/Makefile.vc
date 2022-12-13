@@ -1,0 +1,51 @@
+#
+# Makefile for rayshade.
+#
+# Craig Kolb
+#
+# $Id: Makefile.vc,v 1.1.1.1 2005/01/07 20:51:06 laneb Exp $
+#
+# Bin directory
+#
+OPTIMIZE =
+URTINC = 
+CCFLAGS = -nologo
+URTLIB = 
+LDFLAGS = 
+CC = cl
+
+LIBRAYDIR = ../libray
+LIBSHADEDIR = ../libshade
+INC = -I$(LIBRAYDIR) -I$(LIBSHADEDIR) -I.. $(URTINC)
+
+LIBRAY = $(LIBRAYDIR)/libray.lib
+LIBSHADE = $(LIBSHADEDIR)/libshade.lib
+
+CFLAGS = $(CCFLAGS) $(INC) $(OPTIMIZE)
+
+LIBS = $(LIBSHADE) $(LIBRAY) $(URTLIB)
+
+DRIVE_C =	main.c raytrace.c version.c
+
+DRIVE_H =	raytrace.h
+
+DRIVE_O = $(DRIVE_C:.c=.obj)
+
+HFILES = $(DRIVE_H)
+
+CFILES = $(DRIVE_C)
+
+OBJ = $(DRIVE_O)
+
+DEPENDSRC = $(DRIVE_C)
+
+rayshade.exe: $(OBJ) $(LIBS)
+	$(CC) $(OPTIMIZE) -Ferayshade.exe $(OBJ) $(LIBS) $(LDFLAGS)
+
+#
+# End of configuration section
+#
+clean:
+	del $(OBJ) rayshade.exe
+
+# DO NOT DELETE THIS LINE

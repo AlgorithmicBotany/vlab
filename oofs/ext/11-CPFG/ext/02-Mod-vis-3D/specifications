@@ -1,0 +1,13 @@
+Mod-vis-3D.pdf
+Mod-vis-3D.doc
+description.txt
+ignore:
+*
+Course materials:
+	PDF:
+		open Mod-vis-3D.pdf
+	Word:
+		open Mod-vis-3D.doc
+
+Description:
+	EDIT description.txt

@@ -1,0 +1,14 @@
+Introduction-to-cpfg.pdf
+Introduction-to-cpfg.doc
+description.txt
+ignore:
+*
+Course materials:
+	PDF:
+		open Introduction-to-cpfg.pdf
+	Word:
+		open Introduction-to-cpfg.doc
+
+Description:
+	EDIT description.txt
+

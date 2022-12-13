@@ -1,0 +1,49 @@
+plant.l
+plant.v
+plant.a
+panel.l
+material.mat
+functions.fset
+calyx.con
+leaf.s
+petal.s
+description.txt
+rmode: cont
+ignore:
+*
+model:
+	generate:
+		cpfg -M material.mat plant.l plant.v plant.a
+
+L-system:
+	panel:
+		panel panel.l | awkped plant.l
+	EDIT plant.l
+
+view file:
+	EDIT plant.v
+
+animate file:
+	EDIT plant.a
+
+materials:
+	edit:
+		medit material.mat
+
+functions:
+	gallery:
+		gallery functions.fset
+
+contours:
+	calyx:
+		cuspy calyx.con
+
+surfaces:
+	leaf:
+		SURFACE leaf.s
+	petal:
+		SURFACE petal.s
+
+description:
+	EDIT description.txt
+

@@ -1,0 +1,30 @@
+spiral.l
+spiral.v
+material.mat
+rho.func
+profile.con
+description.txt
+*
+image:
+	generate:
+		cpfg -M material.mat spiral.l spiral.v
+
+L-system:
+	EDIT spiral.l
+
+viewfile:
+	EDIT spiral.v
+
+material:
+	MEDIT material.mat
+
+function:
+	distribution:
+		funcedit rho.func
+
+contour:
+	profile:
+		cuspy profile.con
+
+description:
+	EDIT description.txt

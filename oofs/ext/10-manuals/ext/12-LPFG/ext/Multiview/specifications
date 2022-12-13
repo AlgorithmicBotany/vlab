@@ -1,0 +1,25 @@
+lsystem.l
+anim.a
+view.v
+material.mat
+description.txt
+ignore:
+lsys.o
+lsys.so
+lpfg.log
+lsys.ii
+input.i
+*
+image:
+	generate:
+		lpfg -a -w 600 600 lsystem.l view.v anim.a material.mat
+L-system:
+	EDIT lsystem.l
+view:
+	EDIT view.v
+animate:
+	EDIT anim.a
+material:
+	MEDIT material.mat 
+description:
+	EDIT description.txt

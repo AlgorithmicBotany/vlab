@@ -1,0 +1,40 @@
+plant.l
+plant.v
+plant.a
+plant.map
+plant.e
+density.spec
+description.txt
+ignore:
+*.swp
+output.txt
+*
+model:
+	generate:
+		cpfg -m plant.map -e plant.e plant.l plant.v plant.a
+
+L-system:
+	EDIT plant.l
+
+viewfile:
+	EDIT plant.v
+
+animation:
+	EDIT plant.a
+
+colormap:
+	PALETTE plant.map
+
+environment:
+	comm file:
+		EDIT plant.e
+	parameters:
+		EDIT density.spec
+
+output:
+	view: 
+		vlabTextEdit output.txt
+
+description:
+	EDIT description.txt
+

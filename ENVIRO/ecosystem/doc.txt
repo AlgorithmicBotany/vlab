@@ -1,0 +1,38 @@
+
+   Environmental process - 
+-----------------------------------------------------------------
+
+Name of the executable: honda81
+
+Necessary command line parameters: 
+   honda81 [-k semaphore_key] [-ext comm_files_extension] 
+	   -e environment_file specification_file
+
+
+Commands in specification file:
+
+
+Communication:
+ Turtle parameters sent to the field: ???
+ Communication symbol:
+  - ??? parameters
+     to field: 
+	1) ???
+	...
+
+     from field:
+	1) ???
+	...
+        
+
+
+Algorithm:
+
+The environment stores all queries in a linked list. The parameter specifies
+the vigor of the segment. After all queries are inserted, the program goes 
+through the list and computes the distance from a given query to each other
+having higher or equal vigor (it means that if a segment end point is
+obstructed by a leaflet with lower vigor it would continue growing  - ?E(1)
+will always stop growth of other branches). This repeats for each query.
+
+The respond is 0 (can't grow further) or 1 (can grow).

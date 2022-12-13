@@ -1,0 +1,2 @@
+An example of a stochastic L-system.
+The value after the colon (:) is the probability factor (percentage) for the production. 

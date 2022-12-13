@@ -1,0 +1,27 @@
+leaf.l
+leaf.v
+leaf.a
+leaf.map
+description.txt
+ignore:
+*.swp
+*
+model:
+	generate:
+		cpfg -m leaf.map leaf.l leaf.v leaf.a
+
+L-system:
+	EDIT leaf.l
+
+view:
+	EDIT leaf.v
+
+animation:
+	EDIT leaf.a
+
+colormap:
+	PALETTE leaf.map
+
+description:
+	EDIT description.txt
+

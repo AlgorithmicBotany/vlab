@@ -1,0 +1,20 @@
+funcgalleryver 1 1
+items: 2
+fver 1 1
+name: CALYX_PROFILE
+samples: 100
+flip: on
+points: 4
+0.000000 0.116866
+0.185714 0.551003
+0.886677 -0.026151
+1.000000 0.105390
+fver 1 1
+name: POD_PROFILE
+samples: 20
+flip: on
+points: 4
+0.000000 0.116866
+0.185714 0.551003
+0.947619 -0.057571
+1.000000 0.228143

@@ -1,0 +1,62 @@
+\chapter{Introduction}
+\pagenumbering{arabic}
+
+This document describes {\rayshade} in enough detail to enable
+the technical-minded to
+sit down and render some images.  In its current form,
+it is truly a draft, and even then
+more of a reference manual than a proper user's guide.
+
+This document does not provide any kind of thorough introduction
+to the basics of computer graphics or ray tracing.
+There are many other excellent sources for this kind of information.
+The technical and coding details of {\rayshade} and
+its libraries will be documented elsewhere.
+
+\section{Getting Started}
+
+The best way to learn how to use {\rayshade} is to dive right in and
+start making pictures.  Study the example
+input files that are packaged with {\rayshade}.  Run them through
+{\rayshade} to see what the images they produce look like.
+Change the input files; move the camera,
+change the field of view, modify surface properties, and see what differences
+your changes make, all the while referring to the appropriate portions
+of this document.  Browse through the individual chapters
+to see what {\rayshade} can and cannot do.  The {\rayshade} quick reference
+guide may also help you sort out syntactical nasties.
+
+Throughout this text, the {\tt typewriter} type style is used to indicate
+keywords and other items that should be passed
+directly to {\rayshade}.  Where appropriate,
+items in an {\em italic\/} style indicate
+places where you should provide an appropriate number or string.
+
+Vectors, which consist of three numerical values, are indicated by
+an arrow over a name written in italic type style, e.g., \evec{vector}.
+Items enclosed between {\tt [} and {\tt ]} characters indicate
+that specifying those items is optional.
+Complex constructions that are
+described elsewhere in the text, such as surface or object specification,
+are denoted by enclosing descriptive text between 
+{\tt $<$} and {\tt $>$} characters.
+
+\section{A Simple Example}
+
+Because {\rayshade} provides a default camera description, surface properties,
+and a default light
+source, it is easy to construct short input files that allow you to
+experiment with objects, textures, and transformations.
+If you haven't already run {\rayshade} on one of the example input files,
+you might want to try producing an image using the following input:
+
+\begin{verbatim}
+   sphere 2 0 0 0
+\end{verbatim}
+
+If you are running {\rayshade} on a UNIX\footnote{UNIX is a trademark
+of AT\&T Bell Laboratories}-like machine, the command:
+\begin{verbatim}
+  echo "sphere 2 0 0 0" | rayshade > sphere.rle
+\end{verbatim}
+should produce an image of a sphere.

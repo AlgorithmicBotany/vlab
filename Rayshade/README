@@ -1,0 +1,172 @@
+This is version 4.0 of rayshade, a ray tracing program.
+Rayshade reads a multi-line ASCII file describing a scene to be rendered
+and produces a Utah Raster Toolkit "RLE" format file containing the
+ray traced image.
+
+Rayshade features:
+
+	Eleven primitives (blob, box, cone, cylinder, height field,
+	plane, polygon, sphere, torus, flat- and Phong-shaded triangle)
+
+	Aggregate objects
+
+	Constructive solid geometry
+
+	Point, directional, extended, spot, and quadrilateral light sources
+
+	Solid procedural texturing, bump mapping, and
+		2D "image" texture mapping
+
+	Antialiasing through variable-rate "jittered" sampling
+
+	Arbitrary linear transformations on objects and texture/bump maps.
+
+	Use of uniform spatial subdivision or hierarchy of bounding
+		volumes to speed rendering
+
+	Options to facilitate rendering of stereo pairs
+
+	Rudimentary animation support
+
+
+There are many differences between rayshade versions 3.0 and 4.0.  In
+particular, the input syntax has changed.  Input files created for
+version 3.0 must be converted to version 4.0 syntax using the provided
+conversion utility, rsconvert.  See Doc/Changes for a list of some of
+the more important changes.
+
+Rayshade v4.0 has been tested on many different UNIX-based computers,
+including: SGI 4D, IBM RS6000, Sun Sparcstation 1, Sun 3, DECstation,
+Apollo DN10000, NeXT.  If your machine has a C compiler, enough memory
+(at least 2Mb), and runs something resembling UNIX, rayshade should be fairly
+easy to port.  Be warned that rayshade uses yacc and lex to process input
+files.  If you do not have lex and yacc, try to get flex and bison from
+the Free Software Foundation folks (ftp to prep.ai.mit.edu).  Attempts
+to port rayshade to 16-bit machines will likely lead to nothing but
+a profound sense of frustration.
+
+Rayshade uses a Configure script in order to determine how it should
+be compiled.  This means that if you're not runing under UNIX, you'll
+probably have to create a config.h and edit the Makefiles by hand.
+If you create a config.h file and/or Makefiles for use in an non-UNIX
+environment, send them to us and we will make it available for use by
+others.  The prototype config.H file may be of some help.
+
+Normally, rayshade makes use of the Utah Raster toolkit.  You are
+strongly encouraged to get a copy of the toolkit, as it provides a
+host of useful tools for image manipulation and a library for reading/writing
+the toolkit's "RLE" format image files.  "blurb.urt" is the "blurb" file from
+the latest distribution of the toolkit.  Also of interest is the
+"fbm" library, available from nl.cs.cmu.edu:/usr/mlm/ftp/fbm.tar.Z, which
+provides additional tools for converting Utah Raster format images
+to/from other formats.
+
+If you do not want to or cannot use the Utah Raster toolkit, rayshade
+can be configured to create image files using a generic format
+identical to that used by Mark VandeWettering's "mtv" ray tracer.
+
+The rayshade distribution consists of two libraries (libray, libshade) and
+several applications (rayshade proper, rayview, raypaint) that are
+linked against these libraries.  To compile, run the Configure script to
+generate config.h and the Makefiles, then run "make depend"
+followed by "make".  If the Configuration script fails, or if
+it can't determine a way to generate dependencies, you'll probably
+have to edit the Makefiles or extract them from the Makefile.SH scripts
+by hand.  Don't be overly alarmed if there are a few non-fatal error
+messages while running "make depend"
+
+The Doc directory contains a User's Guide in the Guide subdirectory,
+as well as a quick-reference sheet and some information that might
+be useful in porting or modifying rayshade.  To create a formatted
+version of the User's Guide, you'll need LaTeX.  If you don't have
+LaTeX, a postscript version of the Guide is available via anonymous
+ftp from weedeater.math.yale.edu (see below).
+
+The etc directory contains miscellaneous goodies, including the source
+to a filter to convert rayshade v3.0 input to rayshade 4.0.
+The Example directory contains example input files, which may be
+used to test rayshade and to familiarize yourself with rayshade's input
+syntax.  You can also run any one of Eric Haines'
+Standard Procedural Databases through awk using the etc/nff2shade.awk
+script, and then feed the results to rayshade.  Note that for several
+of the databases, you will need to tweak the data a bit to achieve
+optimal runtimes.  See nff2shade.awk for details.
+
+Rayshade was not designed to be, nor is it, the be-all and end-all of
+ray tracers.  It was meant to be reasonably fast, portable, and easy to
+modify.  It has some nice features which allow you to produce
+pretty pictures, but there are countless extensions, modifications,
+and improvements which could be made.  There are many routines which may be
+optimized and many features which could be added.  For a list of suggested
+improvements and projects see "TODO".  You are strongly encouraged to modify
+the source code left and right.
+
+While there is currently no documentation for the libraries, it
+should be easy for you to add your own primitives, textures, aggregates,
+and light sources by looking at the code and sending mail if you get
+stuck.
+
+Additional rayshade goodies are available via anonymous ftp from
+weedeater.math.yale.edu (130.132.23.17) in pub/rayshade.4.0.
+If you have contributions of new objects, textures, input files,
+configuration files, or images to make, feel free to send us email or
+to drop off a copy via ftp in the "incoming" directory on weedeater.
+
+The first version of rayshade was written by Craig Kolb, David P. Dobkin,
+and David C. Hoffman during 1987-1988, and was heavily based on an
+"introductory" public domain ray tracer written by Roman Kuchkuda.
+Rayshade v3.0 was written by Craig Kolb and released in the Fall of 1989.
+Rayshade v4.0 was written by Craig Kolb and Rod Bogart during 1990-1991.
+
+Rayshade was made possible by many people who have made suggestions,
+fixed bugs, and who have been all-around good sports about the whole thing.
+
+Thanks to Gavin Bell, David Dobkin, Eric Haines, Lefteris Koutsofios,
+Ken Musgrave, Przemek Prusinkiewicz, and Allan Snider for their
+encouragement, comments, and willingness to be on the Front Lines.
+
+Thanks to Roman Kuchkuda for providing such a solid base upon which
+to build.
+
+Special thanks to Robert Skinner for providing the Noise(), DNoise(),
+and other texturing functions and allowing them to be redistributed.
+
+Pat Hanrahan's OOGL provided the spirit (if not the letter) of the
+modularity of rayshade v4.0.  Thanks to Pat and to Mark VandeWettering
+for the 'net tracer' conversations and for the inspiration to do something
+to clean up rayshade.
+
+Thanks to Marc Andreessen, Tony Apodaca, Ray Bellis, Dominique Boisvert,
+William Bouma, Allen Braunsdorf, Jeff Butterworth, Nick Carriero,
+Nancy Everson, Tom Friedel, Robert Funchess, David Gelernter, Mike Gigante,
+Ed Herderick, John Knuston, Raphael Manfredi, Lee Moore, Dietmar Saupe,
+Iain Sinclair, Brian Wyvill, and everybody else for their bugfixes,
+suggestions, input files, encouragement, and other feedback.
+
+Thanks also to Mark Podlipec for providing the blob and torus objects.
+
+Thanks to Jochen Schwarze for the cubic and quartic root-finding functions.
+His code, and a host of other useful routines, can be found in
+"Graphics Gems", edited by Andrew Glassner.
+
+Thanks to Benoit Mandelbrot for the support he provided this project.
+
+If you find any bugs, make any useful extensions, have a nice input file,
+port rayshade to a new environment, or need assistance understanding a
+particularly braindamaged section of code, please let us know.  We can be
+most easily reached by email.
+
+Once you start using rayshade, and you'd like to be kept abreast of
+changes and extensions, send a message to rayshade-request@cs.princeton.edu,
+and we'll add you to the rayshade mailing list.
+
+Craig Kolb
+Rod Bogart
+10 January 1992
+rayshade-request@cs.yale.edu
+
+Craig Kolb 
+Computer Science Department
+Princeton University
+35 Olden St.
+Princeton, NJ 08544

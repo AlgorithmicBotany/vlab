@@ -1,0 +1,7 @@
+COMPOUND LEAF
+
+Example of a very simple L-system generating a compound
+branching structure.  Apices are not visualized, because
+module A() is not predefined, and thus does not have a 
+turtle interpretation.  Since module A() is not predefined,
+it must be explicitly declared.

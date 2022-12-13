@@ -1,0 +1,4 @@
+Context-sensitivity - acropetal (up)
+
+An acropetal flow is captured by a left-context-sensitive
+production.

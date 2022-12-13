@@ -1,0 +1,23 @@
+/*
+ * "planet" input file to demonstrate fbm texture and use of cpp
+ * C. Kolb
+ */
+#define EXPAND(x)	scale x x x
+
+#define LACUNARITY	2.
+#define OCTAVES		6
+
+screen 256 256
+light 1.0 0.9 0.8 directional 1. -1. 1.
+eyep 0. -4. 0.
+sphere  ambient .06 .05 .04
+	diffuse .9 .85 .8
+	1.0 0 0 0
+	texture fbm 	0.		/* offset */
+			1.		/* scale */
+			0.3		/* h */
+			LACUNARITY	/* lambda */
+			OCTAVES		/* octaves */
+			-.2		/* thresh */
+			planet.map 	/* mapname */
+		EXPAND(0.7)

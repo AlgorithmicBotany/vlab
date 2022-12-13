@@ -1,0 +1,25 @@
+Canalization of the number of organs in spiral phyllotaxis
+
+
+The model creates a sequence of flowerheads with an increasing
+number of organs, and outputs the number of ray florets ("petals")
+to the message window.  Observe that these numbers usually
+are Fibonacci numbers.
+
+For each number of organs, the entire phyllotactic pattern 
+is created at once, using a decomposition rule. 
+Consecutive primordia are assigned increasing vigor values.  
+The environment compares the vigor of colliding primordia.  The
+primordium with the lower vigor is dominated by the primordium 
+with the higher vigor.  The only primordia that are not dominated 
+are situated on the circumference of the capitulum (disk). These 
+primordia form ray florets, while the remaining
+primordia form disk florets.   
+
+NOTE: This model uses the multiple window feature of lpfg to 
+simultaneously display two views of the simulation: 
+- a representation of the flowerhead
+- and a plot showing the canalization of petal numbers.
+It interacts with the 'honda81' environmental program to compare the vigor.
+
+

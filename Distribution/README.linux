@@ -1,0 +1,51 @@
+### Installing vlab on Linux systems should be done manually
+
+*Required installed software:* g++, make, Qt5
+On Debian-based systems, the following command installs the essentials:
+    sudo apt install build-essential qt5-default
+You may need to add the universe repository for qt5 first:
+    sudo add-apt-repository universe
+
+Download the vlab tar.gz file. Decompressing it will create a directory like
+`vlab-5.0.x`, or something similar. The directory will contain a `README`
+file with complete installation instructions.
+
+For the simplest configuration, a personal installation, move the vlab
+directory to wherever you want to install vlab (such as `/usr/local` or
+`/opt/vlab` or your home directory). Then, open Terminal and change
+directory to that location.
+
+If you are using Bourne (sh) or Bourne Again shell (bash), run
+
+    ./bin/govlab.sh
+
+and vlab browser should start. Otherwise, run the following scripts:
+
+    ./bin/postinstall.sh
+
+Then add the vlab paths to your environment by running:
+
+    . ./bin/sourceme.sh --- for Bourne shell (sh) or Bourne Again shell (bash)
+OR
+    . ./bin/sourceme.csh --- for C shell (csh)
+
+Finally, run vlab browser:
+
+    ./bin/browser
+
+The above steps install all vlab components and the default configuration
+files. They also install example OOFS databases. Documentation for
+vlab can be found in the 'docs' directory or accessed from Browser's menu.
+
+### Extra information
+
+Screen scaling issues may occur on some systems. They may be
+fixed by setting the environment variable QT_SCREEN_SCALE_FACTORS to 1.
+
+### Contact
+
+The home page for vlab is:
+http://www.algorithmicbotany.org/virtual_laboratory/
+
+Email: vlab.algorithmicbotany@gmail.com
+

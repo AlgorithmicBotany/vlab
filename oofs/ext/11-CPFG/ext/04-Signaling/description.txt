@@ -1,0 +1,4 @@
+Introducton to programming using context-sensitive L-systems
+in cpfg.  In these examples, information is caried by the presence 
+or absence of signals, rather than numerical values associated with
+the signals.

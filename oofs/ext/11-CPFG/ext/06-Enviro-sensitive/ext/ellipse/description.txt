@@ -1,0 +1,4 @@
+A simple demo of environmentally-sensitive L-systems. For an explanation see:
+Przemyslaw Prusinkiewicz, Mark James, and Radomir Mech. Synthetic topiary.
+Proceedings of SIGGRAPH 94, pp. 351-358.
+

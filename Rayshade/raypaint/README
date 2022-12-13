@@ -1,0 +1,34 @@
+Raypaint reads a rayshade input file and opens a graphics window into
+which the image is progressively rendered.  Graphics support routines
+are provided for X11 and GL (SGI / RS6000).  Note that raypaint displays
+a greyscale image when running under X.
+
+Command-line arguments to raypaint are identical to rayshade arguments.
+
+By default, raypaint refines areas of the image that it considers
+"interesting" (largish and contrasty).  The mouse may be used to direct
+raypaint to concentrate on particular regions.  Holding down the
+left mouse button causes the indicated region to be single-sampled down
+to the pixel level.  The right button causes the region to be supersampled.
+When either button is released, raypaint continues to refine by
+either single-sampling (if the left button was pressed) or supersampling
+(if the right button was pressed).  If either button is pressed while the
+cursor is pointing at a region that has already been resolved to the
+pixel-level, raypaint will instead choose its own region to refine.
+
+The middle mouse button may be used to sweep out a rectangular region to
+which raypaint should restrict its refinement:  Press and hold the middle
+mouse button while pointing at one corner of the region of interest,
+drag the cursor to the opposite corner and release the mouse button.
+Note that no rectangle will be drawn.  Refinement will continue inside
+of the indicated region.
+
+When every pixel has been sampled, an image file is written.
+
+Note that raypaint is intended to be an example application, not a
+polished tool.  You are encouraged to tear apart raypaint to improve
+it or build your own application.
+
+To compile, move either xgraphics.c (X11) or glgraphics.c (SGI) to
+graphics.c, edit the Makefile and change GRAPHICSLIB to reflect your
+choice of graphics support, and run make.

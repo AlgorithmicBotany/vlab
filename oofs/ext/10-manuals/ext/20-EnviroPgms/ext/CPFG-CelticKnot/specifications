@@ -1,0 +1,59 @@
+lsystem.l
+viewfile.v
+animate.a
+material.mat
+enviro.e
+obcheck.mak
+obcheck.c
+message.c
+comm_lib.h
+libcomm.a
+obstacles.dat
+mkbackground.mak
+mkbackground.c
+background.dat
+description.txt
+ignore:
+*
+model:
+	generate:
+		cpfg -M material.mat -e enviro.e lsystem.l viewfile.v animate.a
+
+L-system:
+	EDIT lsystem.l
+
+viewfile:
+	EDIT viewfile.v
+
+animate:
+	EDIT animate.a
+
+material:
+	edit:
+		medit material.mat
+
+environment:
+	commfile:
+		EDIT enviro.e
+	enviro program:
+		source:
+			EDIT obcheck.c		
+		makefile:
+			EDIT obcheck.mak
+		make:		
+			make -f obcheck.mak
+	parameters:
+		EDIT obstacles.dat
+
+mkbackground:
+	source:
+		EDIT mkbackground.c
+	makefile:
+		EDIT mkbackground.mak
+		make:
+			make -f mkbackground.mak
+	run:
+		./mkbackground obstacles.dat background.dat
+
+description:
+	EDIT description.txt

@@ -1,0 +1,12 @@
+Insect attack
+
+The insect foraging on the plant is represented 
+by a signal and moved around using context-sensitive 
+rules.  The insect eats buds; when all buds on a branch
+are eaten, the branch dies.  A detailed description 
+of this model is presented in the paper "Visual Models 
+of Plant Development" by P. Prusinkiewicz, M. Hammel, 
+J. Hanan, and R. Mech, published in G. Rozenberg 
+and A. Salomaa (Eds.): Handbook of Formal Languages 
+Vol III, Springer, Berlin 1997, pp. 535-597.
+

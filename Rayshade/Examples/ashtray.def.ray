@@ -1,0 +1,31 @@
+/*
+ * Ashtray object
+ * C. Kolb 11/1990
+ *
+ * $Id: ashtray.def.ray,v 1.1.1.1 2005/01/07 20:51:06 laneb Exp $
+ */
+name indent_proto grid 3 2 1
+	cylinder  0.5  0 -1.2 0  0 1.2 0
+		disc .5 0 -1.2 0 0 -1 0
+		disc .5 0  1.2 0 0  1 0
+	cylinder  0.5  2 -1.2 0  2 1.2 0
+		disc .5 2 -1.2 0 0 -1 0
+		disc .5 2  1.2 0 0  1 0
+	cylinder 0.5  -2 -1.2 0 -2 1.2 0 
+		disc .5 -2 -1.2 0 0 -1 0
+		disc .5 -2  1.2 0 0  1 0
+end
+
+
+name rests grid 3 3 1
+	object indent_proto translate 0 -5. .2
+	object indent_proto translate 0  5. .2 
+	object indent_proto rotate 0 0 1 90 translate 5. 0  .2
+	object indent_proto rotate 0 0 1 90 translate -5. 0 .2
+end
+
+
+name ashtray difference
+	difference box -5 -5 -3  5 5 0 torus 3 1.5 0 0 0 0 0 1 end
+	object rests
+end

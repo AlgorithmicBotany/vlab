@@ -1,0 +1,7 @@
+Light comes from a single source, mainly from above, using the 'chiba'
+environmental program.
+Colors of the balls indicate the total amount of light received.
+The direction of light from viewing (set in the view file) and
+for calculation of the amount of received light (in the light.spec
+file) are the same.  Nevertheless, this view is somewhat confusing
+because of the lack of shadows.

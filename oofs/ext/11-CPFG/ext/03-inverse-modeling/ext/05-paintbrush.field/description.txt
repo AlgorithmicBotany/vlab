@@ -1,0 +1,8 @@
+Indian paintbrush field
+
+Creating a simple field of plants.
+
+Based on P. Prusinkiewicz, L. Muendermann, R. Karwowski and 
+B. Lane, "The use of positional information in the 
+modeling of plants", Proceedings of Siggraph 2001.
+

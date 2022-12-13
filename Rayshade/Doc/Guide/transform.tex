@@ -1,0 +1,49 @@
+\chapter {Transformations}
+
+{\Rayshade} supports the application of linear transformations to objects
+and textures.  If more than one transformation is specified, the
+total resulting transformation is computed and applied.
+
+\begin{defkey}{translate}{\evec{delta}}
+Translate (move) by {\em delta}.
+\end{defkey}
+
+\begin{defkey}{rotate}{\evec{axis} $\theta$}
+Rotate counter-clockwise about the given axis by $\theta$ degrees.
+\end{defkey}
+
+\begin{defkey}{scale}{\evec{v}}
+Scale by {\em v}.
+\end{defkey}
+All three scaling components must be non-zero, else degenerate matrices
+will result.
+
+\begin{defkey}{transform}{\evec{row1} \evec{row2} \evec{row3} [\evec{delta}]}
+Apply the given 3-by-3 transformation matrix.  If given, {\em delta}
+specifies a translation vector.
+\end{defkey}
+
+Transformations should
+be specified in the order in which they are to be applied
+immediately following the item to
+be transformed.  For example:
+
+\begin{verbatim}
+        /*
+         * Ellipsoid, rotated cube
+         */
+        sphere 1. 0 0 0   scale 2. 1. 1. translate 0 0 -2.5
+        box 0 0 0 .5 .5 .5
+           rotate 0 0 1 45 rotate 1 0 0 45 translate 0 0 2.5
+\end{verbatim}
+
+Transformations may also be applied to textures:
+
+\begin{verbatim}
+   plane 0 0 -4  0 0 1
+     texture checker red scale 2 2 2 rotate 0 0 1 45
+\end{verbatim}
+
+Note that transformation parameters may be specified using
+animated expressions, causing the transformations themselves
+to be animated.  See Appendix B for further details.

@@ -1,0 +1,27 @@
+Drawing with a mouse in lpfg
+
+Then hold Key 1 (or Shift+Alt, Shift+Command, or all three),
+and left click to draw.
+
+The model illustrates the use of the MouseStatus structure,
+defined as follows: 
+
+struct MouseStatus
+{
+  int viewNum;                 // currently active view
+  int viewX,viewY;             // x,y pixel positions of mouse cursor
+			       
+  V3d atFront,atRear,atMiddle; // intersection of cursor ray with
+                               // front/back viewplane and
+                               // halfway between them
+			       // calculated when mouse status is called,
+			       // independently of any keys
+
+  bool lbDown;                 // left button currently down
+
+
+  bool lbPushed, lbReleased;   // left button pressed or released
+                               // since last call to GetMouseStatus
+};
+
+Updated by PWP 2022-12-02

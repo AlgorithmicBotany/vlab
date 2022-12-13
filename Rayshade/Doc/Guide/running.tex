@@ -1,0 +1,318 @@
+\chapter{Running Rayshade}
+
+{\Rayshade}
+can take anywhere from seconds to weeks to render an image.  The exact
+time required is a function of the speed of the
+machine(s) on which
+you're working, the complexity of the scene, and how ``good'' you want
+the final image to be.  \footnote{Appendix D describes some simple
+ways to accelerate the rendering process.}
+
+Creating a finished ray-traced image is an iterative process.  Usually, many
+test renderings are made at low resolution and with
+non-essential features turned off.  After each test image is created,
+surface definitions might be modified, the eye or look positions may be
+slightly changed, or the intensity of a light source changed.
+
+This chapter describes the basic operation of {\rayshade} and some of
+the options that control that operation.
+Setting these options properly can greatly reduce
+rendering time, improve the quality of your images, and make you a better
+person.
+
+{\Rayshade} usually works as a filter, reading a description from
+the standard input and writing
+an image file to the standard output.  As it is working, {\rayshade} reports
+on the progress of the rendering by writing messages to the standard
+error.
+
+\section{The Input File}
+
+The scene description read by {\rayshade} consists of a number of
+keywords, each followed by a set of arguments.  These keywords can
+be thought of as commands that direct {\rayshade} to do various things,
+such as create objects, set the eye's position, and change an object's
+appearance.
+
+Many of the keywords have related command-line options for turning
+on special features and setting values.
+These options override the values given in the input file,
+and are explained in detail in Appendix A.
+
+{\Rayshade} is ``case sensitive,'' which means that typing
+{\tt SPHERE} or {\tt Sphere} instead of {\tt sphere} won't work.
+{\Rayshade} keywords are all lower-case.  Many people choose to
+capitalize the first letter of names that they give to objects
+or surfaces in order to make then ``stand out'' in an input file.
+
+Keywords, numbers and strings in the input file are separated by spaces,
+tabs, or new lines (carriage returns).  These ``whitespace'' characters
+are handled identically by {\rayshade}, which means that you can separate
+keywords from keywords, key words from arguments, and arguments from
+arguments using any combination of whitespace characters that you choose.
+
+\begin{table}
+\centering
+\begin{tabular}{|c|c|l|}\hline\hline
+Operator &    Use    & Operation \\ \hline \hline
+\verb+^+ &  \verb!a ^ b!  & Exponentiation \\  \hline
+\verb+-+ &  \verb! -a  !  & Negation  \\   \hline
+\verb+*+ &  \verb!a * b!  & Multiplication  \\  \hline
+\verb+/+ &  \verb!a / b!  & Division     \\  \hline
+\verb+%+ &  \verb!a % b!  & Remainder    \\  \hline
+\verb-+- &  \verb!a + b!  & Addition     \\ \hline
+\verb+-+ &  \verb!a - b!  & Subtraction  \\ \hline \hline
+\end{tabular}
+\caption{Operators, in order of decreasing precedence.}
+\label{tab:operators}
+\end{table}
+
+Numbers may be entered directly as reals or as parenthesized expressions.
+Reals may be written in exponential notation if you wish, and
+integers may be written with or without a trailing decimal point.
+When an integer value is called for and a real is given,
+the real value is truncated and the resulting integer is used.
+Table \ref{tab:operators} lists the available operators
+available for use in expressions, in order of decreasing precedence.
+
+The upshot of all this is that the strings
+{\tt 42}, {\tt 42.},
+{\tt (20 + 22)}, and {\tt (7\verb!^!2 - 7)} mean the same thing
+to {\rayshade}.
+
+Variables may also be defined and used in expressions.  Several
+built-in functions are also provided.  See Appendix B for further details.
+
+{\Rayshade} will automatically run the input it receives
+through the C preprocessor if it is available.  This
+allows you to use C preprocessor directives, such as {\tt \#include},
+{\tt \#define}, and {\tt \#ifdef} when designing your input files.
+
+Comments may be included in {\rayshade} input files by enclosing
+text between the strings \verb!/*! and \verb!*/!, as in the C
+programming
+language.
+
+\section{Images}
+
+The end result of running {\rayshade} is an image file.  Depending upon
+how it was installed, {\rayshade} writes images in either the Utah Raster
+{\em RLE} format or a generic but easily-manipulated {\em mtv} format
+used by Mark VandeWettering in his {\em mtv} ray tracer.  The {\em mtv}
+format consists of a header giving the resolution of the image followed
+by interleaved red-green-blue values for each pixel.  The {\em RLE} format
+supports an arbitrary number of color channels,
+an alpha channel, comments, a history field, and the ability
+to treat images as windows into a larger image.  As a result of this
+flexibility, a number of {\rayshade}'s features
+are not
+supported if the {\em mtv} format is being used. You are thus strongly
+encouraged to obtain a copy of the Utah Raster Toolkit.
+
+If the {\em mtv}
+format is used, the image will (and must) consist of three eight-bit
+color channels.
+If the {\em RLE} format is used, the image file consists of three
+eight-bit color channels plus an eight-bit alpha channel.  {\Rayshade}
+also documents in the {\em RLE} header the command line and {\em gamma}
+value used in creating the image.
+
+If more than one frame is rendered, the resulting images are appended
+in turn
+to the image file.  The various utilities provided by the
+Utah Raster Toolkit can be used to manipulate the resulting ``movie''
+files.
+If the Toolkit is not being used, you will probably need to write
+utility programs to handle the decidedly non-standard multi-image {\em mtv}
+format files.
+
+By default, {\rayshade} writes the computed image to the standard output.
+The image file may be written to a file instead by specifying a file name
+in the input stream.
+
+\begin{defkey}{outfile}{{\em filename}}
+	Write the computed image to the named file.
+\end{defkey}
+The output file name may also be specified on the command line by
+using the {\tt -O} option.
+
+The size of the output image is measured in pixels.  The {\em x} size
+is the number of pixels left-to-right, while the {\em y} size is
+the number of pixels bottom-to-top.
+
+\begin{defkey}{screen}{{\em xsize ysize}}
+	Use a screen {\em xsize} pixels wide by {\em ysize} pixels high.
+\end{defkey}
+The screen size may also be set on the command line through
+the {\tt -R} option.
+The default
+screen size is 512 by 512 pixels.
+
+When rendering an image, it is often advantageous to split the image
+into a number of disjoint windows, each of which is rendered
+on a different machine.  One then combines the images corresponding to
+the windows into a final image.
+
+\begin{defkey}{window}{{\em minx maxx miny maxy}}
+	Render the image in the given window.
+\end{defkey}
+The window must be properly
+contained within the screen, i.e., {\em minx} and {\em miny} must
+be greater than or equal to zero, while {\em maxx} and
+{\em maxy} must be less than {\em xsize} and {\em ysize}, respectively.
+The Utah Raster tool
+{\em rlecomp\/} is useful for reconstructing the full image from
+sub-images.
+By default, the window
+is equivalent to the entire screen.
+
+It is also convenient to be able to render a small portion
+of the window by specifying a subregion using normalized coordinates.
+
+\begin{defkey}{crop}{{\em left right bottom top}}
+	Crop the rendering window.
+\end{defkey}
+The rendering window is cropped by rendering the screen
+area that falls within $minx + left(maxx - minx)$ and
+$minx + right(maxx - minx)$ in the $X$ direction, and similarly
+for the $Y$ direction.
+{\em Left} and {\em bottom} must be greater than or equal to zero.
+{\em Right} and {\em top} must be less than or equal to one.
+If {\em left} is greater than {\em right}, the two values are
+swapped, and similarly for {\em bottom} and {\em top}.
+
+{\em Gamma correction} may also be applied to the three output color
+channels.  See Appendix A for more details.
+
+\section{Statistics Reporting}
+
+As it is working, {\rayshade} informs you of its progress by writing
+messages to a ``report file''.  By default, the report file is the
+standard error.  The report itself consists of a number of
+progress report lines consisting of the number of eye rays traced,
+the total elapsed time, and the elapsed time since the last progress report.
+The end of the report contains detailed statistics about intersection
+tests performed, the number of rays traced, and the like.
+
+\begin{defkey}{report}{[{\tt verbose}] [{\tt quiet}] [{\em freq}] [{\em file}]}
+	Specify the kind of
+	information included in the report and to which
+	file it should be written.
+	If {\tt verbose} is specified, the
+	report will also include a listing of the options selected,
+	the 
+	bounding volumes of each aggregate,
+	and the total number of primitives in each aggregate.
+	{\tt quiet} causes warning
+	messages to be suppressed.  {\em freq} specifies the frequency,
+	in scanlines rendered, that progress reports are made.
+	If given, {\em file} names a file to which the report
+	will be written.
+\end{defkey}
+By default, a non-verbose, non-quiet report is 
+written to the standard error once every 10 lines.
+The {\tt -V} option may also be used to direct the report to a named file.
+
+\section{Antialiasing}
+
+Given a screen of a fixed size, creating an image is accomplished by
+sampling each pixel one or more times in order to determine what can
+be seen ``through'' that pixel by the camera.  A pixel thus covers
+a square area of the image plane, not just a single point.
+
+If a pixel is not sampled at the proper rate, aliasing will result.
+Aliasing usually appears as ``jaggies'' or ``stair steps'' in the image.
+In order to reduce these and other artifacts, {\rayshade} provides
+an adaptive jittered antialiasing scheme that attempts to detect where
+increased sampling rates are needed.
+In jittered sampling, the location at which a sample is taken is
+perturbed by a random amount.  This perturbation reduces aliasing
+but adds noise to the image.  Appendix B describes how jittered
+time sampling is implemented in {\rayshade}.
+
+The adaptive sampling scheme implemented in {\rayshade} begins
+by sampling each pixel on the current scanline once.
+For each pixel on the scanline, the contrast between it and its
+four immediate neighbors is computed.  If this contrast is greater
+than a user-specified maximum in any color channel,
+the pixel and its
+neighbors are all supersampled by firing an additional
+{$numsamples^2 -1$} rays through those pixels that have not already been
+supersampled.  This process is repeated for the current scanline
+until a pass is made without any
+pixel being supersampled.
+
+\begin{defkey}{contrast}{{\em redcont greencont bluecont}}
+	Set the maximum allowed contrast between four color
+	samples when adaptive supersampling is used.
+	The contrast test is applied to each color
+	channel separately.
+\end{defkey}
+The default maximum contrast values for the red, green, and blue
+channels are 0.25, 0.2, and 0.4, respectively.
+
+\begin{defkey}{sample}{{\em n} [{\tt nojitter}]}
+	Use $n^{2} $ samples when performing jittered
+	sampling.  The maximum legal value is 5.
+	If {\tt nojitter} is specified, sample locations
+	and times will not be jittered.
+\end{defkey}
+By default, $3^{2}$ jittered samples are taken.
+
+A given set of sample values must be filtered
+in order to
+assign a color to a pixel.  Ideally, when performing filtering
+for a specific pixel,
+the filter will consider samples from neighboring regions.  In
+{\rayshade}, the filtering applied to a pixel makes use of samples
+taken for that pixel alone.  However, one may increase the size
+of the filter that is applied in order to approximate the results
+a more robust filtering scheme.
+
+\begin{defkey}{filter}{{\em type} [{\em width}]}
+	Use the indicated filter type with the given width,
+	in pixels.
+	Supported filter types are {\tt gauss} (Gaussian)
+	and {\tt box} (the default).
+\end{defkey}
+The default filter width is 1.0 for a box filter, 1.8 for a Gaussian
+filter.  The filter and pixel centers always coincide.
+When sampling a pixel, samples are taken over the area of
+the pixel filter, which is not necessarily the same as the area
+of the pixel itself.
+
+Jittered sampling is used in {\rayshade} to sample extended light
+sources as well.  A total of $samples^2$ samples are taken of
+each extended light source in order to determine the extent of shadowing.
+
+\section{The Ray Tree}
+
+When ray tracing a scene, reflected or transmitted rays may strike
+other reflective or transparent objects.  Further reflected or
+transmitted rays will be spawned, and so on.  Taken together, such
+a family of rays is termed the {\em ray tree}.  Care must be taken
+to control the depth of this tree:  If it is allowed to grow too deeply,
+one may spend a great deal of time computing rays that contribute little
+to the final picture; if it is not allowed to grow far enough, this
+premature tree pruning may be evident in the image.
+
+{\Rayshade} provides two complementary methods for controlling the depth
+of the ray tree.  One method sets an absolute maximum for the tree.  The
+other allows one to adaptively prune a tree as it grows so that ``unimportant''
+rays are not spawned.
+
+\begin{defkey}{maxdepth}{{\em level}}
+	Do not spawn rays deeper than those at the given {\em level}.
+\end{defkey}
+Rays from the eye are of depth zero.  The default value for
+{\em level} is 15.
+This depth may also be set from the command line through the {\tt -D} option.
+
+\begin{defkey}{cutoff}{{\em threshold}}
+	Do not spawn rays whose contribution to the final color of
+	the eye ray is less than {\em threshold} for each color channel.
+	Threshold may be given as a single floating-point value,
+	or as a red-green-blue triple.
+\end{defkey}
+The default value is 0.002.  This threshold may also be set from
+the command line through the {\tt -T} option.

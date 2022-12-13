@@ -1,0 +1,8 @@
+A leaf modeled as a generalized cylinder
+
+Illustrates the use of functions, where each function is referred to
+by its order within the functions.fset file. 
+
+Based on P. Prusinkiewicz, L. Muendermann, R. Karwowski and 
+B. Lane, "The use of positional information in the 
+modeling of plants", Proceedings of Siggraph 2001.

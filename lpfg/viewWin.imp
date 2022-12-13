@@ -1,0 +1,628 @@
+#include "quaternion.h"
+
+extern LPFG *pLpfg;
+
+const unsigned int ViewCommandIdBase = 50000;
+const unsigned int UserCommandIdBase = 60000;
+
+View *View::Create(HINSTANCE hInst, const char *title, HWND hParent,
+                   const RECT &r, LPFG *pLpfg, int id) {
+  CrSt cs(pLpfg, id);
+  DWORD style = WS_CLIPCHILDREN | WS_CLIPSIBLINGS;
+  HWND hRes = 0;
+  if (pLpfg->IsMDI()) {
+    style |= WS_OVERLAPPEDWINDOW;
+    hRes = CreateMDIWindow("LPFGView", title, style, r.left, r.top, r.right,
+                           r.bottom, hParent, hInst,
+                           reinterpret_cast<LPARAM>(&cs));
+  } else {
+    style = WS_CHILD | WS_VISIBLE;
+    hRes = CreateWindow(
+        "LPFGView", title, style, r.left, r.top, r.right, r.bottom, hParent,
+        reinterpret_cast<HMENU>(static_cast<LONG_PTR>(id)), hInst, &cs);
+  }
+  View *pRes = reinterpret_cast<View *>(GetWindowLongPtr(hRes, GWLP_USERDATA));
+  return pRes;
+}
+
+void View::Register(HINSTANCE hInst) {
+  WNDCLASS wc;
+  wc.style = CS_HREDRAW | CS_VREDRAW;
+  wc.lpfnWndProc = WndProc;
+  wc.cbClsExtra = 0;
+  wc.cbWndExtra = 0;
+  wc.hInstance = hInst;
+  wc.hIcon = 0;
+  wc.hCursor = 0;
+  wc.hbrBackground = 0;
+  wc.lpszMenuName = 0;
+  wc.lpszClassName = "LPFGView";
+
+  RegisterClass(&wc);
+}
+
+#define CPFG_COMP_UI
+
+LRESULT CALLBACK View::WndProc(HWND hWnd, UINT msg, WPARAM wParam,
+                               LPARAM lParam) {
+  View *pCtrl = reinterpret_cast<View *>(GetWindowLongPtr(hWnd, GWLP_USERDATA));
+  switch (msg) {
+  case WM_CREATE: {
+    const CREATESTRUCT *pCS = reinterpret_cast<const CREATESTRUCT *>(lParam);
+    pCtrl = new View(hWnd, pCS);
+    SetWindowLongPtr(hWnd, GWLP_USERDATA, reinterpret_cast<LONG_PTR>(pCtrl));
+  }
+    return 0;
+  case WM_DESTROY:
+    delete pCtrl;
+    return 0;
+  case WM_SIZE:
+    pCtrl->Resize(LOWORD(lParam), HIWORD(lParam));
+    break;
+  case WM_PAINT:
+    pCtrl->Repaint();
+    ValidateRect(hWnd, 0);
+    return 0;
+  case WM_CONTEXTMENU: {
+    // It seems that I can't use wparam to get key states
+    // (as for LBUTTONDOWN), so I must use GetKeyState
+    bool IsAlt = (0x8000 & GetKeyState(VK_MENU)) != 0,
+         IsCtrl = (0x8000 & GetKeyState(VK_CONTROL)) != 0,
+         IsShift = (0x8000 & GetKeyState(VK_SHIFT)) != 0;
+    if ((IsAlt && IsShift) || (IsAlt && IsCtrl) || (IsShift && IsCtrl))
+      // Use alternate (user-defined) context menu
+      pCtrl->UserContextMenu(LOWORD(lParam), HIWORD(lParam));
+    else
+      pCtrl->ContextMenu(LOWORD(lParam), HIWORD(lParam));
+  }
+    return 0;
+#ifdef CPFG_COMP_UI
+  case WM_LBUTTONDOWN: {
+    POINTS p = MAKEPOINTS(lParam);
+    bool IsAlt = ((0x8000 & GetKeyState(VK_MENU)) != 0);
+    if ((wParam & (MK_CONTROL | MK_SHIFT)) == (MK_CONTROL | MK_SHIFT)) {
+      pCtrl->InsertX(p.x, p.y);
+      pCtrl->_mouseStatus.lbDown = true;
+    } else if ((wParam & MK_SHIFT) == MK_SHIFT && IsAlt)
+      pCtrl->_mouseStatus.lbDown = true;
+    else if ((wParam & MK_CONTROL) == MK_CONTROL && IsAlt) {
+      pCtrl->InsertPosX(p.x, p.y);
+      pCtrl->_mouseStatus.lbDown = true;
+    } else if (wParam & MK_SHIFT)
+      pCtrl->StartPanning(p.x, p.y);
+    else if (wParam & MK_CONTROL)
+      pCtrl->StartZooming(p.x, p.y);
+    else
+      pCtrl->StartRotating(p.x, p.y);
+  }
+    SetCapture(hWnd);
+    return 0;
+  case WM_MBUTTONDOWN: {
+    POINTS p = MAKEPOINTS(lParam);
+    if (MK_CONTROL & wParam)
+      pCtrl->StartFrustum(p.x, p.y);
+    else if (MK_SHIFT & wParam)
+      pCtrl->StartRoll(p.x, p.y);
+    else
+      pCtrl->StartZooming(p.x, p.y);
+    SetCapture(hWnd);
+  }
+    return 0;
+  case WM_MOUSEMOVE: {
+    POINTS p = MAKEPOINTS(lParam);
+    pCtrl->MouseMove(p.x, p.y);
+  }
+    return 0;
+  case WM_LBUTTONUP:
+    pCtrl->_mouseStatus.lbDown = false;
+  case WM_MBUTTONUP:
+    ReleaseCapture();
+    return 0;
+#else
+  case WM_LBUTTONDOWN: {
+    POINTS p = MAKEPOINTS(lParam);
+    bool IsAlt = ((0x8000 & GetKeyState(VK_MENU)) != 0);
+    if ((wParam & (MK_CONTROL | MK_SHIFT)) == (MK_CONTROL | MK_SHIFT))
+      pCtrl->InsertX(p.x, p.y);
+    else if ((wParam & MK_SHIFT) == MK_SHIFT && IsAlt)
+      pCtrl->_mouseStatus.lbDown = true;
+    else if (wParam & MK_CONTROL)
+      pCtrl->StartPanning(p.x, p.y);
+    else if (wParam & MK_SHIFT)
+      pCtrl->StartZooming(p.x, p.y);
+    else
+      pCtrl->StartRotating(p.x, p.y);
+  }
+    SetCapture(hWnd);
+    return 0;
+  case WM_MOUSEMOVE: {
+    POINTS p = MAKEPOINTS(lParam);
+    pCtrl->MouseMove(p.x, p.y);
+  }
+    return 0;
+  case WM_LBUTTONUP:
+    pCtrl->_mouseStatus.lbDown = false;
+    ReleaseCapture();
+    return 0;
+#endif
+  case WM_CAPTURECHANGED:
+    pCtrl->StartIdle();
+    return 0;
+  case WM_COMMAND:
+    pCtrl->Command(LOWORD(wParam));
+    return 0;
+  case WM_SHOWWINDOW:
+    pCtrl->Showing(TRUE == wParam);
+    return 0;
+
+  case LSTUDIO_3D_CONNECTION_MSG: {
+    Connection3DStatus status;
+    if (pLpfg->getC3D()->getStatus(status))
+      pCtrl->handleC3D(status);
+  }
+    return 0;
+  }
+  if (pLpfg->IsMDI())
+    return DefMDIChildProc(hWnd, msg, wParam, lParam);
+  else
+    return DefWindowProc(hWnd, msg, wParam, lParam);
+}
+
+View::View(HWND hWnd, const CREATESTRUCT *pCS)
+    : _hWnd(hWnd), _hInstance(reinterpret_cast<HINSTANCE>(
+                       GetWindowLongPtr(_hWnd, GWLP_HINSTANCE))),
+#pragma warning(disable : 4355)
+      _IdleTask(this), _RotateTask(this), _ZoomTask(this), _FrustumTask(this),
+      _RollTask(this), _PanTask(this), _hasMoved(false), shadowMapFBO(0),
+      lightMatrixLocation(0), shadowMapLocation(0), shadowColorLocation(0),
+      textureLocation(0), textureShadowLocation(0), numLightsLocation(0),
+      mainShaderProgramID(0), shadowShaderProgramID(0)
+#pragma warning(default : 4355)
+{
+  {
+    const CrSt *pCrSt = 0;
+    if (pLpfg->IsMDI())
+      pCrSt = reinterpret_cast<const CrSt *>(
+          reinterpret_cast<const MDICREATESTRUCT *>(pCS->lpCreateParams)
+              ->lParam);
+    else
+      pCrSt = reinterpret_cast<const CrSt *>(pCS->lpCreateParams);
+    _pLpfg = pCrSt->_pLpfg;
+    _id = pCrSt->_id;
+  }
+
+  shadowMapResolution = drawparams.ShadowMapSize();
+  _pTask = &_IdleTask;
+  _AxisOn = false;
+  _flist = 0;
+  _oflist = 0;
+  _pQ = 0;
+  _hdc = GetDC(_hWnd);
+  _shown = false;
+
+  PIXELFORMATDESCRIPTOR pfd;
+  memset(&pfd, 0, sizeof(pfd));
+  {
+    pfd.nSize = sizeof(PIXELFORMATDESCRIPTOR);
+    pfd.nVersion = 1;
+    pfd.dwFlags = PFD_DRAW_TO_WINDOW | PFD_SUPPORT_OPENGL | PFD_DOUBLEBUFFER;
+    pfd.iPixelType = PFD_TYPE_RGBA;
+    pfd.cColorBits = 24;
+    pfd.cAlphaBits = 16;
+    pfd.cAccumBits = 0;
+    pfd.cDepthBits = 16;
+    pfd.iLayerType = PFD_MAIN_PLANE;
+  }
+  int i = ChoosePixelFormat(_hdc, &pfd);
+  SetPixelFormat(_hdc, i, &pfd);
+  _hrc = wglCreateContext(_hdc);
+
+  CurrentContext cc(this);
+
+  // MC - July 2016 - support for shadow mapping using GLSL 1.2 shaders
+  // first some housekeeping, obtain the addresses of the OpenGL extension entry
+  // points (these are not provided on Windows)
+  GLenum err = glewInit();
+  drawparams.setOpenGL_2(true);
+
+  if (GLEW_OK != err) {
+    std::cerr
+        << "Warning! the 'render mode: shadows' view option will not work.\n";
+    std::cerr << "Cannot initialize OpenGL extensions: "
+              << glewGetErrorString(err) << std::endl;
+    drawparams.SetRenderMode(DParams::rmShaded);
+  }
+  // check if shaders are supported (GL version >= 2.0) and if frame buffers are
+  // supported (GL extension)
+  if (!glewIsSupported("GL_VERSION_2_0")) {
+    drawparams.setOpenGL_2(false);
+
+    std::cerr
+        << "Warning! the 'render mode: shadows' view option will not work.\n";
+    std::cerr
+        << "OpenGL 2.0 is not supported and shadows will not be rendered.\n";
+    drawparams.SetRenderMode(DParams::rmShaded);
+  } else {
+    // check if the framebuffer objects extension is supported
+    if (!glewIsSupported("GL_ARB_framebuffer_object")) {
+      std::cerr << "Warning! OpenGL frame buffer extension is not supported "
+                   "and 'render mode: shadows' may slow down rendering.\n";
+      std::cerr
+          << "In addition, the 'shadow map: size' command is ignored, and the "
+             "shadow map resolution is equal to lpfg's window size\n";
+      shadowMapFBO_supported = false;
+    } else {
+      shadowMapFBO_supported = true;
+    }
+
+    // even if "render mode: shadows" is not specified when the OpenGL context
+    // is first created, the shaders are loaded in case the render mode is
+    // changed in the view file later
+    initShadowMap();
+  }
+
+  _projection.Reset();
+  _projection.SetVolumeAndPos(_pLpfg->GetLEngine().CalculateVolume(_id),
+                              drawparams.Clip());
+  _pQ = gl.CreateQuadric();
+  gl.DoInit(_pQ);
+  _MakeFont();
+  ++_counter;
+}
+
+void View::Show() {
+  assert(!IsVisible());
+  ShowWindow(_hWnd, SW_SHOW);
+}
+
+void View::ShowMaximized() {
+  HWND hParent = GetParent(_hWnd);
+  SendMessage(hParent, WM_MDIMAXIMIZE, (WPARAM)_hWnd, 0);
+}
+
+View::~View() {
+  // MC - July 2016 - delete shaders
+  freeShadowMap();
+
+  gl.DeleteQuadric(_pQ);
+  wglDeleteContext(_hrc);
+  ReleaseDC(_hWnd, _hdc);
+  --_counter;
+  _pLpfg->ViewClosing(this, _id);
+}
+
+void View::Resize(int w, int h) {
+  if (h > 0 && w > 0) {
+    _projection.Resize(w, h);
+    if (_shown) {
+      CurrentContext cc(this);
+      _projection.Apply(drawparams.ProjectionMode());
+    }
+  }
+}
+
+void View::Clear() {
+  CurrentContext cc(this);
+  glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+}
+
+class Font {
+public:
+  Font(const char *nm, int size, bool bold, bool italic) {
+    LOGFONT lf;
+    lf.lfHeight = size < 0 ? size : -size;
+    lf.lfWidth = 0;
+    lf.lfEscapement = 0;
+    lf.lfOrientation = 0;
+    if (bold)
+      lf.lfWeight = FW_BOLD;
+    else
+      lf.lfWeight = FW_NORMAL;
+    if (italic)
+      lf.lfItalic = TRUE;
+    else
+      lf.lfItalic = FALSE;
+    lf.lfUnderline = FALSE;
+    lf.lfStrikeOut = FALSE;
+    lf.lfCharSet = DEFAULT_CHARSET;
+    lf.lfOutPrecision = OUT_DEFAULT_PRECIS;
+    lf.lfClipPrecision = CLIP_DEFAULT_PRECIS;
+    lf.lfQuality = DEFAULT_QUALITY;
+    lf.lfPitchAndFamily = DEFAULT_PITCH;
+    strcpy(lf.lfFaceName, nm);
+    _hF = CreateFontIndirect(&lf);
+  }
+  ~Font() { DeleteObject(_hF); }
+  operator HFONT() { return _hF; }
+
+private:
+  HFONT _hF;
+};
+
+class ObjectHolder {
+public:
+  ObjectHolder(HDC hdc, HGDIOBJ hobj) : _hdc(hdc) {
+    _hobj = SelectObject(hdc, hobj);
+  }
+  ~ObjectHolder() { SelectObject(_hdc, _hobj); }
+
+private:
+  HDC _hdc;
+  HGDIOBJ _hobj;
+};
+
+void View::_MakeFont() {
+  if (0 == _flist) {
+    _flist = glGenLists(256);
+  }
+  if (drawparams.FontSpecified()) {
+    const DrawParams::WinFont &wf = drawparams.GetWinFont();
+    Font font(wf.Name(), wf.Size(), wf.Bold(), wf.Italic());
+    ObjectHolder sf(_hdc, font);
+    wglUseFontBitmaps(_hdc, 0, 256, _flist);
+  } else
+    wglUseFontBitmaps(_hdc, 0, 256, _flist);
+  if (0 == _oflist) {
+    _oflist = glGenLists(128);
+    Font font("Arial", 12, true, false);
+    ObjectHolder sf(_hdc, font);
+    wglUseFontOutlines(_hdc, 0, 128, _oflist, 0.0f, 0.1f,
+                       WGL_FONT_LINES
+                       // WGL_FONT_POLYGONS
+                       ,
+                       0);
+  }
+}
+
+void View::_SaveFrame(int) const {}
+
+void View::UserContextMenu(int x, int y) {
+  if (_pLpfg->_userMenu.empty())
+    // no menu defined
+    return;
+
+  HMENU userMenu = CreatePopupMenu();
+  UserMenu::Map entries = _pLpfg->_userMenu.entries;
+  for (UserMenu::Map::const_iterator iter = entries.begin();
+       iter != entries.end(); iter++) {
+    unsigned int val = (*iter).first;
+    string name = (*iter).second;
+    AppendMenu(userMenu, MF_STRING, UserCommandIdBase + val, name.c_str());
+  }
+
+  TrackPopupMenu(userMenu, 0, x, y, 0, _hWnd, 0);
+}
+
+void View::ContextMenu(int x, int y) {
+  HMENU hM = LoadMenu(GetInstance(), MAKEINTRESOURCE(IDR_MAINMENU));
+  HMENU hS = GetSubMenu(hM, 2);
+  if (_pLpfg->IsRecording())
+    CheckMenuItem(hS, ID_CONTEXTMENU_RECORDING, MF_CHECKED);
+  else
+    CheckMenuItem(hS, ID_CONTEXTMENU_RECORDING, MF_UNCHECKED);
+
+  if (_pLpfg->IsRecordingForPovray())
+    CheckMenuItem(hS, ID_CONTEXTMENU_POVRAY_RECORD, MF_CHECKED);
+  else
+    CheckMenuItem(hS, ID_CONTEXTMENU_POVRAY_RECORD, MF_UNCHECKED);
+
+  TrackPopupMenu(hS, 0, x, y, 0, _hWnd, 0);
+  DestroyMenu(hM);
+}
+
+void View::Show(const WindowParams &wp) {
+  if (IsZoomed(_hWnd) || IsIconic(_hWnd))
+    SendMessage(GetParent(_hWnd), WM_MDIRESTORE, (WPARAM)(_hWnd), 0);
+  RECT pr;
+  GetWindowRect(GetParent(_hWnd), &pr);
+  SIZE ps;
+  ps.cx = pr.right - pr.left;
+  ps.cy = pr.bottom - pr.top;
+  pr.left = static_cast<int>(ps.cx * wp.Left() + 0.5f);
+  pr.top = static_cast<int>(ps.cy * wp.Top() + 0.5f);
+  pr.right = static_cast<int>(ps.cx * wp.Width() + 0.5f);
+  pr.bottom = static_cast<int>(ps.cy * wp.Height() + 0.5f);
+  MoveWindow(_hWnd, pr.left, pr.top, pr.right, pr.bottom, TRUE);
+}
+
+void View::Command(int id) {
+  switch (id) {
+  case ID_CONTEXTMENU_RESTOREVIEW:
+    ResetView();
+    break;
+  case ID_CONTEXTMENU_CLEAR:
+    Clear();
+    Repaint();
+    break;
+  case ID_CONTEXTMENU_RESET_ROTATION:
+    ResetRotation();
+    break;
+  case ID_CONTEXTMENU_RESET_ZOOM:
+    ResetZoom();
+    break;
+  case ID_CONTEXTMENU_RESET_PAN:
+    ResetPan();
+    break;
+  case ID_CONTEXTMENU_RESET_ROLL:
+    ResetRoll();
+    break;
+  case ID_CONTEXTMENU_RESET_FRUSTUM:
+    ResetFrustum();
+    break;
+  case ID_CONTEXTMENU_SHOWAXIS:
+    ShowAxis();
+    break;
+  case ID_CONTEXTMENU_RECORDING:
+    Recording();
+    break;
+  case ID_CONTEXTMENU_POVRAY_RECORD:
+    RecordingForPovray();
+    break;
+  case ID_CONTEXTMENU_OUTPUT_BMP:
+    OutputBmp();
+    break;
+  case ID_CONTEXTMENU_OUTPUT_RAYSHADE:
+    // OutputRayshade();
+    break;
+  case ID_CONTEXTMENU_OUTPUT_POVRAY:
+    OutputPovray("POVRayExport");
+    break;
+  case ID_CONTEXTMENU_OUTPUT_POSTSCRIPT:
+    OutputPostscript();
+    break;
+  case ID_CONTEXTMENU_ANIMATE_STEP:
+    _pLpfg->Step();
+    break;
+  case ID_CONTEXTMENU_ANIMATE_RUN:
+    _pLpfg->RunSim();
+    break;
+  case ID_CONTEXTMENU_FOREVER:
+    _pLpfg->Forever();
+    break;
+  case ID_CONTEXTMENU_ANIMATE_STOP:
+    _pLpfg->Stop();
+    break;
+  case ID_CONTEXTMENU_ANIMATE_REWIND:
+    _pLpfg->Rewind();
+    break;
+  case ID_CONTEXTMENU_GENERATESTATIC:
+    _pLpfg->GenerateStatic();
+    break;
+  case ID_CONTEXTMENU_EXIT:
+    _pLpfg->Exit();
+    break;
+  case ID_OUTPUT_OBJECT:
+    OutputObj();
+    break;
+  case ID_OUTPUT_VIEW:
+    OutputView();
+    break;
+  case ID_SIMULATION_OUTPUTSTRING:
+    _pLpfg->OutputString();
+    break;
+  case ID_SIMULATION_LOADSTRING:
+    _pLpfg->LoadString();
+    break;
+
+  default: {
+    int ViewId = id - ViewCommandIdBase;
+    if (drawparams.IsValidViewId(ViewId)) {
+      _pLpfg->UseView(ViewId);
+      _pLpfg->Repaint();
+    } else {
+      int UserCommandId = id - UserCommandIdBase;
+      _pLpfg->_userMenuChoice = UserCommandId;
+    }
+  }
+  }
+}
+
+void View::Resize(int w, int h, int nw, int nh) {
+  if (IsZoomed(_hWnd))
+    return;
+  else if (IsIconic(_hWnd))
+    return;
+
+  assert(w > 0);
+  assert(h > 0);
+  assert(nw > 0);
+  assert(nh > 0);
+
+  const float wc = static_cast<float>(nw) / static_cast<float>(w);
+  const float hc = static_cast<float>(nh) / static_cast<float>(h);
+
+  RECT r;
+  GetWindowRect(_hWnd, &r);
+  HWND hParent = GetParent(_hWnd);
+  MapWindowPoints(HWND_DESKTOP, hParent, reinterpret_cast<POINT *>(&r), 2);
+  int ww = r.right - r.left;
+  int wh = r.bottom - r.top;
+  ww = static_cast<int>(ww * wc + 0.5f);
+  wh = static_cast<int>(wh * hc + 0.5f);
+  r.left = static_cast<int>(r.left * wc + 0.5f);
+  r.top = static_cast<int>(r.top * hc + 0.5);
+
+  MoveWindow(_hWnd, r.left, r.top, ww, wh, TRUE);
+}
+
+void View::_SaveAsBmp(const char *) const {
+  CurrentContext cc(this);
+  GLint xsize, ysize;
+  {
+    GLint tmp[4];
+    glGetIntegerv(GL_VIEWPORT, tmp);
+    xsize = tmp[2];
+    ysize = tmp[3];
+  }
+
+  Utils::RawMemory rowr(xsize * sizeof(char));
+  Utils::RawMemory rowg(xsize * sizeof(char));
+  Utils::RawMemory rowb(xsize * sizeof(char));
+}
+
+void View::GetRelSize(const Rect &pr, float *sz) const {
+  if (IsZoomed(_hWnd)) {
+    sz[0] = sz[1] = 0.0f;
+    sz[2] = sz[3] = 1.0f;
+  } else {
+    RECT r;
+    GetWindowRect(_hWnd, &r);
+    MapWindowPoints(HWND_DESKTOP, GetParent(_hWnd),
+                    reinterpret_cast<POINT *>(&r), 2);
+    sz[0] = static_cast<float>(r.left) / static_cast<float>(pr.right);
+    sz[1] = static_cast<float>(r.top) / static_cast<float>(pr.bottom);
+    sz[2] = static_cast<float>(r.right - r.left) / static_cast<float>(pr.right);
+    sz[3] =
+        static_cast<float>(r.bottom - r.top) / static_cast<float>(pr.bottom);
+  }
+}
+
+void View::_SwapBuffers() const { SwapBuffers(_hdc); }
+
+void View::Destroy() { DestroyWindow(_hWnd); }
+
+bool View::IsVisible() const { return 0 != IsWindowVisible(_hWnd); }
+
+void View::handleC3D(const Connection3DStatus &status) {
+  // These constants have been calibrated against
+  // 3DConnexion's "Jet Demo"
+  static const float TranslationScale = -1.0f / 250.0f;
+  static const float RotationScale = 3.6f;
+
+  Vector3d pan(status.tx, status.ty, status.tz);
+  _projection.ApplyPan(TranslationScale * pan);
+
+  /* Direct 3D manipulation
+          Vector3d v = status.rx*_projection.ViewLeft()
+                     + status.ry*_projection.ViewUp()
+                     - status.rz*_projection.ViewNormal();
+          float s = sin(RotationScale * status.rangle),
+                c = cos(RotationScale * status.rangle);
+          Quaternion rot(c , s*v);
+  */
+  /* LPFG "classic" */
+  float rangle = RotationScale * status.rangle;
+  Quaternion rot(cos(rangle * status.rx),
+                 sin(rangle * status.rx) * _projection.ViewLeft());
+  rot = rot * Quaternion(cos(rangle * status.ry),
+                         sin(rangle * status.ry) * Vector3d(0, 1, 0));
+
+  rot.Normalize();
+  _projection.ApplyRotation(rot);
+
+  /**** This line lets us interactively model with 6D and tablet: ****/
+  pLpfg->Timer();
+
+  {
+#ifdef WIN32
+    CurrentContext cc(this);
+#else
+    _pView->makeCurrent();
+#endif
+    _projection.Apply(drawparams.ProjectionMode());
+  }
+  if (DParams::rovOn == drawparams.RedrawOnViewChange())
+    _pLpfg->GenerateStatic();
+  else
+    Repaint();
+}

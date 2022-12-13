@@ -1,0 +1,86 @@
+timeEdit 1 2
+items: 9
+start: 2
+end: 15.08
+name: INT_WIDTH
+startLabel: 
+endLabel: 
+timelineFunceditFileStart:
+timelineFunceditFileEnd:
+start: 4
+end: 34.47
+name: LEAF_COLOR
+startLabel: this
+endLabel: this
+timelineFunceditFileStart:
+timelineFunceditFileEnd:
+start: 6
+end: 27.21
+name: LEAF_LENGTH
+color: 102,102,153
+startLabel: T1
+endLabel: T3
+timelineFunceditFileStart:
+timelineFunceditFileEnd:
+start: -20.561
+end: 15.84
+name: INT_LENGTH
+startLabel: test
+endLabel: 
+timelineFunceditFileStart:
+timelineFunceditFileEnd:
+start: 0
+end: 1
+name: CALYX_PROFILE
+startLabel: 
+endLabel: 
+timelineFunceditFileStart:
+timelineFunceditFileEnd:
+start: 0
+end: 3.63098
+name: PROFILE_TRANSITION
+startLabel: 
+endLabel: 
+timelineFunceditFileStart:
+timelineFunceditFileEnd:
+start: -1.75176
+end: 50.4786
+name: CALYX_LENGTH
+startLabel: 
+endLabel: 
+timelineFunceditFileStart:
+timelineFunceditFileEnd:
+start: 0
+end: 1
+name: noname3
+color: 102,102,153
+startLabel: 
+endLabel: 
+timelineFunceditFileStart:
+fver 1 1
+name: noname3
+samples: 20
+flip: off
+points: 4
+0.000000 0.000000
+0.333333 0.000000
+0.666667 0.000000
+1.000000 0.000000
+timelineFunceditFileEnd:
+start: 0
+end: 1
+name: noname1
+color: 102,102,153
+startLabel: 
+endLabel: 
+timelineFunceditFileStart:
+fver 1 1
+name: noname1
+samples: 20
+flip: off
+points: 4
+0.000000 0.000000
+0.333333 0.000000
+0.666667 0.000000
+1.000000 0.000000
+timelineFunceditFileEnd:

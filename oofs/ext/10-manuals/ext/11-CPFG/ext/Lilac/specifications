@@ -1,0 +1,49 @@
+plant.l
+plant.v
+plant.a
+panel.l
+materials.mat
+br_ang.func
+elas.func
+petal.s
+calyx.s
+description.txt
+rmode: cont
+ignore:
+*.swp
+*
+model:
+	generate:
+		cpfg -M materials.mat plant.l plant.v plant.a
+
+L-system:
+	EDIT plant.l
+	panel:
+		display:
+			panel panel.l | awkped plant.l
+		EDIT panel.l
+
+view:
+	EDIT plant.v
+
+animate:
+	EDIT plant.a
+
+materials:
+	medit:
+		medit materials.mat
+
+functions:
+	branching_angle:
+		funcedit br_ang.func
+	elasticity:
+		funcedit elas.func
+
+surfaces:
+	petal:
+		SURFACE petal.s
+	calyx:
+		SURFACE calyx.s 
+
+description:
+	EDIT description.txt

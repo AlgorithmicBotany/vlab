@@ -1,0 +1,14 @@
+A model of compact phyllotactic patterns based on 
+Ridley's aproximation
+
+You may control the shape of the supporting surface
+by editing the generating curve (a contour) and change the distribution of
+spherical organ primordia using the function.
+
+
+This is a direct implementation of Algorithm 5 from
+P. Prusinkiewicz, L. Muendermann, R. Karwowski and 
+B. Lane, "The use of positional information in the 
+modeling of plants", Proceedings of Siggraph 2001.
+Have a look at the L-system (available through the
+tab / menu item "L-system")!

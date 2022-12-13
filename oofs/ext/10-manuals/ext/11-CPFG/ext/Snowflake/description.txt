@@ -1,0 +1,6 @@
+Local snowflake model
+
+Clicking (with command-shift) into the curve locally increases
+the resolution.  (Try clicking closer and closer to the curve in order to find the exact spot where it connects.)
+
+Note: The f(0) symbols in the string are needed because of an apparent bug - without them, the X symbol is always inserted before the first F in the string, rather than the selected F.  

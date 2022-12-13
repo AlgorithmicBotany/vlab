@@ -1,0 +1,47 @@
+/* Converted using rsconvert */
+/*
+ * solids.ray
+ *
+ * Example rayshade input file.
+ *
+ * Render using:
+ *	rayshade solids.ray > solids.rle
+ * Craig Kolb 9/89
+ */
+eyep 0 25 7 
+screen 400 400
+light 1.4 extended  1.5  -15 20 15
+surface red 
+	ambient 0.02 0 0 
+	diffuse 0.5 0 0 
+	specular 0.5 0.5 0.5
+	specpow 32 
+	reflect 1.
+surface blacktile 
+	ambient 0.01 0.015 0.01 
+	diffuse 0.02 0.03 0.02 
+	specular 0.15 0.15 0.15
+	specpow 30 
+surface white 
+	ambient 0.06 0.06 0.04 
+	diffuse 0.5 0.5 0.25 
+	specular 0.2 0.2 0.2 
+	specpow 18 
+	reflect 1.
+surface glass 
+	ambient 0.02 0.02 0.02 
+	specular 0.16 0.16 0.16
+	specpow 25 
+	reflect 1.
+	transp 0.3 body 1. 1. 1. index 1.15 
+
+sphere red 4 3 0 0 
+/*
+ * Cone actually sticks through ground plane.  This solves problems
+ * that arise when the bottom of the cone and the plane are coincident.
+ */
+cone glass 4 -5 3 -4.1 0 -5 3 4 
+
+plane white 0 0 -4 0 0 1 
+		texture marble scale 4 4 4 
+		texture checker blacktile translate 0 0 0.3 scale 4 4 4 

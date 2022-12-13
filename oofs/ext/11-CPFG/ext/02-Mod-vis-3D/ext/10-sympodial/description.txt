@@ -1,0 +1,3 @@
+Sympodial branching
+
+A generic sympodial branching structure. 

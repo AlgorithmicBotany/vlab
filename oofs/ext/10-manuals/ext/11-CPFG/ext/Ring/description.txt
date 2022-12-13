@@ -1,0 +1,12 @@
+A simple illustration of information propagation in a ring L-system
+
+The decomposition rules create a string of NR-1 segments B and one segment A. 
+Due to the presence of the "ring lsystem" statement, the string has ring 
+topology: the last string element is the left neighbor of the first element.  
+Productions propagate symbol A in the direction dependent on parameter dir 
+(0 or 1).  The homomorphism rules give the structure a circular geometry. 
+
+The object includes control panels associated with the L-system and animation file.
+
+----
+Updated by PWP 2022-11-29.

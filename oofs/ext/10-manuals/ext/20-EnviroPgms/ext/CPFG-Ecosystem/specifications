@@ -1,0 +1,35 @@
+tree.l
+tree.v
+tree.a
+tree.mat
+tree.e
+density.spec
+description.txt
+ignore:
+*
+model:
+	generate:
+		cpfg -M tree.mat -w 480 480 -e tree.e tree.l tree.v tree.a
+
+L-system:
+	EDIT tree.l
+
+viewfile:
+	EDIT tree.v
+
+animation:
+	EDIT tree.a
+
+materials:
+	edit:
+		medit tree.mat
+
+environment:
+	commfile:
+		EDIT tree.e
+	parameters:
+		EDIT density.spec
+
+description:
+	EDIT description.txt
+

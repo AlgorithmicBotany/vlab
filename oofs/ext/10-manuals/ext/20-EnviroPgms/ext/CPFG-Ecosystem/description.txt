@@ -1,0 +1,44 @@
+A simple model of an ecosystem
+
+The model communicates with the envirnment using the module ?E(r).
+
+- parameter r send to the environment denotes current radius of the
+  plant (conceptualized as a circle).  In addition, the communication
+  symbols sends information about the position of the plant in the field.
+
+- parameter r received from the environment is equal to 0 when the plant is
+  dominated by another, greater than 0 otherwise.
+
+The axiom defines a field with dimensions SIZE x SIZE and a 
+set X of NR_INIT plants.  In the first simulation step no L-system
+production is applied, and the decomposition rule
+creates the actual plants P.
+
+X(n) : n>0 {r = ran(R_INIT);} --> [f(ran(SIZE))-f(ran(SIZE))P(r)?E(r)]X(n-1)
+
+According to this rule, each plant P is assigned a random initial radius r
+from the interval (0, R_INIT), and is placed at a random position in the field.
+The plant module P is followed by the communication module ?E which 
+informs the environment about the position and radius of the plant.
+
+Plants compete for space according to the rule that if the two circles 
+representing neighboring plants intersect, the smaller plant dies and is 
+removed from the scene.  A plant also dies if it has reached its maximum size
+R_MAX.  These behaviors are captured by the L-system rule:
+
+[f(y)-f(z)P(r)?E(x)] : x==0 || r >= R_MAX --> *
+
+The plant that does not die grows: its radius increases by a random value 
+in the range (0, R_INCR):
+
+P(r)?E(x) : * {r = r + ran(R_INCR);} --> P(r)?E(r)
+
+The remaining L-system rule:
+
+X(n) : n==0 --> X(NR_INCR)
+
+adds NR_INCR plants to the field in each step.
+
+The plants are visualized using the homomorphism:
+
+P(r) --> @c(2*r)

@@ -1,0 +1,7 @@
+Random variation
+
+It is unrealistic to assume that all leaflets will have
+exactly the same parameter values.  In this model, random 
+functions are used to introduce unorganized variation.
+These functions affect the leaflet and internode lengths
+and the branching angle.

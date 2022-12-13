@@ -1,0 +1,31 @@
+CC = DCC
+CFLAGS = -fullwarn -O0 -g
+
+colorChooserTest:	colorChooserTest.o colorChooser.o
+			$(CC) \
+			colorChooserTest.o colorChooser.o -o \
+			colorChooserTest -lGL -lGLw -lXm -lXt -lX11
+
+colorChooserTest.o:	colorChooserTest.c colorChooser.h
+			$(CC) -c $(CFLAGS) \
+			-DCOLOR_CHOOSER_H_FILE='"colorChooser.h"' \
+			colorChooserTest.c
+
+colorChooser.o:		colorChooser.c
+
+sgiColorChooserTest:	sgiColorChooserTest.o sgiColorChooser.o
+			$(CC) \
+			sgiColorChooserTest.o sgiColorChooser.o -o \
+			sgiColorChooserTest -lSgm -lGL -lGLw -lXm -lXt -lX11
+
+sgiColorChooserTest.o:	colorChooserTest.c sgiColorChooser.h
+			$(CC) -c $(CFLAGS) \
+			-DCOLOR_CHOOSER_H_FILE='"sgiColorChooser.h"' \
+			colorChooserTest.c -o sgiColorChooserTest.o
+
+sgiColorChooser.o:	sgiColorChooser.c
+
+clean:
+			-@/bin/rm -f *.o colorChooserTest sgiColorChooserTest
+
+			

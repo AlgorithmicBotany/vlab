@@ -1,0 +1,35 @@
+plant.l
+plant.v
+plant.a
+plant.mat
+enviro.e
+enviro.spec
+light.rgb
+light08.rgb
+description.txt
+*
+model:
+	generate:
+		cpfg -M plant.mat -e enviro.e plant.l plant.v plant.a
+
+L-system:
+	EDIT plant.l
+
+view file:
+	EDIT plant.v
+
+animate file:
+	EDIT plant.a
+
+material:
+	edit:
+	  medit plant.mat
+
+environment:
+	commfile:
+		EDIT enviro.e
+	parameters:
+		EDIT enviro.spec
+
+Description:
+	EDIT description.txt

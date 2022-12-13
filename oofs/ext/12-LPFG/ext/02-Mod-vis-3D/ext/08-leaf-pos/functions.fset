@@ -1,0 +1,39 @@
+funcgalleryver 1 1
+items: 4
+fver 1 1
+name: internode_pos
+samples: 100
+flip: off
+points: 4
+0.000000 1.100523
+0.230453 0.561893
+0.778895 0.452828
+1.000000 0.198987
+fver 1 1
+name: internode_length
+samples: 100
+flip: off
+points: 4
+0.000000 0.032444
+0.051413 0.001421
+0.717629 0.997195
+1.000000 1.003176
+fver 1 1
+name: leaf_length
+samples: 100
+flip: off
+points: 5
+0.000000 0.000000
+0.200955 0.009112
+0.535950 0.099922
+0.535950 1.001753
+1.000000 1.003176
+fver 1 1
+name: leaf_pos
+samples: 100
+flip: off
+points: 4
+0.000000 0.323701
+0.398725 0.629083
+0.685411 0.220284
+1.000000 0.150462

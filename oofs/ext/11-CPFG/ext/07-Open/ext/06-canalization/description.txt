@@ -1,0 +1,12 @@
+Differentiation of ray florets
+
+The entire phyllotactic pattern is created at once, using
+a decomposition rule.  Consecutive primordia are assigned 
+increasing vigor values.  The environmental program 'honda81'
+compares vigors of colliding primordia.  The primordium with a lower vigor
+is dominated by the primordium of a higher vigor.  
+The only primordia that are not dominated are situated
+on the circumference of the capitulum.  These 
+primordia form ray florets ('petals'), while the remaining
+primordia form disk florets.
+

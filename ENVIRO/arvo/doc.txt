@@ -1,0 +1,110 @@
+
+	Environment according to Arvo and Kirk's paper 
+      Modeling Plants with Environment-Sensitive Automata
+-----------------------------------------------------------------
+
+Name of the executable: arvo
+
+Necessary command line parameters: 
+   arvo [-k semaphore_key] [-ext comm_files_extension] 
+	-e environment_file specification_file
+
+
+Commands in specification file:
+ domain size: xrange yrange zrange  (numbers can be delimited also by , ; or x)
+                         specifies the range of the grid in world coorninates
+
+ position: xpos ypos zpos   (numbers can be delimited also by , ; or x)
+                         specifies the position of the lower front left corner
+                         of the grid
+
+ grid size: x y z (numbers can be delimited also by , ; or x)
+			 size of the grid in voxels
+
+ verbose: on/off         switches on or off erbose mode
+
+ seed: n   (integer)     seed for the random generator
+
+ surface distance: D (float)
+			 distance from the surface segment enpoints are trying 
+                         to keep
+ max surface distance: D (float)
+			 maximal distance from the surface segment enpoints 
+			 will have (usually around 2*surface_distance)
+
+ tries for Q: n          number of tries to select point Q
+
+ tries for surface: n    number of tries (rays) to find the closest surface
+
+ obstacles: filename     filename containing specification of obstacles in
+			 DAT format (see doc.txt for program 'soil')
+
+ add objects: on/off (default off)
+                         Objects specified by the symbol following ?E are
+			 added to the grid (and removed at the end of each
+			 step). So far only:
+			    S(rad) - sphere;
+			    C(rad,height) - cylinder, 
+			    C(rad1,rad2,height) - cone.
+
+ remove objects: on/off (default on)
+			 When on objects are removed from the grid at the
+			 beginning of each simulation step. 
+
+Communication:
+ Turtle parameters sent to the field: position, heading and up.
+ Communication symbol:
+  - 0 parameters.
+        add an object (S-sphere, C-cylinder) to the grid.
+
+  - 7 parameters
+     to field: 
+        1) desired segment length
+        2)-7) zeros (or whatever)
+
+     from field:
+        1)-3) new heding vector (of unit length)
+        4) length of the new segment. Zero if the segment not found. In that
+           case values of other parameters are undefined
+        5)-7) new up vector (basically the closest surface normal)
+
+  - 1 or 4 parameters. Communication symbol MUST be followed by F,f,G, or g!
+     to field:
+        1) or 1)-4) ignored
+     from field:
+        1) 1 if there is an intersection of the segment with an object. 
+	   Otherwise returns 0.
+        2)-4) surface normal in the intersection point.
+
+
+Algorithm:
+  Program stores all incoming queries in a dynamically allocated array
+(prepared for the case that some queries will only add a new object - part of
+the plant).
+
+  After the string is processed, quieries are answered. For each point P a new
+point Q in a given distance length (specified by the comm. symbol) on a line
+perpendicular to up vector is found. There are "tries for Q" tries in which the
+whole circle is swept starting in the heading direction and then +- angle where
+angle is increasing up to 180 degrees.
+
+  For each such point Q a closest surface is found - "tries for surface" rays
+are shot and a closest intersection (but less then max surface distance) is
+sought. If it is not found a new point Q is generated. Otherwise, new end point
+P is taken, specified as the intersection of the trial ray with the closest
+surface plus the normal vector in the intercection times the desired min
+distance from the surface. The field program then returns the new heading
+vector (P-previous point), length |P,previous point|, and the up vector
+(surface normal).
+
+
+NOTE: In the case of 1 or 4 parameters, when only segment intersection is
+tested, the parameter 'surface distance' influences the returned intersection
+(can be used to keep the plant a little away from the surface - to accont for
+stem width). Just make sure that the size of one voxel is bigger than this
+'surface distance'.
+
+
+Not finished:
+ Well, out of all primitives in DAT format, so far it works only with
+cylinders, spheres, prisms, and rectangles.

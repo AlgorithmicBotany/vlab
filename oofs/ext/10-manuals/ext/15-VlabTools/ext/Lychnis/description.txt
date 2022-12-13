@@ -1,0 +1,14 @@
+Lychnis coronaria - Rose campion
+
+A developmental model originally based on the L-system on page 84
+of the "Algorithmic Beauty of Plants".
+
+This example began as an illustration of a simple 
+developmental model expressed using a context-free 
+L-system (no information flow between the modules). 
+It now includes:
+- functions
+- contours
+- surfaces
+- a timeline 
+

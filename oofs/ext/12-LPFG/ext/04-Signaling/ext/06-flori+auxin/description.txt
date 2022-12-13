@@ -1,0 +1,12 @@
+Interplay between florigen and auxin
+
+Florigen flows in a growing structure.  The vegetative 
+apex is transformed into a flowering bud when the apex is
+reached by florigen.  At this time, the apex induces
+a second signal that propagates downwards.  This second
+signal can be viewed as (the removal of) the auxin - thus
+it can be used by the plant to gradually lift the apical
+dominance from the top down.
+
+The florigen and the auxin-related signal are represented
+by two parameters (f and a) associated with the internodes.

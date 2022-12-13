@@ -1,0 +1,13 @@
+Delay::Delay() : _startTime(GetTickCount()) {}
+
+void Delay::Wait(int dl) const {
+  const DWORD now = GetTickCount();
+  const DWORD elapsed = now - _startTime;
+  if (elapsed < static_cast<DWORD>(dl)) {
+    DWORD remains = dl - elapsed;
+    const DWORD MaxWait = 5000;
+    if (remains >= MaxWait)
+      remains = MaxWait;
+    Sleep(remains);
+  }
+}

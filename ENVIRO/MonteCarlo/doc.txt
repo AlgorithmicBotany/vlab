@@ -1,0 +1,188 @@
+
+	Radiosity program based on Monte Carlo method
+-----------------------------------------------------------------
+
+Name of the executable: radiosity
+
+Necessary command line parameters: 
+   arvo [-k semaphore_key] [-ext comm_files_extension] 
+	-e environment_file specification_file
+
+
+Commands in specification file:
+
+a) specification of the grid containing all objects. Make sure it is large
+   enough because it does not adapt its size to enclose all objects.
+
+ domain size: xrange yrange zrange  (numbers can be delimited also by , ; or x)
+                         specifies the range of the grid in world coorninates
+
+ position: xpos ypos zpos   (numbers can be delimited also by , ; or x)
+                         specifies the position of the lower front left corner
+                         of the grid
+
+ grid size: x y z (numbers can be delimited also by , ; or x)
+			 size of the grid in voxels. Default 1x1x1
+
+b) parameters of the ray tracing:
+ maximum depth: n        specifies the maximum depth of a single ray.
+			 -1 means no limits. In both cases the ray can be
+			 terminated at lower depths by Russian roulette method.
+			 Default 3.
+ 
+ Russian roulette: thr prob
+                         a Russian roulette is used for determining the ray
+			 termination. If the ray intensity falls below
+			 specified threshold 'thr', it is terminated with
+			 probability 'prob'. If the ray continues, its
+			 intensity is multiplied by 1/(1-prob).
+			 Default 0 (no roulette) 0.7.
+
+ reflectance model: blinn|phong|parcinopy
+			 specifies the way a random reflected or transmited
+		         ray is generated.
+			 In all cases, two random angles are generated
+                         specifying the angle from the exact reflected ray 
+			 (alpha) and angle beta within the cone of posibilities
+		         Beta is always 2*PI*random(1).
+			 Alpha is (n is reflectance or transmittance exponent):
+	                 1) blinn: 
+			   Alpha = 2.0*acos(pow(1.0-drand48(), 1.0/(n+2)))
+	                 2) phong: 
+			   Alpha = acos(pow(1.0-drand48(), 1.0/(n+1)))
+			 3) Parcinopy (n is always 0):
+			   Alpha = 0.5 * acos(1.0 - 2.0*drand48());
+
+ ray density: dens       the number of rays reaching unobstracted unit area.
+			 Default 500.
+
+
+c) materials, sky, spectrum:
+ spectrum samples: spec  number of considered wavelengths. MUST BE BEFORE
+			 SPECIFYING leaf material OR source spectrum!	
+			 Default 1.
+
+ source spectrum: wl1 wght1 wl2 wght2 ...
+			 For 'spec' considered wavelengths, specifies the
+			 wavelength wl_i and its weight wght_i in the light
+		         sources or sky. The value of weights also influences
+                         the number of rays shot to keep the specified ray
+                         density 'dens'. Actually, the number of rays generated
+			 for a specific wavelength is multiplied by its weight.
+			 Default: 660 1.0   (red)
+
+ one ray per spectrum: yes/no  (default no)
+		         one ray is used for computation of all wavelengths
+			 together.
+
+ leaf material (top): n1 n2 .. n5
+		    : n1 n2 .. n5
+		    ...
+		      specifies material of objects tops by its 
+			n1: reflectance  - specifying reflectance for each
+					   considered wavelength: what
+					   percentage of rays reaching the 
+					   object is reflected
+			n2: reflectance exponent - specifying the
+                                           width of cone of rays generated
+					   around reflected ray.
+					   0 - completely diffuse material
+					   the higher value, the thinner cone
+				           -1 - mirror (width is 0)
+			n3: transmittance - what percentage of rays reaching 
+					    the object is transmitted
+			n4: transmittance exponent- the same as reflectance
+					    exponent
+			n5: index of refraction: not used right now, because
+				            only polygons and triangles imple-
+					    mented
+		       'spec' row (one row per wavelength).
+
+		        Material absorbes: 1-transmittance-reflectance of the
+			incoming ray.
+
+		         Default: 0.35 0  0.55 0 1.4 for all wavelengths
+			
+
+ leaf material (bottom): specifies material of objects bottoms 
+
+ material:               adds a new material. Index of the material is
+			 2 + the order of material specification in the spec
+			 file. Leaf top material is alwas 0, leaf bottom 1.
+
+ rays from object: yes/no exp
+			 specifies whether the rays originate in the sky or in
+			 the light sources (no) or from objects (yes) (default
+			 no).	
+			 In the rays-from-objects mode, the sky file must be
+			 specified (as actual light intensities). The exponent
+			 'exp' specifies the width of cone in which random rays
+			 originated from the object are generated (default 0).
+
+ sky file: sky_file      the file contains sampled ditribution function of 
+			 probability density function allowing to generate
+			 random angles specifying the direction towards the sky
+			 which would reflect the sky intesity.
+			 The file can be generated by program 'computesky'.
+			 
+			 If the rays-from-object mode is used, the file
+			 contains actual light intensities for given 2 angles.
+
+			 If this command is not present all light is coming
+			 from the top.
+
+d) general use commands:
+ verbose: on/off         switches on or off verbose mode (default off)
+
+ seed: n   (integer)     seed for the random generator
+
+
+Communication:
+ Turtle parameters sent to the field: position, heading and up.
+    in rays-from-object mode also     left
+
+ Communication symbol:
+  - 0 parameters.
+        add an object (T(a,b,...)-triangle with base length a and length b, 
+		       P(a,b,...)-polygon (<> not []) with length 2*b and 
+				  width a ) 
+        to the grid.
+	If T or P has only the two parameters, the default top and bottom (if
+	specified) materials are used for the primitive.
+
+	If T or P has 7 parameters, the last 5 specify the object material -
+	the same values for all wave lengths - for backward compatibility.
+
+        Is is recommended to define material in the specification file and
+	then associate the material with the primitive by specifying the
+	top and bottom material indexes as the 3-rd and 4-th parameter of T or
+	P. If the 4-th parameter is not present the bottom material has the
+	same index as top material.
+
+  - 1-'spec' parameters (can be less than 'spec')
+     to field: 
+        nothing, add an object if T or P follows (parameters have the same
+	function as described above)
+
+	in rays-from-objects mode, the module ?E must be followed by P(a,b,..)
+	specifying the sensor polygon from which rays are shot. If the third
+	parameter exp is present, it specifyies the width of cone of rays
+	randomly generated (originating from the polygon).
+
+     from field:
+        1)-spec) intensity reaching the object in each wavelength
+
+
+Note:
+To debug the program, set the mean of communication (in .e file) to files and
+combine one or more .to_field* files in one single file (e.g. sample) and add
+line "Control: 8" at the end of the file. Then you change the communication
+type to pipes and you can run the environmental program separately:
+radiosity -e plant.e field.spec < sample
+and the result will be output to stdout.
+In this way you can easily debug the program.
+
+
+Algorithm:
+
+

@@ -1,0 +1,33 @@
+plant.l
+plant.v
+plant.a
+plant.mat
+plant.e
+density.spec
+description.txt
+*
+model:
+	generate:
+		cpfg -M plant.mat -e plant.e plant.l plant.v plant.a
+
+L-system:
+	EDIT plant.l
+
+viewfile:
+	EDIT plant.v
+
+animation:
+	EDIT plant.a
+
+material:
+	MEDIT plant.mat
+
+environment:
+	commfile:
+		EDIT plant.e
+	parameters:
+		EDIT density.spec
+
+description:
+	EDIT description.txt
+

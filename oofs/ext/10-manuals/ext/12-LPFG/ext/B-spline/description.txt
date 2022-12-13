@@ -1,0 +1,6 @@
+L-system generating a closed B-spline curve
+of arbitrary order with an arbitrary number
+of subdivisions using Lane-Riesenfeld algorithm
+
+Updated by pwp 2020-01-07
+

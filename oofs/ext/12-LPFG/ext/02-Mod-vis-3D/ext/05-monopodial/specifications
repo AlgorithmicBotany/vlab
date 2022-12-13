@@ -1,0 +1,39 @@
+lsystem.l
+view.v
+anim.a
+material.mat
+functions.fset
+description.txt
+ignore:
+lsys.so
+lpfg.log
+lsys.ii
+lsysinp.cpp
+lsys.o
+input.i
+*.swp
+temp*
+rmode: cont
+*
+image:
+	generate:
+		lpfg material.mat lsystem.l view.v anim.a functions.fset
+
+L-system:
+	EDIT lsystem.l
+
+viewfile:
+	EDIT view.v
+
+animation:
+	EDIT anim.a
+
+materials:
+	MEDIT material.mat
+
+functions:
+	GALLERY functions.fset
+
+description:
+	EDIT description.txt
+

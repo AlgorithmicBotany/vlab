@@ -1,0 +1,36 @@
+
+   Environmental process - 3d density
+-----------------------------------------------------------------
+
+Name of the executable: density3d
+
+Necessary command line parameters: 
+   density3d [-k semaphore_key] [-ext comm_files_extension] 
+	     -e environment_file specification_file
+
+
+Commands in specification file:
+ range: xrange yrange zrange    (numbers can be delimited also by , ; or x)
+                         specifies the range of the grid in world coorninates
+
+ position: xpos ypos zpos   (numbers can be delimited also by , ; or x)
+                         specifies the position of the lower front left corner
+                         of the grid
+
+ grid size: x y z (numbers can be delimited also by , ; or x)
+			 size of the grid in voxels
+
+ verbose: on/off         switches on or off verbose mode
+ 
+
+Communication:
+ Turtle parameters sent to the field: position
+ Communication symbol:
+  - 1 parameter
+     to field: 
+	1) value to add to a voxel 
+
+     from field:
+	1) value in a voxel (after adding)
+
+

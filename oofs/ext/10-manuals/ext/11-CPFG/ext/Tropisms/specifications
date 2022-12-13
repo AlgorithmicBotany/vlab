@@ -1,0 +1,38 @@
+lsystem.l
+view.v
+anim.a
+panel.l
+materials.mat
+stripe.con
+description.txt
+rmode: cont
+ignore:
+*
+model:
+	generate:
+		cpfg -M materials.mat lsystem.l view.v anim.a
+
+L-system:
+	panel:
+		display:
+			panel panel.l | awkped lsystem.l
+		EDIT panel.pnl
+	EDIT lsystem.l
+
+view:
+	EDIT view.v
+
+animation:
+	EDIT anim.a
+
+materials:
+	edit:
+		medit materials.mat
+
+contour:
+	stripe:
+		cuspy stripe.con
+
+description:
+	EDIT description.txt
+

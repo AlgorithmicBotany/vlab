@@ -1,0 +1,440 @@
+background.c:		if(dr->output_type == TYPE_OPENGL) 
+background.c:		if(dr->output_type == TYPE_OPENGL) 
+background.c:	(*dr->tdd->RenderTriangle)(p1, p2, p3, dr);
+background.c:	if((which == 0)||(dr->output_type != TYPE_OPENGL))
+background.c:		(*dr->tdd->RenderTriangle)(p1, p2, p3, dr);
+background.c:		(*dr->tdd->RenderTriangle)(p1, p2, p3, dr);
+background.c:	if(dr->output_type == TYPE_RAYSHADE)
+background.c:	dr->texture = 0;
+background.c:				(*dr->tdd->SetColour)(&dummy_turtle, dr, &viewparam);
+background.c:				if(dr->output_type == TYPE_RAYSHADE)
+background.c:				if(dr->output_type == TYPE_RAYSHADE)
+background.c:						if(dr->output_type == TYPE_RAYSHADE)
+background.c:				(*dr->tdd->Sphere)(&dummy_turtle, dr, &viewparam, 
+background.c:				(*dr->tdd->StartNode)(&dummy_turtle, dr, &viewparam,
+background.c:				(*dr->tdd->Circle3D)(&dummy_turtle, dr, &viewparam,
+background.c:				(*dr->tdd->EndNode)(&dummy_turtle, dr, &viewparam,'\0');
+background.c:				(*dr->tdd->Circle3D)(&dummy_turtle, dr, &viewparam,
+background.c:				(*dr->tdd->StartNode)(&dummy_turtle, dr, &viewparam,
+background.c:				(*dr->tdd->Circle3D)(&dummy_turtle, dr, &viewparam,
+background.c:				(*dr->tdd->EndNode)(&dummy_turtle, dr, &viewparam,'\0');
+background.c:				(*dr->tdd->Circle3D)(&dummy_turtle, dr, &viewparam,
+blackbox.c:		if((dr->output_type != TYPE_ENVIRONMENT)||(dr->env_output_symbol)) 
+blackbox.c:				turtle->color_index_back -= dr->color_increment_back;
+blackbox.c:			(*dr->tdd->SetColour)(turtle, dr, vw);
+blackbox.c:		if((dr->output_type != TYPE_ENVIRONMENT)||(dr->env_output_symbol)) 
+blackbox.c:				turtle->color_index_back += dr->color_increment_back;
+blackbox.c:			(*dr->tdd->SetColour)(turtle, dr, vw);
+blackbox.c:		if((dr->tdd!=NULL)&&((dr->output_type != TYPE_ENVIRONMENT)||
+blackbox.c:			(dr->env_output_symbol)))
+blackbox.c:			(*dr->tdd->Circle2D)(turtle, dr, vw, (float) parameter1);
+blackbox.c:		if((dr->tdd!=NULL)&&((dr->output_type != TYPE_ENVIRONMENT)||
+blackbox.c:			(dr->env_output_symbol)))
+blackbox.c:			(*dr->tdd->Circle3D)(turtle, dr, vw, (float) parameter1);
+blackbox.c:		if((dr->tdd!=NULL)&&((dr->output_type != TYPE_ENVIRONMENT)||
+blackbox.c:			(dr->env_output_symbol)))
+blackbox.c:			(*dr->tdd->Sphere)(turtle, dr, vw, (float) parameter1);
+blackbox.c:			if(dr->output_type == TYPE_VIEWVOLUME)
+blackbox.c:			if((dr->tdd!=NULL)&&((dr->output_type != TYPE_ENVIRONMENT)||
+blackbox.c:				(dr->env_output_symbol)))
+blackbox.c:				(*dr->tdd->LdefinedSurface)(&subModule, turtle, dr, vw);
+blackbox.c:			if((dr->tdd!=NULL)&&((dr->output_type != TYPE_ENVIRONMENT)||
+blackbox.c:				(dr->env_output_symbol)))
+blackbox.c:				(*dr->tdd->Label)(turtle, dr, vw, GlobalString(parameter1), 
+blackbox.c:			if(dr->output_type != TYPE_ENVIRONMENT)
+blackbox.c:					if(dr->tdd!=NULL) 
+blackbox.c:					if(dr->tdd!=NULL) 
+blackbox.c:							if(dr->output_type == TYPE_RAYSHADE) 
+blackbox.c:				if(dr->output_type == TYPE_RAYSHADE) 
+blackbox.c:				if(dr->tdd!=NULL) 
+blackbox.c:					if(dr->output_type == TYPE_RAYSHADE) 
+blackbox.c:					if(dr->tdd!=NULL) 
+blackbox.c:								turtle->scale_factor *= dr->scale_multiplier;
+blackbox.c:								turtle->scale_factor /= dr->scale_multiplier;
+blackbox.c:					/* if(dr->tdd!=NULL)
+blackbox.c:				(*dr->tdd->BlackBox)(turtle, dr, vw, &module, &subModule); */
+general.c:	if(dr->gllighting 
+general.c:		&& dr->output_type != TYPE_INVENTOR
+general.c:		if(dr->gllighting || dr->ourlighting) 
+general.c:		if(dr->texture) 
+general.c:	void (* TmeshVertex)(const float *, DRAWPARAM *) = dr->tdd->TmeshVertex;
+general.c:	col2 = (dr->render_mode == RM_INTERPOLATED) ?
+general.c:	col2_back = (dr->render_mode == RM_INTERPOLATED) ?
+general.c:	dr->tdd->StartTmesh();
+general.c:		if(dr->ourlighting) 
+general.c:			cos_theta = -(*(p1+ NORMAL_X) * dr->light_dir[0] +
+general.c:				*(p1+NORMAL_Y) * dr->light_dir[1] +
+general.c:				*(p1+NORMAL_Z) * dr->light_dir[2]);
+general.c:			col1 = tu_col + (short)((float)dr->diff_coef * cos_theta);
+general.c:			col1_back = tu_col_back + (short)((float)dr->diff_coef * cos_theta);
+general.c:			cos_theta = -(*(p2+ NORMAL_X) * dr->light_dir[0] +
+general.c:				*(p2+NORMAL_Y) * dr->light_dir[1] +
+general.c:				*(p2+NORMAL_Z) * dr->light_dir[2]);
+general.c:			col2 = tu_col + (short)((float)dr->diff_coef * cos_theta);
+general.c:			col2_back = tu_col_back + (short)((float)dr->diff_coef * cos_theta);
+general.c:	dr->tdd->EndTmesh();
+general.c:	switch(dr->line_style) 
+general.c:		dr->texture = is_valid_texture_index(tu->texture);
+general.c:		if(dr->gen_cyl_twist)
+general.c:	if((dr->output_type != TYPE_ENVIRONMENT)||(dr->env_output_symbol))
+general.c:	switch(dr->line_style) 
+general.c:		if(dr->texture) dr->tdd->StartTexture(tu1.texture);
+general.c:			switch(dr->line_style)
+general.c:				dr->tdd->StartNode(&tu1, dr, &viewparam, 0, ' ');
+general.c:				dr->tdd->EndNode(&tu2, dr, &viewparam, ' ');
+general.c:				dr->tdd->StartNode(&tu1, dr, &viewparam, len2, ' ');
+general.c:				dr->tdd->EndNode(&tu2, dr, &viewparam, ' ');	
+general.c:	switch(dr->line_style)
+general.c:		dr->tdd->StartNode(&tu1, dr, &viewparam, 0, ' ');
+general.c:		dr->tdd->EndNode(&tu_end, dr, &viewparam, ' ');
+general.c:		dr->tdd->StartNode(&tu1, dr, &viewparam, len2, ' ');
+general.c:		dr->tdd->EndNode(&tu_end, dr, &viewparam, ' ');	
+general.c:		if(dr->texture) dr->tdd->EndTexture(tu1.texture);
+glcanvas.cpp:				if(pixmaps_exist && dr->output_type == TYPE_OPENGL) ;
+glcanvas.cpp://			if(pixmaps_exist && dr->output_type == TYPE_OPENGL) ;
+interpret.c:	if(dr->tdd==NULL) 
+interpret.c:	ltdd = *dr->tdd;
+interpret.c:	subLstackPtr->scale = dr->scale_factor;
+interpret.c:	if(dr->output_type == TYPE_ENVIRONMENT) 
+interpret.c:		if(prodPtr->object_flag == 1 && dr->output_type == TYPE_RAYSHADE) 
+interpret.c:		if(prodPtr->object_flag == 1 && dr->output_type == TYPE_RAYSHADE) 
+interpret.c:		aux =  dr->env_output_symbol;
+interpret.c:			dr->env_output_symbol = 0;
+interpret.c:		if(dr->output_type != TYPE_ENVIRONMENT) 
+interpret.c:			if(dr->output_type != TYPE_VIEWVOLUME){
+interpret.c:			if(dr->env_output_symbol)
+interpret.c:			dr->sinangle,
+interpret.c:			dr->cosangle);
+interpret.c:			-dr->sinangle,
+interpret.c:			dr->cosangle);
+interpret.c:			dr->sinangle,
+interpret.c:			dr->cosangle);
+interpret.c:			-dr->sinangle,
+interpret.c:			dr->cosangle);
+interpret.c:			dr->sinangle,dr->cosangle);
+interpret.c:			-dr->sinangle,dr->cosangle);
+interpret.c:		if((dr->output_type != TYPE_ENVIRONMENT)||(env_finish_symbol))
+interpret.c:		if((dr->output_type != TYPE_ENVIRONMENT)||(dr->env_output_symbol))
+interpret.c:		if((dr->output_type != TYPE_ENVIRONMENT)||(env_finish_symbol))
+interpret.c:			if((dr->output_type != TYPE_ENVIRONMENT)||(dr->env_output_symbol))
+interpret.c:		if((dr->output_type != TYPE_ENVIRONMENT)||(env_finish_symbol)) 
+interpret.c:			if((dr->output_type != TYPE_ENVIRONMENT)||(dr->env_output_symbol)) 
+interpret.c:		if((dr->output_type != TYPE_ENVIRONMENT)||(env_finish_symbol)) 
+interpret.c:		if((dr->output_type != TYPE_ENVIRONMENT)||(env_finish_symbol)) 
+interpret.c:		if((dr->output_type != TYPE_ENVIRONMENT)||(env_finish_symbol))
+interpret.c:			internodeLength = dr->step_size * tu->scale_factor;
+interpret.c:		if((dr->output_type != TYPE_ENVIRONMENT)||(dr->env_output_symbol)) 
+interpret.c:		if((dr->output_type != TYPE_ENVIRONMENT)||(dr->env_output_symbol)) 
+interpret.c:		if((dr->output_type != TYPE_ENVIRONMENT)||(env_finish_symbol))
+interpret.c:			internodeLength = dr->step_size * tu->scale_factor;
+interpret.c:		if((dr->output_type != TYPE_ENVIRONMENT)||(dr->env_output_symbol)) 
+interpret.c:			/*determine_end_point(tu, dr->line_type, internodeLength); }*/
+interpret.c:		if((dr->output_type != TYPE_ENVIRONMENT)||(dr->env_output_symbol)) 
+interpret.c:				tu->color_index -= dr->color_increment;
+interpret.c:		if((dr->output_type != TYPE_ENVIRONMENT)||(dr->env_output_symbol)) 
+interpret.c:				tu->color_index += dr->color_increment;
+interpret.c:			if(!dr->interpretation_past_cut) 
+interpret.c:		if(dr->output_type == TYPE_ENVIRONMENT) 
+interpret.c:		if((dr->output_type != TYPE_ENVIRONMENT)||(dr->env_output_symbol)) 
+interpret.c:				tu->line_width -= dr->width_increment*tu->scale_factor;
+interpret.c:		if((dr->output_type != TYPE_ENVIRONMENT)||(dr->env_output_symbol)) 
+interpret.c:				tu->line_width += dr->width_increment*tu->scale_factor;
+interpret.c:			tu->elasticity += dr->elasticity_increment;
+interpret.c:		if((dr->output_type != TYPE_ENVIRONMENT)||(env_finish_symbol)) 
+interpret.c:			if ((dr->output_type != TYPE_ENVIRONMENT)||(dr->env_output_symbol))
+interpret.c:		if((dr->output_type != TYPE_ENVIRONMENT)||(env_finish_symbol)) 
+interpret.c:		if(dr->output_type == TYPE_ENVIRONMENT)
+interpret.c:			if(dr->output_type == TYPE_ENVIRONMENT)
+interpret.c:							dr->env_output_symbol = 
+interpret.c:	bendcos = (tu->elasticity)*DDotProduct(dr->tropism_dir, tu->up);
+interpret.c:	bendcos = (tu->elasticity)*DDotProduct(dr->tropism_dir, tu->left);
+inventor.c:    SoSV3fSetX_Y_Z(&(ptL->location), dr->light_dir[0]*DIRECTIONLIGHTCOEF,
+inventor.c:		     dr->light_dir[1]*DIRECTIONLIGHTCOEF,
+inventor.c:		     dr->light_dir[2]*DIRECTIONLIGHTCOEF);
+inventor.c:    dr->texture = is_valid_texture_index(tu->texture);
+inventor.c:    if(dr->texture) dr->tdd->StartTexture(StartTu.texture);
+inventor.c:    if(dr->texture) dr->tdd->EndTexture(StartTu.texture);
+inventor.c:  dr->texture = is_valid_texture_index(polygon->vertex[0].texture);
+inventor.c:	  dr->texture = is_valid_texture_index(tu->texture);
+inventor.c:	  if(dr->texture) dr->tdd->StartTexture(tu->texture);        
+inventor.c:	  if(dr->texture) dr->tdd->EndTexture(tu->texture);
+inventor.c:  if(dr->texture) {
+irisGL.c:	if(dr->render_mode == RM_WIREFRAME)
+irisGL.c:		lshaderange((Colorindex)(tu->color_index - dr->cue_range),
+irisGL.c:			(Colorindex)(tu->color_index + dr->cue_range),
+irisGL.c:	if(dr->gllighting) 
+irisGL.c:		dr->gllighting = 0;
+irisGL.c:	if(dr->line_style == LS_PIXEL) 
+irisGL.c:		if(dr->render_mode == RM_INTERPOLATED) 
+irisGL.c:			dr->gllighting = 1;
+irisGL.c:			if (dr->shade_mode > SIMPLE_FILL && dr->cue_range != 0) 
+irisGL.c:				lshaderange((Colorindex)(tu->color_index - dr->cue_range),
+irisGL.c:					(Colorindex)(tu->color_index + dr->cue_range),
+irisGL.c:			if(dr->render_mode != RM_WIREFRAME)
+irisGL.c:			else if(dr->line_style == LS_PIXEL)
+irisGL.c:	if (dr->shade_mode > SIMPLE_FILL) depthcue(FALSE);
+irisGL.c:    /* draw_surface(tu, dr, vw, dr->line_type, length);*/
+irisGL.c:	if (dr->shade_mode > SIMPLE_FILL && dr->cue_range != 0) 
+irisGL.c:		lshaderange((Colorindex)(tu->color_index - dr->cue_range),
+irisGL.c:			(Colorindex)(tu->color_index + dr->cue_range),
+irisGL.c:		if (dr->shade_mode > SIMPLE_FILL) depthcue(FALSE);
+irisGL.c:		if(dr->gllighting)
+irisGL.c:		else if(dr->ourlighting) 
+irisGL.c:			VecMatMult(dr->light_dir, rotate, nlightdir);
+irisGL.c:				(Colorindex)((float)dr->diff_coef*cos_theta),
+irisGL.c:				(Colorindex)((float)dr->diff_coef*cos_theta));
+irisGL.c:		if(dr->tapered_lines_on)
+irisGL.c:		if(dr->render_mode == RM_WIREFRAME)
+irisGL.c:		if(dr->render_mode == RM_INTERPOLATED) 
+irisGL.c:			if (dr->shade_mode > SIMPLE_FILL && dr->cue_range != 0) 
+irisGL.c:				lshaderange((Colorindex)(tu->color_index - dr->cue_range),
+irisGL.c:					(Colorindex)(tu->color_index + dr->cue_range),
+irisGL.c:			if(dr->render_mode != RM_WIREFRAME)
+irisGL.c:		if (dr->shade_mode > SIMPLE_FILL) depthcue(FALSE);
+irisGL.c:		if(dr->ourlighting) 
+irisGL.c:			VecMatMult(dr->light_dir, rotate, nlightdir);
+irisGL.c:		if(dr->tapered_lines_on)
+irisGL.c:		if((dr->gllighting)||(dr->ourlighting))
+irisGL.c:				if(dr->gllighting) 
+irisGL.c:			if(dr->ourlighting) 
+irisGL.c:					(Colorindex)((float)dr->diff_coef*cos_theta),
+irisGL.c:					(Colorindex)((float)dr->diff_coef*cos_theta));
+irisGL.c:			else if(dr->gllighting)
+irisGL.c:			if(dr->render_mode == RM_INTERPOLATED) 
+irisGL.c:			if(dr->render_mode == RM_INTERPOLATED) 
+irisGL.c:		if (dr->shade_mode > SIMPLE_FILL && dr->cue_range != 0) 
+irisGL.c:			lshaderange((Colorindex)(tu->color_index - dr->cue_range),
+irisGL.c:				(Colorindex)(tu->color_index + dr->cue_range),
+irisGL.c:		if(dr->render_mode != RM_WIREFRAME)
+irisGL.c:	if (dr->shade_mode > SIMPLE_FILL && dr->cue_range != 0) 
+irisGL.c:		lshaderange((Colorindex)(tu->color_index - dr->cue_range),
+irisGL.c:			(Colorindex)(tu->color_index + dr->cue_range),
+irisGL.c:	if(dr->render_mode != RM_WIREFRAME)
+irisGL.c:/* NOTE: dr->texture has to be already set to 1, if the polygon is  */
+irisGL.c:	if(dr->texture) 
+irisGL.c:		dr->tdd->StartTexture(polygon->vertex[0].texture);
+irisGL.c:	dr->tdd->StartTmesh();
+irisGL.c:	if(dr->texture) 
+irisGL.c:	if(dr->texture) 
+irisGL.c:		if(dr->texture) 
+irisGL.c:		dr->tdd->RenderTriangle(ptr0 , prev_p, p, dr);
+irisGL.c:	dr->tdd->EndTmesh();
+irisGL.c:	if(dr->texture)
+irisGL.c:		dr->tdd->EndTexture(polygon->vertex[0].texture);
+irisGL.c:	dr->texture = (char) is_valid_texture_index(polygon->vertex[0].texture);
+irisGL.c:	if(dr->texture) 
+irisGL.c:		dr->tdd->StartTexture(polygon->vertex[0].texture);
+irisGL.c:	if(dr->render_mode == RM_WIREFRAME)
+irisGL.c:	if(dr->gllighting) 
+irisGL.c:	else if(dr->ourlighting) 
+irisGL.c:		if(dr->render_mode == RM_FLAT) 
+irisGL.c:			cos_theta = (float)DFDotProduct((polygon->vertex[0]).up, dr->light_dir);
+irisGL.c:				(Colorindex) ((float)dr->diff_coef * cos_theta),
+irisGL.c:				(Colorindex) ((float)dr->diff_coef * cos_theta));
+irisGL.c:		if(dr->ourlighting && (dr->render_mode == RM_SHADED)) 
+irisGL.c:			cos_theta = (float)DFDotProduct((polygon->vertex[i]).up, dr->light_dir);
+irisGL.c:				(Colorindex) ((float)dr->diff_coef * cos_theta),
+irisGL.c:				(Colorindex) ((float)dr->diff_coef * cos_theta));
+irisGL.c:		else if(dr->render_mode == RM_INTERPOLATED)
+irisGL.c:		if(dr->texture) 
+irisGL.c:	if(dr->texture) 
+irisGL.c:		dr->tdd->EndTexture(polygon->vertex[0].texture);
+irisGL.c:	if(dr->shade_mode == CLOSED_B_SPLINE) 
+irisGL.c:	if(dr->render_mode == RM_WIREFRAME)
+irisGL.c:		cos_theta = DFDotProduct((polygon->vertex[i]).up, dr->light_dir);
+irisGL.c:			(Colorindex) ((float)dr->diff_coef * cos_theta) -
+irisGL.c:			(Colorindex) ((float)dr->diff_coef * cos_theta) -
+irisGL.c:	if(dr->render_mode == RM_WIREFRAME) 
+irisGL.c:		if(dr->gllighting) 
+irisGL.c:	if(dr->gllighting) 
+irisGL.c:	if(dr->texture)
+irisGL.c:	if(dr->vertexbound) 
+irisGL.c:		if(dr->gllighting) 
+irisGL.c:	if(dr->texture)
+irisGL.c:	if(dr->vertexbound) 
+irisGL.c:		if(dr->gllighting) 
+irisGL.c:	if(dr->texture)
+irisGL.c:		if (dr->shade_mode > SIMPLE_FILL && dr->cue_range != 0) 
+irisGL.c:			lshaderange((Colorindex)(tu->color_index - dr->cue_range),
+irisGL.c:				(Colorindex)(tu->color_index + dr->cue_range),
+irisGL.c:		if(dr->render_mode != RM_WIREFRAME)
+irisGL.c:	switch(dr->render_mode) 
+irisGL.c:	switch(dr->render_mode) 
+irisGL.c:	switch(dr->render_mode) 
+irisGL.c:				(dr->render_mode == RM_WIREFRAME)
+irisGL.c:				||(dr->render_mode == RM_FAST) ?
+irisGL.c:			if(dr->render_mode == RM_FAST) 
+irisGL.c:				if(dr->render_mode == RM_WIREFRAME)
+irisGL.c:			VecMatMult(dr->light_dir, rot, nlightdir);
+irisGL.c:				if(dr->render_mode == RM_WIREFRAME)
+irisGL.c:					my_color(tu->color_index + (Colorindex)((float)dr->diff_coef*cos_theta),
+irisGL.c:						tu->color_index_back + (Colorindex)((float)dr->diff_coef*cos_theta));
+irisGL.c:	if(dr->gllighting) 
+irisGL.c:		dr->gllighting = 0;
+irisGL.c:		dr->gllighting = 1;
+irisGL.c:	if(dr->gllighting) /* switch on gl lighting */
+irisGL.c:		if (dr->shade_mode > SIMPLE_FILL) depthcue(FALSE);
+irisGL.c:		if (dr->shade_mode > SIMPLE_FILL && dr->cue_range != 0) 
+irisGL.c:			lshaderange((Colorindex)(tu->color_index - dr->cue_range),
+irisGL.c:				(Colorindex)(tu->color_index + dr->cue_range),
+irisGL.c:	if(dr->render_mode != RM_WIREFRAME)
+irisGL.c:	if(dr->render_mode != RM_WIREFRAME)
+irisGL.c:	if(dr->vertexbound)
+irisGL.c:		if(dr->gllighting) 
+irisGL.c:	if(dr->texture)
+irisGL.c:	dr->texture = 0;
+irisGL.c:	switch(dr->line_style)
+irisGL.c:	switch(dr->render_mode) 
+irisGL.c:		if(dr->line_style == LS_CYLINDER) 
+irisGL.c:			dr->render_mode);
+irisGL.c:		dr->render_mode = RM_FILLED;
+irisGL.c:	dr->gllighting = ((dr->render_mode == RM_FLAT)||
+irisGL.c:		(dr->render_mode == RM_SHADED)) 
+irisGL.c:	dr->ourlighting = ((dr->render_mode == RM_FLAT)||
+irisGL.c:		(dr->render_mode == RM_SHADED)) 
+irisGL.c:	dr->vertexbound = dr->render_mode == RM_SHADED || 
+irisGL.c:		dr->render_mode == RM_FLAT || 
+irisGL.c:		dr->render_mode == RM_INTERPOLATED;
+irisGL.c:	MakeSphere(dr->cylinder_sides);
+irisGL.c:	MakeCylinder(dr->cylinder_sides);
+mesh.c:	if((dr->gllighting)||(dr->ourlighting)) 
+mesh.c:	if(dr->texture) 
+mesh.c:		dr->tdd->RenderTriangle(prev_pair, curr_pair, prev_pair+PITEM, dr);
+mesh.c:		dr->tdd->RenderTriangle(prev_pair+PITEM, curr_pair, curr_pair+PITEM, dr);
+outputgls.c:	output_type = dr->output_type;
+outputgls.c:		output_material(dr->color_index);
+outputgls.c:	dr->gllighting = 1;
+outputgls.c:	dr->vertexbound = 1;
+outputgls.c:	dr->ourlighting = 0;
+outputgls.c:	dr->texture = 0;
+outputgls.c:	normals = (dr->ourlighting || dr->gllighting)&&
+outputgls.c:		(dr->render_mode == RM_SHADED);
+patches.c:			gll = dr->gllighting;
+patches.c:			ourl = dr->ourlighting;
+patches.c:			dr->gllighting = 1;
+patches.c:			dr->ourlighting = 0;
+patches.c:			dr->gllighting = gll;
+patches.c:			dr->ourlighting = ourl;
+patches.c:	switch(dr->render_mode) 
+patches.c:	gluNurbsProperty(theNurb, GLU_SAMPLING_TOLERANCE, dr->nurbs_sampling);
+patches.c:	if(dr->gllighting)
+patches.c:		if(dr->texture)
+patches.c:	dr->texture = dr->tdd->StartTexture(tex_index);
+patches.c:	if((dr->output_type == TYPE_OPENGL)&&(dr->nurbs_sampling > 0.0))
+patches.c:		if(dr->render_mode == RM_INTERPOLATED)
+patches.c:				if(dr->ourlighting)
+patches.c:				if(dr->ourlighting)
+patches.c:	if(dr->texture) 
+patches.c:		dr->tdd->EndTexture(tex_index);
+patches.c:	if(dr->output_type == TYPE_RAYSHADE 
+patches.c:		|| dr->output_type == TYPE_INVENTOR
+patches.c:			dr->texture = 1;
+patches.c:			dr->texture = 0;
+patches.c:		dr->texture = dr->tdd->StartTexture(tex_index);
+patches.c:	if((dr->output_type == TYPE_OPENGL)&&(dr->nurbs_sampling > 0.0))
+patches.c:		if(dr->render_mode == RM_INTERPOLATED)
+patches.c:					if(dr->ourlighting)
+patches.c:					if(dr->ourlighting)
+patches.c:	if(dr->output_type != TYPE_RAYSHADE
+patches.c:		&& dr->output_type != TYPE_INVENTOR
+patches.c:		if(dr->texture) dr->tdd->EndTexture(tex_index);
+patches.c:	if (dr->render_mode == RM_FILLED) 
+patches.c:	vertex_lamp = n_x * dr->light_dir[eX] +
+patches.c:		n_y * dr->light_dir[eY] + n_z * dr->light_dir[eZ];
+patches.c:		patch_diffuse[surface][p][side] : dr->diffuse;
+patches.c:	index = (int)(64. * intensity * ( dr->ambient +
+patches.c:	if(dr->double_sided) 
+patches.c:			patch_diffuse[surface][p][side] : dr->diffuse;
+patches.c:		index = (int)(64. * intensity * ( dr->ambient +
+patches.c:			gll = dr->gllighting;
+patches.c:			ourl = dr->ourlighting;
+patches.c:			dr->gllighting = 1;
+patches.c:			dr->ourlighting = 0;
+patches.c:			dr->gllighting = gll;
+patches.c:			dr->ourlighting = ourl;
+postscript.c:	ptr = dr->fontname;
+postscript.c:	if(dr->line_style == LS_PIXEL)
+postscript.c:		if(dr->line_style == LS_PIXEL) 
+postscript.c:		else if (dr->render_mode == RM_WIREFRAME) 
+postscript.c:		if(dr->line_style == LS_PIXEL) 
+postscript.c:		if(dr->ourlighting) 
+postscript.c:			VecMatMult(dr->light_dir, rotate, nlightdir);
+postscript.c:				(Colorindex)((float)dr->diff_coef*cos_theta),
+postscript.c:		if(dr->tapered_lines_on)
+postscript.c:		if(dr->render_mode != RM_WIREFRAME)
+postscript.c:		if(dr->ourlighting) 
+postscript.c:			VecMatMult(dr->light_dir, rotate, nlightdir);
+postscript.c:		if(dr->tapered_lines_on)
+postscript.c:		if((dr->ourlighting))
+postscript.c:			if(dr->ourlighting) 
+postscript.c:					(Colorindex)((float)dr->diff_coef*cos_theta), 
+postscript.c:			if(dr->render_mode != RM_WIREFRAME)
+postscript.c:	switch(dr->render_mode)
+postscript.c:			cos_theta = DFDotProduct((polygon->vertex[i]).up, dr->light_dir);
+postscript.c:		cos_theta = DFDotProduct((polygon->vertex[i]).up, dr->light_dir);
+postscript.c:			(Colorindex) ((float)dr->diff_coef * cos_theta) -
+postscript.c:	if(dr->ourlighting)
+postscript.c:	if((dr->render_mode == RM_WIREFRAME)&&(p1[DRAW_LINE] == 0))
+postscript.c:	if((dr->render_mode == RM_WIREFRAME)&&(p2[DRAW_LINE] == 0))
+postscript.c:		if((dr->render_mode != RM_WIREFRAME)||(p3[DRAW_LINE] == 1)) 
+postscript.c:	if((dr->render_mode == RM_WIREFRAME)||(dr->render_mode == RM_FAST))
+postscript.c:	if((dr->render_mode == RM_WIREFRAME)||(dr->render_mode == RM_FAST))
+postscript.c:	if((dr->render_mode == RM_WIREFRAME)||(dr->render_mode == RM_FAST))
+postscript.c:	switch(dr->render_mode) 
+postscript.c:		VecMatMult(dr->light_dir, rotate, nlightdir);
+postscript.c:			if(dr->ourlighting) 
+postscript.c:				my_getmcolor(tu->color_index + (Colorindex)((float)dr->diff_coef*cos_theta), 
+postscript.c:	switch(dr->line_style)
+postscript.c:	MakeSphere(dr->cylinder_sides);
+rayshade.c:    if(dr->rayshade_scale == 1)
+rayshade.c:    if(dr->rayshade_scale == 1)
+rayshade.c:  dr->texture = is_valid_texture_index(polygon->vertex[0].texture);
+rayshade.c:  if(dr->texture) 
+rayshade.c:  dr->gllighting = 1;
+rayshade.c:  dr->vertexbound = 1;
+rayshade.c:  dr->ourlighting = 0;
+rayshade.c:  dr->texture = 0;
+rayshade.c:  if(dr->rayshade_scale == 1)
+rayshade.c:  if(dr->texture) 
+rayshade.c:  if(dr->ourlighting) 
+rayshade.c:  if(dr->ourlighting || dr->gllighting) 
+rayshade.c:  if(dr->texture)
+rayshade.c:  if(dr->ourlighting || dr->gllighting)
+rayshade.c:  if(dr->texture)
+rayshade.c:  if(dr->ourlighting || dr->gllighting)
+rayshade.c:  if(dr->texture)
+rayshade.c:	if(dr->rayshade_scale != 1) 
+rayshade.c:	  fprintf(fp,"scale %g %g %g\n\n", dr->rayshade_scale,
+rayshade.c:		  dr->rayshade_scale, dr->rayshade_scale);
+renderman.c:  dr->texture = is_valid_texture_index(polygon->vertex[0].texture);
+renderman.c:  dr->gllighting = 1;
+renderman.c:  dr->vertexbound = 1;
+renderman.c:  dr->ourlighting = 0;
+renderman.c:  dr->texture = 0;
+renderman.c:  if(dr->gllighting) {
+renderman.c:  /*  if(dr->texture)
+tsurfaces.c:  dr->texture = dr->tdd->StartTexture(tex_index);
+tsurfaces.c:      if(dr->ourlighting)
+tsurfaces.c:    (*dr->tdd->RenderTriangle)(
+tsurfaces.c:  if(dr->texture) dr->tdd->EndTexture(tex_index);
+tsurfaces.c:  if (dr->render_mode == RM_FILLED) 
+tsurfaces.c:  vertex_lamp = n_x * dr->light_dir[eX] +
+tsurfaces.c:    n_y * dr->light_dir[eY] + n_z * dr->light_dir[eZ];
+tsurfaces.c:  diffuse = dr->diffuse;
+tsurfaces.c:  index = (int)(64. * intensity * ( dr->ambient +
+tsurfaces.c:  if(dr->double_sided) 
+tsurfaces.c:    diffuse = dr->diffuse;
+tsurfaces.c:    index = (int)(64. * intensity * ( dr->ambient +
+tsurfaces.c:    gll = dr->gllighting;
+tsurfaces.c:    ourl = dr->ourlighting;
+tsurfaces.c:    dr->ourlighting = dr->ourlighting | dr->gllighting;
+tsurfaces.c:    dr->gllighting = 1;
+tsurfaces.c:    dr->ourlighting = 0;
+tsurfaces.c:    dr->gllighting = gll;
+tsurfaces.c:    dr->ourlighting = ourl;
+tsurfaces.c:      gll = dr->gllighting;
+tsurfaces.c:      ourl = dr->ourlighting;
+tsurfaces.c:      dr->gllighting = 1;
+tsurfaces.c:      dr->ourlighting = 0;
+tsurfaces.c:      dr->gllighting = gll;
+tsurfaces.c:      dr->ourlighting = ourl;

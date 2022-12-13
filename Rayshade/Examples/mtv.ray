@@ -1,0 +1,79 @@
+/*
+ * Logo for a certain drek-filled cable channel.
+ * Rod Bogart, 10/90
+ */
+eyep  0 20 8
+lookp 0 0 3.5
+fov 30
+background .1 .3 .8
+light 1 1 1 directional 0.5 1.5 2
+screen 100 100
+maxdepth 10
+surface red
+	ambient .2 .05 .05
+	diffuse .8 .1 .05
+	specular .05 .05 .05 specpow 20
+surface green
+	ambient .05 .2 .05
+	diffuse .1 .8 .05
+	specular .05 .05 .05 specpow 20
+surface blue
+	ambient .05 .05 .2
+	diffuse .1 .1 .8
+	specular .05 .05 .05 specpow 20
+surface white
+	ambient .2 .2 .2
+	diffuse 1. 1. 1.
+	specular 0.2 0.2 0.2 specpow 18
+surface glass
+	ambient .02 .02 .02
+	diffuse 0.1 0.1 0.1
+	specular 0.8 0.8 0.8 specpow 200 
+	transp 1. index 1.5
+surface redglass
+	ambient .52 .02 .02 
+	transp 1. index 1.0
+surface greenglass
+	ambient .02 .52 .02
+	transp 1 index 1.0
+surface m_surf specpow 20 specular 1. 1. 1. transp .8 reflect .1 index 1.4
+surface tv_surf
+	ambient .2 .05 .05
+	diffuse .8 .1 .05
+	specular .05 .05 .05 specpow 20
+plane white 0 0 -0.05  0 0 1 texture checker diffuse .8 .1 .05 scale 2 2 2
+
+name general_cyl
+list
+	cylinder tv_surf 0.25  0 0 0  0 0 1 
+	disc tv_surf 0.25  0 0 1  0 0 1
+	disc tv_surf 0.25  0 0 0  0 0 -1
+end
+
+name thingy
+grid 6 6 6
+	union	/* M */
+		list	/* m legs */
+			box m_surf   1.0 -1 0  4.2 1 7.0
+			box m_surf   -4.2 -1 0  -1 1 7.0
+   			/*box m_surf   2.6 0 3.5 1.6 1 3.5 
+   			box m_surf  -2.6 0 3.5 1.6 1 3.5 */
+		end
+		difference
+			box m_surf (-4.5^0.5) -1 (-4.5^0.5) 
+					(4.5^0.5) 1 (4.5^0.5)
+				translate (4.5^0.5) 0 (4.5^0.5)
+				rotate 0 1 0 -45 translate 0 0 2
+			box m_surf -1 -1 -1  1 1 1
+			  	translate 1 0 1
+				rotate 0 1 0 -45 translate 0 0 6
+		end
+	end /* M */
+	/* TV */
+	object general_cyl scale 1 1 3.6 rotate 0 1 0 -64 translate 0.2 0 3.4
+	object general_cyl scale 1 1 4.0 rotate 0 1 0 3 translate -1.8 0 0.9
+	object general_cyl scale 1 1 2.7 rotate 0 1 0 15 translate -3.2 0 1.5
+	object general_cyl scale 1 1 5.0 rotate 0 1 0 -25 translate -3.2 0 1.5
+end
+
+object thingy rotate 0 0 1 -40

@@ -1,0 +1,27 @@
+plant.l
+plant.v
+plant.mat
+background.dat
+description.txt
+ignore:
+*
+model:
+	generate:
+		cpfg -M plant.mat plant.l plant.v
+
+L-system:
+	EDIT plant.l
+
+view:
+	EDIT plant.v
+
+material:
+	material-editor:
+		medit plant.mat
+
+background:
+	EDIT background.dat
+
+description:
+	EDIT description.txt
+

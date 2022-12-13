@@ -1,0 +1,234 @@
+                      Rayshade Quick Reference
+
+-------------------------------------------------------------------------------
+Key:
+[thing]  Optional item              <Thing>  Production
+Thing    Number or String           (thing)  Default value(s)
+thing    Keyword
+-------------------------------------------------------------------------------
+
+Reals and integers may be written in exponential notation, with or without a
+decimal point.  Reals are truncated to integers when need be.  Numbers may also
+be written as expressions surrounded by a matched pair of parentheses.
+Subexpressions may be parenthesized to control order of evaluation.  Variables
+may be defined and used in parenthesized expressions.  Predefined variables
+include time (current time) and frame (current frame number, 0 - frames-1), pi,
+dtor (pi/180), rotd (180/pi).  Available operators are '+' (addition),
+'-' (subtraction and negation), '*' (multiplication), '/' (division),
+'%' (remainder), '^' (exponentiation).  Functions include sin, cos, tan, asin,
+acos, atan, sqrt, hypot.
+
+Strings are written as non-quoted strings that may include include the
+special characters '/' ("slash"), '-' ("dash"), '_' ("underscore), and '.'
+("period"), in addition to upper and lowercase letters and non-leading digits.
+
+-------------------------------------------------------------------------------
+Command-line options (override options set in input file):
+
+-A frame       First frame to render 
+-a             Toggle alpha channel   -C cutoff      Adaptive tree cutoff 
+-c             Continued rendering    -D depth       Maximum ray tree depth.
+-E eye_sep     Eye separation         -e             Exponential RLE output
+-F freq        Report frequency       -f             Flip triangle normals
+-G gamma       Gamma exponent         -g             Use gaussian filter
+-h             Help                   -j             Toggle jittered sampling
+-l             Render left eye view   -m             Produce sample map
+-N frames      Total frames to render -n             No shadows
+-O outfile     Output file name       -o             Toggle opaque shadows 
+-P cpp-args    Arguments for cpp      -p             Preview-quality
+-q             Run quietly            -R xres yres   Resolution
+-r             Right eye view         -S samples     Use Samples^2 samples
+-s             Toggle shadow caching  -T r g b       Contrast threshold
+-u             Toggle use of cpp      -V filename    Verbose file output
+-v             Verbose output         -W lx hx ly hy Render subwindow
+-X l r b t     Crop window
+-------------------------------------------------------------------------------
+
+File: /* Input file consists of...*/
+        <Item> [<Item> ... ]
+
+Item:
+        <Viewing>
+        <Light>
+        <Atmosphere>
+        <RenderOption>
+        <ObjItem>
+        <Definition>
+
+ObjItem: /* Items used in object definition blocks */
+        <SurfDef>
+        <ApplySurf>
+        <Instance>
+        <ObjDef>
+
+Viewing:
+        eyep Xpos Ypos Zpos     /* Eye position (0 -10 0) */
+        lookp Xpos Ypos Zpos    /* Look position (0 0 0) */
+        up Xup Yup Zup          /* "up" vector (0 0 1) */
+        fov Hfov [Vfov]         /* Field of view in degrees (horiontal=45) */
+        aperture Width          /* Aperture width (0) */
+        focaldist Distance      /* focal distance (|eyep - lookp|) */
+        shutter Speed           /* Shutter speed (0 --> no blur) */
+        framelength Length      /* Length of a singelf frame (1) */
+        screen Xsize Ysize      /* Screen size */
+        window Xmin Xmax Ymin Ymax /* Window (0 xsize-1 0 ysize-1) */
+        crop left right bot top /* Crop window (0 1 0 1) */
+        eyesep Separation       /* eye separation (0) */
+
+SurfDef: /* Give a name to a set of surface attributes. */
+        surface Name <SurfSpec> [<SurfSpec> ...]
+
+Surface: /* Surface specification */
+        <SurfSpec>                /* Use gven attributes */
+        Surfname [<SurfSpec> ...] /* Use named surface w/ optional mods. */
+        cursurf  [<SurfSpec> ...] /* Use cur. surface w/mods - see ApplySurf */
+
+SurfSpec: /* Surface attribute specification */
+        ambient R G B           /* Ambient contribution */
+        diffuse R G B           /* Diffuse color */
+        specular R G B          /* Specular color */
+        specpow Exponent        /* Phong exponent */
+        body R G B              /* Body color */
+        extinct Coef            /* Extinction coefficient */
+        transp Ktr              /* Transparency */
+        reflect Kr              /* Reflectivity */
+        index N                 /* Index of refraction */
+        translu Ktl R G B Stpow /* Translucency, transmit diffuse, spec exp */
+        noshadow                /* No shadows cast on this surface */
+
+Effect: /* Atmospheric Effects */
+        mist   R G B Rtrans Gtrans Btrans Zero Scale
+        fog    R G B Rtrans Gtrans Btrans
+
+Atmosphere: /* Global atmosphere */
+        atmosphere [Index] <Effect> [<Effect>...] /* Global index, effects */
+
+ApplySurf:
+        applysurf <Surface> /* apply surf to all following objs w/o surface */
+
+Instance: /* Instance of an object */
+        <Object> [<Transforms>] [<Textures>] 
+
+Object:
+        Primitive        /* Primitive object */
+        Aggregate        /* Named aggregate */
+
+ObjDef: /* define a named object */
+        name Objname <Instance>
+        
+Primitive: /* Primitive object */
+        plane    [<Surface>] Xpos Ypos Zpos Xnorm Ynorm Znorm
+        disc     [<Surface>] Radius Xpos Ypos Zpos Xnorm Ynorm Znorm
+        sphere   [<Surface>] Radius Xpos Ypos Zpos
+        triangle [<Surface>] Xv1 Yv1 Zv1
+                             Xv2 Yv2 Zv2  Xv3 Yv3 Zv3/* flat-shaded triangle */
+        triangle [<Surface>] Xv1 Yv1 Zv1 Xn1 Yn1 Zn1
+                             Xv2 Yv2 Zv2 Xn2 Yn2 Zn2
+                             Xv3 Yv3 Zv3 Xn3 Yn3 Zn3/* Phong-shaded triangle */
+        polygon  [<Surface>] Xv1 Yv1 Zv1
+                             Xv2 Yv2 Zv2  Xv3 Yv3 Zv3 [Xv3 Yv4 Zv4 ...]
+        box      [<Surface>] Xlow Ylow Zlow
+                             Xhi  Yhi  Zhi
+        cylinder [<Surface>] Radius Xbase Ybase Zbase Xapex Yapex Zapex
+        cone     [<Surface>] Rbase Xbase Ybase Zbase  Rapex Xapex Yapex Zapex
+        torus    [<Surface>] Rswept Rtube Xpos Ypos Zpos Xnorm Ynorm Znorm
+        blob     [<Surface>] Thresh Stren Rad Xpos Ypos Zpos
+                             [Stren Rad X Y Z ...]
+        heightfield [<Surface>] Filename
+
+Aggregate:
+        Grid
+        List
+        Csg
+
+Grid:
+        grid X Y Z <ObjItem> [<ObjItem> ...]  end
+
+List:
+        list <ObjItem> [<ObjItem> ...] end
+
+Csg:
+        union      <Object> <Object> [<Object> ...] end
+        intersect  <Object> <Object> [<Object> ...] end
+        difference <Object> <Object> [<Object> ...] end
+
+        /* CSG will only work properly when applied to closed objects, e.g.:
+         * sphere, box, torus, blob, closed Aggregate, other Csg object
+         */
+
+Transforms: /* Transformations */
+        translate  Xtrans Ytrans Ztrans
+        scale      Xscale Yscale Zscale
+        rotate     Xaxis Yaxis Zaxis Degrees
+        transform  A   B   C
+                   D   E   F
+                   G   H   I
+                  [Xt  Yt  Zt]
+
+Textures:
+        texture <TextType> [Transforms] [<Texture> [Transforms] ...]
+
+Texture:
+        checker    <Surface>
+        blotch    Scale <Surface>
+        bump      Bumpscale
+        marble    [Colormapname]
+        fbm       Offset Scale H Lambda Octaves Thresh [Colormapname]
+        fbmbump   Offset Scale H Lambda Octaves
+        wood
+        gloss     Glossiness
+        cloud     Offset Scale H Lambda Octaves Cthresh Lthresh Transcale
+        sky       Scale H Lambda Octaves Cthresh Lthresh
+        stripe    <Surface> Width Bumpscale
+        image     Imagefile [<ImageTextOption> [<ImageTextOption> ...]]
+
+ImageTextOption:
+        component <SufComp>
+        range     Lo Hi
+        smooth
+        textsurf  <Surface>
+        tile      U V
+        <Mapping>
+
+SurfComp:
+        ambient
+        diffuse
+        reflect
+        transp
+        specular
+        specpow
+
+Mapping:
+        map uv
+        map cylindrical [Xorigin Yorigin Zorigin Xup Yup Zup Xu Yu Zu] 
+        map planar      [Xorigin Yorigin Zorigin Xv  Yv  Zv  Xu Yu Zu]
+        map spherical   [Xorigin Yorigin Zorigin Xup Yup Zup Xu Yu Zu]
+
+Light:
+        light R G B <LightType> [noshadow]
+        light Intensity <LightType> [noshadow]
+
+LightType:
+        ambient
+        point       Xpos Ypos Zpos
+        directional Xdir Ydir Zdir
+        extended    Radius Xpos Ypos Zpos
+        spot        Xpos Ypos Zpos Xat Yat Zat Coef Thetain Thetaout
+        area        Xorigin Yorigin Zorigin Xu Yu Zu Usamples Xv Yv Zv Vsamples
+
+RenderOption:
+        samples      Nsamp [jitter | nojitter]
+                                /* Use Nsamp^2 pixel samples (3^2 jittered) */
+        background   R G B      /* Background color (0 0 0) */
+        outfile      Filename   /* Output file name (written to stdout) */
+        frames       Nframes    /* Number of frames to render (1) */
+        starttime    Time       /* Time corresponding to start of frame 0 */
+        contrast     R G B      /* Maximum contrast w/o supersampling */
+        maxdepth     Depth      /* Maximum ray tree depth (5) */
+        cutoff       Factor     /* Minium spawned ray contribution (.001) */
+        report [verbose] [quiet] [Freq] [Statfile]
+                                /* Reporting mode (false false 10 stderr) */
+        shadowtransp            /* Toggle object opacity affects shadows */
+
+Definition: /* Variable definition */
+        define Name Expr        /* Assign value for Name */

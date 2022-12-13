@@ -1,0 +1,52 @@
+lsystem.l
+view.v
+anim.a
+material.mat
+functions.fset
+leaf.s
+leaft.png
+description.txt
+ignore:
+lsys.so
+lpfg.log
+lsys.ii
+lsysinp.cpp
+lsys.o
+input.i
+*.swp
+temp*
+rmode: cont
+*
+model:
+	generate:
+		lpfg material.mat lsystem.l view.v anim.a functions.fset
+
+L-system:
+	EDIT lsystem.l
+
+viewfile:
+	EDIT view.v
+
+animation:
+	EDIT anim.a
+
+materials:
+	MEDIT material.mat
+
+functions:
+	GALLERY functions.fset
+
+leaf surface:
+	surface:
+		bezieredit:
+			bezieredit leaf.s
+		stedit:
+			stedit -bezier leaf.s
+	surface + texture:
+		stedit -both leaf.s leaft.png
+	texture only:
+		stedit -warp leaft.png
+
+description:
+	EDIT description.txt
+

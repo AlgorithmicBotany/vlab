@@ -1,0 +1,8 @@
+A simple model of a plant's response to pruning.
+Modules are pruned if they grow outside the box.
+
+Based on the model described by P. Prusinkiewicz, M. James,
+and R. Mech, "Synthetic Topiary", Proceedings of SIGGRAPH '94,
+pp. 351-358.
+
+

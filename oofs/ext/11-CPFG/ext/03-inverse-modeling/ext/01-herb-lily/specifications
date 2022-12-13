@@ -1,0 +1,31 @@
+plant.l
+plant.v
+plant.mat
+functions.fset
+leaf.con
+description.txt
+ignore:
+*
+model:
+	generate:
+		cpfg -M plant.mat plant.l plant.v
+
+L-system:
+	EDIT plant.l
+
+view file:
+	EDIT plant.v
+
+materials:
+	MEDIT plant.mat
+
+functions:
+	gallery:
+		gallery functions.fset
+
+contour:
+	leaf:
+		cuspy leaf.con
+
+description:
+	EDIT description.txt

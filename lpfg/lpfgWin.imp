@@ -1,0 +1,700 @@
+#include <windowsx.h>
+
+#include <sstream>
+
+#include "resource.h"
+#include "canvas.h"
+#include "ddb.h"
+
+const unsigned int ViewCommandIdBase = 50000;
+
+const char *DefTitle = "LPFG";
+
+LPFG::LPFG(HINSTANCE hInst) : _hInstance(hInst) {
+  _RecordingOn = false;
+  _show = false;
+  _BatchMode = false;
+  _hLProject = NULL;
+  _hLSemaphore = NULL;
+  _hWnd = 0;
+  _hMDIClient = 0;
+  _hAccel = 0;
+  _hMainIcon = 0;
+  _mAMode = amStill;
+  ASSERT(0 == Interface::pLpfg);
+  Interface::pLpfg = this;
+  _hMenu = LoadMenu(_hInstance, MAKEINTRESOURCE(IDR_MENU1));
+  _hWinMenu = CreatePopupMenu();
+  _recording = false;
+  _recordingForPovray = false;
+  _frameNo = 0;
+  _displayFrame = false;
+  _outputFrame = false;
+  _hDocIcon = LoadIcon(_hInstance, MAKEINTRESOURCE(IDI_ICON5));
+  _tablet = NULL;
+  _c3d = NULL;
+  _userMenuChoice = -1;
+}
+
+void LPFG::Exit() { PostMessage(_hWnd, WM_CLOSE, 0, 0); }
+
+void LPFG::Create() {
+  Rect r(CW_USEDEFAULT, CW_USEDEFAULT, CW_USEDEFAULT, CW_USEDEFAULT);
+  if (comlineparam.WindowSpecified())
+    r = comlineparam.WindowRect();
+  else if (_LoadWindowPlacement()) {
+    r.left = _wp.rcNormalPosition.left;
+    r.right = _wp.rcNormalPosition.right;
+    r.top = _wp.rcNormalPosition.top;
+    r.bottom = _wp.rcNormalPosition.bottom;
+    r.right -= r.left;
+    r.bottom -= r.top;
+  }
+  DWORD style = WS_OVERLAPPEDWINDOW;
+  if (comlineparam.NoBorder())
+    style = WS_BORDER | WS_POPUP;
+  _hWnd = CreateWindow(ClassName(), DefTitle, style, r.left, r.top, r.right,
+                       r.bottom, 0, 0, _hInstance, this);
+  ShowWindow(_hWnd, SW_SHOW);
+  _ResetViewNoSync();
+
+  _tablet = getWinTablet();
+  if (_tablet != NULL) {
+    Utils::Log("Tablet driver loaded.\n");
+    if (!_tablet->init(_hWnd, !comlineparam.TabletMode())) {
+      _tablet = NULL;
+      Utils::Error("Could not initialize tablet.\n");
+    }
+  }
+
+}
+
+bool LPFG::_LoadWindowPlacement() {
+  HKEY hK;
+  LONG res = RegOpenKeyEx(HKEY_CURRENT_USER, "Software\\RadekSoftware\\lpfg", 0,
+                          KEY_QUERY_VALUE, &hK);
+
+  if (ERROR_SUCCESS != res)
+    return false;
+
+  DWORD type = REG_BINARY;
+  DWORD cbDt = sizeof(WINDOWPLACEMENT);
+  res =
+      RegQueryValueEx(hK, WinPlaceRegName(), NULL, &type, (BYTE *)&_wp, &cbDt);
+  RegCloseKey(hK);
+  if (ERROR_SUCCESS != res)
+    return false;
+  return true;
+}
+
+void LPFG::_SaveWindowPlacement() {
+  _wp.length = sizeof(WINDOWPLACEMENT);
+  GetWindowPlacement(_hWnd, &_wp);
+  HKEY hK;
+  DWORD dsp;
+  LONG res = RegCreateKeyEx(HKEY_CURRENT_USER, "Software\\RadekSoftware\\lpfg",
+                            0, NULL, 0, KEY_SET_VALUE, NULL, &hK, &dsp);
+
+  if (ERROR_SUCCESS != res)
+    return;
+
+  RegSetValueEx(hK, WinPlaceRegName(), 0, REG_BINARY, (const BYTE *)&_wp,
+                sizeof(WINDOWPLACEMENT));
+  RegCloseKey(hK);
+}
+
+void LPFG::_CreateView(int id) {
+  RECT ir = {CW_USEDEFAULT, CW_USEDEFAULT, CW_USEDEFAULT, CW_USEDEFAULT};
+  if (drawparams.IsValidViewId(id)) {
+    const WindowParams &wp = drawparams.GetView(id);
+    ir.left = static_cast<int>(_size.cx * wp.Left());
+    ir.top = static_cast<int>(_size.cy * wp.Top());
+    ir.right = static_cast<int>(_size.cx * wp.Width());
+    ir.bottom = static_cast<int>(_size.cy * wp.Height());
+  } else // if (comlineparam.NoBorder())
+  {
+    ir.left = 0;
+    ir.top = 0;
+    ir.right = _size.cx;
+    ir.bottom = _size.cy;
+  }
+
+  if (_aView.size() < static_cast<size_t>(id + 1))
+    _aView.resize(id + 1);
+  std::string title;
+  if (drawparams.IsValidViewId(id)) {
+    title = drawparams.ViewName(id);
+  } else {
+    std::stringstream ttl;
+    ttl << "view " << id;
+    title = ttl.str();
+  }
+  HWND hParent = _hMDIClient;
+  if (!IsMDI())
+    hParent = _hWnd;
+  _aView[id] = View::Create(_hInstance, title.c_str(), hParent, ir, this, id);
+  _aView[id]->SetIcon(_hDocIcon);
+}
+
+void LPFG::Initialize(HWND hWnd, const CREATESTRUCT *pCS) {
+  LPFG *pCtrl = reinterpret_cast<LPFG *>(pCS->lpCreateParams);
+  pCtrl->DoInitialize(hWnd, pCS);
+}
+
+void LPFG::DoInitialize(HWND hWnd, const CREATESTRUCT *pCS) {
+  SetWindowLongPtr(hWnd, GWL_USERDATA, reinterpret_cast<LONG_PTR>(this));
+  _hWnd = hWnd;
+  SendMessage(_hWnd, WM_SETICON, ICON_BIG, (LPARAM)_hMainIcon);
+  _size.cx = pCS->cx;
+  _size.cy = pCS->cy;
+  if (_size.cx <= 0 || _size.cy <= 0) {
+    RECT r;
+    GetClientRect(hWnd, &r);
+    _size.cx = r.right;
+    _size.cy = r.bottom;
+  }
+
+  _HandshakeLstudio();
+
+  if (IsMDI()) {
+    CreateClientWindow();
+
+    HMENU hS = GetSubMenu(_hMenu, 2);
+    SendMessage(_hMDIClient, WM_MDISETMENU, (WPARAM)(_hMenu), (LPARAM)(hS));
+    DrawMenuBar(_hWnd);
+  }
+  /*
+  _fileMonitor = new ActiveFileMonitor();
+  if (_fileMonitor != NULL)
+  {
+          _fileMonitor->monitorFile("Parameters", "");
+  }
+  */
+  _lengine.StartEnvironment();
+
+  if (_lengine.NewLsystem(comlineparam.Lsystemfile())) {
+    if (!drawparams.IsMultiView())
+      _CreateView(0);
+    if (comlineparam.StartInAnimMode())
+      _lengine.Rewind();
+    else
+      _lengine.DeriveString();
+    if (_lengine.NumOfVGroups() == 1)
+      _aView[0]->ShowMaximized();
+  } else if (comlineparam.NoBorder()) {
+    MessageBox(0, "Error in L-system. Exiting", "Error", MB_ICONSTOP);
+    PostQuitMessage(0);
+  }
+}
+
+void LPFG::CreateClientWindow() {
+  CLIENTCREATESTRUCT ccs;
+  HMENU hSM = GetSubMenu(_hMenu, 2);
+  ccs.hWindowMenu = hSM;
+  ccs.idFirstChild = 101;
+  _hMDIClient =
+      CreateWindow("MDICLIENT", 0, WS_VISIBLE | WS_CHILD | WS_CLIPCHILDREN, 0,
+                   0, 0, 0, _hWnd, (HMENU)2, _hInstance, &ccs);
+}
+
+void LPFG::Destroy() {
+  _SaveWindowPlacement();
+  if (NULL != _hLProject)
+    FORWARD_WM_COMMAND(_hLProject, PrjVar::ccQuitting, 0, 0, PostMessage);
+}
+
+void LPFG::ConsoleClosed() {
+  if (NULL != _hLProject)
+    FORWARD_WM_COMMAND(_hLProject, PrjVar::ccQuitting, 0, 0, PostMessage);
+}
+
+void LPFG::PanicExit() {
+  if (NULL != _hLProject)
+    FORWARD_WM_COMMAND(_hLProject, PrjVar::ccQuitting, 0, 0, PostMessage);
+  else
+    MessageBox(NULL, "Sorry, exiting", "Unknown error", MB_ICONSTOP);
+}
+
+void LPFG::_Exit() { PostMessage(_hWnd, WM_CLOSE, 0, 0); }
+
+void LPFG::Command(int id) {
+  try {
+    switch (id) {
+    case ID_CONTEXTMENU_GENERATESTATIC:
+      _GenerateStatic();
+      break;
+    case ID_CONTEXTMENU_ANIMATE_STEP:
+      Step();
+      break;
+    case ID_CONTEXTMENU_ANIMATE_REWIND:
+      Rewind();
+      break;
+    case ID_CONTEXTMENU_ANIMATE_RUN:
+      _Run();
+      break;
+    case ID_CONTEXTMENU_ANIMATE_STOP:
+      _Stop();
+      break;
+    case ID_CONTEXTMENU_FOREVER:
+      _Forever();
+      break;
+    case ID_CONTEXTMENU_RECORDING:
+      break;
+    case ID_CONTEXTMENU_EXIT:
+      _Exit();
+      break;
+    case ID_CONTEXTMENU_RESTOREVIEW:
+      _ResetViewNoSync();
+      break;
+    case ID_CONTEXTMENU_SHOWAXIS:
+      _ToggleShowAxis();
+      break;
+    case ID_CONTEXTMENU_RESET_ROTATION:
+      _ResetRotation();
+      break;
+    case ID_CONTEXTMENU_RESET_ZOOM:
+      _ResetZoom();
+      break;
+    case ID_CONTEXTMENU_RESET_PAN:
+      _ResetPan();
+      break;
+    case ID_CONTEXTMENU_RESET_ROLL:
+      _ResetRoll();
+      break;
+    case ID_CONTEXTMENU_RESET_FRUSTUM:
+      break;
+    case ID_VIEW_SAVEARRANGEMENT:
+      SaveViewArrangement();
+      break;
+
+    // output
+    case ID_CONTEXTMENU_OUTPUT_RAYSHADE:
+      break;
+    case ID_CONTEXTMENU_OUTPUT_POSTSCRIPT:
+      break;
+    case ID_CONTEXTMENU_OUTPUT_POVRAY:
+      break;
+    case ID_CONTEXTMENU_OUTPUT_BMP:
+      break;
+    case ID_HIDDEN_REREADENVIRONMENT:
+      _RereadEnvironment();
+      break;
+
+    case ID_SIMULATION_OUTPUTSTRING:
+      OutputString();
+      break;
+    case ID_SIMULATION_LOADSTRING:
+      LoadString();
+      break;
+
+    // communication with L-studio
+    case ID_NEWMODEL:
+    case PrjVar::ccNewModel:
+      _NewModel();
+      break;
+    case PrjVar::ccNewLsystem:
+      _NewLsystem();
+      break;
+    case PrjVar::ccNewHomomorphism:
+      _NewHomomorphism();
+      break;
+    case PrjVar::ccNewView:
+      _ResetView();
+      break;
+    case PrjVar::ccRerun:
+      _Rerun();
+      break;
+    case PrjVar::ccNewProjection:
+      _NewProjection();
+      break;
+    case PrjVar::ccNewRender:
+      _NewRender();
+      break;
+    case PrjVar::ccNewAnimate:
+      _NewAnimate();
+      break;
+    case PrjVar::ccRereadColors:
+      _RereadColors();
+      Repaint();
+      break;
+    case PrjVar::ccRereadSurfaces:
+      _RereadSurfaces();
+      break;
+    case PrjVar::ccRereadCurvesRerun:
+      _RereadCurveXYZRerun();
+      break;
+    case PrjVar::ccRereadContours:
+      _RereadContours();
+      break;
+    case PrjVar::ccRereadFunctionsRerun:
+      _RereadFunctionsRerun();
+      break;
+    // MDI stuff
+    case ID_WINDOW_CASCADE40036:
+      Cascade();
+      break;
+    case ID_WINDOW_TILEHORIZONTALLY:
+      TileH();
+      break;
+    case ID_WINDOW_TILEVERTICALLY:
+      TileV();
+      break;
+    case ID_WINDOW_DEFAULT:
+      DefaultArrangement();
+      break;
+
+    default: {
+      int ViewId = id - ViewCommandIdBase;
+      if (ViewId >= 0 && ViewId < _lengine.NumOfVGroups()) {
+        UseView(ViewId);
+        Repaint();
+      }
+    }
+    }
+  } catch (Exception e) {
+    Utils::Error(e.Msg());
+  }
+}
+
+void LPFG::TileH() {
+  FORWARD_WM_MDITILE(_hMDIClient, MDITILE_HORIZONTAL, SendMessage);
+}
+
+void LPFG::TileV() {
+  FORWARD_WM_MDITILE(_hMDIClient, MDITILE_VERTICAL, SendMessage);
+}
+
+void LPFG::Cascade() { FORWARD_WM_MDICASCADE(_hMDIClient, 0, SendMessage); }
+
+void LPFG::_HandshakeLstudio() {
+  HANDLE hFile = CreateFile(".\\xwnds", GENERIC_READ | GENERIC_WRITE,
+                            FILE_SHARE_READ | FILE_SHARE_WRITE, NULL,
+                            OPEN_EXISTING, 0, NULL);
+  if (INVALID_HANDLE_VALUE != hFile) {
+    DWORD aux;
+    ReadFile(hFile, &_hLProject, sizeof(HWND), &aux, NULL);
+    WriteFile(hFile, &_hWnd, sizeof(HWND), &aux, NULL);
+    CloseHandle(hFile);
+    HANDLE hSemaphore =
+        OpenSemaphore(SEMAPHORE_MODIFY_STATE, false, "CpfgStarted");
+    if (NULL != hSemaphore) {
+      ReleaseSemaphore(hSemaphore, 1, NULL);
+      CloseHandle(hSemaphore);
+      char name[16];
+      ASSERT(sizeof(unsigned int) == sizeof(HWND));
+      sprintf(name, "Mtx%08x", (unsigned int)_hLProject);
+      _hLSemaphore = OpenSemaphore(SEMAPHORE_MODIFY_STATE, FALSE, name);
+    }
+  } else {
+    _hLProject = NULL;
+    Utils::Message("Cannot communicate with L-studio\n");
+  }
+}
+
+void LPFG::ContextMenu(int, int) {}
+
+int LPFG::Loop() {
+  MSG msg;
+  for (;;) {
+    if (Animating()) {
+      if (!PeekMessage(&msg, NULL, 0, 0, PM_REMOVE))
+        Timer();
+      else if (WM_QUIT == msg.message)
+        break;
+      else
+        HandleMsg(msg);
+    } else {
+      if (!GetMessage(&msg, NULL, 0, 0))
+        break;
+      else
+        HandleMsg(msg);
+    }
+  }
+
+  Utils::Quitting();
+  return msg.wParam;
+}
+
+void LPFG::InitMenu() {
+  HMENU hSB = 0;
+  for (int i = 0; i < 4; ++i) {
+    hSB = GetSubMenu(_hMenu, i);
+    if (0 == hSB)
+      break;
+    char bf[32];
+    GetMenuString(hSB, 5, bf, 31, MF_BYPOSITION);
+    if (0 == strcmp("Views", bf)) {
+      DeleteMenu(hSB, 5, MF_BYPOSITION);
+      break;
+    }
+  }
+  if (0 != hSB) {
+    HMENU hVList = _BuildViewListMenu();
+    if (0 != hVList) {
+      InsertMenu(hSB, 5, MF_BYPOSITION | MF_POPUP,
+                 reinterpret_cast<UINT_PTR>(hVList), "Views");
+      EnableMenuItem(_hMenu, ID_WINDOW_DEFAULT, MF_BYCOMMAND | MF_ENABLED);
+    } else
+      EnableMenuItem(_hMenu, ID_WINDOW_DEFAULT, MF_BYCOMMAND | MF_GRAYED);
+  }
+}
+
+void LPFG::DefaultArrangement() {
+  size_t i = 0;
+  for (Viter it = _aView.begin(); it != _aView.end(); ++it) {
+    if (0 != *it) {
+      PView pV = *it;
+      if (pV->IsVisible() && drawparams.IsValidViewId(i))
+        pV->Show(drawparams.GetView(i));
+    }
+    ++i;
+  }
+}
+
+HMENU LPFG::_BuildViewListMenu() {
+  if (!_lengine.ValidLsystem())
+    return 0;
+  HMENU hRes = CreatePopupMenu();
+  const size_t maxvgroup = _lengine.NumOfVGroups();
+  for (size_t i = 0; i < maxvgroup; ++i) {
+    std::stringstream label;
+    if (drawparams.IsValidViewId(i))
+      label << drawparams.ViewName(i);
+    else
+      label << i;
+    std::string lst(label.str());
+    AppendMenu(hRes, MF_STRING, ViewCommandIdBase + i, lst.c_str());
+    if (ViewExists(i))
+      CheckMenuItem(hRes, ViewCommandIdBase + i, MF_BYCOMMAND | MF_CHECKED);
+  }
+  int c = GetMenuItemCount(hRes);
+  assert(-1 != c);
+  if (c > 0)
+    return hRes;
+  else {
+    DestroyMenu(hRes);
+    return 0;
+  }
+}
+
+LRESULT CALLBACK WndProc(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam) {
+  LPFG *pCtrl = reinterpret_cast<LPFG *>(GetWindowLongPtr(hWnd, GWLP_USERDATA));
+  switch (msg) {
+  case WM_CREATE:
+    LPFG::Initialize(hWnd, (const CREATESTRUCT *)lParam);
+    return 0;
+  case WM_DESTROY:
+    pCtrl->Destroy();
+    PostQuitMessage(0);
+    return 0;
+  case WM_CONTEXTMENU:
+    pCtrl->ContextMenu(LOWORD(lParam), HIWORD(lParam));
+    return 0;
+  case WM_COMMAND:
+    pCtrl->Command(LOWORD(wParam));
+    break;
+  case WM_INITMENU:
+    pCtrl->InitMenu();
+    return 0;
+  case WM_SIZE:
+    pCtrl->Size(LOWORD(lParam), HIWORD(lParam));
+    if (pCtrl->IsMDI())
+      break;
+    else
+      return 0;
+
+  case LSTUDIO_3D_CONNECTION_MSG:
+    SendMessage(pCtrl->GetView(0)->getWindowHandle(), msg, wParam, lParam);
+    // Why doesn't this one work to give us the active window?
+    //		SendMessage(GetActiveWindow(),msg,wParam,lParam);
+    return 0;
+  }
+  if (pCtrl->IsMDI())
+    return DefFrameProc(hWnd, pCtrl ? pCtrl->MdiClient() : 0, msg, wParam,
+                        lParam);
+  else
+    return DefWindowProc(hWnd, msg, wParam, lParam);
+}
+
+void LPFG::Size(int w, int h) {
+  if (w > 0 && h > 0) {
+    if (_size.cx < 0)
+      _size.cx = w;
+    if (_size.cy < 0)
+      _size.cy = h;
+
+    if (IsMDI())
+      MoveWindow(MdiClient(), 0, 0, w, h, TRUE);
+
+    for (Viter it = _aView.begin(); it != _aView.end(); ++it) {
+      if (0 != *it) {
+        PView pV = *it;
+        pV->Resize(_size.cx, _size.cy, w, h);
+      }
+    }
+
+    {
+      _size.cx = w;
+      _size.cy = h;
+    }
+  }
+}
+
+void LPFG::Register() {
+  WNDCLASS wc;
+  wc.style = 0;
+  wc.lpfnWndProc = WndProc;
+  wc.cbClsExtra = 0;
+  wc.cbWndExtra = 0;
+  wc.hInstance = _hInstance;
+  wc.hIcon = LoadIcon(_hInstance, MAKEINTRESOURCE(IDI_ICON1));
+  ;
+  wc.hCursor = 0;
+  wc.hbrBackground = 0;
+  wc.lpszMenuName = 0;
+  wc.lpszClassName = ClassName();
+  RegisterClass(&wc);
+  _hAccel = LoadAccelerators(_hInstance, MAKEINTRESOURCE(IDR_ACCELERATOR1));
+}
+
+void LPFG::HandleMsg(MSG &msg) {
+  if (IsMDI()) {
+    if (TranslateMDISysAccel(MdiClient(), &msg))
+      ;
+    else if (Accelerator() && TranslateAccelerator(_hWnd, Accelerator(), &msg))
+      ;
+    else {
+      TranslateMessage(&msg);
+      DispatchMessage(&msg);
+    }
+  } else {
+    if (Accelerator() && TranslateAccelerator(_hWnd, Accelerator(), &msg))
+      ;
+    else {
+      TranslateMessage(&msg);
+      DispatchMessage(&msg);
+    }
+  }
+}
+
+void LPFG::SaveFrame(int i) const {
+  UpdateCanvas src(0);
+  MemoryCanvas dst(src);
+  RECT r;
+  GetClientRect(_hWnd, &r);
+  MapWindowPoints(_hWnd, HWND_DESKTOP, (POINT *)(&r), 2);
+  const int l = r.left;
+  const int t = r.top;
+  const int w = r.right - r.left;
+  const int h = r.bottom - r.top;
+  DDB bmp(src, w, h);
+  {
+    ObjectHolder sb(dst, bmp);
+    BitBlt(dst, 0, 0, w, h, src, l, t, SRCCOPY);
+  }
+
+  char fnm[256];
+  strcpy(fnm, comlineparam.Lsystemfile());
+  char *dot = strrchr(fnm, '.');
+  *dot = 0;
+  if (-1 != i)
+    sprintf(dot, "%05d.bmp", i);
+  else
+    strcpy(dot, ".bmp");
+  bmp.SaveBMP(fnm, src);
+}
+
+bool LPFG::IsMDI() const {
+  return (!comlineparam.NoBorder() && drawparams.IsMultiView());
+}
+
+void LPFG::StartTimer() {}
+
+void LPFG::StopTimer() {}
+
+MouseStatus LPFG::GetMouseStatus(void) {
+  static MouseStatus msOld;
+  MouseStatus ms;
+  POINT mousePos;
+  GetCursorPos(&mousePos);
+  HWND myWindow = _hWnd;
+  assert(_aView.size() > 0); // we should always have one view, right?
+  View *myView = _aView[0];
+  ms.viewNum = 0;
+  if (ViewExist()) {
+    HWND activeWindow = GetActiveWindow();
+    for (unsigned int i = 0; i < _aView.size(); i++)
+      if (_aView[i] != NULL && _aView[i]->getWindowHandle() == activeWindow) {
+        myView = _aView[i];
+        myWindow = _aView[i]->getWindowHandle();
+        ms.viewNum = int(i);
+        break;
+      }
+  }
+
+  ScreenToClient(myWindow, &mousePos);
+  ms.viewX = mousePos.x;
+  ms.viewY = mousePos.y;
+
+  if (ms.viewNum >= 0)
+    myView->FillMouseStatus(ms);
+
+  if (!msOld.lbDown && ms.lbDown)
+    ms.lbPushed = true;
+  else if (msOld.lbDown && !ms.lbDown)
+    ms.lbReleased = true;
+
+  msOld = ms;
+  return ms;
+}
+
+TabletStatus LPFG::GetTabletStatus(void) {
+  if (_tablet == NULL)
+    return TabletStatus();
+
+  TabletStatus answer;
+  WinTabletStatus status;
+  if (!_tablet->getStatus(status))
+    return TabletStatus();
+
+  answer.connected = true;
+  answer.viewX = status.x;
+  answer.viewY = status.y;
+  fprintf(stderr, "sx = %d, sy = %d\n", status.sx, status.sy);
+  answer.azimuth = status.ori.azimuth;
+  answer.altitude = status.ori.altitude;
+  answer.pressure = status.pressure;
+  answer.cursorT = status.cursorT;
+  answer.buttonState = status.buttonState;
+
+  _aView[0]->makeCurrent();
+  Vector3d prFront =
+      _aView[0]->GetProjection().Unproject(answer.viewX, answer.viewY, 0);
+  answer.atFront = V3d(prFront.X(), prFront.Y(), prFront.Z());
+  Vector3d prRear =
+      _aView[0]->GetProjection().Unproject(answer.viewX, answer.viewY, 1);
+  answer.atRear = V3d(prRear.X(), prRear.Y(), prRear.Z());
+
+  return answer;
+}
+
+class ProfileTimer {
+public:
+  ProfileTimer() { QueryPerformanceFrequency(&_Frequency); }
+  ~ProfileTimer() {}
+  void Start() { QueryPerformanceCounter(&_StartTime); }
+  void Stop() { QueryPerformanceCounter(&_EndTime); }
+  double GetSeconds() const {
+    if (_Frequency.QuadPart == 0L)
+      return 0.0;
+    LARGE_INTEGER delta;
+    delta.QuadPart = _EndTime.QuadPart - _StartTime.QuadPart;
+    return static_cast<double>(delta.QuadPart) /
+           static_cast<double>(_Frequency.QuadPart);
+  }
+
+private:
+  LARGE_INTEGER _Frequency;
+  LARGE_INTEGER _StartTime;
+  LARGE_INTEGER _EndTime;
+};

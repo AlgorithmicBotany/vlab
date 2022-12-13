@@ -1,0 +1,37 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Generated stuff">
+      <UniqueIdentifier>{7cd9f0fd-5e89-4d93-b712-fd67e84359a1}</UniqueIdentifier>
+      <SourceControlFiles>False</SourceControlFiles>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="l2c_yacc.cpp">
+      <Filter>Generated stuff</Filter>
+    </ClCompile>
+    <ClCompile Include="lex_l.cpp">
+      <Filter>Generated stuff</Filter>
+    </ClCompile>
+    <ClCompile Include="contextdata.cpp" />
+    <ClCompile Include="main.cpp" />
+    <ClCompile Include="module.cpp" />
+    <ClCompile Include="production.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="l2c_yacc.h">
+      <Filter>Generated stuff</Filter>
+    </ClInclude>
+    <ClInclude Include="contextdata.h" />
+    <ClInclude Include="file.h" />
+    <ClInclude Include="..\lpfg\include\lparams.h" />
+    <ClInclude Include="module.h" />
+    <ClInclude Include="production.h" />
+    <ClInclude Include="unistd.h" />
+    <ClInclude Include="warningset.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <CustomBuild Include="l2c.l" />
+    <CustomBuild Include="l2c.y" />
+  </ItemGroup>
+</Project>

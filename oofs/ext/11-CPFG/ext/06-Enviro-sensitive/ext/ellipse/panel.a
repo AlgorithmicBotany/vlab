@@ -1,0 +1,13 @@
+target: Lsystem
+panel name: Animation
+background: 0,0,0
+size: 172 91
+font: Arial,14,-1,5,50,0,0,0,0,0
+
+type: SLIDER
+name: Swap interval
+colors: 255,255,255 255,0,0
+origin: 13 29
+min/max: 0 20
+value: 10
+message: n 4 1 0 %d

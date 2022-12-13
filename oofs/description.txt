@@ -1,0 +1,15 @@
+About VLAB and OOFS
+-------------------
+
+This directory (OOFS, or Object Oriented File System)
+contains sample models ("objects") illustrating 
+the operation of the main simulation programs included
+in the Virtual Laboratory (CPFG and LPFG), 
+as well as other tools included in vlab.  
+
+The models can be used under the GNU GPL 3.0 licence. 
+Please acknowledge their use in any derived models 
+and/or resulting publications.
+
+Przemyslaw Prusinkiewicz
+Last updated December 11, 2022

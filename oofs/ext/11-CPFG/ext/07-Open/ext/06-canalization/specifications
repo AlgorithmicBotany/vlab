@@ -1,0 +1,34 @@
+plant.l
+plant.v
+plant.a
+plant.map
+plant.e
+density.spec
+description.txt
+ignore:
+*
+model:
+	generate:
+		cpfg -m plant.map -e plant.e plant.l plant.v plant.a
+
+L-system:
+	EDIT plant.l
+
+viewfile:
+	EDIT plant.v
+
+animation:
+	EDIT plant.a
+
+colormap:
+	PALETTE plant.map
+
+environment:
+	commfile:
+		EDIT plant.e
+	parameters:
+		EDIT density.spec
+
+description:
+	EDIT description.txt
+

@@ -1,0 +1,65 @@
+;#define OBJED          xemacs -geometry 80x24
+;#define OBJDEMOED      xemacs -geometry 60x12
+;#define OBJSHELL       xterm -fg yellow -bg black
+
+;#define OBJED          xterm -bg 'black' -fg 'white' -T 'vlab editor' -geometry 80x24 -fa '*bold*18*' -e vi
+;#define OBJDEMOED      xterm -bg 'black' -fg 'white' -T 'vlab editor' -geometry 80x24 -fa '*bold*24*' -e vi
+;#define OBJSHELL       xterm -fg yellow -bg black
+
+#define OBJED          vlabTextEdit
+#define OBJDEMOED      vlabTextEdit
+; the next line uses apple script to ask the terminal to open a new shell launching the script: cd [current_path]; export PATH=`pbpaste`
+; pbpaste is replaced by the content of the clipboard, so before that, pbcopy is used to put the content of the PATH in the clipboard
+; All that is necessary only because the Terminal is not launched as a child process of the object, and thus do not inherit path and current directory
+#define OBJSHELL       echo $PATH | pbcopy; osascript -e "tell application \"Terminal\" to do script \"cd `pwd`; export PATH=\`pbpaste\`\""
+
+;comments are now supported
+
+EDIT
+edit:
+	OBJED
+demo-edit:
+	OBJDEMOED
+
+MAP
+loadmap:
+	loadmap
+savemap:
+	savemap
+
+PALETTE
+palette:
+	palette
+
+MEDIT
+material-editor:
+	medit
+
+FUNCEDIT
+function-editor:
+	funcedit
+
+TEXT
+display:
+	xless
+edit:
+	OBJED
+print:
+	enscript
+
+HINTS
+display:
+	xwsh -s 40,10 -H -c cat
+edit:
+	OBJED
+
+SURFACE
+bezieredit:
+	bezieredit
+edit:
+	OBJED
+
+GALLERY
+gallery:
+	gallery
+

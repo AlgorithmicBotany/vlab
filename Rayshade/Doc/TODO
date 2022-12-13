@@ -1,0 +1,45 @@
+---------
+TODO List
+---------
+
+If World object has only one subobject, and the World
+is neither textured nor transformed (can't do this anyway),
+then make that object the World object.  In theory we could
+do this (collapsing) throughout the modeling tree.
+
+> 2 objects in CSG objects
+
+Create nasty, rigorous test scenes, more examples in general.
+
+Animated lights & camera.
+
+Cubic interpolation functions.
+
+Animated primitive/texture/surface/etc parameters.
+
+There should be a windowing command that takes pixel locations
+as well as one that takes normalized coordinates.
+
+Put Linda code back in place.
+
+User-selectable primitives/aggregates/lights/textures at compile time?
+
+Technical Documentation
+
+Make heightfields be stored in fixed-point, and take care of byte-ordering
+problems so that height fields are transportable from machine to machine.
+
+Is Bayes' theorem-based polygon intersection method better?
+
+Adaptive gridding.
+
+Better antialiasing.
+
+Add an option to perform sorting during ray/List intersection tests so
+objects are tested approximately in order.
+
+Expr compressor program:  Spits out .ray file with just floats.
+
+Optimize blur for non-jitter case (don't exapnd bboxes, etc).
+
+Animated scales and translations can modify matrix directly.

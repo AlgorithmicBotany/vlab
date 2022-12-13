@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>UI_RALogin</class>
+ <widget class="QDialog" name="UI_RALogin">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>251</width>
+    <height>161</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>Vlab RA Login</string>
+  </property>
+  <layout class="QVBoxLayout" name="verticalLayout">
+   <item>
+    <widget class="QLabel" name="question_label">
+     <property name="text">
+      <string>Please enter your login information:</string>
+     </property>
+     <property name="wordWrap">
+      <bool>false</bool>
+     </property>
+    </widget>
+   </item>
+   <item>
+    <layout class="QGridLayout">
+     <item row="0" column="1">
+      <widget class="QLineEdit" name="username_text"/>
+     </item>
+     <item row="0" column="0">
+      <widget class="QLabel" name="textLabel1">
+       <property name="text">
+        <string>Username:</string>
+       </property>
+       <property name="alignment">
+        <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+       </property>
+       <property name="wordWrap">
+        <bool>false</bool>
+       </property>
+      </widget>
+     </item>
+     <item row="1" column="1">
+      <widget class="QLineEdit" name="password_text">
+       <property name="echoMode">
+        <enum>QLineEdit::Password</enum>
+       </property>
+      </widget>
+     </item>
+     <item row="1" column="0">
+      <widget class="QLabel" name="textLabel1_2">
+       <property name="text">
+        <string>Password:</string>
+       </property>
+       <property name="alignment">
+        <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+       </property>
+       <property name="wordWrap">
+        <bool>false</bool>
+       </property>
+      </widget>
+     </item>
+    </layout>
+   </item>
+   <item>
+    <widget class="Line" name="line1">
+     <property name="frameShape">
+      <enum>QFrame::HLine</enum>
+     </property>
+     <property name="frameShadow">
+      <enum>QFrame::Sunken</enum>
+     </property>
+    </widget>
+   </item>
+   <item>
+    <widget class="QDialogButtonBox" name="buttonBox">
+     <property name="standardButtons">
+      <set>QDialogButtonBox::Abort|QDialogButtonBox::Ok</set>
+     </property>
+    </widget>
+   </item>
+  </layout>
+ </widget>
+ <layoutdefault spacing="6" margin="11"/>
+ <resources>
+  <include location="logo.qrc"/>
+ </resources>
+ <connections>
+  <connection>
+   <sender>buttonBox</sender>
+   <signal>accepted()</signal>
+   <receiver>UI_RALogin</receiver>
+   <slot>accept()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>122</x>
+     <y>137</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>86</x>
+     <y>113</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>buttonBox</sender>
+   <signal>rejected()</signal>
+   <receiver>UI_RALogin</receiver>
+   <slot>reject()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>203</x>
+     <y>143</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>209</x>
+     <y>114</y>
+    </hint>
+   </hints>
+  </connection>
+ </connections>
+</ui>

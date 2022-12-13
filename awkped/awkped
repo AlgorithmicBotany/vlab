@@ -1,0 +1,100 @@
+#! /bin/bash
+#
+# Usage: awkped file
+#
+# Generic editor using awk - primarily intended for use with panels
+#   - processes stdin input messages to edit the file specified on the
+#	  command line using awk. The result then replaces the original file.
+#   - handles two formats of input:
+#		- a line number, field number, new value and scale
+#		  the field in the line is replaced by value/scale
+#		- a "d" (for define), field name, new value and scale
+#		  the third field in the line with "#define" in the first field
+#		  and field name in the second field is replaced by value/scale
+#
+unique=`date +%H%M%S`
+my_file=$1
+flag=
+if [ "$1" == "-lstudio" ]
+then
+        flag="-f"
+	shift 1
+fi
+if [ "$2" == "-lstudio" ]
+then
+	flag="-f"
+fi
+while read line field value scale extra
+do
+case $line in
+    d)  
+	#echo "case d"
+	if awk '{ if ($1 == "#define" && $2 == NAME) $3 = VALUE/SCALE; print }'k NAME=$field VALUE=$value SCALE=$scale FLAG=$flag $1 > $1.$unique.x;
+	then
+	    cp $1.$unique.x $1
+	    rm $1.$unique.x
+
+	fi
+	;;
+    n)
+	#echo "case n"
+	if awk "{
+			if (NR == FIELD) {
+				if ( FLAG == \"-f\" )  # the -f flag means that our field index is relative to the : symbol not the beginning of the line
+					if (\$0 ~ /:/) {
+						split(\$0,result,\":\"); split(result[1],numwords,\" \"); for (var in numwords) i++
+						VALUE += i
+					} else {
+						print \"-f flag specified but no colon found in specified line, results may not be as expected\" > \"/dev/stderr\"
+					}
+				if (\$VALUE ~ /,/)
+					add = \",\"
+				if (VALUE > NF)
+					print \"ERRROR: Field number \" VALUE \" is greater than number of fields on line \" NF > \"/dev/stderr\"
+				else # only change the value if the user's input makes sense
+					\$VALUE = EXTRA*(10^SCALE)  add
+			}
+			print 
+		}
+	" FIELD=$field VALUE=$value EXTRA=$extra SCALE=$scale FLAG=$flag $1 > $1.$unique.x;
+	then
+		cp $1.$unique.x $1
+		rm $1.$unique.x
+	fi
+	;;
+    o)
+	#echo "case o"
+	if awk "{if (NR == FIELD) \$NF=VALUE; print }" FIELD=$field VALUE=$value FLAG=$flag $1 > $1.$unique.x;
+	then
+		cp $1.$unique.x $1
+		rm $1.$unique.x
+	fi 
+	;;
+    *)
+	#echo "case *"
+	if awk "{
+			if (NR == LINE) {
+				if ( FLAG == \"-f\" )  # the -f flag means that our field index is relative to the : symbol not the beginning of the line
+					if (\$0 ~ /:/) {
+						split(\$0,result,\":\"); split(result[1],numwords,\" \"); for (var in numwords) i++
+						FIELD += i
+					} else {
+                        print \"-f flag specified but no colon found in specified line, results may not be as expected\" > \"/dev/stderr\"
+                    }
+				if (\$FIELD ~ /,/)
+					add = \",\"
+				if (FIELD > NF)
+                                        print \"ERROR: Field number \" FIELD \" is greater than number of fields on line \" NF > \"/dev/stderr\"
+                                else # only change the value if the user's input makes sense
+					\$FIELD = VALUE/SCALE add;
+			}
+			print 
+		}
+	" LINE=$line FIELD=$field VALUE=$value SCALE=$scale FLAG=$flag $1 > $1.$unique.x;
+	then
+		cp $1.$unique.x $1
+		rm $1.$unique.x
+	fi
+	;;
+esac
+done

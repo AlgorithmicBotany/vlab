@@ -1,0 +1,11 @@
+3D model visualization
+
+This is a simple example of 3D model visualization.  
+See the view file for the parameters used, and explore 
+the alternatives, as indicated there. 
+
+This model operates in the material mode.  Material 
+parameters can be specified using the material editor.  
+Light parameters are listed in the view file.  Specifying
+material and light parameters that result in appealing 
+images is a true art.

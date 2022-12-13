@@ -1,0 +1,869 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="cpfgv|Win32">
+      <Configuration>cpfgv</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="cpfgv|x64">
+      <Configuration>cpfgv</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Debug|Win32">
+      <Configuration>Debug</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Debug|x64">
+      <Configuration>Debug</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Eval|Win32">
+      <Configuration>Eval</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Eval|x64">
+      <Configuration>Eval</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="NoJimDebug|Win32">
+      <Configuration>NoJimDebug</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="NoJimDebug|x64">
+      <Configuration>NoJimDebug</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|Win32">
+      <Configuration>Release</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|x64">
+      <Configuration>Release</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <ProjectGuid>{AFC21E4C-800D-48EB-8E3F-4048DB8C73E4}</ProjectGuid>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='cpfgv|Win32'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseOfMfc>false</UseOfMfc>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='cpfgv|x64'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseOfMfc>false</UseOfMfc>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseOfMfc>false</UseOfMfc>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseOfMfc>false</UseOfMfc>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Eval|Win32'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseOfMfc>false</UseOfMfc>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Eval|x64'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseOfMfc>false</UseOfMfc>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='NoJimDebug|Win32'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseOfMfc>false</UseOfMfc>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='NoJimDebug|x64'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseOfMfc>false</UseOfMfc>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseOfMfc>false</UseOfMfc>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseOfMfc>false</UseOfMfc>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='cpfgv|Win32'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+    <Import Project="$(VCTargetsPath)Microsoft.CPP.UpgradeFromVC71.props" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='cpfgv|x64'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+    <Import Project="$(VCTargetsPath)Microsoft.CPP.UpgradeFromVC71.props" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+    <Import Project="$(VCTargetsPath)Microsoft.CPP.UpgradeFromVC71.props" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+    <Import Project="$(VCTargetsPath)Microsoft.CPP.UpgradeFromVC71.props" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Eval|Win32'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+    <Import Project="$(VCTargetsPath)Microsoft.CPP.UpgradeFromVC71.props" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Eval|x64'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+    <Import Project="$(VCTargetsPath)Microsoft.CPP.UpgradeFromVC71.props" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='NoJimDebug|Win32'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+    <Import Project="$(VCTargetsPath)Microsoft.CPP.UpgradeFromVC71.props" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='NoJimDebug|x64'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+    <Import Project="$(VCTargetsPath)Microsoft.CPP.UpgradeFromVC71.props" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+    <Import Project="$(VCTargetsPath)Microsoft.CPP.UpgradeFromVC71.props" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+    <Import Project="$(VCTargetsPath)Microsoft.CPP.UpgradeFromVC71.props" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup>
+    <_ProjectFileVersion>10.0.30319.1</_ProjectFileVersion>
+    <OutDir Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">.\Debug\</OutDir>
+    <OutDir Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">.\Debug\</OutDir>
+    <IntDir Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">.\Debug\</IntDir>
+    <IntDir Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">.\Debug\</IntDir>
+    <LinkIncremental Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</LinkIncremental>
+    <LinkIncremental Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</LinkIncremental>
+    <OutDir Condition="'$(Configuration)|$(Platform)'=='NoJimDebug|Win32'">.\NoJimDebug\</OutDir>
+    <OutDir Condition="'$(Configuration)|$(Platform)'=='NoJimDebug|x64'">.\NoJimDebug\</OutDir>
+    <IntDir Condition="'$(Configuration)|$(Platform)'=='NoJimDebug|Win32'">.\NoJimDebug\</IntDir>
+    <IntDir Condition="'$(Configuration)|$(Platform)'=='NoJimDebug|x64'">.\NoJimDebug\</IntDir>
+    <LinkIncremental Condition="'$(Configuration)|$(Platform)'=='NoJimDebug|Win32'">true</LinkIncremental>
+    <LinkIncremental Condition="'$(Configuration)|$(Platform)'=='NoJimDebug|x64'">true</LinkIncremental>
+    <OutDir Condition="'$(Configuration)|$(Platform)'=='Eval|Win32'">.\Eval\</OutDir>
+    <OutDir Condition="'$(Configuration)|$(Platform)'=='Eval|x64'">.\Eval\</OutDir>
+    <IntDir Condition="'$(Configuration)|$(Platform)'=='Eval|Win32'">.\Eval\</IntDir>
+    <IntDir Condition="'$(Configuration)|$(Platform)'=='Eval|x64'">.\Eval\</IntDir>
+    <LinkIncremental Condition="'$(Configuration)|$(Platform)'=='Eval|Win32'">true</LinkIncremental>
+    <LinkIncremental Condition="'$(Configuration)|$(Platform)'=='Eval|x64'">true</LinkIncremental>
+    <OutDir Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">.\Release\</OutDir>
+    <OutDir Condition="'$(Configuration)|$(Platform)'=='Release|x64'">.\Release\</OutDir>
+    <IntDir Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">.\Release\</IntDir>
+    <IntDir Condition="'$(Configuration)|$(Platform)'=='Release|x64'">.\Release\</IntDir>
+    <LinkIncremental Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">false</LinkIncremental>
+    <LinkIncremental Condition="'$(Configuration)|$(Platform)'=='Release|x64'">false</LinkIncremental>
+    <OutDir Condition="'$(Configuration)|$(Platform)'=='cpfgv|Win32'">cpfgv\</OutDir>
+    <OutDir Condition="'$(Configuration)|$(Platform)'=='cpfgv|x64'">cpfgv\</OutDir>
+    <IntDir Condition="'$(Configuration)|$(Platform)'=='cpfgv|Win32'">cpfgv\</IntDir>
+    <IntDir Condition="'$(Configuration)|$(Platform)'=='cpfgv|x64'">cpfgv\</IntDir>
+    <LinkIncremental Condition="'$(Configuration)|$(Platform)'=='cpfgv|Win32'">false</LinkIncremental>
+    <LinkIncremental Condition="'$(Configuration)|$(Platform)'=='cpfgv|x64'">false</LinkIncremental>
+  </PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <Midl>
+      <PreprocessorDefinitions>_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <MkTypLibCompatible>true</MkTypLibCompatible>
+      <SuppressStartupBanner>true</SuppressStartupBanner>
+      <TargetEnvironment>Win32</TargetEnvironment>
+      <TypeLibraryName>.\Debug/cpfg.tlb</TypeLibraryName>
+    </Midl>
+    <ClCompile>
+      <Optimization>Disabled</Optimization>
+      <AdditionalIncludeDirectories>..\libs\glew-1.5.4\include;..\libs\rand48;..\libs\image;..\libs\comm;..\libs\scramble;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>GLEW_STATIC;_DEBUG;JIM;WIN32;_WINDOWS;STRICT;WIN32_LEAN_AND_MEAN;RESEARCH_VER;CPFG_ENVIRONMENT;CPFG_VERSION=6600;CONTEXT_SENSITIVE_HOMO;INSERTX;%(PreprocessorDefinitions);_CRT_SECURE_NO_WARNINGS</PreprocessorDefinitions>
+      <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
+      <AdditionalOptions> /J</AdditionalOptions>
+      <PrecompiledHeader>
+      </PrecompiledHeader>
+      <PrecompiledHeaderOutputFile>.\Debug/cpfg.pch</PrecompiledHeaderOutputFile>
+      <AssemblerListingLocation>.\Debug/</AssemblerListingLocation>
+      <ObjectFileName>.\Debug/</ObjectFileName>
+      <ProgramDataBaseFileName>.\Debug/</ProgramDataBaseFileName>
+      <WarningLevel>Level4</WarningLevel>
+      <SuppressStartupBanner>true</SuppressStartupBanner>
+      <DebugInformationFormat>EditAndContinue</DebugInformationFormat>
+      <CompileAs>Default</CompileAs>
+    </ClCompile>
+    <ResourceCompile>
+      <PreprocessorDefinitions>_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <Culture>0x0409</Culture>
+    </ResourceCompile>
+    <Link>
+      <AdditionalOptions>/MACHINE:I386 %(AdditionalOptions)</AdditionalOptions>
+      <AdditionalDependencies>opengl32.lib;glu32.lib;winmm.lib;rand48.lib;comm_lib.lib;image.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <OutputFile>.\Debug/cpfg.exe</OutputFile>
+      <SuppressStartupBanner>true</SuppressStartupBanner>
+      <AdditionalLibraryDirectories>..\libs\rand48\Debug;..\libs\comm\Debug;..\libs\image\Debug;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <IgnoreSpecificDefaultLibraries>LIBCD;%(IgnoreSpecificDefaultLibraries)</IgnoreSpecificDefaultLibraries>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <ProgramDatabaseFile>.\Debug/cpfg.pdb</ProgramDatabaseFile>
+      <GenerateMapFile>true</GenerateMapFile>
+      <MapFileName>.\Debug/cpfg.map</MapFileName>
+      <SubSystem>Windows</SubSystem>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <Midl>
+      <PreprocessorDefinitions>_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <MkTypLibCompatible>true</MkTypLibCompatible>
+      <SuppressStartupBanner>true</SuppressStartupBanner>
+      <TypeLibraryName>.\Debug/cpfg.tlb</TypeLibraryName>
+    </Midl>
+    <ClCompile>
+      <Optimization>Disabled</Optimization>
+      <AdditionalIncludeDirectories>..\libs\rand48;..\libs\image;..\libs\comm;..\libs\scramble;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>_DEBUG;JIM;WIN32;_WINDOWS;STRICT;WIN32_LEAN_AND_MEAN;RESEARCH_VER;CPFG_ENVIRONMENT;CPFG_VERSION=6600;CONTEXT_SENSITIVE_HOMO;INSERTX;%(PreprocessorDefinitions);_CRT_SECURE_NO_WARNINGS</PreprocessorDefinitions>
+      <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
+      <AdditionalOptions> /J</AdditionalOptions>
+      <PrecompiledHeader>
+      </PrecompiledHeader>
+      <PrecompiledHeaderOutputFile>.\Debug/cpfg.pch</PrecompiledHeaderOutputFile>
+      <AssemblerListingLocation>.\Debug/</AssemblerListingLocation>
+      <ObjectFileName>.\Debug/</ObjectFileName>
+      <ProgramDataBaseFileName>.\Debug/</ProgramDataBaseFileName>
+      <WarningLevel>Level4</WarningLevel>
+      <SuppressStartupBanner>true</SuppressStartupBanner>
+      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
+      <CompileAs>Default</CompileAs>
+    </ClCompile>
+    <ResourceCompile>
+      <PreprocessorDefinitions>_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <Culture>0x0409</Culture>
+    </ResourceCompile>
+    <Link>
+      <AdditionalOptions>/MACHINE:I386 %(AdditionalOptions)</AdditionalOptions>
+      <AdditionalDependencies>opengl32.lib;glu32.lib;winmm.lib;rand48.lib;comm_lib.lib;image.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <OutputFile>.\Debug/cpfg.exe</OutputFile>
+      <SuppressStartupBanner>true</SuppressStartupBanner>
+      <AdditionalLibraryDirectories>..\libs\rand48\Debug;..\libs\comm\Debug;..\libs\image\Debug;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <IgnoreSpecificDefaultLibraries>LIBCD;%(IgnoreSpecificDefaultLibraries)</IgnoreSpecificDefaultLibraries>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <ProgramDatabaseFile>.\Debug/cpfg.pdb</ProgramDatabaseFile>
+      <GenerateMapFile>true</GenerateMapFile>
+      <MapFileName>.\Debug/cpfg.map</MapFileName>
+      <SubSystem>Windows</SubSystem>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='NoJimDebug|Win32'">
+    <Midl>
+      <PreprocessorDefinitions>_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <MkTypLibCompatible>true</MkTypLibCompatible>
+      <SuppressStartupBanner>true</SuppressStartupBanner>
+      <TargetEnvironment>Win32</TargetEnvironment>
+      <TypeLibraryName>.\NoJimDebug/cpfg.tlb</TypeLibraryName>
+    </Midl>
+    <ClCompile>
+      <Optimization>Disabled</Optimization>
+      <AdditionalIncludeDirectories>..\libs\rand48;..\libs\image;..\libs\comm;..\libs\scramble;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>_DEBUG;WIN32;_WINDOWS;STRICT;WIN32_LEAN_AND_MEAN;RESEARCH_VER;CPFG_ENVIRONMENT;CPFG_VERSION=6600;CONTEXT_SENSITIVE_HOMO;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
+      <AdditionalOptions> /J</AdditionalOptions>
+      <PrecompiledHeader>
+      </PrecompiledHeader>
+      <PrecompiledHeaderOutputFile>.\NoJimDebug/cpfg.pch</PrecompiledHeaderOutputFile>
+      <AssemblerListingLocation>.\NoJimDebug/</AssemblerListingLocation>
+      <ObjectFileName>.\NoJimDebug/</ObjectFileName>
+      <ProgramDataBaseFileName>.\NoJimDebug/</ProgramDataBaseFileName>
+      <WarningLevel>Level4</WarningLevel>
+      <SuppressStartupBanner>true</SuppressStartupBanner>
+      <DebugInformationFormat>EditAndContinue</DebugInformationFormat>
+      <CompileAs>Default</CompileAs>
+    </ClCompile>
+    <ResourceCompile>
+      <PreprocessorDefinitions>_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <Culture>0x0409</Culture>
+    </ResourceCompile>
+    <Link>
+      <AdditionalOptions>/MACHINE:I386 %(AdditionalOptions)</AdditionalOptions>
+      <AdditionalDependencies>opengl32.lib;glu32.lib;winmm.lib;rand48.lib;comm_lib.lib;image.lib;scramble.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <OutputFile>.\NoJimDebug/cpfg.exe</OutputFile>
+      <SuppressStartupBanner>true</SuppressStartupBanner>
+      <AdditionalLibraryDirectories>..\libs\rand48\Debug;..\libs\comm\Debug;..\libs\image\Debug;..\libs\scramble\DebugST;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <IgnoreSpecificDefaultLibraries>LIBCD;%(IgnoreSpecificDefaultLibraries)</IgnoreSpecificDefaultLibraries>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <ProgramDatabaseFile>.\NoJimDebug/cpfg.pdb</ProgramDatabaseFile>
+      <SubSystem>Windows</SubSystem>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='NoJimDebug|x64'">
+    <Midl>
+      <PreprocessorDefinitions>_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <MkTypLibCompatible>true</MkTypLibCompatible>
+      <SuppressStartupBanner>true</SuppressStartupBanner>
+      <TypeLibraryName>.\NoJimDebug/cpfg.tlb</TypeLibraryName>
+    </Midl>
+    <ClCompile>
+      <Optimization>Disabled</Optimization>
+      <AdditionalIncludeDirectories>..\libs\rand48;..\libs\image;..\libs\comm;..\libs\scramble;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>_DEBUG;WIN32;_WINDOWS;STRICT;WIN32_LEAN_AND_MEAN;RESEARCH_VER;CPFG_ENVIRONMENT;CPFG_VERSION=6600;CONTEXT_SENSITIVE_HOMO;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
+      <AdditionalOptions> /J</AdditionalOptions>
+      <PrecompiledHeader>
+      </PrecompiledHeader>
+      <PrecompiledHeaderOutputFile>.\NoJimDebug/cpfg.pch</PrecompiledHeaderOutputFile>
+      <AssemblerListingLocation>.\NoJimDebug/</AssemblerListingLocation>
+      <ObjectFileName>.\NoJimDebug/</ObjectFileName>
+      <ProgramDataBaseFileName>.\NoJimDebug/</ProgramDataBaseFileName>
+      <WarningLevel>Level4</WarningLevel>
+      <SuppressStartupBanner>true</SuppressStartupBanner>
+      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
+      <CompileAs>Default</CompileAs>
+    </ClCompile>
+    <ResourceCompile>
+      <PreprocessorDefinitions>_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <Culture>0x0409</Culture>
+    </ResourceCompile>
+    <Link>
+      <AdditionalOptions>/MACHINE:I386 %(AdditionalOptions)</AdditionalOptions>
+      <AdditionalDependencies>opengl32.lib;glu32.lib;winmm.lib;rand48.lib;comm_lib.lib;image.lib;scramble.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <OutputFile>.\NoJimDebug/cpfg.exe</OutputFile>
+      <SuppressStartupBanner>true</SuppressStartupBanner>
+      <AdditionalLibraryDirectories>..\libs\rand48\Debug;..\libs\comm\Debug;..\libs\image\Debug;..\libs\scramble\DebugST;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <IgnoreSpecificDefaultLibraries>LIBCD;%(IgnoreSpecificDefaultLibraries)</IgnoreSpecificDefaultLibraries>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <ProgramDatabaseFile>.\NoJimDebug/cpfg.pdb</ProgramDatabaseFile>
+      <SubSystem>Windows</SubSystem>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Eval|Win32'">
+    <Midl>
+      <PreprocessorDefinitions>_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <MkTypLibCompatible>true</MkTypLibCompatible>
+      <SuppressStartupBanner>true</SuppressStartupBanner>
+      <TargetEnvironment>Win32</TargetEnvironment>
+      <TypeLibraryName>.\Eval/cpfg.tlb</TypeLibraryName>
+    </Midl>
+    <ClCompile>
+      <Optimization>Disabled</Optimization>
+      <AdditionalIncludeDirectories>..\libs\rand48;..\libs\image;..\libs\comm;..\libs\scramble;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>EVALVER;NDEBUG;WIN32;_WINDOWS;STRICT;WIN32_LEAN_AND_MEAN;RESEARCH_VER;CPFG_ENVIRONMENT;CPFG_VERSION=6600;CONTEXT_SENSITIVE_HOMO;INSERTX;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
+      <AdditionalOptions> /J</AdditionalOptions>
+      <PrecompiledHeader>
+      </PrecompiledHeader>
+      <PrecompiledHeaderOutputFile>.\Eval/cpfg.pch</PrecompiledHeaderOutputFile>
+      <AssemblerListingLocation>.\Eval/</AssemblerListingLocation>
+      <ObjectFileName>.\Eval/</ObjectFileName>
+      <ProgramDataBaseFileName>.\Eval/</ProgramDataBaseFileName>
+      <WarningLevel>Level4</WarningLevel>
+      <SuppressStartupBanner>true</SuppressStartupBanner>
+      <CompileAs>Default</CompileAs>
+    </ClCompile>
+    <ResourceCompile>
+      <PreprocessorDefinitions>_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <Culture>0x0409</Culture>
+    </ResourceCompile>
+    <Link>
+      <AdditionalOptions>/MACHINE:I386 %(AdditionalOptions)</AdditionalOptions>
+      <AdditionalDependencies>opengl32.lib;glu32.lib;winmm.lib;rand48.lib;comm_lib.lib;image.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <OutputFile>.\Eval/cpfg.exe</OutputFile>
+      <SuppressStartupBanner>true</SuppressStartupBanner>
+      <AdditionalLibraryDirectories>..\libs\rand48\Debug;..\libs\comm\Debug;..\libs\image\Debug;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <IgnoreSpecificDefaultLibraries>LIBCD;%(IgnoreSpecificDefaultLibraries)</IgnoreSpecificDefaultLibraries>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <ProgramDatabaseFile>.\Eval/cpfg.pdb</ProgramDatabaseFile>
+      <GenerateMapFile>true</GenerateMapFile>
+      <MapFileName>.\Eval/cpfg.map</MapFileName>
+      <SubSystem>Windows</SubSystem>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Eval|x64'">
+    <Midl>
+      <PreprocessorDefinitions>_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <MkTypLibCompatible>true</MkTypLibCompatible>
+      <SuppressStartupBanner>true</SuppressStartupBanner>
+      <TypeLibraryName>.\Eval/cpfg.tlb</TypeLibraryName>
+    </Midl>
+    <ClCompile>
+      <Optimization>Disabled</Optimization>
+      <AdditionalIncludeDirectories>..\libs\rand48;..\libs\image;..\libs\comm;..\libs\scramble;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>EVALVER;NDEBUG;WIN32;_WINDOWS;STRICT;WIN32_LEAN_AND_MEAN;RESEARCH_VER;CPFG_ENVIRONMENT;CPFG_VERSION=6600;CONTEXT_SENSITIVE_HOMO;INSERTX;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
+      <AdditionalOptions> /J</AdditionalOptions>
+      <PrecompiledHeader>
+      </PrecompiledHeader>
+      <PrecompiledHeaderOutputFile>.\Eval/cpfg.pch</PrecompiledHeaderOutputFile>
+      <AssemblerListingLocation>.\Eval/</AssemblerListingLocation>
+      <ObjectFileName>.\Eval/</ObjectFileName>
+      <ProgramDataBaseFileName>.\Eval/</ProgramDataBaseFileName>
+      <WarningLevel>Level4</WarningLevel>
+      <SuppressStartupBanner>true</SuppressStartupBanner>
+      <CompileAs>Default</CompileAs>
+    </ClCompile>
+    <ResourceCompile>
+      <PreprocessorDefinitions>_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <Culture>0x0409</Culture>
+    </ResourceCompile>
+    <Link>
+      <AdditionalOptions>/MACHINE:I386 %(AdditionalOptions)</AdditionalOptions>
+      <AdditionalDependencies>opengl32.lib;glu32.lib;winmm.lib;rand48.lib;comm_lib.lib;image.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <OutputFile>.\Eval/cpfg.exe</OutputFile>
+      <SuppressStartupBanner>true</SuppressStartupBanner>
+      <AdditionalLibraryDirectories>..\libs\rand48\Debug;..\libs\comm\Debug;..\libs\image\Debug;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <IgnoreSpecificDefaultLibraries>LIBCD;%(IgnoreSpecificDefaultLibraries)</IgnoreSpecificDefaultLibraries>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <ProgramDatabaseFile>.\Eval/cpfg.pdb</ProgramDatabaseFile>
+      <GenerateMapFile>true</GenerateMapFile>
+      <MapFileName>.\Eval/cpfg.map</MapFileName>
+      <SubSystem>Windows</SubSystem>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <Midl>
+      <PreprocessorDefinitions>NDEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <MkTypLibCompatible>true</MkTypLibCompatible>
+      <SuppressStartupBanner>true</SuppressStartupBanner>
+      <TargetEnvironment>Win32</TargetEnvironment>
+      <TypeLibraryName>.\Release/cpfg.tlb</TypeLibraryName>
+    </Midl>
+    <ClCompile>
+      <InlineFunctionExpansion>OnlyExplicitInline</InlineFunctionExpansion>
+      <FavorSizeOrSpeed>Speed</FavorSizeOrSpeed>
+      <AdditionalIncludeDirectories>..\libs\glew-1.5.4\include;..\libs\rand48;..\libs\image;..\libs\comm;..\libs\scramble;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>GLEW_STATIC;NDEBUG;JIM;WIN32;_WINDOWS;STRICT;WIN32_LEAN_AND_MEAN;RESEARCH_VER;CPFG_ENVIRONMENT;CPFG_VERSION=6600;CONTEXT_SENSITIVE_HOMO;INSERTX;%(PreprocessorDefinitions);_CRT_SECURE_NO_WARNINGS</PreprocessorDefinitions>
+      <StringPooling>true</StringPooling>
+      <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
+      <BufferSecurityCheck>false</BufferSecurityCheck>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <AdditionalOptions> /J</AdditionalOptions>
+      <PrecompiledHeader>
+      </PrecompiledHeader>
+      <PrecompiledHeaderOutputFile>.\Release/cpfg.pch</PrecompiledHeaderOutputFile>
+      <AssemblerListingLocation>.\Release/</AssemblerListingLocation>
+      <ObjectFileName>.\Release/</ObjectFileName>
+      <ProgramDataBaseFileName>.\Release/</ProgramDataBaseFileName>
+      <WarningLevel>Level4</WarningLevel>
+      <SuppressStartupBanner>true</SuppressStartupBanner>
+      <CompileAs>Default</CompileAs>
+    </ClCompile>
+    <ResourceCompile>
+      <PreprocessorDefinitions>NDEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <Culture>0x0409</Culture>
+    </ResourceCompile>
+    <Link>
+      <AdditionalOptions>/MACHINE:I386 %(AdditionalOptions)</AdditionalOptions>
+      <AdditionalDependencies>opengl32.lib;glu32.lib;winmm.lib;rand48.lib;comm_lib.lib;image.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <OutputFile>.\Release/cpfg.exe</OutputFile>
+      <SuppressStartupBanner>true</SuppressStartupBanner>
+      <AdditionalLibraryDirectories>..\libs\rand48\Release;..\libs\comm\Release;..\libs\image\Release;..\libs\scramble\ReleaseST;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <IgnoreSpecificDefaultLibraries>LIBC;%(IgnoreSpecificDefaultLibraries)</IgnoreSpecificDefaultLibraries>
+      <SubSystem>Windows</SubSystem>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <Midl>
+      <PreprocessorDefinitions>NDEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <MkTypLibCompatible>true</MkTypLibCompatible>
+      <SuppressStartupBanner>true</SuppressStartupBanner>
+      <TypeLibraryName>.\Release/cpfg.tlb</TypeLibraryName>
+    </Midl>
+    <ClCompile>
+      <InlineFunctionExpansion>OnlyExplicitInline</InlineFunctionExpansion>
+      <FavorSizeOrSpeed>Speed</FavorSizeOrSpeed>
+      <AdditionalIncludeDirectories>..\libs\rand48;..\libs\image;..\libs\comm;..\libs\scramble;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>NDEBUG;JIM;WIN32;_WINDOWS;STRICT;WIN32_LEAN_AND_MEAN;RESEARCH_VER;CPFG_ENVIRONMENT;CPFG_VERSION=6600;CONTEXT_SENSITIVE_HOMO;INSERTX;%(PreprocessorDefinitions);_CRT_SECURE_NO_WARNINGS</PreprocessorDefinitions>
+      <StringPooling>true</StringPooling>
+      <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
+      <BufferSecurityCheck>false</BufferSecurityCheck>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <AdditionalOptions> /J</AdditionalOptions>
+      <PrecompiledHeader>
+      </PrecompiledHeader>
+      <PrecompiledHeaderOutputFile>.\Release/cpfg.pch</PrecompiledHeaderOutputFile>
+      <AssemblerListingLocation>.\Release/</AssemblerListingLocation>
+      <ObjectFileName>.\Release/</ObjectFileName>
+      <ProgramDataBaseFileName>.\Release/</ProgramDataBaseFileName>
+      <WarningLevel>Level4</WarningLevel>
+      <SuppressStartupBanner>true</SuppressStartupBanner>
+      <CompileAs>Default</CompileAs>
+    </ClCompile>
+    <ResourceCompile>
+      <PreprocessorDefinitions>NDEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <Culture>0x0409</Culture>
+    </ResourceCompile>
+    <Link>
+      <AdditionalOptions>/MACHINE:I386 %(AdditionalOptions)</AdditionalOptions>
+      <AdditionalDependencies>opengl32.lib;glu32.lib;winmm.lib;rand48.lib;comm_lib.lib;image.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <OutputFile>.\Release/cpfg.exe</OutputFile>
+      <SuppressStartupBanner>true</SuppressStartupBanner>
+      <AdditionalLibraryDirectories>..\libs\rand48\Release;..\libs\comm\Release;..\libs\image\Release;..\libs\scramble\ReleaseST;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <IgnoreSpecificDefaultLibraries>LIBC;%(IgnoreSpecificDefaultLibraries)</IgnoreSpecificDefaultLibraries>
+      <SubSystem>Windows</SubSystem>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='cpfgv|Win32'">
+    <Midl>
+      <PreprocessorDefinitions>NDEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <MkTypLibCompatible>true</MkTypLibCompatible>
+      <SuppressStartupBanner>true</SuppressStartupBanner>
+      <TargetEnvironment>Win32</TargetEnvironment>
+      <TypeLibraryName>.\Release/cpfg.tlb</TypeLibraryName>
+    </Midl>
+    <ClCompile>
+      <InlineFunctionExpansion>OnlyExplicitInline</InlineFunctionExpansion>
+      <AdditionalIncludeDirectories>..\libs\rand48;..\libs\image;..\libs\comm;..\libs\scramble;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>NDEBUG;WIN32;_WINDOWS;STRICT;WIN32_LEAN_AND_MEAN;RESEARCH_VER;CPFG_ENVIRONMENT;CPFG_VERSION=6600;CONTEXT_SENSITIVE_HOMO;INSERTX;VIEWER;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <StringPooling>true</StringPooling>
+      <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <AdditionalOptions> /J</AdditionalOptions>
+      <PrecompiledHeader>
+      </PrecompiledHeader>
+      <PrecompiledHeaderOutputFile>.\Viewer/cpfg.pch</PrecompiledHeaderOutputFile>
+      <AssemblerListingLocation>.\Viewer/</AssemblerListingLocation>
+      <ObjectFileName>.\Viewer/</ObjectFileName>
+      <ProgramDataBaseFileName>.\Viewer/</ProgramDataBaseFileName>
+      <WarningLevel>Level4</WarningLevel>
+      <SuppressStartupBanner>true</SuppressStartupBanner>
+      <CompileAs>Default</CompileAs>
+    </ClCompile>
+    <ResourceCompile>
+      <PreprocessorDefinitions>NDEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <Culture>0x0409</Culture>
+    </ResourceCompile>
+    <Link>
+      <AdditionalOptions>/MACHINE:I386 %(AdditionalOptions)</AdditionalOptions>
+      <AdditionalDependencies>opengl32.lib;glu32.lib;winmm.lib;rand48.lib;comm_lib.lib;image.lib;scramble.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <OutputFile>.\Viewer/cpfgv.exe</OutputFile>
+      <SuppressStartupBanner>true</SuppressStartupBanner>
+      <AdditionalLibraryDirectories>..\libs\rand48\Release;..\libs\comm\Release;..\libs\image\Release;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <IgnoreSpecificDefaultLibraries>LIBC;%(IgnoreSpecificDefaultLibraries)</IgnoreSpecificDefaultLibraries>
+      <SubSystem>Windows</SubSystem>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='cpfgv|x64'">
+    <Midl>
+      <PreprocessorDefinitions>NDEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <MkTypLibCompatible>true</MkTypLibCompatible>
+      <SuppressStartupBanner>true</SuppressStartupBanner>
+      <TypeLibraryName>.\Release/cpfg.tlb</TypeLibraryName>
+    </Midl>
+    <ClCompile>
+      <InlineFunctionExpansion>OnlyExplicitInline</InlineFunctionExpansion>
+      <AdditionalIncludeDirectories>..\libs\rand48;..\libs\image;..\libs\comm;..\libs\scramble;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>NDEBUG;WIN32;_WINDOWS;STRICT;WIN32_LEAN_AND_MEAN;RESEARCH_VER;CPFG_ENVIRONMENT;CPFG_VERSION=6600;CONTEXT_SENSITIVE_HOMO;INSERTX;VIEWER;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <StringPooling>true</StringPooling>
+      <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <AdditionalOptions> /J</AdditionalOptions>
+      <PrecompiledHeader>
+      </PrecompiledHeader>
+      <PrecompiledHeaderOutputFile>.\Viewer/cpfg.pch</PrecompiledHeaderOutputFile>
+      <AssemblerListingLocation>.\Viewer/</AssemblerListingLocation>
+      <ObjectFileName>.\Viewer/</ObjectFileName>
+      <ProgramDataBaseFileName>.\Viewer/</ProgramDataBaseFileName>
+      <WarningLevel>Level4</WarningLevel>
+      <SuppressStartupBanner>true</SuppressStartupBanner>
+      <CompileAs>Default</CompileAs>
+    </ClCompile>
+    <ResourceCompile>
+      <PreprocessorDefinitions>NDEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <Culture>0x0409</Culture>
+    </ResourceCompile>
+    <Link>
+      <AdditionalOptions>/MACHINE:I386 %(AdditionalOptions)</AdditionalOptions>
+      <AdditionalDependencies>opengl32.lib;glu32.lib;winmm.lib;rand48.lib;comm_lib.lib;image.lib;scramble.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <OutputFile>.\Viewer/cpfgv.exe</OutputFile>
+      <SuppressStartupBanner>true</SuppressStartupBanner>
+      <AdditionalLibraryDirectories>..\libs\rand48\Release;..\libs\comm\Release;..\libs\image\Release;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <IgnoreSpecificDefaultLibraries>LIBC;%(IgnoreSpecificDefaultLibraries)</IgnoreSpecificDefaultLibraries>
+      <SubSystem>Windows</SubSystem>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <ClCompile Include="..\libs\glew-1.5.4\src\glew.c" />
+    <ClCompile Include="App.cpp" />
+    <ClCompile Include="Canvas.cpp" />
+    <ClCompile Include="..\Lstudio\cmndefs.cpp" />
+    <ClCompile Include="dummies.c" />
+    <ClCompile Include="file.cpp" />
+    <ClCompile Include="lodepng.c" />
+    <ClCompile Include="Main.cpp" />
+    <ClCompile Include="mainwindow.cpp" />
+    <ClCompile Include="msglogwnd.cpp" />
+    <ClCompile Include="msgrow.cpp" />
+    <ClCompile Include="myexception.cpp" />
+    <ClCompile Include="platformmenuWin.c" />
+    <ClCompile Include="platformWin.c" />
+    <ClCompile Include="shaders.c" />
+    <ClCompile Include="View.cpp" />
+    <ClCompile Include="wininterface.cpp" />
+    <ClCompile Include="Wndproc.cpp" />
+    <ClCompile Include="animparam.c" />
+    <ClCompile Include="background.c" />
+    <ClCompile Include="blackbox.c" />
+    <ClCompile Include="compactor.cpp" />
+    <ClCompile Include="control.c" />
+    <ClCompile Include="curveXYZ.cpp" />
+    <ClCompile Include="curveXYZa.cpp" />
+    <ClCompile Include="curveXYZc.cpp" />
+    <ClCompile Include="environment.c" />
+    <ClCompile Include="general.c" />
+    <ClCompile Include="generate.c" />
+    <ClCompile Include="hash.c" />
+    <ClCompile Include="interpret.c" />
+    <ClCompile Include="irisGL.c" />
+    <ClCompile Include="log.c" />
+    <ClCompile Include="matrix.c" />
+    <ClCompile Include="mesh.c" />
+    <ClCompile Include="movements.c" />
+    <ClCompile Include="object.c" />
+    <ClCompile Include="outputgls.c" />
+    <ClCompile Include="patches.c" />
+    <ClCompile Include="point.cpp" />
+    <ClCompile Include="postscript.c" />
+    <ClCompile Include="quaternions.c" />
+    <ClCompile Include="rayshade.c" />
+    <ClCompile Include="rle.c" />
+    <ClCompile Include="sphere.c" />
+    <ClCompile Include="splinearr.cpp" />
+    <ClCompile Include="splinefun.cpp" />
+    <ClCompile Include="targa.c" />
+    <ClCompile Include="test_malloc.c" />
+    <ClCompile Include="textures.c" />
+    <ClCompile Include="tsurfaces.c" />
+    <ClCompile Include="turtle.c" />
+    <ClCompile Include="userfiles.cpp" />
+    <ClCompile Include="utility.c" />
+    <ClCompile Include="viewVol.c" />
+    <ClCompile Include="writergb.c" />
+    <ClCompile Include="lsys_input_lex.c" />
+    <ClCompile Include="lsys_input_yacc.c" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="App.h" />
+    <ClInclude Include="Canvas.h" />
+    <ClInclude Include="classnames.h" />
+    <ClInclude Include="file.h" />
+    <ClInclude Include="lodepng.h" />
+    <ClInclude Include="mainwindow.h" />
+    <ClInclude Include="msglogwnd.h" />
+    <ClInclude Include="msgrow.h" />
+    <ClInclude Include="myexception.h" />
+    <ClInclude Include="shaders.h" />
+    <ClInclude Include="View.h" />
+    <ClInclude Include="warningset.h" />
+    <ClInclude Include="wininterface.h" />
+    <ClInclude Include="Wndproc.h" />
+    <ClInclude Include="animparam.h" />
+    <ClInclude Include="background.h" />
+    <ClInclude Include="blackbox.h" />
+    <ClInclude Include="comlineparam.h" />
+    <ClInclude Include="compactmesh.h" />
+    <ClInclude Include="compactor.h" />
+    <ClInclude Include="control.h" />
+    <ClInclude Include="curveXYZ.h" />
+    <ClInclude Include="curveXYZa.h" />
+    <ClInclude Include="curveXYZc.h" />
+    <ClInclude Include="drawparam.h" />
+    <ClInclude Include="environment.h" />
+    <ClInclude Include="general.h" />
+    <ClInclude Include="generate.h" />
+    <ClInclude Include="geometry.h" />
+    <ClInclude Include="hash.h" />
+    <ClInclude Include="..\libs\image\image.h" />
+    <ClInclude Include="indices.h" />
+    <ClInclude Include="interpret.h" />
+    <ClInclude Include="irisGL.h" />
+    <ClInclude Include="log.h" />
+    <ClInclude Include="material.h" />
+    <ClInclude Include="matrix.h" />
+    <ClInclude Include="maxpth.h" />
+    <ClInclude Include="mesh.h" />
+    <ClInclude Include="movements.h" />
+    <ClInclude Include="object.h" />
+    <ClInclude Include="outputgls.h" />
+    <ClInclude Include="patch.h" />
+    <ClInclude Include="platform.h" />
+    <ClInclude Include="platformmenu.h" />
+    <ClInclude Include="polygon.h" />
+    <ClInclude Include="postscript.h" />
+    <ClInclude Include="quaternions.h" />
+    <ClInclude Include="..\libs\rand48\rand.h" />
+    <ClInclude Include="rayshade.h" />
+    <ClInclude Include="rle.h" />
+    <ClInclude Include="server.h" />
+    <ClInclude Include="sphere.h" />
+    <ClInclude Include="splinearr.h" />
+    <ClInclude Include="splinefun.h" />
+    <ClInclude Include="splinefunC.h" />
+    <ClInclude Include="targa.h" />
+    <ClInclude Include="test_malloc.h" />
+    <ClInclude Include="textures.h" />
+    <ClInclude Include="tsurfaces.h" />
+    <ClInclude Include="turtle.h" />
+    <ClInclude Include="turtleDrawDispatcher.h" />
+    <ClInclude Include="userfiles.h" />
+    <ClInclude Include="utility.h" />
+    <ClInclude Include="viewparam.h" />
+    <ClInclude Include="viewVol.h" />
+    <ClInclude Include="writergb.h" />
+    <ClInclude Include="resource.h" />
+    <ClInclude Include="lsys_input_yacc.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <CustomBuild Include="lsys_input.l">
+      <Message Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Generating lexer</Message>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Generating lexer</Message>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">flex --wincompat -Plsys_input lsys_input.l
+copy lex.lsys_input.c lsys_input_lex.c
+REM del lex.lsys_input.c
+</Command>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">flex --wincompat -Plsys_input lsys_input.l
+copy lex.lsys_input.c lsys_input_lex.c
+REM del lex.lsys_input.c
+</Command>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">lsys_input_lex.c;%(Outputs)</Outputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">lsys_input_lex.c;%(Outputs)</Outputs>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Eval|Win32'">Generating lexer</Message>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Eval|x64'">Generating lexer</Message>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Eval|Win32'">flex -Plsys_input lsys_input.l
+copy lex.lsys_input.c lsys_input_lex.c
+REM del lex.lsys_input.c
+</Command>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Eval|x64'">flex -Plsys_input lsys_input.l
+copy lex.lsys_input.c lsys_input_lex.c
+REM del lex.lsys_input.c
+</Command>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Eval|Win32'">lsys_input_lex.c;%(Outputs)</Outputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Eval|x64'">lsys_input_lex.c;%(Outputs)</Outputs>
+      <Message Condition="'$(Configuration)|$(Platform)'=='NoJimDebug|Win32'">Generating lexer</Message>
+      <Message Condition="'$(Configuration)|$(Platform)'=='NoJimDebug|x64'">Generating lexer</Message>
+      <Command Condition="'$(Configuration)|$(Platform)'=='NoJimDebug|Win32'">flex -Plsys_input lsys_input.l
+copy lex.lsys_input.c lsys_input_lex.c
+REM del lex.lsys_input.c
+</Command>
+      <Command Condition="'$(Configuration)|$(Platform)'=='NoJimDebug|x64'">flex -Plsys_input lsys_input.l
+copy lex.lsys_input.c lsys_input_lex.c
+REM del lex.lsys_input.c
+</Command>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='NoJimDebug|Win32'">lsys_input_lex.c;%(Outputs)</Outputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='NoJimDebug|x64'">lsys_input_lex.c;%(Outputs)</Outputs>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Generating lexer</Message>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Generating lexer</Message>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">flex --wincompat -Plsys_input lsys_input.l
+copy lex.lsys_input.c lsys_input_lex.c
+REM del lex.lsys_input.c
+</Command>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Release|x64'">flex --wincompat -Plsys_input lsys_input.l
+copy lex.lsys_input.c lsys_input_lex.c
+REM del lex.lsys_input.c
+</Command>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">lsys_input_lex.c;%(Outputs)</Outputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Release|x64'">lsys_input_lex.c;%(Outputs)</Outputs>
+      <Message Condition="'$(Configuration)|$(Platform)'=='cpfgv|Win32'">Generating lexer</Message>
+      <Message Condition="'$(Configuration)|$(Platform)'=='cpfgv|x64'">Generating lexer</Message>
+      <Command Condition="'$(Configuration)|$(Platform)'=='cpfgv|Win32'">flex -Plsys_input lsys_input.l
+copy lex.lsys_input.c lsys_input_lex.c
+REM del lex.lsys_input.c
+</Command>
+      <Command Condition="'$(Configuration)|$(Platform)'=='cpfgv|x64'">flex -Plsys_input lsys_input.l
+copy lex.lsys_input.c lsys_input_lex.c
+REM del lex.lsys_input.c
+</Command>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='cpfgv|Win32'">lsys_input_lex.c;%(Outputs)</Outputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='cpfgv|x64'">lsys_input_lex.c;%(Outputs)</Outputs>
+    </CustomBuild>
+    <CustomBuild Include="lsys_input.y">
+      <Message Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Generating parser</Message>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Generating parser</Message>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">bison -d -p lsys_input lsys_input.y
+copy lsys_input.tab.c lsys_input_yacc.c
+copy lsys_input.tab.h lsys_input_yacc.h
+REM del lsys_input.tab.*
+</Command>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">bison -d -p lsys_input lsys_input.y
+copy lsys_input.tab.c lsys_input_yacc.c
+copy lsys_input.tab.h lsys_input_yacc.h
+REM del lsys_input.tab.*
+</Command>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">lsys_input_yacc.h;lsys_input_yacc.c;%(Outputs)</Outputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">lsys_input_yacc.h;lsys_input_yacc.c;%(Outputs)</Outputs>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Eval|Win32'">Generating parser</Message>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Eval|x64'">Generating parser</Message>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Eval|Win32'">bison -d -p lsys_input lsys_input.y
+copy lsys_input.tab.c lsys_input_yacc.c
+copy lsys_input.tab.h lsys_input_yacc.h
+REM del lsys_input.tab.*
+</Command>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Eval|x64'">bison -d -p lsys_input lsys_input.y
+copy lsys_input.tab.c lsys_input_yacc.c
+copy lsys_input.tab.h lsys_input_yacc.h
+REM del lsys_input.tab.*
+</Command>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Eval|Win32'">lsys_input_yacc.h;lsys_input_yacc.c;%(Outputs)</Outputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Eval|x64'">lsys_input_yacc.h;lsys_input_yacc.c;%(Outputs)</Outputs>
+      <Message Condition="'$(Configuration)|$(Platform)'=='NoJimDebug|Win32'">Generating parser</Message>
+      <Message Condition="'$(Configuration)|$(Platform)'=='NoJimDebug|x64'">Generating parser</Message>
+      <Command Condition="'$(Configuration)|$(Platform)'=='NoJimDebug|Win32'">bison -d -p lsys_input lsys_input.y
+copy lsys_input.tab.c lsys_input_yacc.c
+copy lsys_input.tab.h lsys_input_yacc.h
+REM del lsys_input.tab.*
+</Command>
+      <Command Condition="'$(Configuration)|$(Platform)'=='NoJimDebug|x64'">bison -d -p lsys_input lsys_input.y
+copy lsys_input.tab.c lsys_input_yacc.c
+copy lsys_input.tab.h lsys_input_yacc.h
+REM del lsys_input.tab.*
+</Command>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='NoJimDebug|Win32'">lsys_input_yacc.h;lsys_input_yacc.c;%(Outputs)</Outputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='NoJimDebug|x64'">lsys_input_yacc.h;lsys_input_yacc.c;%(Outputs)</Outputs>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Generating parser</Message>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Generating parser</Message>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">bison -d -p lsys_input lsys_input.y
+copy lsys_input.tab.c lsys_input_yacc.c
+copy lsys_input.tab.h lsys_input_yacc.h
+REM del lsys_input.tab.*
+</Command>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Release|x64'">bison -d -p lsys_input lsys_input.y
+copy lsys_input.tab.c lsys_input_yacc.c
+copy lsys_input.tab.h lsys_input_yacc.h
+REM del lsys_input.tab.*
+</Command>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">lsys_input_yacc.h;lsys_input_yacc.c;%(Outputs)</Outputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Release|x64'">lsys_input_yacc.h;lsys_input_yacc.c;%(Outputs)</Outputs>
+      <Message Condition="'$(Configuration)|$(Platform)'=='cpfgv|Win32'">Generating parser</Message>
+      <Message Condition="'$(Configuration)|$(Platform)'=='cpfgv|x64'">Generating parser</Message>
+      <Command Condition="'$(Configuration)|$(Platform)'=='cpfgv|Win32'">bison -d -p lsys_input lsys_input.y
+copy lsys_input.tab.c lsys_input_yacc.c
+copy lsys_input.tab.h lsys_input_yacc.h
+REM del lsys_input.tab.*
+</Command>
+      <Command Condition="'$(Configuration)|$(Platform)'=='cpfgv|x64'">bison -d -p lsys_input lsys_input.y
+copy lsys_input.tab.c lsys_input_yacc.c
+copy lsys_input.tab.h lsys_input_yacc.h
+REM del lsys_input.tab.*
+</Command>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='cpfgv|Win32'">lsys_input_yacc.h;lsys_input_yacc.c;%(Outputs)</Outputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='cpfgv|x64'">lsys_input_yacc.h;lsys_input_yacc.c;%(Outputs)</Outputs>
+    </CustomBuild>
+    <None Include="todo.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="Resources\cpfg.rc" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\libs\comm\comm_lib.vcxproj">
+      <Project>{8ad42689-9ff0-40bb-9088-1fa0e8383da3}</Project>
+      <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
+    </ProjectReference>
+    <ProjectReference Include="..\libs\image\image.vcxproj">
+      <Project>{fe34fd43-7dd2-4b13-9532-0cd918ad9b0e}</Project>
+      <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
+    </ProjectReference>
+    <ProjectReference Include="..\libs\rand48\rand48.vcxproj">
+      <Project>{08349937-831b-45cb-842c-00fbaeacbe7b}</Project>
+      <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
+    </ProjectReference>
+    <ProjectReference Include="..\libs\scramble\scramble.vcxproj">
+      <Project>{c73a7219-a344-4021-950b-c08e1c2d28b6}</Project>
+      <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
+</Project>
