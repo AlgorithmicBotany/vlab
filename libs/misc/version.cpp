@@ -46,7 +46,7 @@ int build_number() {
 
 std::string build_date_string() {
   // Date of build is set manually
-  return "December 12th, 2022";
+  return "December 13th, 2022";
 }
 
 std::string version_string() {
