@@ -89,13 +89,19 @@ Panel::Panel(int ac, char **av, SavingMode savingMode)
   if (!ok)
     _cantread = true;
   setWindowTitle(name);
+  if (mainWindowLocation != NULL)
+    move(*mainWindowLocation);
 }
 
 bool Panel::parseargs(int argc, char **argv) {
   QString W;
 
-  int wscr = getDesktopWidth();
-  int hscr = getDesktopHeight();
+  //int wscr = getDesktopWidth();
+  //int hscr = getDesktopHeight();
+  QDesktopWidget widget;
+  QRect mainScreenSize = widget.availableGeometry(widget.primaryScreen());
+  int wscr = mainScreenSize.width();
+  int hscr = mainScreenSize.height();
 
   int xpos = -1;
   int ypos = -1;
@@ -138,9 +144,13 @@ bool Panel::parseargs(int argc, char **argv) {
         yr = atof(*++argv);
         --argc;
         --argc;
-
-        xpos = xr * wscr;
-        ypos = yr * hscr;
+        if ((xr > 1.f) && (yr > 1.f)) {
+          xpos = xr * wscr / 100.f;
+          ypos = yr * hscr / 100.f;
+        } else {
+          xpos = xr * wscr;
+          ypos = yr * hscr;
+        }
       } else if (!strcmp(argv[0], "-wr")) {
         float xr, yr;
         xr = atof(*++argv);
