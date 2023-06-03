@@ -30,7 +30,7 @@
 ObjTurtle::ObjTurtle(ObjOutputStore &trg)
     : _CurrentContour(0), _ContourId2(0), _blender(0.0f),
       _allowBranchGC(false), _trg(trg),
-      _PolygonStarted(false) {
+      _PolygonStarted(false), _divisions(divUnspecified) {
   _textureV = 0.0f;
   _textureVCoeff = 1.0f;
 }
@@ -47,8 +47,8 @@ void ObjTurtle::operator=(const ObjTurtle &src) {
 }
 
 void ObjTurtle::Sphere(float radius) const {
-  const int SphereStacks = 12;
-  const int SphereSlices = 12;
+  int SphereSlices = _divisions == divUnspecified ? drawparams.ContourDivisions() : _divisions;
+  int SphereStacks = (SphereSlices + 1) / 2;
   _trg.NewGroup();
   // top
   {
@@ -384,7 +384,7 @@ void ObjTurtle::_GCF(float v) {
       _trg.Quad(vx1.first, nx1, vx1.second,
                 vx2.first, nx2, vx2.second,
                 vx4.first, nx4, vx4.second,
-                vx3.first, nx3, vx4.second,
+                vx3.first, nx3, vx3.second,
                 _color, _CurrentTexture);
 #else
       if (vx1 != vx2 && vx1 != vx3 && vx2 != vx3) {
@@ -412,7 +412,8 @@ void ObjTurtle::_GCF(float v) {
 void ObjTurtle::_CapGC(bool endCap) {
     ASSERT(_gc.On());
 
-    _trg.NewGroup();
+    // Moved to StartGC
+    //_trg.NewGroup();
 
     OpenGLMatrix bgn;
     bgn.Translate(_gc.Position().X(), _gc.Position().Y(), _gc.Position().Z());
@@ -487,6 +488,7 @@ void ObjTurtle::_CapGC(bool endCap) {
 }
 
 void ObjTurtle::StartGC() {
+  _trg.PushGroup();
   _trg.NewGroup();
   if (_allowBranchGC) {
     _gc.End();
@@ -515,6 +517,7 @@ void ObjTurtle::EndGC() {
     if (drawparams.CappedCylinders() == DParams::cappedCylindersOn)
       _CapGC(true);
     _gc.End();
+    _trg.PopGroup();
   }
   else
     Utils::Message("EndGC: cylinder not started. Module ignored.\n");
@@ -665,6 +668,15 @@ void ObjTurtle::BSurface(int id, float sx, float sy, float sz) const {
 void ObjTurtle::DBSurfaceS(BsurfaceObjS) const {}
 
 void ObjTurtle::DBSurfaceM(BsurfaceObjM) const {}
+
+void ObjTurtle::ContourSides(int cs) {
+  if (cs < LPFGParams::MinContourDivisions) {
+    _divisions = LPFGParams::MinContourDivisions;
+  } else if (cs > LPFGParams::MaxContourDivisions - 1) {
+    _divisions = LPFGParams::MaxContourDivisions;
+  } else
+    _divisions = cs;
+}
 
 void ObjTurtle::StartPolygon() { _PolygonStarted = true; }
 void ObjTurtle::EndPolygon() {

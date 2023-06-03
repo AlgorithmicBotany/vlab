@@ -28,7 +28,8 @@ const float epsilon = 0.0001f;
 
 ObjOutputStore::ObjOutputStore(std::string fnm, GLEnv &glEnv, const Volume &v)
     : _v(v), _precision(Distance(_v.Max(), _v.Min()) * epsilon), _groupId(0),
-      _glEnv(glEnv) {
+      _glEnv(glEnv), _last_color(-1), _last_texture(-1)
+{
   std::string objfile(fnm);
   objfile.append(".obj");
   std::string mtlfile(fnm);
@@ -38,6 +39,8 @@ ObjOutputStore::ObjOutputStore(std::string fnm, GLEnv &glEnv, const Volume &v)
   _trg << "# Obj output created by lpfg" << std::endl;
   _trg << "mtllib " << fnm << ".mtl" << std::endl;
   _mtl << "# Mtl output created by lpfg" << std::endl;
+
+  _groupIds.clear();
 
   for (int i = 0; i < 256; i++) {
     PrintMaterial(glEnv, i, -1);
@@ -149,7 +152,7 @@ std::pair<size_t, size_t> ObjOutputStore::VertexTexCoord(Vector3d v,
     _texCoordArr.push_back(vt);
     return std::make_pair(_vertexArr.size(), _texCoordArr.size());
   } else {
-    size_t res2 = _Find(vt, _texCoordArr, _precision);
+    size_t res2 = _Find(vt, _texCoordArr, epsilon);
     if (res2 == static_cast<size_t>(-1)) {
       _trg << "vt" << ' ' << vt.X() << ' ' << vt.Y() << std::endl;
       _texCoordArr.push_back(vt);
@@ -258,11 +261,9 @@ void ObjOutputStore::Polygon(std::vector<size_t> v, int color, int texture) {
 
 void ObjOutputStore::PrintMaterialUse(int color, int texture) {
   // to stop the same "usemtl sxxx" being printed, save last material index
-  static int last_color = -1;
-  static int last_texture = -1;
-  if (color != last_color || texture != last_texture) {
-    last_color = color;
-    last_texture = texture;
+  if (color != _last_color || texture != _last_texture) {
+    _last_color = color;
+    _last_texture = texture;
 
     // if no texture is specified, use existing material
     if (texture == -1) {
@@ -300,6 +301,17 @@ void ObjOutputStore::LinePnt(Vector3d v) {
 void ObjOutputStore::NewGroup() {
   _trg << "g group" << _groupId << std::endl;
   ++_groupId;
+}
+
+void ObjOutputStore::PushGroup() {
+  _groupIds.push_back(_groupId);
+}
+
+void ObjOutputStore::PopGroup() {
+  _groupIds.pop_back();
+  if (_groupIds.size() > 0) {
+    _trg << "g group" << _groupIds.back() << std::endl;
+  }
 }
 
 ObjOutputStore::QuadStripObj::QuadStripObj(ObjOutputStore &trg)

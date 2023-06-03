@@ -535,6 +535,7 @@ public:
   void BSurface(int, float, float, float) const;
   void DBSurfaceS(BsurfaceObjS) const;
   void DBSurfaceM(BsurfaceObjM) const;
+  void ContourSides(int);
   void StartPolygon();
   void EndPolygon();
   void PolygonPoint();
@@ -580,6 +581,9 @@ private:
 
   std::vector<Vector3d> polygonPoints;
   bool _PolygonStarted;
+
+  enum { divUnspecified = -1 };
+  int _divisions;
 };
 
 class PostscriptTurtle : public Turtle {

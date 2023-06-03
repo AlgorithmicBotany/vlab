@@ -79,6 +79,9 @@ public:
     int _counter;
   };
 
+  void PushGroup();
+  void PopGroup();
+
 private:
   void PrintMaterial(GLEnv &glEnv, int c, int t);
   size_t _Element(Vector3d, std::vector<Vector3d> &, float, const char *);
@@ -94,7 +97,11 @@ private:
   std::vector<Vector3d> _texCoordArr;
   std::vector<size_t> _lnv;
   int _groupId;
+  std::vector<int> _groupIds; // used to reset group id if branched gen. cylinders are used
   GLEnv &_glEnv;
+
+  int _last_color;
+  int _last_texture;
 };
 
 #else
