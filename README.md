@@ -52,6 +52,15 @@ sudo ./install_fedora_reqs.sh
 ./compile_all.sh
 ```
 
+### Windows, using Windows Subsystem for Linux (WSL)
+
+On Windows 10 (build 19041 and higher) or Windows 11, you will need to install WSL 2 and a Linux distribution.
+You can install both at the same time using the Windows Command Prompt (in administator mode):
+```
+wsl --install
+```
+giving you Ubuntu as the default distribution. Then follow the instructions for compiling vlab for Ubuntu given above. 
+
 ## Version Numbering
 
 The build number and date are stored in two files:
