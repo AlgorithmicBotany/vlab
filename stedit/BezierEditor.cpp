@@ -63,7 +63,7 @@ BezierEditor::BezierEditor(QWidget *parent) : QGLWidget(parent) {
   showLines = true;
   showSurface = true;
   showVectors = true;
-  wireframe = true;
+  wireframe = false;
   symmetrical14Y = false;
   symmetrical14X = false;
   symmetrical113X = false;
