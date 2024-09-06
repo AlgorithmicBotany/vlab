@@ -87,7 +87,7 @@ function help() {
   echo "Usage: $0 [OPTION]"
   echo "    -A x Compile for 32 and/or 64 bits. x should be one of '32', '64' or 'both'. Default is  the default of your compiler.'"
   echo "    -c   Clean all compilations"
-  echo "    -M x Version of Max OS X to compile the system for (default: 10.13)"
+  echo "    -M x Version of Max OS X to compile the system for (default: 10.15)"
   echo "    -h   Show this help"
 }
 
@@ -109,7 +109,7 @@ function cleanCompile() {
 }
 
 
-macVersion="10.13"
+macVersion="10.15"
 
 wantClean=""
 
@@ -205,7 +205,7 @@ echo $macVersion
 #  QTARCHS="x86 x86_64"
 #    CMAKEARCHS="i386;x86_64"
 # PASCAL : DEPLOYMENT_TARGET A Modifier 
-deployment_target="10.13"
+deployment_target="10.15"
 # The following variable is used for the new  XCode version 4.3
 
 MAC_SDK=/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform
