@@ -143,7 +143,7 @@ public:
   void RunSim() {
     // This is called only if RunSimulation() specified
 #ifdef LINUX
-    _mainWindow->RunSimulation();
+    if (_mainWindow) _mainWindow->RunSimulation();
 #else
     _Run();
 #endif
