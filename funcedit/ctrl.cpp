@@ -94,7 +94,8 @@ Ctrl::Ctrl(QWidget *parent, int argc, char **argv)
   int wscr = mainScreenSize.width();
   int hscr = mainScreenSize.height();
 
-  std::string filename = "noname.func";
+  //std::string filename = "noname.func";
+  std::string filename = "";
   while (--argc > 0) {
     if ((*++argv)[0] == '-') {
       if (!strcmp(argv[0], "-wp")) {
@@ -148,7 +149,8 @@ Ctrl::Ctrl(QWidget *parent, int argc, char **argv)
       --argc;
     }
   }
-  if (filename.compare("noname.func") != 0) {
+  //if (filename.compare("noname.func") != 0) {
+  if (!filename.empty()) {
 
     Load(filename.c_str());
     std::string funcmodel_name = _FuncModel.getName();
@@ -158,8 +160,10 @@ Ctrl::Ctrl(QWidget *parent, int argc, char **argv)
     else
       mw->setWindowTitle(_caption + QString(": ") + QString(filename.c_str()));
     _default = false;
-  } else
+  } else {
+    filename = "noname.func";
     mw->setWindowTitle(_caption);
+  }
 
  // initialize the context menu
   _contextmenu = new QMenu();
