@@ -20,12 +20,12 @@ HEADERS += combinedpk.h \
            sobol.h \
            soboldata.h \
            surface.h
-SOURCES += args.c \
+SOURCES += main.cpp \
+           args.c \
            combinedpk.c \
            gldisplay.cpp \
            globjwin.cpp \
            korobov.c \
-           main.cpp \
            matrix.c \
            mc.c \
            message.c \

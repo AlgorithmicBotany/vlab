@@ -53,23 +53,23 @@ extern "C" {
 
 // --------------------------------------------------------------------
 
-int InitQMC(void);
+extern int InitQMC(void);
 // initializes the correct method, parameters described in qmc.c
 
-double *(*QMC)(void);
+extern double *(*QMC)(void);
 // returns a point from the point set
 
-void (*ResetQMC)(void);
+extern void (*ResetQMC)(void);
 // resets the qmc method
 
-void (*FreeMethod)(void);
+extern void (*FreeMethod)(void);
 // frees the qmc method
 
-void FreeQMC();
+extern void FreeQMC();
 
-double GetQMC(int request);
+extern double GetQMC(int request);
 
-int SetQMC(int request, double value);
+extern int SetQMC(int request, double value);
 // --------------------------------------------------------------------
 #ifdef __cplusplus
 }
@@ -137,13 +137,13 @@ void FreeStat(STATSQMC stats);
 
 // --------------------------------------------------------------------
 
-double *GenRandom(void);
+extern double *GenRandom(void);
 // generate a random number to be used by AppRandom
 
-double *(*AppRandom)(double *point, double *r);
+extern double *(*AppRandom)(double *point, double *r);
 // apply the randomization to point, and return the new point
 
-double RPoint(int currdim);
+extern double RPoint(int currdim);
 // returns the a value for the (currdim) dimension from one point
 // according to lastpoint and rpoint
 

@@ -327,8 +327,8 @@ void ProcessKeyword(FILE *infile, int index, int *line_num)
       break;
     }
     max_depth = (unsigned int)atoi(token);
-    if (max_depth < 0)
-      max_depth = 0;
+    if (max_depth > 1000)
+      max_depth = 1000;
     break;
 
   case 6: /* number of runs */

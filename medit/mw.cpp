@@ -54,9 +54,16 @@ MW::MW(int n, char **args, QWidget *parent)
 
 void MW::init() {
   // new viewer and editor
+#ifdef __APPLE__
   editor = new MWEditor(this, "editor", Qt::Tool);
   // [PASCAL] next attribute is to fix a bug in Qt to make sure the window is always visible
   editor->setAttribute(Qt::WA_MacAlwaysShowToolWindow, true);
+#else
+  // On some systems, using MWEditor with Qt:Tool flag causes the window to be inactive
+  // This is strange because Qt::Tool == Qt::Dialog | Qt::Popup
+  // So something about the popup attribute causes issues
+  editor = new MWEditor(this, "editor", Qt::Dialog);
+#endif
 
   viewer = new MWViewer(this, "viewer");
   setCentralWidget(viewer);

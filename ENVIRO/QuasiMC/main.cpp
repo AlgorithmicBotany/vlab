@@ -52,6 +52,15 @@ int numSides; // the number of sides on the triangulated cylinder
 double *pointqmc, *rpointqmc, *randqmc;
 double npoints = 0.0;
 
+// functions in qmc.h
+int InitQMC(void);
+double *(*QMC)(void);
+void (*ResetQMC)(void);
+void (*FreeMethod)(void);
+void FreeQMC();
+double GetQMC(int request);
+int SetQMC(int request, double value);
+double *(*AppRandom)(double *point, double *r);
 #ifdef __cplusplus
 }
 #endif

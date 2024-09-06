@@ -39,7 +39,7 @@ int InitRandom(double *parameters);
 double *GenRandom(void);
 // generate a random number to be used by AppRandom
 
-double *(*AppRandom)(double *point, double *r);
+//extern double *(*AppRandom)(double *point, double *r);
 // apply the randomization to point, and return the new point
 
 double RPoint(int currdim);

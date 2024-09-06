@@ -388,7 +388,7 @@ void GLDisplay::updateGLVisualization(void) {
 /* ------------------------------------------------------------ */
 void GLDisplay::mousePressEvent(QMouseEvent *event) {
   if ((event->buttons() & Qt::LeftButton) ||
-      (event->buttons() & Qt::MidButton)) {
+      (event->buttons() & Qt::MiddleButton)) {
     mouse_x = event->x();
     mouse_y = event->y();
     updateGL();
@@ -422,7 +422,7 @@ void GLDisplay::mouseMoveEvent(QMouseEvent *event) {
     else if (yrot < 0.f)
       yrot += 360.f;
     updateGL();
-  } else if ((event->buttons() & Qt::MidButton) &&
+  } else if ((event->buttons() & Qt::MiddleButton) &&
              (event->modifiers() & Qt::SHIFT)) {
     // Roll around z-axis
     zrot += (mouse_x - (float)event->x()) * 0.5f;
@@ -431,7 +431,7 @@ void GLDisplay::mouseMoveEvent(QMouseEvent *event) {
     else if (zrot < 0.f)
       zrot += 360.f;
     updateGL();
-  } else if (event->buttons() & Qt::MidButton) {
+  } else if (event->buttons() & Qt::MiddleButton) {
     // Zooming
     zpos += (mouse_y - (float)event->y()) * (sky_radius * 0.01f);
     updateGL();
