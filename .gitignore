@@ -20,6 +20,8 @@ Makefile
 /cpfg/lsys_input_lex.cpp
 /cpfg/lsys_input_yacc.cpp
 /cpfg/lsys_input_yacc.h
+/cpfg/lsys_input.tab.c
+/cpfg/lsys_input.tab.h
 /PreProc/scanline_lex.cpp
 /Rayshade/libshade/lex.c
 /Rayshade/libshade/yacc.c
@@ -28,6 +30,8 @@ Makefile
 /l2c/l2c_lex.cpp
 /l2c/l2c_yacc.cpp
 /l2c/l2c_yacc.h
+/l2c/l2c.tab.c
+/l2c/l2c.tab.h
 
 # macOS files
 .DS_Store

@@ -59,10 +59,9 @@ HEADERS  = GLWindow.h \
            
 DEFINES  = LINUX DEBUG=0 CPFG_VERSION=6600 CPFG_ENVIRONMENT \
 	   RESEARCH_VER CONTEXT_SENSITIVE_HOMO JIM _GLUT_WINDOWING DEPTH_CUEING DEPTHCUE
-LEXSOURCES = lsys_input.l
-YACCSOURCES = lsys_input.y
-FORMS +=  SaveAs.ui 
 
+FORMS +=  SaveAs.ui 
+ 
 RESOURCES = cpfg.qrc ../libs/misc/about.qrc
 
 MY_BASE  = ..
@@ -71,6 +70,9 @@ include( $${MY_BASE}/common.pri )
 
 
 macx: {
+    LEXSOURCES = lsys_input.l
+    YACCSOURCES = lsys_input.y
+
     DEFINES += MACX_OPENGL_HEADERS
     SOURCES += apple.cpp
     HEADERS += apple.h
@@ -87,6 +89,29 @@ macx: {
 unix:!macx{
   SOURCES += apple.cpp
   HEADERS += apple.h
+
+  LEXSOURCES = lsys_input.l
+  BISONSOURCES = lsys_input.y
+
+  bison_decl.name = bison_decl
+  bison_decl.input = BISONSOURCES
+  bison_decl.variable_out = GENERATED_FILES
+  bison_decl.commands = \
+    -$(DEL_FILE) lsys_input.tab.h lsys_input.tab.c lsys_input_yacc.h lsys_input_yacc.cpp$$escape_expand(\\n\\t) \  
+    bison -d -p lsys_input -b lsys_input ${QMAKE_FILE_IN}$$escape_expand(\\n\\t) \
+    $(COPY) lsys_input.tab.h lsys_input_yacc.h$$escape_expand(\\n\\t) \
+    $(COPY) lsys_input.tab.c lsys_input_yacc.cpp
+  bison_decl.output = lsys_input_yacc.h
+  bison_decl.dependency_type = TYPE_C
+  QMAKE_EXTRA_COMPILERS += bison_decl
+
+  bison_impl.name = bisonsource
+  bison_impl.input = BISONSOURCES
+  bison_impl.variable_out = GENERATED_SOURCES
+  bison_impl.commands = $$escape_expand(\\n)
+  bison_impl.depends = lsys_input_yacc.h
+  bison_impl.output = lsys_input_yacc.cpp 
+  QMAKE_EXTRA_COMPILERS += bison_impl
  }
 
 QMAKE_CXXFLAGS += -Wno-deprecated-register

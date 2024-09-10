@@ -3,7 +3,7 @@
 
 ## Developer Getting Started Guide
 
-Note: our current version has been developed using QT 5.12.3
+Note: our current version has been developed using QT 5.12.3, but will also compile with QT 5.15.2
 
 ### OSX
 
@@ -17,7 +17,7 @@ Then install Qt: https://doc.qt.io/qt-5/gettingstarted.html
 
 To compile vlab, go to the source directory and run: 
 ```
-./configure.sh -A 64 -M 10.13  # 10.13 is High Sierra, substitute as appropriate
+./configure.sh -A 64 -M 10.15  # 10.15 is Catalina, substitute as appropriate
 ./compile_all.sh
 ```
 
@@ -30,7 +30,7 @@ The script will create a vlab-5-******.dmg file.
 ### Ubuntu
 
 The supported version of Ubuntu is listed in `install_ubuntu_reqs.sh`, though
-other versions may also work. This may require first running: sudo add-apt-repository universe 
+other versions may also work. This may require first running: `sudo add-apt-repository universe `
 
 ```
 sudo ./install_ubuntu_reqs.sh
