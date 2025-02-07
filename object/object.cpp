@@ -1033,6 +1033,7 @@ void readConfiguration(const QString & fileName) {
 }
 
 int main(int argc, char **argv) {
+    /*
 #ifdef __APPLE__
   char str[256];
   size_t size = sizeof(str);
@@ -1046,6 +1047,7 @@ int main(int argc, char **argv) {
     QFont::insertSubstitution(".Lucida Grande UI", "Lucida Grande");
   }
 #endif
+  */
 
   // create user interface
   qapp = new QApplication(argc, argv);
