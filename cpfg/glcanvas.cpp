@@ -130,12 +130,12 @@ glcanvas::glcanvas(QWidget *parent)
   sysctlbyname("kern.osrelease", str, &size, NULL, 0);
   int version, x1, x2;
   sscanf(str, "%d.%d.%d", &version, &x1, &x2);
-  if (version > 12) {
+  /*if (version > 12) {
     // fix Mac OS X 10.9 (mavericks) font issue
     // https://bugreports.qt-project.org/browse/QTBUG-32789
     QFont::insertSubstitution(".Helvetica Neue DeskInterface", "Lucida Grande");
     QFont::insertSubstitution(".Lucida Grande UI", "Lucida Grande");
-  }
+  }*/
 #endif
 
   rot = scl = pan = roll = false;
@@ -1887,13 +1887,22 @@ QImage glcanvas::qt_gl_read_framebuffer(const QSize &size, bool alpha_format,
 QImage glcanvas::grabFrameBuffer(bool withAlpha) {
   makeCurrent();
   QImage res;
-  int w = width();
-  int h = height();
-  if (true) {
+  const int retinaScale = devicePixelRatio(); 
+  int w = width() * retinaScale;
+  int h = height() * retinaScale;
+ 
+  //if (true) {
     res = qt_gl_read_framebuffer(QSize(w, h), format().hasAlpha(), withAlpha);
-  } else {
-  }
+  //} else {
+  //}
 
+  // not sure if this is "the" way to handle Retina displays
+  // but here we scale the image's DPI so the image appears
+  // in the same size on the screen as the cpfg window
+  if (!res.isNull() && retinaScale > 1) {
+    res.setDotsPerMeterX(res.dotsPerMeterX() * retinaScale);
+    res.setDotsPerMeterY(res.dotsPerMeterY() * retinaScale);
+  }
   return res;
 }
 
@@ -3018,6 +3027,9 @@ void glcanvas::renderText(double x, double y, double z, const QString &str,
   glPushClientAttrib(GL_CLIENT_ALL_ATTRIB_BITS);
   glPushAttrib(GL_ALL_ATTRIB_BITS);
 
+  // on Retina displays the window coordinates must be scaled
+  const double retinaScale = (double)devicePixelRatioF();
+
   int height = this->height();
 
   GLdouble model[4][4], proj[4][4];
@@ -3030,14 +3042,15 @@ void glcanvas::renderText(double x, double y, double z, const QString &str,
   project(x, y, z, &model[0][0], &proj[0][0], &view[0], &textPosX, &textPosY,
           &textPosZ);
 
-  textPosY = height - textPosY; // y is inverted
+  textPosY = (height - textPosY / float(retinaScale)); // y is inverted
+  textPosX /= float(retinaScale);
 
   int fontSize = font.pointSize();
 
   QFontMetrics metrics(font);
   int text_width = metrics.width(QString(str)) + 10;
-  int text_height = fontSize + 5;
-  QPixmap textimg(text_width, text_height);
+  int text_height = fontSize;// + 5;
+  QPixmap textimg(text_width, fontSize + fontSize / 3 + 1);//text_height);
   textimg.fill(Qt::transparent);
 
   QPainter painter(&textimg);
