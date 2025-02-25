@@ -160,7 +160,7 @@ private:
   // in recursive decompositions and interpretations
   mutable MemoryPool _pool;
 
-  std::auto_ptr<Environment> _pEnvironment;
+  std::unique_ptr<Environment> _pEnvironment;
 
   void Axiom();
   void DeriveForward(int);
@@ -663,6 +663,10 @@ private:
     case ContourSides_id: {
       PARAMS(ContourSides);
       turtle.ContourSides(params.Param0);
+    } break;
+    case ContourNormal_id: {
+      PARAMS(ContourNormal);
+      turtle.ContourNormal(params.Param0);
     } break;
     case InitSurface_id: {
       PARAMS(InitSurface);

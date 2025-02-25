@@ -110,6 +110,7 @@ public:
   virtual void STropismDirection(V3f);
   virtual void DSurface(SurfaceObj, bool) const;
   virtual void ContourSides(int);
+  virtual void ContourNormal(V3f);
   virtual void InitSurface(int) const;
   virtual void SurfacePoint(int, int, int);
   virtual void DrawSurface(int) const;
@@ -332,6 +333,7 @@ public:
   void EndGC();
   void ScaleContour(float, float);
   void ContourSides(int);
+  void ContourNormal(V3f);
   void StartBranch();
 
 private:
@@ -478,6 +480,7 @@ public:
   void SetWidth(float);
   void ScaleContour(float, float);
   void ContourSides(int);
+  void ContourNormal(V3f);
   void StartBranch();
 
   void StartNewGrid(int *size, std::string fname) const;
@@ -536,6 +539,7 @@ public:
   void DBSurfaceS(BsurfaceObjS) const;
   void DBSurfaceM(BsurfaceObjM) const;
   void ContourSides(int);
+  void ContourNormal(V3f);
   void StartPolygon();
   void EndPolygon();
   void PolygonPoint();
@@ -611,6 +615,7 @@ public:
   void SetWidth(float);
   void ScaleContour(float, float);
   void ContourSides(int);
+  void ContourNormal(V3f);
   void Rhombus(float, float) const;
   void Triangle(float, float) const;
   void Orient() const;
@@ -736,6 +741,7 @@ public:
   void STropismDirection(V3f);
   void DSurface(SurfaceObj, bool) const;
   void ContourSides(int);
+  void ContourNormal(V3f);
   void InitSurface(int) const;
   void SurfacePoint(int, int, int);
   void DrawSurface(int) const;

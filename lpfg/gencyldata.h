@@ -53,6 +53,12 @@ public:
   int ContourId2() const { return _contourId2; }
   float Blender() const { return _blender; }
   bool Blended() const { return _blender > 0.0f; }
+  
+  void SetNormal (const Vector3d &);
+  Vector3d bgnNormal() const { return _bgnNormal; }
+  Vector3d endNormal() const { return _endNormal; }
+  bool changedNormal() const { return _isNormalChanged; }
+
 
 private:
   bool _isOn;
@@ -64,6 +70,10 @@ private:
   int _contourId;
   int _contourId2;
   float _blender;
+  // user-specified normal
+  Vector3d _bgnNormal;
+  Vector3d _endNormal;
+  bool _isNormalChanged;
 };
 
 #else

@@ -87,6 +87,7 @@ const char *DrawParams::_strLabels[] = {"#",
                                         "PS linecap:",
                                         "stationary lights:",
                                         "auto normals:",
+                                        "tapered cylinders:",
                                         "antialiasing:",
                                         "mesh:",
                                         "animated mesh:",
@@ -132,6 +133,7 @@ void DrawParams::Default(
   _dparams._postscriptLinecap = 0;
   _FlagSet(flStationaryLights);
   _FlagClear(flAutomaticNormals);
+  _FlagClear(flTaperedCylinders);
   meshes.Clear();
 }
 
@@ -142,6 +144,7 @@ bool DrawParams::Load(const char *fname) {
 
   std::ofstream clopt("clopt", std::ios::out);
   _FlagClear(flAutomaticNormals);
+  _FlagClear(flTaperedCylinders);
 
   sprintf(cmnd, "%s %s %s", LPFGParams::PreprocScript, fname, ifile);
   const int EnvSize = 4096;
@@ -349,6 +352,11 @@ bool DrawParams::Load(const char *fname) {
         break;
       case lAutomaticNormals:
         if (!_ReadOnOff(line + cntn, flAutomaticNormals)) {
+          _Error(line, src);
+        }
+        break;
+      case lTaperedCylinders:
+        if (!_ReadOnOff(line + cntn, flTaperedCylinders)) {
           _Error(line, src);
         }
         break;

@@ -103,5 +103,6 @@ module CircleB(float) = 98;
 module CircleFrontB(float) = 99;
 module SetCoordinateSystem(float) = 100;
 module Mesh3(int, float, float, float) = 101;
+module ContourNormal(V3tf) = 102;
 
 #endif

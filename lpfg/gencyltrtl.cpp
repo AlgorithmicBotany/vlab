@@ -25,6 +25,7 @@
 #include "glutils.h"
 #include "drawparam.h"
 #include "polygon.h"
+#include "quaternion.h"
 
 CylinderLineScreenTurtle::CylinderLineScreenTurtle(unsigned int glbase,
                                                    Vector3d vn,
@@ -69,6 +70,10 @@ void CylinderLineScreenTurtle::ContourSides(int cs) {
         _UpdateContourDivisions(_ContourId2);
     }
   }
+}
+
+void CylinderLineScreenTurtle::ContourNormal(V3f n) {
+  _gc.SetNormal(Vector3d(n.x,n.y,n.z));
 }
 
 void CylinderLineScreenTurtle::_UpdateContourDivisions(size_t id) {
@@ -247,28 +252,104 @@ void CylinderLineScreenTurtle::_GCF(float v) {
   {
     GLprimitive glp(GL_TRIANGLE_STRIP);
     Vector3d vtx;
+    Vector3d normal; 
     const Contour &bgncntr =
         contours.Get1(_gc.ContourId(), _gc.ContourId2(), _gc.Blender());
     const Contour &endcntr =
         contours.Get2(_CurrentContour, _ContourId2, _blender);
     for (size_t i = 0; i < bgncntr.Divisions(); ++i) {
-      //if (drawparams.RenderMode() == DParams::rmShaded ||
-      //    drawparams.RenderMode() == DParams::rmShadows) {
-      { vtx.Transform(bgncntr.Normal(i), bgnnrm);
-        glNormal3fv(vtx);
+
+      if (drawparams.TaperedCylinders()) {
+        // get normal at begin vertex
+        Vector3d bgnV, bgnN;
+        bgnN.Transform(bgncntr.Normal(i), bgnnrm);
+        bgnV.Transform(bgncntr.Vertex(i), bgnmtrx);
+        // get normal at end vertex
+        Vector3d endV, endN;
+        endN.Transform(endcntr.Normal(i), endnrm);
+        endV.Transform(endcntr.Vertex(i), endmtrx);
+        // compute vector between end and begin, and normalize it
+        Vector3d vec1 = (endV - bgnV).Normalize();
+        Vector3d bgnV2;
+        if (i+1 < bgncntr.Divisions())
+          bgnV2.Transform(bgncntr.Vertex(i+1), bgnmtrx);
+        else // don't pick Vertex(0) because it is the same as Vertex(-1), pick Vertex(1)
+          bgnV2.Transform(bgncntr.Vertex(1), bgnmtrx);
+        Vector3d vec2 = (bgnV2 - bgnV).Normalize();
+
+        vtx = (vec1 % vec2).Normalize();
+        normal = vtx;
+      } else {
+        // set the normal
+        vtx.Transform(bgncntr.Normal(i), bgnnrm);
+        // check if CurrentNormal was specified
+        if (_gc.changedNormal()) {
+          const float *cntr_n = bgncntr.Normal(i);
+          Vector3d perp (cntr_n[1], -cntr_n[0], 0.);
+          Vector3d tangent;
+          tangent.Transform(perp, bgnnrm);
+
+          Vector3d n_curr = _gc.bgnNormal();
+          Vector3d def(-1.f,0.f,0.f);
+          float angle = acosf(def * n_curr); // assumes both vectors are normalized
+          Vector3d up(0.f,1.f,0.f);
+          if ((up * n_curr) <= 1e-4)
+            angle *= -0.5f;
+          else
+            angle *= 0.5f;
+          Quaternion q(cosf(angle), tangent.Normalize(sinf(angle)));
+          vtx.RotateBy(q);
+        }
       }
-  
+      glNormal3fv(vtx);
+
       if (_TextureOn())
         glTexCoord2f(i * 1.0f / (bgncntr.Divisions() - 1), _textureV);
 
       vtx.Transform(bgncntr.Vertex(i), bgnmtrx);
       glVertex3fv(vtx);
 
-      //if (drawparams.RenderMode() == DParams::rmShaded ||
-      //    drawparams.RenderMode() == DParams::rmShadows) {
-      { vtx.Transform(endcntr.Normal(i), endnrm);
-        glNormal3fv(vtx);
+      // end point
+      vtx.Transform(endcntr.Normal(i), endnrm);
+      if (drawparams.TaperedCylinders()) {
+        // // get normal at begin vertex
+        // Vector3d bgnV, bgnN;
+        // bgnN.Transform(bgncntr.Normal(i), bgnnrm);
+        // bgnV.Transform(bgncntr.Vertex(i), bgnmtrx);
+        // // get normal at end vertex -- QQQ -- don't know what the next vertex is yet!!!!!
+        // Vector3d endV, endN;
+        // endN.Transform(endcntr.Normal(i), endnrm);
+        // endV.Transform(endcntr.Vertex(i), endmtrx);
+        // // compute vector between end and begin, and normalize it
+        // Vector3d vec1 = (endV - bgnV).Normalize();
+        // Vector3d bgnV2;
+        // int next_i = i+1 < bgncntr.Divisions() ? i + 1 : 0;
+        // bgnV2.Transform(bgncntr.Vertex(next_i), bgnmtrx);
+        // Vector3d vec2 = (bgnV2 - bgnV).Normalize();
+
+        // vtx = (vec1 % vec2).Normalize();
+        vtx = normal;
+      } else {
+        // check if CurrentNormal was specified
+        if (_gc.changedNormal()) {
+          const float *cntr_n = endcntr.Normal(i);
+          Vector3d perp (cntr_n[1], -cntr_n[0], 0.);
+          Vector3d tangent;
+          tangent.Transform(perp, endnrm);
+
+          Vector3d n_curr = _gc.endNormal();
+          Vector3d def(-1.f,0.f,0.f);
+          float angle = acosf(def * n_curr); // assumes both vectors are normalized
+          Vector3d up(0.f,1.f,0.f);
+          if ((up * n_curr) <= 1e-4)
+            angle *= -0.5f;
+          else
+            angle *= 0.5f;
+          Quaternion q(cosf(angle), tangent.Normalize(sinf(angle)));
+          vtx.RotateBy(q);
+        }
       }
+      glNormal3fv(vtx);
 
       if (_TextureOn())
         glTexCoord2f(i * 1.0f / (bgncntr.Divisions() - 1), endtv);

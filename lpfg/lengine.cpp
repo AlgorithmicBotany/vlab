@@ -73,8 +73,8 @@ void LEngine::StartEnvironment() {
   ASSERT(_pEnvironment.get() == 0);
   if (comlineparam.EnvFileSpecified()) {
     try {
-      std::auto_ptr<Environment> newenv(new Environment(envparams));
-      _pEnvironment = newenv;
+      std::unique_ptr<Environment> newenv(new Environment(envparams));
+      _pEnvironment = std::move(newenv);
     } catch (Exception e) {
       Utils::Error(e.Msg());
     }

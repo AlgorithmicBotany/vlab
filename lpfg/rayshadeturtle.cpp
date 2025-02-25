@@ -864,6 +864,11 @@ void RayshadeTurtle::ContourSides(int cs) {
     Turtle::ContourSides(cs);
   }
 }
+
+void RayshadeTurtle::ContourNormal(V3f n) {
+  _gc.SetNormal(Vector3d(n.x,n.y,n.z));
+}
+
 void RayshadeTurtle::CurrentContour(int id) {
   if (id == 0 || contours.ValidId(id))
     _CurrentContour = id;

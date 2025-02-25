@@ -20,7 +20,7 @@
 #include "gencyldata.h"
 
 GeneralizedCylinderData::GeneralizedCylinderData()
-    : _isOn(false), _blender(0.0f) {}
+    : _isOn(false), _blender(0.0f), _bgnNormal(-1.f,0.f,0.f), _endNormal(-1.f,0.f,0.f), _isNormalChanged(false) {}
 
 void GeneralizedCylinderData::Set(const Scale &scale, const Vector3d &position,
                                   const Vector3d &up, const Vector3d &left,
@@ -34,4 +34,10 @@ void GeneralizedCylinderData::Set(const Scale &scale, const Vector3d &position,
   _contourId = contourId;
   _contourId2 = contourId2;
   _blender = blender;
+}
+
+void GeneralizedCylinderData::SetNormal(const Vector3d &normal) {
+  _bgnNormal = _endNormal;
+  _endNormal = normal;
+  _isNormalChanged = true;
 }

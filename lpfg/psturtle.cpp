@@ -460,6 +460,9 @@ void PostscriptTurtle::ContourSides(int cs) {
     Turtle::ContourSides(cs);
   }
 }
+void PostscriptTurtle::ContourNormal(V3f n) {
+  Turtle::ContourNormal(n);
+}
 
 void PostscriptTurtle::Circle(float r) const {
   _store.AddNew();

@@ -277,6 +277,11 @@ void TextFileTurtle::ContourSides(int sides) {
   Turtle::ContourSides(sides);
 }
 
+void TextFileTurtle::ContourNormal(V3f n) {
+  fprintf(_fp, "ContourNormal(%f,%f,%f)\n", n.x, n.y, n.z);
+  Turtle::ContourNormal(n);
+}
+
 void TextFileTurtle::InitSurface(int id) const {
   fprintf(_fp, "InitSurface(%d)\n", id);
   Turtle::InitSurface(id);

@@ -623,6 +623,8 @@ void Turtle::STropismDirection(V3f dir) {
 
 void Turtle::ContourSides(int) {}
 
+void Turtle::ContourNormal(V3f) {}
+
 void Turtle::CircleFront(float) const {}
 
 void Turtle::CircleFrontB(float) const {}

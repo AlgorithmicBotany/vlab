@@ -94,6 +94,7 @@ public:
   bool BackfaceCulling() const { return _IsFlagSet(flBackfaceCulling); }
   bool StationaryLights() const { return _IsFlagSet(flStationaryLights); }
   bool AutomaticNormals() const { return _IsFlagSet(flAutomaticNormals); }
+  bool TaperedCylinders() const { return _IsFlagSet(flTaperedCylinders); }
 
   bool isOpenGL_2() { return _openGL_2; }
   void setOpenGL_2(bool b) { _openGL_2 = b; }
@@ -315,6 +316,7 @@ private:
     lPostscriptLinecap,
     lStationaryLights,
     lAutomaticNormals,
+    lTaperedCylinders,
     lAntialiasing,
     lMesh,
     lAnimatedMesh,
@@ -328,7 +330,8 @@ private:
     flCorrectedRotation = 1 << 1,
     flBackfaceCulling = 1 << 2,
     flStationaryLights = 1 << 3,
-    flAutomaticNormals = 1 << 4
+    flAutomaticNormals = 1 << 4,
+    flTaperedCylinders = 1 << 5
   };
   static const char *_strLabels[];
   bool _openGL_2;

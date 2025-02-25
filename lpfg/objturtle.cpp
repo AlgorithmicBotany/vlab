@@ -678,6 +678,10 @@ void ObjTurtle::ContourSides(int cs) {
     _divisions = cs;
 }
 
+void ObjTurtle::ContourNormal(V3f n) {
+  _gc.SetNormal(Vector3d(n.x,n.y,n.z));
+}
+
 void ObjTurtle::StartPolygon() { _PolygonStarted = true; }
 void ObjTurtle::EndPolygon() {
   _PolygonStarted = false;
