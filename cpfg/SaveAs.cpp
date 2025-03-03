@@ -29,6 +29,12 @@ SaveAs::SaveAs(QWidget *parent, QString objName, QString currentPath,
                QString labTablePath, int number, int id, int outputFormat,
                int pix_format)
     : QDialog(parent) {
+  // check if the OS theme is light or dark (Qt 6.5 solution will be different, but may still work)
+  const QPalette defaultPalette;
+  const auto text = defaultPalette.color(QPalette::WindowText);
+  const auto window = defaultPalette.color(QPalette::Window);
+  _isLightTheme = text.lightness() < window.lightness();
+  
   changeFormat = false;
   nodeName = objName;
   saveName = currentPath;
@@ -176,24 +182,31 @@ void SaveAs::writeSettings() {
 
 void SaveAs::closeEvent(QCloseEvent *) { writeSettings(); }
 
+void SaveAs::changeEvent(QEvent *event) {
+  // check if the OS theme has changed (tested on macOS)
+  if (event->type() == QEvent::PaletteChange) {
+    _isLightTheme = !_isLightTheme;
+    this->setLineEdit();
+  } else {
+    QWidget::changeEvent(event);
+  }
+}
+
 SaveAs::~SaveAs() {}
 
 void SaveAs::setLineEdit() {
+  QString textColor = _isLightTheme ? "#000000" : "#FFFFFF";
   QString formatedNodeName =
-      QString("<span style= color:#000000;> %1</span>").arg(nodeName);
+      QString("<span style='color:" + textColor + ";'>" + nodeName + "</span>");
+  QString ext;
   if (numbering == 2) {
     decay = 4;
-    QString ext = QString("<span style= color:#999999;>%1</span>")
-                      .arg(fileNameNumber + "." + getExtension());
-    lineEdit->setHtml(formatedNodeName + ext);
-
+    ext = QString("<span style='color:#999999;'>%1</span>").arg(fileNameNumber + "." + getExtension());
   } else {
     decay = 0;
-    QString ext = QString("<span style= color:#999999;>%1</span>")
-                      .arg("." + getExtension());
-    lineEdit->setHtml("<span style= color:#000000;>" + formatedNodeName +
-                      "</span>" + ext);
+    ext = QString("<span style='color:#999999;'>%1</span>").arg("." + getExtension());
   }
+  lineEdit->setHtml(formatedNodeName + ext);
 }
 
 void SaveAs::preserveFormat() {

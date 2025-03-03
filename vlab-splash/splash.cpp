@@ -57,14 +57,11 @@ protected:
 int displaySplash( int & argc, char ** & argv )
 {
    QApplication app( argc, argv );
-   //std::cerr<<"Display Splash"<<std::endl;
-   //  QSplashScreen * splash = new QSplashScreen( QPixmap::fromImage( QImage("logo.png" )),
-   //					       Qt::WStyle_StaysOnTop ); //P.F. Qt4
 
-//     QSplashScreen * splash = new QSplashScreen( QPixmap::fromMimeSource( "logo.png" ),
-//                                                Qt::WStyle_StaysOnTop ); // Qt3 version
    QSplashScreen * splash = new MySplashScreen( QPixmap( ":/logo.png" ),
                                                 Qt::WindowStaysOnTopHint );
+   // workaround for invisible splash screen on Qt >= 5.15
+   splash->setWindowFlags(Qt::Dialog | Qt::FramelessWindowHint | Qt::WindowStaysOnTopHint );
 
    std::ostringstream msg;
    msg << "\t\t\t\t\t\t\t\tversion " << vlab::version_string() << "\n\t\t\t\t\t\t\t\t"

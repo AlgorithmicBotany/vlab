@@ -70,8 +70,8 @@ include( $${MY_BASE}/common.pri )
 
 
 macx: {
-    LEXSOURCES = lsys_input.l
-    YACCSOURCES = lsys_input.y
+    #LEXSOURCES = lsys_input.l
+    #YACCSOURCES = lsys_input.y
 
     DEFINES += MACX_OPENGL_HEADERS
     SOURCES += apple.cpp
@@ -89,35 +89,35 @@ macx: {
 unix:!macx{
   SOURCES += apple.cpp
   HEADERS += apple.h
+}
 
-  LEXSOURCES = lsys_input.l
-  BISONSOURCES = lsys_input.y
+# qmake does not work automatically with lex/yacc/bison commands, so it needs to be done manually 
+LEXSOURCES = lsys_input.l
+BISONSOURCES = lsys_input.y
 
-  bison_decl.name = bison_decl
-  bison_decl.input = BISONSOURCES
-  bison_decl.variable_out = GENERATED_FILES
-  bison_decl.commands = \
+bison_decl.name = bison_decl
+bison_decl.input = BISONSOURCES
+bison_decl.variable_out = GENERATED_FILES
+bison_decl.commands = \
     -$(DEL_FILE) lsys_input.tab.h lsys_input.tab.c lsys_input_yacc.h lsys_input_yacc.cpp$$escape_expand(\\n\\t) \  
     bison -d -p lsys_input -b lsys_input ${QMAKE_FILE_IN}$$escape_expand(\\n\\t) \
     $(COPY) lsys_input.tab.h lsys_input_yacc.h$$escape_expand(\\n\\t) \
     $(COPY) lsys_input.tab.c lsys_input_yacc.cpp
-  bison_decl.output = lsys_input_yacc.h
-  bison_decl.dependency_type = TYPE_C
-  QMAKE_EXTRA_COMPILERS += bison_decl
+bison_decl.output = lsys_input_yacc.h
+bison_decl.dependency_type = TYPE_C
+QMAKE_EXTRA_COMPILERS += bison_decl
 
-  bison_impl.name = bisonsource
-  bison_impl.input = BISONSOURCES
-  bison_impl.variable_out = GENERATED_SOURCES
-  bison_impl.commands = $$escape_expand(\\n)
-  bison_impl.depends = lsys_input_yacc.h
-  bison_impl.output = lsys_input_yacc.cpp 
-  QMAKE_EXTRA_COMPILERS += bison_impl
- }
+bison_impl.name = bisonsource
+bison_impl.input = BISONSOURCES
+bison_impl.variable_out = GENERATED_SOURCES
+bison_impl.commands = $$escape_expand(\\n)
+bison_impl.depends = lsys_input_yacc.h
+bison_impl.output = lsys_input_yacc.cpp 
+QMAKE_EXTRA_COMPILERS += bison_impl
+
 
 QMAKE_CXXFLAGS += -Wno-deprecated-register
-
-
-
+S
 
 !isEmpty(MAKE_BUNDLE) {
 QMAKE_INFO_PLIST = Info.plist

@@ -115,10 +115,13 @@ else {
   message($$CONFIG)
   ARCH=""
   contains(CONFIG,x86) {
-    ARCH+=" -arch i386"
+    ARCH+=" -arch i386 -stdlib=libc++"
   }
   contains(CONFIG,x86_64) {
-    ARCH+=" -arch x86_64"
+    ARCH+=" -arch x86_64 -stdlib=libc++"
+  }
+  contains(CONFIG,arm64) {
+    ARCH+=" -arch arm64"
   }
 
   LPFG_SCRIPTS = scripts/Plug-in/cmpl.sh scripts/Plug-in/preproc.sh

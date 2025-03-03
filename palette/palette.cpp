@@ -86,7 +86,8 @@ void Palette::init() {
 
   QLabel *redlab = new QLabel("Red", this);
   redlab->setAlignment(AlignCenter);
-  redlab->setPalette(QPalette(QColor(0, 0, 0), QColor(255, 125, 125)));
+  // remove calls to setPalette because they mess up dark theme mode
+  //redlab->setPalette(QPalette(QColor(0, 0, 0), QColor(255, 125, 125)));
 
   redslide = new QSlider(Qt::Horizontal, this);
   redslide->setObjectName(QStringLiteral("redslide"));
@@ -106,14 +107,14 @@ void Palette::init() {
   redspin->setSingleStep(1);
   redspin->setValue(0);
 
-  redspin->setPalette(QPalette(QColor(255, 125, 125), QColor(255, 125, 125)));
+  //redspin->setPalette(QPalette(QColor(255, 125, 125), QColor(255, 125, 125)));
   theslides->addWidget(redlab, 0, 0);
   theslides->addWidget(redslide, 0, 1);
   theslides->addWidget(redspin, 0, 2, AlignLeft);
 
   QLabel *greenlab = new QLabel("Green", this);
   greenlab->setAlignment(AlignCenter);
-  greenlab->setPalette(QPalette(QColor(0, 0, 0), QColor(112, 255, 112)));
+  //greenlab->setPalette(QPalette(QColor(0, 0, 0), QColor(112, 255, 112)));
   greenslide = new QSlider(Qt::Horizontal, this);
   greenslide->setObjectName("greenslide");
   greenslide->setMinimum(0);
@@ -130,14 +131,14 @@ void Palette::init() {
   greenspin->setSingleStep(1);
   greenspin->setValue(0);
 
-  greenspin->setPalette(QPalette(QColor(125, 255, 125), QColor(125, 255, 125)));
+  //greenspin->setPalette(QPalette(QColor(125, 255, 125), QColor(125, 255, 125)));
   theslides->addWidget(greenlab, 1, 0);
   theslides->addWidget(greenslide, 1, 1);
   theslides->addWidget(greenspin, 1, 2, AlignLeft);
 
   QLabel *bluelab = new QLabel("Blue", this);
   bluelab->setAlignment(AlignCenter);
-  bluelab->setPalette(QPalette(QColor(0, 0, 0), QColor(125, 125, 255)));
+  //bluelab->setPalette(QPalette(QColor(0, 0, 0), QColor(125, 125, 255)));
   blueslide = new QSlider(Qt::Horizontal, this);
   blueslide->setObjectName("blueslide");
   blueslide->setMinimum(0);
@@ -154,7 +155,7 @@ void Palette::init() {
   bluespin->setSingleStep(1);
   bluespin->setValue(0);
 
-  bluespin->setPalette(QPalette(QColor(125, 125, 255), QColor(125, 125, 255)));
+  //bluespin->setPalette(QPalette(QColor(125, 125, 255), QColor(125, 125, 255)));
   theslides->addWidget(bluelab, 2, 0);
   theslides->addWidget(blueslide, 2, 1);
   theslides->addWidget(bluespin, 2, 2, AlignLeft);

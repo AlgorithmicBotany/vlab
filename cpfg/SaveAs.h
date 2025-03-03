@@ -35,6 +35,7 @@ class SaveAs : public QDialog, public Ui_SaveAs {
 
 protected:
   void closeEvent(QCloseEvent *event);
+  void changeEvent(QEvent *event);
 
 public:
   SaveAs(QWidget *parent = 0, QString objName = NULL,
@@ -92,6 +93,7 @@ private:
   int previousOutputFormat;
   int previousPixFormat;
   bool changeFormat;
+  bool _isLightTheme;
 
 private slots:
   void preserveExtension();

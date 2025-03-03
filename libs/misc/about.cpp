@@ -79,6 +79,16 @@ void about(QWidget *parent) {
   
   void about(QWidget *parent, QString programName ) {
 
+    // check if the OS theme is light or dark (Qt 6.5 solution will be different, but may still work)
+    // however, if the user changes the theme with the about window open, the colors in the window will
+    // not be updated until it is re-open
+    const QPalette defaultPalette;
+    const auto text = defaultPalette.color(QPalette::WindowText);
+    const auto window = defaultPalette.color(QPalette::Window);
+    bool _isLightTheme = text.lightness() < window.lightness();
+    QString textColor = _isLightTheme ? "#000000" : "#FFFFFF";
+    QString bgColor = !_isLightTheme ? "#000000" : "#FFFFFF";
+
     std::string version =
       "Version " +
       vlab::version_string() +
@@ -86,18 +96,28 @@ void about(QWidget *parent) {
       vlab::build_info() + std::string("\n") ;
     
     QDialog box(parent);
-  
 
     Ui::About ui;
     ui.setupUi(&box);
 
-    box.setStyleSheet("background-color: white;");
+    box.setStyleSheet("background-color:" + bgColor + ";");
     ui.appName->setText(programName);
     QPixmap pix(":/vlabLogo.png");
     pix = pix.scaled(QSize(150,150),  Qt::KeepAspectRatio,Qt::SmoothTransformation);
     ui.logo->setPixmap(pix);
     ui.version->setText(version.c_str());
 
+    QString button_style = QString(
+      "background-color: %1;"
+      "border-style: outset;"
+      "border-width: 1px;"
+      "border-radius: 10px;"
+      "border-color: %2;"
+      "font: 12px;"
+      "padding: 6px;").arg(bgColor).arg(textColor);
+    ui.LicenceButton->setStyleSheet(button_style);
+    ui.credits_button->setStyleSheet(button_style);
+    ui.notices_button->setStyleSheet(button_style);
     /* credits */
     //QDialog *credits = openFile("credits.html","Credits",&box);
     //QDialog *license = openFile("license.html","License",&box);
