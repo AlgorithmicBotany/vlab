@@ -71,3 +71,5 @@ libs/*/comments
 
 #test files
 
+/.vscode
+config_lpfg.pri

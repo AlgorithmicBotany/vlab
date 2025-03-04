@@ -3,7 +3,7 @@
 
 ## Developer Getting Started Guide
 
-Note: our current version has been developed using QT 5.12.3, but will also compile with QT 5.15.2
+Note: our current version has been developed using QT 5.15.16.
 
 ### OSX
 
@@ -14,18 +14,20 @@ xcode-select -install
 ```
 This should install the command line tools only and not the IDE.
 Then install Qt: https://doc.qt.io/qt-5/gettingstarted.html
+Because Qt 5.15 support is ending on 26 May, 2025, it is recommended to install Qt via
+Homebrew (https://formulae.brew.sh/formula/qt@5) or Macports (https://ports.macports.org/port/qt5/).
 
 To compile vlab, go to the source directory and run: 
 ```
-./configure.sh -A 64 -M 10.15  # 10.15 is Catalina, substitute as appropriate
+./configure.sh -A {arm64 | x86 | x86_64} -M {macOS version}
 ./compile_all.sh
 ```
 
 After compiling, to make an application bundle, change to the ./Distribution directory and run:
 ```
-./make-standalone-bundle.sh
+./vlab-macdeployqt.sh
 ```
-The script will create a vlab-5-******.dmg file.
+The script will create a vlab-5******.dmg file.
 
 ### Ubuntu
 
