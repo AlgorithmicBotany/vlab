@@ -86,6 +86,7 @@ private:
   QString saveName;
   int numbering;
   bool alphaChannel;
+  int _alphaChannelTypeIndex;
   QString settingsFile;
   QString fileNameNumber;
   int _id;

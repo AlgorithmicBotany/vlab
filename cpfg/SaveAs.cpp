@@ -54,6 +54,8 @@ SaveAs::SaveAs(QWidget *parent, QString objName, QString currentPath,
   previousOutputFormat = outputFormat;
   setAlphaChannelBox(outputFormat);
 
+  // set an index at which to enable alpha channel
+  _alphaChannelTypeIndex = 2; // starts at PDF and includes everything after
   imageTypes << "BMP";
   imageTypes << "JPG";
   imageTypes << "PDF";
@@ -332,7 +334,7 @@ void SaveAs::setFormat(int inValue) {
     checkBox_2->setEnabled(false);
   } else {
     comboBox_2->setEnabled(true);
-    if (comboBox_2->currentIndex() >= 4)
+    if (comboBox_2->currentIndex() >= _alphaChannelTypeIndex)
       checkBox_2->setEnabled(true);
     else
       checkBox_2->setEnabled(false);
@@ -344,7 +346,7 @@ void SaveAs::setFormat(int inValue) {
 
 void SaveAs::setAlphaChannelBox(int inValue) {
   comboBox_2->setCurrentIndex(inValue);
-  if (comboBox_2->currentIndex() >= 4)
+  if (comboBox_2->currentIndex() >= _alphaChannelTypeIndex)
     checkBox_2->setEnabled(true);
   else
     checkBox_2->setEnabled(false);
