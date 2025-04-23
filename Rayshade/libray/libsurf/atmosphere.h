@@ -35,7 +35,7 @@ typedef struct Atmosphere {
 } Atmosphere;
 
 extern Medium *MediumPush();
-extern Atmosphere *AtmosCreate(), *AtmosphereCopy();
+extern Atmosphere *AtmosCreate(char *data, void (*method)(void *fog, Ray *ray, Vector *pos, Float dist, Color *color)), *AtmosphereCopy();
 extern void Atmospherics();
 
 #endif /* ATMOSPHERE_H */

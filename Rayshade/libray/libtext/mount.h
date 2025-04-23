@@ -24,10 +24,9 @@ typedef struct {
   Color *cmap;
 } Mount;
 
-extern Mount *MountCreate();
-void
-MountApply(
-	 Mount *fbm,
+extern Mount *MountCreate(char *cmap, Float turb, Float slope);
+void MountApply(
+	 void *fbm,
 	 Geom *prim,
 	 Ray *ray,
 	 Vector *pos, Vector *norm, Vector *gnorm,

@@ -22,8 +22,8 @@ typedef struct {
   Float size;
 } Bump;
 
-extern Bump *BumpCreate();
-void BumpApply(Bump *bump, Geom *prim, Ray *ray, Vector *pos, Vector *norm,
+extern Bump *BumpCreate(Float size);
+void BumpApply(void *bump, Geom *prim, Ray *ray, Vector *pos, Vector *norm,
                Vector *gnorm, Surface *surf);
 
 #endif /* BUMP_H */

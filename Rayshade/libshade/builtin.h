@@ -19,6 +19,6 @@
 #define BUILTIN_H
 
 extern Float SumExpr(), DiffExpr(), MultExpr(), DivideExpr(), ModExpr(),
-    NegateExpr(), LinearTime();
+    NegateExpr(), PowExpr(), LinearTime();
 
 #endif /* BUILTIN_H */

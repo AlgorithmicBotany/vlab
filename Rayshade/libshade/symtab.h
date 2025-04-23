@@ -44,8 +44,8 @@ typedef struct SymtabEntry {
   struct SymtabEntry *next;
 } SymtabEntry;
 
-extern Expr *ExprFloatSymtabFind();
-extern SymtabEntry *SymtabFind(), *SymtabBuiltinFind();
-extern void SymtabAddEntry();
+extern Expr *ExprFloatSymtabFind(char *name);
+extern SymtabEntry *SymtabFind(char *name), *SymtabBuiltinFind(char *name);
+extern void SymtabAddEntry(char *name, int type, Expr *expr, Float (*fp)(), int timevary, int params);
 void SymtabInit();
 #endif /* SYMTAB_H */

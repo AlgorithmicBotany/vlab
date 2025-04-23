@@ -38,11 +38,15 @@ typedef struct ExprAssoc {
   struct ExprAssoc *next; /* Next in list */
 } ExprAssoc;
 
-extern Float ExprEval();
+extern Float ExprEval(Expr *expr);
 
-extern Expr *ExprResolve1(), *ExprResolve2(), *ExprResolve3(), *ExprResolve4(),
-    *ExprResolve5(), *ExprFloatCreate();
-extern Expr *TimeExpr, *FrameExpr, *ExprReuseFloatCreate();
+extern Expr *ExprResolve1(Expr *a, Float (*fp)(), int timevary), 
+  *ExprResolve2(Expr *a, Expr *b, Float (*fp)(), int timevary), 
+  *ExprResolve3(Expr *a, Expr *b, Expr *c, Float (*fp)(), int timevary), 
+  *ExprResolve4(Expr *a, Expr *b, Expr *c, Expr *d, Float (*fp)(), int timevary),
+  *ExprResolve5(Expr *a, Expr *b, Expr *c, Expr *d, Expr *e, Float (*fp)(), int timevary), 
+  *ExprFloatCreate(Float val, int timevary);
+extern Expr *TimeExpr, *FrameExpr, *ExprReuseFloatCreate(Float val);
 
 extern ExprAssoc *AssocCreate();
 extern void TimeSet();

@@ -58,7 +58,7 @@ typedef struct Light {
 } Light;
 
 extern LightMethods *LightMethodsCreate();
-extern Light *LightCreate();
+extern Light *LightCreate(LightRef light, LightMethods *meth, Color *color);
 extern void LightAllocateCache(), LightAddToDefined();
 extern int LightIntens(), LightDirection();
 extern void ShadowSetOptions(), ShadowStats();

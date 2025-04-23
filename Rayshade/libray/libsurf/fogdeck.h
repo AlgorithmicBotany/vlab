@@ -28,8 +28,9 @@ typedef struct Fogdeck {
   int octaves;
 } Fogdeck;
 
-extern Fogdeck *FogdeckCreate();
+extern Fogdeck *FogdeckCreate(Float alt, Float offset, Vector *scale,
+  Float chaoscale, int octaves, Color *color, Color *trans);
 
-void FogdeckApply(Fogdeck *fogdeck, Ray *ray, Vector *pos, Float dist,
+void FogdeckApply(void *fogdeck, Ray *ray, Vector *pos, Float dist,
                   Color *color);
 #endif /* FOGDECK_H */

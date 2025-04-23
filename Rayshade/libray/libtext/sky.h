@@ -24,10 +24,11 @@ typedef struct {
   int octaves;
 } Sky;
 
-extern Sky *SkyCreate();
+extern Sky *SkyCreate(Float scale, Float h, Float lambda, int octaves,
+					 Float cthresh, Float lthresh);
 void
 SkyApply(
-	 Sky *sky,
+	 void *sky,
 	 Geom *prim,
 	 Ray *ray,
 	 Vector *pos, Vector *norm, Vector *gnorm,

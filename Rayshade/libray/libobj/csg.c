@@ -30,7 +30,7 @@ Csg *CsgCreate(op) int op;
   Csg *csg;
 
   csg = (Csg *)share_malloc(sizeof(Csg));
-  csg->operator= op;
+  csg->my_operator= op;
   csg->obj1 = csg->obj2 = (Geom *)NULL;
 
   switch (op) {
@@ -71,16 +71,16 @@ Ray *ray;
 HitList *hit1, *hit2;
 Float mindist, *dist1, *dist2;
 {
-  int operator;
+  int my_operator;
 
   hit1->nodes = 0;
   hit2->nodes = 0;
   *dist1 = FAR_AWAY;
   *dist2 = FAR_AWAY;
-  operator= csg->operator;
+  my_operator= csg->my_operator;
 
   if (!intersect(csg->obj1, ray, hit1, mindist, dist1) &&
-      ((operator== CSG_INTERSECT) || (operator== CSG_DIFFERENCE))) {
+      ((my_operator== CSG_INTERSECT) || (my_operator== CSG_DIFFERENCE))) {
     /*
      * Intersection and Difference cases: if you miss the first
      * object, you missed the whole thing.
@@ -89,8 +89,8 @@ Float mindist, *dist1, *dist2;
   }
 
   if (!intersect(csg->obj2, ray, hit2, mindist, dist2) &&
-      ((operator== CSG_INTERSECT) ||
-       ((hit1->nodes == 0) && (operator== CSG_UNION)))) {
+      ((my_operator== CSG_INTERSECT) ||
+       ((hit1->nodes == 0) && (my_operator== CSG_UNION)))) {
     /*
      * Intersect case:  if you miss either object, you miss whole
      * Union case: if you miss both object, you miss whole
@@ -283,7 +283,7 @@ Float mindist, *maxdist;
   }
 
   if ((dist1 > dist2) &&
-      (csg->operator== CSG_UNION || csg->operator== CSG_INTERSECT)) {
+      (csg->my_operator== CSG_UNION || csg->my_operator== CSG_INTERSECT)) {
     /* swap so 1 is closest (except in difference case) */
     disttmp = dist2;
     dist2 = dist1;
@@ -326,7 +326,7 @@ Float bounds[2][3];
   GeomComputeBounds(csg->obj1);
   GeomComputeBounds(csg->obj2);
 
-  switch (csg->operator) {
+  switch (csg->my_operator) {
   case CSG_UNION:
     bounds[LOW][X] = min(csg->obj1->bounds[LOW][X], csg->obj2->bounds[LOW][X]);
     bounds[HIGH][X] =
@@ -358,7 +358,7 @@ Float bounds[2][3];
     bounds[HIGH][Z] = csg->obj1->bounds[HIGH][Z];
     break;
   default:
-    RLerror(RL_ABORT, "Unknown csg operator type %d?\n", csg->operator);
+    RLerror(RL_ABORT, "Unknown csg operator type %d?\n", csg->my_operator);
   }
 }
 

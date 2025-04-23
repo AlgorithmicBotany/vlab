@@ -51,9 +51,9 @@ typedef struct SurfList {
 } SurfList;
 
 extern Surface *SurfaceCreate(), *GetShadingSurf(), /* application-provided */
-    *SurfaceCopy();
+    *SurfaceCopy(Surface *surf);
 
-extern SurfList *SurfPop(), *SurfPush();
+extern SurfList *SurfPop(SurfList *list), *SurfPush(Surface *surf, SurfList *list);
 
 extern void SurfaceBlend(), ColorBlend();
 

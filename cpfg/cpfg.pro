@@ -81,7 +81,7 @@ macx: {
     # to speed-up testing, make install will copy the cpfg.app bundle to the Distribution directory
     # this is much faster than calling ./compile-all.sh from the root vlab directory
     # however, the vlab-x.x.x, version number has to be updated manually in the next line
-    cpfg_quick_install.path = ../Distribution/vlab-5.0.0/browser.app/Contents/Plug-ins/
+    cpfg_quick_install.path = ../Distribution/vlab-5.1/browser.app/Contents/Plug-ins/
     cpfg_quick_install.files = ../.binaries/cpfg.app
     INSTALLS += cpfg_quick_install
 }

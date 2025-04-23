@@ -37,14 +37,14 @@ int octaves;
 
 void
 SkyApply(
-	 Sky *sky,
+	 void *p_sky,
 	 __attribute__((unused)) Geom *prim,
 	 __attribute__((unused)) Ray *ray,
 	 Vector *pos, __attribute__((unused)) Vector *norm, __attribute__((unused)) Vector *gnorm,
 	 Surface *surf)
 {
   Float It, maxval;
-
+  Sky *sky = (Sky *)p_sky;
   It = fBm(pos, sky->omega, sky->lambda, sky->octaves);
   maxval = 1. / (1. - sky->omega);
   /*

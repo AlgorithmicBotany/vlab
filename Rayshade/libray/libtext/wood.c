@@ -33,7 +33,7 @@ Wood *WoodCreate() {
 /*ARGSUSED*/
 void
 WoodApply(
-	__attribute__((unused))  Wood *wood,
+	__attribute__((unused))  void *p_wood,
 	__attribute__((unused))  Geom *prim,
 	__attribute__((unused))  Ray *ray,
 	 Vector *pos, __attribute__((unused)) Vector *norm, __attribute__((unused)) Vector *gnorm,
@@ -43,6 +43,8 @@ WoodApply(
   Float chaos, brownLayer, greenLayer;
   Float perturb, brownPerturb, greenPerturb, grnPerturb;
   Float t;
+  
+  Wood *wood = (Wood *)p_wood;
 
   chaos = Chaos(pos, 7);
   t = sin(sin(8. * chaos + 7 * pos->x + 3. * pos->y));

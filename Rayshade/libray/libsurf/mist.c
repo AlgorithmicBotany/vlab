@@ -34,7 +34,7 @@ Float zero, scale;
 /*
  * Add low-altitude mist to the given color.
  */
-void MistApply(mist, ray, pos, dist, color) Mist *mist;
+void MistApply(p_mist, ray, pos, dist, color) void *p_mist;
 Ray *ray;
 Vector *pos;
 Float dist;
@@ -42,7 +42,7 @@ Color *color;
 {
   Float deltaZ, d, atten;
   extern Float ExpAtten();
-
+  Mist *mist = (Mist *)p_mist;
   deltaZ = mist->scale * (pos->z - ray->pos.z);
   if (fabs(deltaZ) > EPSILON)
     d = (exp(-ray->pos.z * mist->scale + mist->zero) -

@@ -58,7 +58,7 @@ typedef struct MetaList {
 
 extern int BlobIntersect(), BlobNormal();
 extern void BlobBounds(), BlobStats();
-extern Blob *BlobCreate();
+extern Blob *BlobCreate(Float T, MetaList *mlist, int npoints);
 extern char *BlobName();
 extern Methods *BlobMethods();
 

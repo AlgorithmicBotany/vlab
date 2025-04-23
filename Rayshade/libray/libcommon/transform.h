@@ -47,10 +47,10 @@ typedef struct Trans {
 } Trans;
 
 extern void MatrixMult(), MatrixCopy(), MatrixInit(), MatrixInvert(),
-    TransCopy(), TransInit(), TransInvert(), TransCompose(), VecTransform(),
+    TransCopy(), TransInit(), TransInvert(), TransCompose(Trans *t1, Trans *t2, Trans *res), VecTransform(),
     PointTransform(), NormalTransform();
 
-extern Trans *TransCreate();
+extern Trans *TransCreate(TransRef tr, TransMethods *meth);
 
 extern RSMatrix *MatrixCreate();
 
@@ -60,7 +60,7 @@ extern Float RayTransform();
 
 extern void TransResolveAssoc();
 extern void TransComposeList();
-extern void TransPropagate();
+extern void TransPropagate(Trans *trans);
 void TransFree(Trans *trans);
 void TransAssoc(Trans *trans, Float *ptr, Expr *expr);
 

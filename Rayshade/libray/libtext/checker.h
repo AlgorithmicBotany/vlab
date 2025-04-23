@@ -22,8 +22,8 @@ typedef struct {
   Surface *surf; /* Alternate surface */
 } Checker;
 
-extern Checker *CheckerCreate();
-void CheckerApply(Checker *blotch, Geom *prim, Ray *ray, Vector *pos,
+extern Checker *CheckerCreate(Surface *surf);
+void CheckerApply(void *checker, Geom *prim, Ray *ray, Vector *pos,
                   Vector *norm, Vector *gnorm, Surface *surf);
 
 #endif /* CHECKER_H */

@@ -34,6 +34,15 @@ Float ModExpr(a, b) Float a, b;
 Float NegateExpr(a) Float a;
 { return -a; }
 
+Float PowExpr(a, b) Float a, b;
+{
+  if (a == 0.0 && b == 0.0)
+    return 1.0;
+  if (a < 0.0 && equal(b, (int)b) && ((int)b % 2) == 0)
+    return -pow(-a, b);
+  return pow(a, b);
+}
+
 Float LinearTime(starttime, startval, endtime, endval) Float starttime, endtime,
     startval, endval;
 {

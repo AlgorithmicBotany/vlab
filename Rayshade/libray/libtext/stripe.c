@@ -32,14 +32,15 @@ Mapping *mapping;
   return stripe;
 }
 
-void StripeApply(stripe, prim, pos, norm, gnorm, surf) Stripe *stripe;
+void StripeApply(p_stripe, prim, ray, pos, norm, gnorm, surf) void *p_stripe;
+Ray *ray;
 Geom *prim;
 Vector *pos, *norm, *gnorm;
 Surface *surf;
 {
   Vector dpdu, dpdv;
   Float fu, fv, u, v;
-
+  Stripe *stripe = (Stripe *)p_stripe;
   TextToUV(stripe->mapping, prim, pos, gnorm, &u, &v, &dpdu, &dpdv);
 
   u -= floor(u);

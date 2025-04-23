@@ -26,7 +26,7 @@ typedef struct {
   Float radius;
 } Extended;
 
-extern Extended *ExtendedCreate();
+extern Extended *ExtendedCreate(Float radius, Vector *pos);
 extern LightMethods *ExtendedMethods();
 extern int ExtendedIntens();
 extern void ExtendedDirection();

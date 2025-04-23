@@ -41,13 +41,13 @@ char *mapname;
   return fbm;
 }
 
-void FBmApply(FBm *fbm, __attribute__((unused)) Geom *prim,
+void FBmApply(void *p_fbm, __attribute__((unused)) Geom *prim,
               __attribute__((unused)) Ray *ray, Vector *pos,
               __attribute__((unused)) Vector *norm,
               __attribute__((unused)) Vector *gnorm, Surface *surf) {
   Float val;
   int index;
-
+  FBm *fbm = (FBm *)p_fbm;
   val = fBm(pos, fbm->omega, fbm->lambda, fbm->octaves);
   if (val < fbm->thresh)
     val = fbm->offset;

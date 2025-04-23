@@ -31,8 +31,8 @@ typedef struct {
   Mapping *mapping;
 } ImageText;
 
-extern ImageText *ImageTextCreate();
-extern void ImageTextSetComponent();
-void ImageTextApply(ImageText *text, Geom *prim, Ray *ray, Vector *pos,
+extern ImageText *ImageTextCreate(char *imagefile);
+extern void ImageTextSetComponent(ImageText *text, int component);
+void ImageTextApply(void *text, Geom *prim, Ray *ray, Vector *pos,
                     Vector *norm, Vector *gnorm, Surface *surf);
 #endif /* IMAGETEXT_H */

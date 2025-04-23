@@ -25,7 +25,9 @@ typedef struct {
   Float width, bump;
 } Stripe;
 
-extern Stripe *StripeCreate();
-extern void StripeApply();
+extern Stripe *StripeCreate(Surface *surf, Float width, Float bump,
+                            Mapping *mapping);
+void StripeApply(void *stripe, Geom *prim, Ray *ray, Vector *pos, Vector *norm,
+                        Vector *gnorm, Surface *surf);
 
 #endif /* STRIPE_H */

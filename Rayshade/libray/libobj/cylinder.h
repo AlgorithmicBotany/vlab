@@ -28,7 +28,7 @@ typedef struct cylinder {
   Trans trans;
 } Cylinder;
 
-extern Cylinder *CylinderCreate();
+extern Cylinder *CylinderCreate(Float r, Vector *bot, Vector *top);
 extern int CylinderIntersect(), CylinderEnter(), CylinderNormal();
 extern void CylinderBounds(), CylinderStats();
 extern char *CylinderName();

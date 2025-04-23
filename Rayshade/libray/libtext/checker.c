@@ -32,7 +32,7 @@ Checker *CheckerCreate(surf) Surface *surf;
 /*
  * Apply a "checker" texture.
  */
-void CheckerApply(Checker *checker, __attribute__((unused)) Geom *prim,
+void CheckerApply(void *p_checker, __attribute__((unused)) Geom *prim,
                   __attribute__((unused)) Ray *ray, Vector *pos,
                   __attribute__((unused)) Vector *norm,
                   __attribute__((unused)) Vector *gnorm, Surface *surf) {
@@ -42,6 +42,7 @@ void CheckerApply(Checker *checker, __attribute__((unused)) Geom *prim,
   yp = pos->y > 0. ? pos->y : 1. - pos->y;
   zp = pos->z > 0. ? pos->z : 1. - pos->z;
 
+  Checker *checker = (Checker *)p_checker;
   if ((xp + yp + zp) % 2)
     *surf = *checker->surf;
   /* else surface stays the same. */

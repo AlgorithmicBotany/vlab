@@ -24,8 +24,8 @@ typedef struct {
   Surface *surf;
 } Blotch;
 
-extern Blotch *BlotchCreate();
-void BlotchApply(Blotch *blotch, Geom *prim, Ray *ray, Vector *pos,
+extern Blotch *BlotchCreate(Float mix, Surface *surf);
+void BlotchApply(void *blotch, Geom *prim, Ray *ray, Vector *pos,
                  Vector *norm, Vector *gnorm, Surface *surf);
 
 #endif /* BLOTCH_H */

@@ -97,11 +97,11 @@ extern FILE *yyin;				/* input file pointer */
 extern int yylineno;				/* Current line # in file */
 extern Atmosphere *AtmosEffects;		/* atmospheric effects */
 extern Medium TopMedium;			/* "air" */
-extern void	GeomAddToDefined(),
-		LightAddToDefined(),
-		SurfaceAddToDefined();
-extern Surface	*SurfaceGetNamed();
-extern Geom 	*GeomGetNamed();
+extern void	GeomAddToDefined(Geom *obj),
+		LightAddToDefined(Light *light),
+		SurfaceAddToDefined(Surface *surf);
+extern Surface	*SurfaceGetNamed(char *name);
+extern Geom 	*GeomGetNamed(char *name);
 %}
 %union {
 	char *c;
@@ -368,7 +368,7 @@ Texturetype	: tCHECKER Surface
 			if (Imagetext->image == (Image *)NULL)
 				$$ = (Texture *)NULL;
 			else
-				$$ = TextCreate(Imagetext, ImageTextApply);
+				$$ = TextCreate((TextRef)Imagetext, ImageTextApply);
 			Imagetext = (ImageText *)NULL;
 		}
 		| tSTRIPE Surface Expr Expr OptMapping
@@ -749,7 +749,8 @@ Light		: LightType
 		}
 		| Lightdef tAREA Vector Vector IExpr Vector IExpr
 		{
-			extern void AreaLightCreate();
+			extern void AreaLightCreate(
+				Color *color, Vector *corner, Vector *u, int usamp, Vector *v, int vsamp, int shadow);
 			/* Area light is strange in that the
 			 * Creation routine does the installation.
 			 */
@@ -757,7 +758,8 @@ Light		: LightType
 		}
 		| Lightdef tAREA Vector Vector IExpr Vector IExpr tNOSHADOW
 		{
-			extern void AreaLightCreate();
+			extern void AreaLightCreate(
+				Color *color, Vector *corner, Vector *u, int usamp, Vector *v, int vsamp, int shadow);
 			/* Area light is strange in that the
 			 * Creation routine does the installation.
 			 */
@@ -1460,7 +1462,7 @@ MExpr		: tFLOAT
 		}
 		| MExpr '^' MExpr
 		{
-			$$ = ExprResolve2($1, $3, pow, FALSE);
+			$$ = ExprResolve2($1, $3, PowExpr, FALSE);
 		} ;
 Float		: tFLOAT
 		| '-' tFLOAT
@@ -1494,9 +1496,7 @@ void yyerror(const char* s)
 	exit(1);
 }
 
-Geom *
-NewAggregate(obj)
-Geom *obj;
+Geom * NewAggregate(Geom *obj)
 {
 	obj->name = Defstack->obj->name;
 	obj->next = Defstack->obj->next;

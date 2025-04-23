@@ -38,7 +38,7 @@ Surface DefaultSurface = {
     NULL,            /* next */
 };
 
-Surface *SurfaceGetNamed(), *SurfaceFetchNamed();
+Surface *SurfaceGetNamed(char *name), *SurfaceFetchNamed(char *name);
 
 /*
  * Add surf to the list of defined surfaces.

@@ -26,7 +26,7 @@ typedef struct {
   Float coef, radius, falloff;
 } Spotlight;
 
-extern Spotlight *SpotCreate();
+extern Spotlight *SpotCreate(Vector *from, Vector *to, Float coef, Float in, Float out);
 extern LightMethods *SpotMethods();
 extern int SpotIntens();
 extern void SpotDirection();

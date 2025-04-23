@@ -19,8 +19,8 @@
 
 #define TextFBmBumpCreate(o, s, h, l, n)                                       \
   TextCreate((TextRef)FBmBumpCreate(o, s, h, l, n), FBmBumpApply)
-extern FBm *FBmBumpCreate();
-void FBmBumpApply(FBm *fbm, Geom *prim, Ray *ray, Vector *pos, Vector *norm,
+extern FBm *FBmBumpCreate(Float offset, Float scale, Float h, Float lambda, int octaves);
+void FBmBumpApply(void *fbm, Geom *prim, Ray *ray, Vector *pos, Vector *norm,
                   Vector *gnorm, Surface *surf);
 
 #endif /* FBMBUMP_H */

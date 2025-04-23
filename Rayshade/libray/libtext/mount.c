@@ -38,7 +38,7 @@ Float turb, slope;
  */
 void
 MountApply(
-	 Mount *mount,
+	 void *p_mount,
 	 __attribute__((unused))Geom *prim,
 	 __attribute__((unused))Ray *ray,
 	 Vector *pos, Vector *norm, __attribute__((unused))Vector *gnorm,
@@ -46,7 +46,7 @@ MountApply(
 {
   int index;
   Float t;
-
+  Mount *mount = (Mount *)p_mount;
   t = Chaos(pos, 7);
   index = (pos->z + mount->turb * t - mount->slope * (1. - norm->z)) * 256;
   if (index < 0)

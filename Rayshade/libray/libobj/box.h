@@ -26,7 +26,7 @@ typedef struct box {
   Float bounds[2][3];
 } Box;
 
-extern Box *BoxCreate();
+extern Box *BoxCreate(Vector *v1, Vector *v2);
 extern int BoxIntersect(), BoxNormal();
 extern void BoxBounds(), BoxStats();
 extern char *BoxName();

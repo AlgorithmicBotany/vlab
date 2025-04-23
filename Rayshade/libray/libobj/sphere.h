@@ -29,7 +29,7 @@ typedef struct {
   Float x, y, z; /* position */
 } Sphere;
 
-extern Sphere *SphereCreate();
+extern Sphere *SphereCreate(Float r, Vector *pos);
 extern Methods *SphereMethods();
 extern int SphereIntersect(), SphereNormal();
 extern void SphereBounds(), SphereStats();

@@ -32,7 +32,7 @@ MarbleText *MarbleCreate(mapname) char *mapname;
 
 void
 MarbleApply(
-	 MarbleText *marble,
+	 void *p_marble,
 	 __attribute__((unused)) Geom *prim,
 	 __attribute__((unused))  Ray *ray,
 	 Vector *pos, __attribute__((unused)) Vector *norm, __attribute__((unused)) Vector *gnorm,
@@ -40,7 +40,7 @@ MarbleApply(
 {
   Float val;
   int index;
-
+  MarbleText *marble = (MarbleText *)p_marble;
   val = Marble(pos);
   if (marble->colormap) {
     index = (int)(255. * val);

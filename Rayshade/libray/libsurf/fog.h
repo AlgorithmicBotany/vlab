@@ -23,6 +23,6 @@ typedef struct Fog {
       trans;   /* Fog transmissivity */
 } Fog;
 
-extern Fog *FogCreate();
-void FogApply(Fog *fog, Ray *ray, Vector *pos, Float dist, Color *color);
+extern Fog *FogCreate(Color *color, Color *trans);
+void FogApply(void *fog, Ray *ray, Vector *pos, Float dist, Color *color);
 #endif /* FOG_H */

@@ -119,14 +119,14 @@ typedef struct HitList {
 
 extern char *GeomName();
 
-extern Geom *GeomCreate(), *GeomCopy(), *GeomCopyNamed(),
+extern Geom *GeomCreate(GeomRef objptr, Methods *methods), *GeomCopy(), *GeomCopyNamed(),
     *GeomComputeAggregateBounds();
 
-extern GeomList *GeomStackPush(), *GeomStackPop();
+extern GeomList *GeomStackPush(Geom *obj, GeomList *list), *GeomStackPop(GeomList *list);
 
 extern void PrimUV(), AggregatePrintInfo(), IntersectStats();
 
-extern int AggregateConvert(), PrimNormal(),
+extern int AggregateConvert(Geom *obj, Geom *objlist), PrimNormal(),
     TraceRay(); /* application-provided */
 
 extern Methods *MethodsCreate();

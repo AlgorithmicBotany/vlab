@@ -36,12 +36,12 @@ Surface *surf;
  * Apply "blotch" texture.
  */
 /*ARGSUSED*/
-void BlotchApply(Blotch *blotch, __attribute__((unused)) Geom *prim,
+void BlotchApply(void *p_blotch, __attribute__((unused)) Geom *prim,
                  __attribute__((unused)) Ray *ray, Vector *pos,
                  __attribute__((unused)) Vector *norm,
                  __attribute__((unused)) Vector *gnorm, Surface *surf) {
   Float val;
-
+  Blotch *blotch = (Blotch *)p_blotch;
   /*
    * "mix" represents the 'average' noise value at a point.
    */

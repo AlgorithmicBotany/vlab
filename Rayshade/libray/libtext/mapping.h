@@ -31,8 +31,10 @@ typedef struct Mapping {
   void (*method)();
 } Mapping;
 
-extern Mapping *UVMappingCreate(), *SphereMappingCreate(), *CylMappingCreate(),
-    *LinearMappingCreate();
+extern Mapping *UVMappingCreate(), 
+    *SphereMappingCreate(Vector *center, Vector *norm, Vector *uaxis), 
+    *CylMappingCreate(Vector *center, Vector *norm, Vector *uaxis),
+    *LinearMappingCreate(Vector *center, Vector *vaxis, Vector *uaxis);
 
 void UVMapping(Mapping *map, Geom *obj, Vector *pos, Vector *norm, Vec2d *uv,
                Vector *dpdu, Vector *dpdv);

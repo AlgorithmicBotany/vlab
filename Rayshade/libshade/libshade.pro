@@ -4,38 +4,42 @@ CONFIG  += staticlib yacc_no_name_mangle
 CONFIG -= qt
 TARGET   = lshade
 SOURCES  = setup.c viewing.c shade.c picture.c  builtin.c symtab.c misc.c lightdef.c objdef.c options.c \
-		stats.c surfdef.c yacc.c lex.c 
+		stats.c surfdef.c yacc.c lex.c
 HEADERS = ../config.h  funcdefs.h \
 		../patchlevel.h rayshade.h 
 
 INCLUDEPATH += ./ ../ ../libray/ ../../cpfg/ ../../misc/libs/
 QMAKE_LINK = $$QMAKE_LINK_C
 
-flex.name = Flex ${QMAKE_FILE_IN}
+flex.name = flex ${QMAKE_FILE_IN}
 flex.input = FLEXSOURCES
 flex.output = .obj/lex.o
 flex.commands = flex -l  -t lex.l > lex.c
 flex.CONFIG += target_predeps
-#flex.variable_out = GENERATED_SOURCES
+flex.variable_out = GENERATED_SOURCES
 silent:flex.commands = @echo Lex ${QMAKE_FILE_IN} && $$flex.commands
 QMAKE_EXTRA_COMPILERS += flex
 
-FLEXSOURCES = lex.l
-
-#bison.name = Bison ${QMAKE_FILE_IN}
-bison.input = BISONSOURCES
-bison.output = ./y.tab.h
-bison.commands = bison -y -d yacc.y 
-#bison -y -d -o ${QMAKE_FILE_PATH}/${QMAKE_FILE_BASE}.parser.cpp ${QMAKE_FILE_IN}
-bison.CONFIG += target_predeps
-#bison.variable_out = GENERATED_SOURCES
-silent:bison.commands = @echo Bison ${QMAKE_FILE_IN} && $$bison.commands
-
-QMAKE_EXTRA_TARGETS += bison flex
-PRE_TARGETDEPS += flex bison
 BISONSOURCES = yacc.y
+bison_decl.name = bison_decl
+bison_decl.input = BISONSOURCES
+bison_decl.variable_out = GENERATED_FILES
+bison_decl.commands = \
+    -$(DEL_FILE) y.tab.h y.tab.c yacc.h yacc.c$$escape_expand(\\n\\t) \  
+    bison -y -d ${QMAKE_FILE_IN}$$escape_expand(\\n\\t) \
+    $(COPY) y.tab.h yacc.h$$escape_expand(\\n\\t) \
+    $(COPY) y.tab.c yacc.c
+bison_decl.output = yacc.h
+bison_decl.dependency_type = TYPE_C
+QMAKE_EXTRA_COMPILERS += bison_decl
 
-QMAKE_EXTRA_COMPILERS += bison
+bison_impl.name = bisonsource
+bison_impl.input = BISONSOURCES
+bison_impl.variable_out = GENERATED_SOURCES
+bison_impl.commands = $$escape_expand(\\n)
+bison_impl.depends = yacc.h
+bison_impl.output = yacc.c
+QMAKE_EXTRA_COMPILERS += bison_impl
 
 MY_LIBS =  rayimage raycommon raysurf raytext rayobj raylight misc
 #QT = core
@@ -48,7 +52,3 @@ MY_BASE  = ../..
 include( $${MY_BASE}/common.pri )
 QMAKE_CFLAGS -= Wall
 
-#mv -f y.tab.c yacc.c
-#gcc -g -arch x86_64  -I.. -I../libray -I/usr/X11/include -O3   -c -o yacc.o yacc.c
-#flex -l  -t lex.l > lex.c
-#gcc -g -arch x86_64  -I.. -I../libray -I/usr/X11/include -O3   -c -o lex.o lex.c
