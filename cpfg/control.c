@@ -3603,7 +3603,7 @@ void SaveFile(char *name, int format) {
     clp.savefp[format] = stdout;
     Message("Standard output used.\n");
   } else if ((clp.savefp[format] = fopen(name, "w")) == NULL) {
-    Message("Can't open %s\n", name);
+    Message("(control.c) SaveFile - Can't open %s\n", name);
     return;
   }
 

@@ -2392,9 +2392,10 @@ void glcanvas::SaveTGA() {
 
 void glcanvas::SaveRAY() {
   if (validLsystem) {
-
     QWidget::setCursor(WaitCursor); /* change to hourglass cursor */
-    char *name = const_cast<char *>((_filename + ".ray").c_str());
+    //char *name = const_cast<char *>((_filename + ".ray").c_str());
+    std::string savefname = _filename + ".ray";
+    char *name = const_cast<char *>(savefname.c_str());
     OpenOutputFile(name, SAVE_RAYSHADE);
     QWidget::setCursor(ArrowCursor); /* change to arrow cursor */
   }
@@ -2409,7 +2410,9 @@ void glcanvas::SavePS() {
   if (validLsystem) {
 
     QWidget::setCursor(WaitCursor); /* change to hourglass cursor */
-    char *name = const_cast<char *>((_filename + ".ps").c_str());
+    //char *name = const_cast<char *>((_filename + ".ps").c_str());
+    std::string savefname = _filename + ".ps";
+    char *name = const_cast<char *>(savefname.c_str());    
     OpenOutputFile(name, SAVE_POSTSCRIPT);
     QWidget::setCursor(ArrowCursor); /* change to arrow cursor */
   }
@@ -2424,7 +2427,9 @@ void glcanvas::SaveSTR() {
   if (validLsystem) {
 
     QWidget::setCursor(WaitCursor); // change to hourglass cursor
-    char *name = const_cast<char *>((_filename + ".str").c_str());
+    //char *name = const_cast<char *>((_filename + ".str").c_str());
+    std::string savefname = _filename + ".str";
+    char *name = const_cast<char *>(savefname.c_str());
     OpenOutputFile(name, SAVE_STRING);
     QWidget::setCursor(ArrowCursor); // change to arrow cursor
   }
@@ -2439,7 +2444,9 @@ void glcanvas::SaveSTRB() {
   if (validLsystem) {
 
     QWidget::setCursor(WaitCursor); /* change to hourglass cursor*/
-    char *name = const_cast<char *>((_filename + ".strb").c_str());
+    //char *name = const_cast<char *>((_filename + ".strb").c_str());
+    std::string savefname = _filename + ".strb";
+    char *name = const_cast<char *>(savefname.c_str());
     OpenOutputFile(name, SAVE_STRINGDUMP);
     QWidget::setCursor(ArrowCursor); /* change to arrow cursor */
   }
@@ -2920,7 +2927,7 @@ void glcanvas::save() {
     st1 << _id;
     _filename = _filename + st1.str();
   }
-
+  
   switch (_outputFormat) {
   case 0: {
     switch (_pix_format) {
