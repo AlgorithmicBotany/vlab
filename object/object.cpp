@@ -802,7 +802,10 @@ static void MakeTemp()
 {
   // create a name for the temporary directory for this object
   QString tmpdir = Vlab::getTmpDir();
-  char *buff = dsprintf("%s/VLXXXXXX", tmpdir.toStdString().c_str());
+  QString objPath = QString::fromStdString(obj.objDir);
+  QDir objDir(objPath);
+  QString dirName = objDir.dirName();
+  char *buff = dsprintf("%s/VL-%s-XXXXXX", tmpdir.toStdString().c_str(), dirName.toStdString().c_str());
   if (mkdtemp(buff) == 0) {
     qqWarning(QString("object: could not create temporary directory:"));
     qqWarning(QString("        %1").arg(buff));

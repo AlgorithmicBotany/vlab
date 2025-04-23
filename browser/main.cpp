@@ -208,18 +208,35 @@ int start_browser(int argc, char **argv, bool cleanTMP) {
     QString tmpPath = QString(QDir::homePath() + QString("/.vlab/tmp/"));
     sysInfo.tmpDir = xstrdup(tmpPath.toLatin1());
   }
+  // if temp dir does not exist, create it.
   QDir dir(sysInfo.tmpDir);
   if (!dir.exists()) {
     dir.mkpath(sysInfo.tmpDir);
-  }
-
-
-  // check if temporary directory exists if not create it, if yes empty it
-  if (cleanTMP) {
-    QDir dir(sysInfo.tmpDir);
-    bool a = dir.removeRecursively();
-    if (!dir.exists()) {
-      a = dir.mkpath(sysInfo.tmpDir);
+  } else {
+    // temp dir exists; if it should be cleaned but isn't empty, ask user what to do
+    if (cleanTMP && !dir.isEmpty()) {
+      QMessageBox msgBox;
+      msgBox.setIcon(QMessageBox::Warning);
+      msgBox.setText("An existing temporary folder for vlab was detected. Would you like to save or discard it?");
+      msgBox.setInformativeText("Discarding the folder will remove all files within open objects. You will lose any unsaved work!");
+      // write out the names of the objects contained in the temp folder
+      QString name_filter("VL*"); // all objects start with 'VL', see MakeTemp() in object.cpp
+      QString folder_names = dir.entryList(QStringList(name_filter), QDir::Dirs | QtDir::NoDotAndDotDot)).join("\n");
+      QString folder_str = "Object folders to be deleted:\n" + folder_names;
+      msgBox.setDetailedText(folder_str);
+      msgBox.setStandardButtons(QMessageBox::Save | QMessageBox::Discard | QMessageBox::Cancel);
+      msgBox.setDefaultButton(QMessageBox::Save);
+      int ret = msgBox.exec();
+      if (ret == QMessageBox::Cancel) {
+        // exit and don't do anything
+        exit(-1);
+      } else if (ret == QMessageBox::Discard) {
+        QDir dir(sysInfo.tmpDir);
+        bool a = dir.removeRecursively();
+        if (!dir.exists()) {
+          a = dir.mkpath(sysInfo.tmpDir);
+        }
+      } // else ... keep the temp folder
     }
   }
 
