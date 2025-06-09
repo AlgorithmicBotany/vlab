@@ -65,7 +65,8 @@ typedef struct SSquare {
   struct SSquare *child[4], *parent;
 } SSquare;
 
-SSquare *SSquares, *SSquareCreate(), *SSquareInstall(), *SSquareSelect(),
+//SSquare *SSquares,
+SSquare *SSquareCreate(), *SSquareInstall(), *SSquareSelect(),
     *SSquareFetchAtMouse();
 
 Float SSquareComputeLeafVar();

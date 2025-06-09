@@ -49,7 +49,6 @@ fi
 
 platform=$(uname)
 
-CMAKEOPTS=()
 QMAKEOPTS=()
 
 function create_cache() {
@@ -62,7 +61,6 @@ function create_cache() {
     QMAKEOPTS=( "${QMAKEOPTS[@]}" "QMAKE_CC=${CC}" )
   fi
   echo "QMAKEOPTS=(${QMAKEOPTS[@]})" > config_cache.sh
-  echo "CMAKEOPTS=(${CMAKEOPTS[@]})" >> config_cache.sh
   cat >> config_cache.sh <<EOF
 function qmake_os() {
   $qmakebin "\${QMAKEOPTS[@]}" "\$@"
@@ -128,11 +126,9 @@ while true; do
           case "$2" in
             x86)
               QTARCHS="-m32"
-              CMAKEARCHS="x86"
               ;;
             x86_64)
               QTARCHS="-m64"
-              CMAKEARCHS="x86_64"
               ;;
             both)
               echo "Error, multiple architecture is not available on Linux"
@@ -148,7 +144,6 @@ while true; do
           case "$2" in
             arm64)
               QTARCHS="arm64"
-              CMAKEARCHS="arm64"
               INSTALLOPTION="--64"
 	      rm config_lpfg.pri
 	      echo "CONFIG += arm64" > config_lpfg.pri
@@ -156,21 +151,18 @@ while true; do
 
             x86)
               QTARCHS="x86"
-              CMAKEARCHS="i386"
               INSTALLOPTION="--32"
 	      rm config_lpfg.pri
 	      echo "CONFIG += x86" > config_lpfg.pri
               ;;
             x86_64)
               QTARCHS="x86_64"
-              CMAKEARCHS="x86_64"
               INSTALLOPTION="--64"
 	      rm config_lpfg.pri
 	      echo "CONFIG += x86_64" > config_lpfg.pri
               ;;
             both)
               QTARCHS="'x86 x86_64'"
-              CMAKEARCHS="'i386;x86_64'"
               INSTALLOPTION="--both"
 	      rm config_lpfg.pri
 	      echo "CONFIG += x86 x86_64" > config_lpfg.pri
@@ -215,10 +207,6 @@ case "$platform" in
     INSTALLSCRIPT="./vlab-macdeployqt.sh"
     ;;
   Linux)
-    CMAKEOPTS+=(-D CMAKE_INSTALL_PREFIX="$installdir")
-    if [ ! -z "${CMAKEARCHS}" ]; then
-      CMAKEOPTS=(${CMAKEOPTS[@]} -D TARGET_SYSTEM_PROCESSOR="${CMAKEARCHS}")
-    fi
     INSTALLSCRIPT=""
     INSTALLOPTION=""
     if [ ! -z "$QTARCHS" ]; then
