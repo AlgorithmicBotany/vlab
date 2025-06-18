@@ -28,7 +28,8 @@ ENVIRO \
 stedit \
 vlabTextEditor \
 Timeline \ 
-Rayshade
+Rayshade \
+vv
 
 macx:SUBDIRS += updatebin
 
