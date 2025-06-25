@@ -1,7 +1,7 @@
 TEMPLATE = app
 CONFIG += qt yacc_no_name_mangle
 SOURCES = main.cpp
-TARGET = vv2cpp
+TARGET = vvp2cpp
 
 QMAKE_LEX = flex
 LEXSOURCES = vvp.l

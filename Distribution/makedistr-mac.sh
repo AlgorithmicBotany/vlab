@@ -129,7 +129,7 @@ plugin_programs="MonteCarlo.app QuasiMC.app arvo.app bezieredit.app stedit.app
 chiba.app clover.app ornament.app cpfg.app vlabcpp.app cuspy.app density.app density3d.app ecosystem.app funcedit.app gallery.app timeline.app
 honda81.app l2c.app lpfg.app medit.app multiple.app palette.app  
 panel.app ped.app preproc.app radiosity.app snapicon.app soil.app shadowpyramid.app takenaka.app vlabTextEdit.app rayshade.app raypaint.app
-vv2cpp.app vvinterpreter.app"
+vvp2cpp.app vvinterpreter.app"
 plugin_librairies="libcomm.a ../libs/comm/message.c ../libs/comm/comm_lib.h"
 
 # copy system programs

@@ -19,5 +19,5 @@ LIBS = -L'$(VVLIBDIR)' -lvv $(LIBS_MacOS)
 	$(CXX) $(CXXFLAGS) $(INCDIRS) -c -o $@ $< 
 
 %.cpp: %.vvp
-	vv2cpp $< $@
+	vvp2cpp $< $@
 
