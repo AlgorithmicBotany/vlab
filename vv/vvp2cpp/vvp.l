@@ -145,6 +145,16 @@ ws    {delim}+
     BEGIN NRML;
     first = 0;
     w("\n#include <algebra/abstractvertex.hpp>\n#include <algebra/xmlmesh.hpp>");
+    // Added extra preprocessor defines and includes so that old vv models will run without modification
+    w("\n#define FALSE 0");
+    w("\n#define TRUE 1");
+    w("\n#ifdef __APPLE__");
+    w("\n#include <OpenGL/gl.h>");
+    //w("\n#include <OpenGL/glu.h>");
+    w("\n#else");
+    w("\n#include <GL/gl.h>");
+    //w("\n#include <GL/glu.h>");
+    w("\n#endif");
     print_line(yylineno);
   }
 %}

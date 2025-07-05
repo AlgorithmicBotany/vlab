@@ -245,8 +245,10 @@ void VVPViewer::buildContextMenu() {
    
   pContextMenu->addSeparator();
  
-  pContextMenu->addAction("New Model", this, SLOT(send_reread()));
-  pContextMenu->addSeparator();
+  // Hide "New Model" for now...
+  //pContextMenu->addAction("New Model", this, SLOT(send_reread()));
+  //pContextMenu->addSeparator();
+  //
   pContextMenu->addAction("Exit", this, SLOT(send_quit()) );
 
   // moved to initializeGL:
