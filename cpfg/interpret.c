@@ -695,6 +695,7 @@ int TurtleDrawNsteps(int counter) {
       return 1;
     }
 
+    // stop interpreting if "interpretation step" reached (maybe there should be a message)
     if ((counter -= sub) < 0)
       return 0;
 
@@ -2054,6 +2055,9 @@ int ReadViewData(char *filename, DRAWPARAM *drawPtr, VIEWPARAM *viewPtr) {
 
   fpos_t filepos;
 
+  char buffer[1024]; /* buffer for creating system call */
+  char scenefile[TMPFILELEN]; /* temporary file name */
+
   if (NULL == drawPtr)
     drawPtr = &DummyDp;
   if (NULL == viewPtr)
@@ -2566,16 +2570,19 @@ int ReadViewData(char *filename, DRAWPARAM *drawPtr, VIEWPARAM *viewPtr) {
         break;
 
       case 42: /* background scene */
-        fgets(tmpfile, TMPFILELEN, fp);
-	//if (access(tmpfile, F_OK) == 0) {
-          VERBOSE("Background scene from input file(s) %s.\n", tmpfile);
-	  viewPtr->backgroundFilename = malloc(strlen(tmpfile) + 1); 
-	  strcpy(viewPtr->backgroundFilename , tmpfile);
-
-          if (ReadBackgroundSceneFile(viewPtr->backgroundFilename ) == 0){
-	    Message("Can't read background scene file: %s\n",tmpfile);
-
-	  }
+        //fgets(scenefile, TMPFILELEN, fp);
+        fscanf(fp, "%s", scenefile);
+        // Set up temporary file name and preprocess.  
+        strcpy(tmpfile, "/tmp/scene.XXXXXX");
+        mkstemp(tmpfile);
+        sprintf(buffer, "preproc %s > %s", scenefile, tmpfile);
+        system(buffer);
+        // save name of preprocessed file for rereading later, and removing when cpfg is closed
+        // the preprocessed tmpfile is unlinked in FreeViewFileData() in generate.c
+        strcpy(viewPtr->backgroundFilename, tmpfile);
+        if (ReadBackgroundSceneFile(viewPtr->backgroundFilename ) == 0) {
+	      Message("Can't read background scene file: %s\n", scenefile);
+	    }
         break;
 
       case 43: /* twist of generalized cylinders */

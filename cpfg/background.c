@@ -470,12 +470,13 @@ void DrawRectangle(float *p1, float *p2, float *p3, float *p4, DRAWPARAM *dr
 void DrawPrimitives(int run, DRAWPARAM *dr) {
   int i, j, x, y, z, c;
   float vec1[3], vec2[3], vec[2], norm[3], normc[3];
-  float zero[3] = {0}, zeroc[3];
+  float zero[3] = {0,0,0};
+  float zeroc[3] = {0,0,0};
   float rotmat[16];
   float P[2][2][2][3];
   char draw = 1, translucent;
   float rotate90[4] = {90, 1, 0, 0};
-  float translate[3] = {0};
+  float translate[3] = {0,0,0};
   float pt[4][PITEM];  /* for drawing triangles */
   TURTLE dummy_turtle; /* for positioning spheres */
 

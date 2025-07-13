@@ -70,7 +70,9 @@ struct VIEWPARAM {
   char concavePolygons; // 0 - Tesselator is turned off, 1 - Tesselator is
                         // turned on
 
-  char *backgroundFilename;
+  //char *backgroundFilename;
+  #define TMPFILELEN 2048
+  char backgroundFilename[TMPFILELEN];
 
 };
 

@@ -445,7 +445,8 @@ int ReadPrimitiveFile(char *name, int first_time) {
   /* Set up temporary file name and preprocess.  */
   strcpy(tmpfile, "/tmp/scene.XXXXXX");
   mkstemp(tmpfile);
-  sprintf(buffer, "cc -E %s > %s", name, tmpfile);
+  //sprintf(buffer, "cc -E %s > %s", name, tmpfile);
+  sprintf(buffer, "preproc %s > %s", name, tmpfile);
   system(buffer);
 
   if ((fp = fopen(tmpfile, "r")) == NULL) {
