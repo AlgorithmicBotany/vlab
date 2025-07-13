@@ -37,13 +37,10 @@
 #include <GL/glu.h>
 #endif
 
-// NOT USED: #ifdef LINUX
-// NOT USED: extern QApplication *pApp; // QQQ IS THIS EVEN USED ANYWHERE????
-// NOT USED: #endif
-
 int View::_counter = 0;
 
-#include "mainwindow.cpp"
+// bad practice to include a .cpp file, so its been moved to the lpfg.pro file
+// #include "mainwindow.cpp"
 
 #define CPFG_COMP_UI
 

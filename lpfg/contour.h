@@ -44,6 +44,7 @@ public:
   */
   const char *Name() const;
   bool Closed() const;
+  float GetArcLen() const;
 
   // vertex data.
   const float *Vertex(size_t i) const;
@@ -163,6 +164,7 @@ protected:
   std::vector<Vector3d> _vertex; // the points for the b-spline curve
   std::vector<Vector3d>
       _normal; // the normals for each point of the b-spline curve.
+  float _arcLen; // the curve's arclength
 
   bool _Closed;
   ContourType _type;

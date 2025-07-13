@@ -37,6 +37,7 @@
 #include "lpfg.h"
 #include "directorywatcher.h"
 #include "SaveAs.h"
+#include "animparam.h"
 
 #include "glwidget.h"
 using namespace Qt;

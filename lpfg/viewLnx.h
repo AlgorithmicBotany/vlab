@@ -31,9 +31,6 @@
 #include <QTimer>
 #include <QGridLayout>
 
-// was included twice?!
-//#include "glwidget.h"
-
 #include "volume.h"
 #include "projection.h"
 #include "rect.h"
@@ -177,7 +174,6 @@ public:
 public:
   void StartTimer();
   void StopTimer();
-// NOT USED:  GLWidget *getGLWidget() { return _glWidget; }
   GLWidget *getGLWidget(const int i) { return m_glWidgets[i]; }
   void update();
   void SetTitle();
@@ -197,8 +193,6 @@ private:
   void updateFilename();
   void InitializeDocks();
 
-  //    friend class GLWidget;
-// NOT USED: GLWidget *_glWidget;
   QString _title;
   QVector<GLWidget *> m_glWidgets;
   QVector<QWidget *> layoutWidgets;

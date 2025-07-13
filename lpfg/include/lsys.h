@@ -75,6 +75,7 @@ pfFloatIntFloat curveZ = 0;
 pfV2fIntFloat curveXY = 0;
 pfV3fIntFloat curveXYZ = 0;
 pfV3fIntFloat curveNormal = 0;
+pfFloatInt curveGAL = 0;
 pfVoidInt curveReset = 0;
 pfVoid2Int3Float curveSetPoint = 0;
 pfVoidInt curveRecalculate = 0;
@@ -167,6 +168,7 @@ void __lc_SetExported(const __lc_ExportedFromLpfg *pExp) {
   curveXY = pExp->fCurveV2fPoint;
   curveXYZ = pExp->fCurveV3fPoint;
   curveNormal = pExp->fCurveV3fNormal;
+  curveGAL = pExp->fCurveGAL;
   curveScale = pExp->fCurveScale;
   Run = pExp->fRun;
   GetSurface = pExp->fGetSurface;

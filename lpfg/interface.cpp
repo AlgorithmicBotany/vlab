@@ -373,6 +373,18 @@ void Interface::CurveRecalc(int id) {
     contours.GetAccess(id).Recalculate();
 }
 
+float Interface::CurveGAL(int id) {
+  // if the contour id is invalid
+  // just print the warning
+  if (!contours.ValidId(id)) {
+    Utils::Message("CurveGAL: invalid id = %d. Function call ignored.\n",
+                   id);
+    return 0.f;
+  }
+  else
+    return contours.GetAccess(id).GetArcLen();
+}
+
 void Interface::RunCmnd(const char *cmnd) { Utils::ExecuteDetached(cmnd); }
 
 SurfaceObj Interface::GetSurface(int id) {

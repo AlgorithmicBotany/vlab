@@ -742,6 +742,7 @@ struct __lc_ExportedFromLpfg {
   pfV3fIntFloat fCurveV3fPoint;
   pfV3fIntFloat fCurveV3fNormal;
   pfVoidInt3Float fCurveScale;
+  pfFloatInt fCurveGAL;
   pfVoidString fRun;
   pfVoidInt fUseView;
   pfVoidInt fCloseView;

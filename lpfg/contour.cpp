@@ -67,6 +67,7 @@ void Contour::_Default() {
   // MC - Sept. 2016 - default max and min point
   _maxPt = Vector3d(1.f, 1.f, 0.0);
   _minPt = Vector3d(-1.f, -1.f, 0.0);
+  _arcLen = 0.;
 }
 
 Contour::Contour(ReadTextFile &src) {
@@ -146,6 +147,10 @@ Vector3d Contour::GetVertex(size_t i) const {
 Vector3d Contour::GetNormal(size_t i) const {
   ASSERT(i < Divisions());
   return _normal[i];
+}
+
+float Contour::GetArcLen() const {
+  return _arcLen;
 }
 
 const char *Contour::Name() const { return _Name; }
@@ -509,6 +514,8 @@ void Contour::_Reparametrize2(std::vector<Vector3d> &pts,
   }
   if (totalLength < epsilon)
     totalLength = epsilon;
+  // save the curve's total arc length
+  _arcLen = totalLength;
 
   // table for arclength values (vertex -> Distance along curve).
   std::vector<float> at(pts.size());

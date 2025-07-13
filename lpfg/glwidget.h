@@ -22,13 +22,7 @@
 
 #include <QOpenGLWidget>
 #include <QOpenGLFunctions>
-//#include <QOpenGLFunctions_4_3_Core>
-
-//#include <QOpenGLBuffer>
-//#include <QVector3D>
-//#include <QMatrix4x4>
 #include <QTime>
-//#include <QVector>
 #include <QPushButton>
 #include <QContextMenuEvent>
 #include <QMenu>
@@ -44,10 +38,6 @@
 
 class View;
 class LPFG;
-
-//QT_FORWARD_DECLARE_CLASS(QOpenGLTexture)
-//QT_FORWARD_DECLARE_CLASS(QOpenGLShader)
-//QT_FORWARD_DECLARE_CLASS(QOpenGLShaderProgram)
 
 class GLWidget : public QOpenGLWidget, protected QOpenGLFunctions {
   Q_OBJECT
@@ -213,34 +203,6 @@ private:
 
   void *_pQ;
   LPFG *_pLpfg;
-  // These variables are not used
-  //qreal m_fAngleX;
-  //qreal m_fAngleY;
-  //qreal m_fAngleZ;
-  //qreal m_fX;
-  //qreal m_fY;
-  //qreal m_fZ;
-  //qreal m_fScale;
-  //QVector<QVector3D> m_vertices;
-  //QVector<QVector3D> m_normals;
-  //bool m_qtLogo;
-  //int m_frames;
-  //QTime m_time;
-  //QOpenGLShader *m_vshader1;
-  //QOpenGLShader *m_fshader1;
-  //QOpenGLShaderProgram *m_program1;
-  //QOpenGLBuffer m_vbo1;
-  //int m_vertexAttr1;
-  //int m_normalAttr1;
-  //int m_matrixUniform1;
-  //int m_vertexAttr2;
-  //int m_normalAttr2;
-  //int m_texCoordAttr2;
-  //int m_matrixUniform2;
-  //int m_textureUniform2;
-  //QPushButton *m_btn;
-  //bool m_hasButton;
-  //QColor m_background;
   bool _alphaChannel;
 
   QMenu *testMenu;

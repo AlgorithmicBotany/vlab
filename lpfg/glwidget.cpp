@@ -22,7 +22,6 @@
 #include <QPainter>
 #include <QPaintEngine>
 #include <QOpenGLShaderProgram>
-//#include <QOpenGLTexture>
 #include <QRandomGenerator>
 #include <QCoreApplication>
 #include <QDesktopWidget>
@@ -48,8 +47,6 @@ GLWidget::GLWidget(View *mw, bool button, const QColor &background,
                    const int id, const QOpenGLWidget::UpdateBehavior behaviour)
     : _IdleTask(this), _RotateTask(this), _ZoomTask(this),
       _FrustumTask(this), _RollTask(this), _PanTask(this), m_mainWindow(mw), _view(mw)
-      // NOT USED: m_qtLogo(true), m_frames(0), m_program1(0), m_btn(0),
-      // m_hasButton(button), m_background(background)
 {
   _format.setRedBufferSize(8);
   _format.setGreenBufferSize(8);
@@ -77,11 +74,6 @@ GLWidget::~GLWidget() {
   makeCurrent();
   if (_pQ)
     gl.DeleteQuadric(_pQ);
-  // NOT USED:
-  //delete m_program1;
-  //delete m_vshader1;
-  //delete m_fshader1;
-  //m_vbo1.destroy();
   doneCurrent();
 }
 
