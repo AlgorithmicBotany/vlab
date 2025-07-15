@@ -20,7 +20,7 @@ template <class V> class XMLMesh;
 
 /** @brief Abstract base class for parsing vvm files. */
 template <class V>
-class AbstractXMLMeshParser : { //public QXmlDefaultHandler {
+class AbstractXMLMeshParser { // : public QXmlDefaultHandler {
   public:
     AbstractXMLMeshParser(XMLMesh<V>* pMesh);
     virtual ~AbstractXMLMeshParser();
@@ -157,7 +157,7 @@ template <class V>
 bool algebra::AbstractXMLMeshParser<V>::startElement(
                                                      const std::string& namespaceURI,
                                                      const std::string& localName,
-                                                     const std::string& qName,
+                                                     const std::string& qName
                                                     )//const QXmlAttributes& atts)
 {
   if (!pMesh) return false;
