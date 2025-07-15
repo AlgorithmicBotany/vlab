@@ -8,9 +8,9 @@
 #include <list>
 #include <map>
 
-#include <qxml.h>
-#include <qfile.h>
-#include <qstring.h>
+//#include <qxml.h>
+//#include <qfile.h>
+//#include <qstring.h>
 
 #include <algebra/abstractmesh.hpp>
 #include <algebra/abstractvertex.hpp>
@@ -20,13 +20,14 @@ template <class V> class XMLMesh;
 
 /** @brief Abstract base class for parsing vvm files. */
 template <class V>
-class AbstractXMLMeshParser : public QXmlDefaultHandler {
+class AbstractXMLMeshParser : { //public QXmlDefaultHandler {
   public:
     AbstractXMLMeshParser(XMLMesh<V>* pMesh);
     virtual ~AbstractXMLMeshParser();
 
     virtual bool startDocument();
-    virtual bool startElement(const QString&, const QString&, const QString&, const QXmlAttributes&);
+    //virtual bool startElement(const QString&, const QString&, const QString&, const QXmlAttributes&);
+    virtual bool startElement(const std::string&, const std::string&, const std::string&);
     virtual bool endDocument();
 
   protected:
@@ -154,39 +155,39 @@ bool algebra::AbstractXMLMeshParser<V>::startDocument() {
   */
 template <class V>
 bool algebra::AbstractXMLMeshParser<V>::startElement(
-                                                     const QString& namespaceURI,
-                                                     const QString& localName,
-                                                     const QString& qName,
-                                                     const QXmlAttributes& atts)
+                                                     const std::string& namespaceURI,
+                                                     const std::string& localName,
+                                                     const std::string& qName,
+                                                    )//const QXmlAttributes& atts)
 {
   if (!pMesh) return false;
   if (qName == "mesh") {
-    for (int i = 0; i < atts.length(); i++) {
-      std::istringstream is(atts.value(i).toStdString());
-      processMeshAttribute(pMesh, atts.qName(i).toStdString(), is);
-    }
+    //for (int i = 0; i < atts.length(); i++) {
+    //  std::istringstream is(atts.value(i).toStdString());
+    //  processMeshAttribute(pMesh, atts.qName(i).toStdString(), is);
+    //}
   }
   else if (qName == "e") {
     typename V::edge_type e;
     unsigned int first = 0;
     unsigned int second = 0;
     bool         symmetric = false;
-    for (int i = 0; i < atts.length(); i++) {
-      std::istringstream is(atts.value(i).toStdString());
-      if (atts.qName(i) == "first") {
-        is >> std::ws >> first >> std::ws;
-      }
-      else if (atts.qName(i) == "second") {
-        is >> std::ws >> second >> std::ws;
-      }
-      else if (atts.qName(i) == "symmetric") {
-        is >> std::ws >> symmetric >> std::ws;
-      }
-      else {
-        processEdgeAttribute(e, atts.qName(i).toStdString(), is);
-      }
-    }
-    newEdges.push_back(Edge(first + vbase, second + vbase, symmetric, e));
+    // for (int i = 0; i < atts.length(); i++) {
+    //   std::istringstream is(atts.value(i).toStdString());
+    //   if (atts.qName(i) == "first") {
+    //     is >> std::ws >> first >> std::ws;
+    //   }
+    //   else if (atts.qName(i) == "second") {
+    //     is >> std::ws >> second >> std::ws;
+    //   }
+    //   else if (atts.qName(i) == "symmetric") {
+    //     is >> std::ws >> symmetric >> std::ws;
+    //   }
+    //   else {
+    //     processEdgeAttribute(e, atts.qName(i).toStdString(), is);
+    //   }
+    // }
+    // newEdges.push_back(Edge(first + vbase, second + vbase, symmetric, e));
   }
   else if (qName == "v") {
     typename XMLMesh<V>::VPtr v = pMesh->createVertex();
@@ -195,23 +196,23 @@ bool algebra::AbstractXMLMeshParser<V>::startElement(
       reset_vbase = false;
     }
     newVertices[v->getLabel()] = v;
-    for (int i = 0; i < atts.length(); i++) {
-      std::istringstream is(atts.value(i).toStdString());
-      if (atts.qName(i) == "nb") {
-        std::list<unsigned int> neighbours;
+    // for (int i = 0; i < atts.length(); i++) {
+    //   std::istringstream is(atts.value(i).toStdString());
+    //   if (atts.qName(i) == "nb") {
+    //     std::list<unsigned int> neighbours;
 
-        while (!is.eof()) {
-          unsigned int label;
-          is >> std::ws >> label >> std::ws;
-          neighbours.push_back(label + vbase);
-        }
+    //     while (!is.eof()) {
+    //       unsigned int label;
+    //       is >> std::ws >> label >> std::ws;
+    //       neighbours.push_back(label + vbase);
+    //     }
 
-        newNeighbourhoods[v->getLabel()] = neighbours;
-      }
-      else {
-        processVertexAttribute(v, atts.qName(i).toStdString(), is);
-      }
-    }
+    //     newNeighbourhoods[v->getLabel()] = neighbours;
+    //   }
+    //   else {
+    //     processVertexAttribute(v, atts.qName(i).toStdString(), is);
+    //   }
+    // }
   }
   return true;
 }
@@ -263,11 +264,11 @@ template <class V> algebra::XMLMesh<V>::~XMLMesh() {}
 template <class V>
 void algebra::XMLMesh<V>::readXMLFile(std::string filename) {
   if (!pParser) return;
-
-  QXmlSimpleReader reader;
-  reader.setContentHandler(pParser);
-  QFile* file = new QFile(filename.c_str());
-  reader.parse(QXmlInputSource(file));
+  std::cerr << "readXMLFile is not implemented yet.\n";
+  // QXmlSimpleReader reader;
+  // reader.setContentHandler(pParser);
+  // QFile* file = new QFile(filename.c_str());
+  // reader.parse(QXmlInputSource(file));
 }
 
 /** @brief A function to relabel the vertices.
