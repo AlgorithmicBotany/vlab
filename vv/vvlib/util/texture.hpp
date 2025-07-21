@@ -17,12 +17,14 @@ namespace util {
   public:
     Texture1D();
     Texture1D(const Texture1D& texture);
-    Texture1D(std::string filename);
+    //Texture1D(std::string filename);
     ~Texture1D();
 
     const Texture1D& operator=(const Texture1D& texture);
 
     void bind();
+
+    void load(std::string filename);
 
     // tex parameter functions
     static void clamp(bool enable = true);
@@ -47,12 +49,14 @@ namespace util {
   public:
     Texture2D();
     Texture2D(const Texture2D& texture);
-    Texture2D(std::string filename);
+    //Texture2D(std::string filename);
     ~Texture2D();
 
     const Texture2D& operator=(const Texture2D& texture);
 
     void bind();
+
+    void load(std::string filename);
 
     // tex parameter functions
     static void clamp(bool enable = true);

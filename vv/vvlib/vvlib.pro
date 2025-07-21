@@ -1,5 +1,7 @@
 TEMPLATE = lib
-CONFIG  += staticlib
+#CONFIG  += staticlib
+CONFIG  += shared
+QMAKE_SONAME_PREFIX = @executable_path/../Resources/libs/
 QT += opengl
 TARGET   = vv
 SOURCES  = \

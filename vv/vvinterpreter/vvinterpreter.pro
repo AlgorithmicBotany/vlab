@@ -47,13 +47,10 @@ macx {
   copy_vvinterpreter_headers.depends = $$VV_VVINTERPRETER_HEADERS
   copy_vvinterpreter_headers.commands = mkdir -p  $$VV_DESTDIR/Resources/include/vvinterpreter && cp -p $$VV_VVINTERPRETER_HEADERS $$VV_DESTDIR/Resources/include/vvinterpreter
 
-  #VV_LIBS = $${MY_BASE}/.libraries/libvv.a
-  #copylibs.target = copylibs
-  #copylibs.depends = $$VV_LIBS
-  #copyscripts.commands += mkdir -p $$VV_DESTDIR/Resources/libs && cp -p $$VV_LIBS $$VV_DESTDIR/Resources/libs
-  VV_LIBS.files = $${MY_BASE}/.libraries/libvv.a
-  VV_LIBS.path = Contents/Resources/libs
-  QMAKE_BUNDLE_DATA += VV_LIBS
+  VV_LIBS = $${MY_BASE}/.libraries/libvv*dylib
+  copylibs.target = copylibs
+  copylibs.depends = $$VV_LIBS
+  copylibs.commands += mkdir -p $$VV_DESTDIR/Resources/libs && cp -p $$VV_LIBS $$VV_DESTDIR/Resources/libs
 
   message($$CONFIG)
   ARCH=""
@@ -75,7 +72,7 @@ macx {
   #copyhelp.commands = mkdir -p $$HELPDIR && cp -f ../../docs/VVManual.pdf $$HELPDIR && cp -f ../../docs/Quick_Help/VVQuickHelp.html $$HELPDIR && cp -rf ../../docs/files/*.* $$HELPDIR
   copyhelp.commands = mkdir -p $$HELPDIR && cp -rf ../../docs/files/*.* $$HELPDIR
 
-  QMAKE_EXTRA_TARGETS += copy_view_headers copy_util_headers copy_ext_headers copy_vvinterpreter_headers copymak copyhelp
-  PRE_TARGETDEPS += copy_view_headers copy_util_headers copy_ext_headers copy_vvinterpreter_headers copymak copyhelp
+  QMAKE_EXTRA_TARGETS += copy_view_headers copy_util_headers copy_ext_headers copy_vvinterpreter_headers copylibs copymak copyhelp
+  PRE_TARGETDEPS += copy_view_headers copy_util_headers copy_ext_headers copy_vvinterpreter_headers copylibs copymak copyhelp
 }
 
