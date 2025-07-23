@@ -2055,9 +2055,6 @@ int ReadViewData(char *filename, DRAWPARAM *drawPtr, VIEWPARAM *viewPtr) {
 
   fpos_t filepos;
 
-  char buffer[1024]; /* buffer for creating system call */
-  char scenefile[TMPFILELEN]; /* temporary file name */
-
   if (NULL == drawPtr)
     drawPtr = &DummyDp;
   if (NULL == viewPtr)
@@ -2570,18 +2567,11 @@ int ReadViewData(char *filename, DRAWPARAM *drawPtr, VIEWPARAM *viewPtr) {
         break;
 
       case 42: /* background scene */
-        //fgets(scenefile, TMPFILELEN, fp);
-        fscanf(fp, "%s", scenefile);
-        // Set up temporary file name and preprocess.  
-        strcpy(tmpfile, "/tmp/scene.XXXXXX");
-        mkstemp(tmpfile);
-        sprintf(buffer, "preproc %s > %s", scenefile, tmpfile);
-        system(buffer);
-        // save name of preprocessed file for rereading later, and removing when cpfg is closed
-        // the preprocessed tmpfile is unlinked in FreeViewFileData() in generate.c
+        fgets(tmpfile, TMPFILELEN, fp);
+        // save name of preprocessed file for rereading later
         strcpy(viewPtr->backgroundFilename, tmpfile);
         if (ReadBackgroundSceneFile(viewPtr->backgroundFilename ) == 0) {
-	      Message("Can't read background scene file: %s\n", scenefile);
+	      Message("Can't read background scene file: %s\n", tmpfile);
 	    }
         break;
 

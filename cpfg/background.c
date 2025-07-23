@@ -155,6 +155,8 @@ void InitializeBackgroundScene(void) {
 #define LINELEN 1024
 static char line[LINELEN];
 
+extern char defaultPreprocessor[8];
+
 /*************************************************************************/
 
 int ReadBackgroundSceneFile(const char *nms) {
@@ -174,10 +176,18 @@ int ReadBackgroundSceneFile(const char *nms) {
   InitializeBackgroundScene();
 
   while (token != NULL) {
+    /* preprocess the background scene file */
+    // by default cpfg uses vlabcpp, but that preprocessor inserts a space between a minus sign '-' and a user-defined macro
+    // for example, "#define STEP 35" in "translate -STEP 0 0", produces "translate - 35 0 0"
+    // the space between "-" and "35" causes cpfg to misinterpret the translation and print a warning message.
+    // Why does vlabcpp, insert a space there?
+    // A workaround is to use 'preproc', a different preprocessor for now...
+    clp.preprocessor = "preproc"; 
     if ((fp = PreprocessFile(token, "")) == NULL) {
       Message("Cannot open preprocessed data file %s.\n", token);
       return 0;
     }
+    clp.preprocessor = defaultPreprocessor;
 
     VERBOSE("Processing the primitive file.\n");
 

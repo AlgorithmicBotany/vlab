@@ -426,11 +426,6 @@ void FreeViewFileData(void) {
   FreeTsurfaces();
   FreeSplineFunctions();
   FreeCurveXYZ();
-
-  // remove the preprocessed file: unlink the temp file 
-  // UNIX will keep the file around until it is closed
-  // at which point it is removed 
-  unlink(viewparam.backgroundFilename);
 }
 
 #ifdef WIN32

@@ -2113,7 +2113,9 @@ int main(int argc, char **argv) {
 /*
         Parse the command line.
 */
-static char defaultPreprocessor[8] =
+// name of defaultPreprocessor used in background.c
+//static 
+char defaultPreprocessor[8] =
 #if defined LINUX
     "vlabcpp"
 #elif defined WIN32

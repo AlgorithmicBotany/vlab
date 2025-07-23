@@ -443,21 +443,31 @@ int ReadPrimitiveFile(char *name, int first_time) {
     return 0;
 
   /* Set up temporary file name and preprocess.  */
+#ifdef WIN32
+  strcpy(tmpfile, "scene.tmp");
+  sprintf(buffer, "vlabcpp %s %s", name, tmpfile);
+  system(buffer);
+#else
   strcpy(tmpfile, "/tmp/scene.XXXXXX");
   mkstemp(tmpfile);
-  //sprintf(buffer, "cc -E %s > %s", name, tmpfile);
+  //sprintf(buffer, "vlabcpp %s %s", name, tmpfile);
+  //vlabcpp inserts a space between a minus sign and user-defined macro, which breaks the file parsing in arvo
+  //so, for now, use preproc, which doesn't insert a space
   sprintf(buffer, "preproc %s > %s", name, tmpfile);
   system(buffer);
+#endif
 
   if ((fp = fopen(tmpfile, "r")) == NULL) {
     fprintf(stderr, "Cannot open preprocessed data file %s.\n", tmpfile);
     return 0;
   }
 
+#ifndef WIN32
   unlink(tmpfile); /* unlink the temp file immediately */
                    /* UNIX will keep the file around until it is closed */
                    /* at which point it is removed */
-
+#endif
+  
   if (first_time) {
     /* initialization */
     InitializeStructures();
