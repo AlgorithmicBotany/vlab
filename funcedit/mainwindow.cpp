@@ -34,7 +34,8 @@
 #include <QDialogButtonBox>
 #include <iostream>
 #include <QPushButton>
-
+#include <QWindow>
+#include <QScreen>
 
 
 
@@ -43,7 +44,7 @@
 #include "cocoabridge.h"
 #endif
 
-MainWindow::MainWindow() : QMainWindow() {
+MainWindow::MainWindow() : QMainWindow(), m_previousDevicePixelRatio(0.0) {
 #ifdef __APPLE__
   CocoaBridge::setAllowsAutomaticWindowTabbing(false);
 #endif
@@ -141,6 +142,39 @@ void MainWindow::closeEvent(QCloseEvent *pEv) {
 
 void MainWindow::nameChanged(QString s) {
   setWindowTitle(QString("Funcedit: " + s));
+}
+
+void MainWindow::showEvent(QShowEvent *event) {
+  QMainWindow::showEvent(event);
+  if (m_previousDevicePixelRatio == 0.0) {
+    QWindow *window = this->windowHandle();
+    if (window) {
+      m_previousDevicePixelRatio = window->devicePixelRatio();
+      connect(window, &QWindow::screenChanged, this, &MainWindow::handleScreenChanged);
+    }
+  }  
+}
+
+void MainWindow::handleScreenChanged(QScreen *screen) {
+    Q_UNUSED(screen); 
+
+    QWindow *window = this->windowHandle();
+    if (!window) {
+        return;
+    }
+
+    qreal currentDevicePixelRatio = window->devicePixelRatio();
+
+    // if ratio changed, trigger a repaint
+    if (m_previousDevicePixelRatio != currentDevicePixelRatio) {
+      Ctrl *ctrl = dynamic_cast<Ctrl *>(centralWidget());
+      if (ctrl) {
+        ctrl->resetView();
+        ctrl->update();
+      }
+    }
+
+    m_previousDevicePixelRatio = currentDevicePixelRatio;
 }
 
 /******************************************************************************

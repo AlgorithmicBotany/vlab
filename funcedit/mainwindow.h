@@ -36,7 +36,9 @@ public:
   QMenu *help_menu, *file, *view;
 
 protected:
-  void closeEvent(QCloseEvent* pEv);
+  void closeEvent(QCloseEvent* pEv) override;
+  void showEvent(QShowEvent *) override;
+  void handleScreenChanged(QScreen *);
 
 public slots:
   void help();
@@ -46,6 +48,8 @@ public slots:
   void editPreferencesCB();
   void msgBoxClosed(QAbstractButton*);
 
+private:
+  qreal m_previousDevicePixelRatio;
 };
 
 #endif // MAINWINDOW_H

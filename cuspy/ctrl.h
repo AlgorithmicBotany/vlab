@@ -57,6 +57,8 @@ public:
   void MovePoint(int, WorldPoint);
   void IncPointMultiplicity(int);
 
+  void resetView(void);
+
 protected:
   void closeEvent(QCloseEvent *pEv);
   // following is used to render text

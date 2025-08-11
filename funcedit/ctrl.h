@@ -23,9 +23,6 @@
 
 #include <QOpenGLWidget>
 #include <QOpenGLFunctions>
-#include <QOpenGLFunctions_4_3_Core>
-
-#include <QOpenGLBuffer>
 
 #include <QString>
 #include <QMouseEvent>
@@ -63,6 +60,7 @@ enum SavingMode {CONTINUOUS,TRIGGERED, OFF};
   void MovePoint(int, WorldPoint);
   void IncPointMultiplicity(int);
 
+  void resetView(void);
 
  protected:
   void closeEvent(QCloseEvent* pEv);

@@ -540,11 +540,15 @@ void Ctrl::initializeGL() {
   }
 }
 
-void Ctrl::resizeGL(int, int) {
+void Ctrl::resetView(void) {
   const int retinaScale = devicePixelRatio();
   _WindowSize.x = width()*retinaScale;
   _WindowSize.y = height()*retinaScale;
   GridView::_SetView();
+}
+
+void Ctrl::resizeGL(int, int) {
+  resetView();
 }
 
 void Ctrl::paintGL() {
