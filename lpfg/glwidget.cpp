@@ -212,13 +212,17 @@ void GLWidget::paintGL() {
   // not used anymore: _initializeGL = true;
 }
 
-void GLWidget::resizeGL(int width, int height) {
+void GLWidget::resetProjection(int width, int height) {
   if (height > 0 && width > 0) {
     const int retinaScale = devicePixelRatio();
     _projection.Resize(width * retinaScale, height * retinaScale);
     makeCurrent();
     _projection.Apply(drawparams.ProjectionMode());
   }
+}
+
+void GLWidget::resizeGL(int width, int height) {
+  resetProjection(width, height);
   resize(width, height);
 }
 

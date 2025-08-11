@@ -122,6 +122,7 @@ public:
 protected:
   void resizeEvent(QResizeEvent *) override;
   void closeEvent(QCloseEvent *)override{};
+  void showEvent(QShowEvent *) override;
 
 private:
   void _DrawExpired() const;
@@ -186,6 +187,8 @@ private:
   int _id;
   int _fileNameid;
   std::string _filename;
+
+  qreal m_previousDevicePixelRatio;
 
   QList<QDockWidget *> docks;
   std::string getExtension();
@@ -335,6 +338,8 @@ private slots:
   void mouseMoved(const QPoint &);
   void mouseReleased(const QPoint &);
   void resetWindowTitle();
+
+  void handleScreenChanged(QScreen *screen);
 
 protected:
   void contextMenuEvent(QContextMenuEvent *) override;

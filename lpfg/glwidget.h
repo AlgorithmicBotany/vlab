@@ -80,6 +80,7 @@ public:
   void Show(const WindowParams &);
   void ShowMaximized();
   Projection *GetProjection() { return &_projection; }
+  void resetProjection(int width, int height);
   int getId() { return _id; }
   void HCenter();
   void Scale();

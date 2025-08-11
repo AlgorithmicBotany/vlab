@@ -19,6 +19,8 @@
 
 
 #include <QApplication>
+#include <QScreen>
+#include <QWindow>
 #include <QMenuBar>
 #include <QGroupBox>
 #include <QRandomGenerator>
@@ -48,7 +50,7 @@ QTimer *idleTimer;
 } // namespace
 
 View::View(const std::string &, const Rect &r, LPFG *pLpfg, int id)
-    : _idTimer(0), new_model_pending(false), directoryWatcher(NULL)
+    : _idTimer(0), new_model_pending(false), directoryWatcher(NULL), m_previousDevicePixelRatio(0.0)
 
 {
   const WindowBorderParams &wbp = drawparams.GetWindowBorderParams();
@@ -380,7 +382,7 @@ void View::contextMenuEvent(QContextMenuEvent *) {
 
 void View::addDockWindows(const std::string &, const Rect &r, int id) {
   // add a dockWidget
-  int size = m_glWidgets.size();
+  size_t size = m_glWidgets.size();
   if (size < static_cast<size_t>(id +1)){
     m_glWidgets.resize(id +1);
     size = id + 1;
@@ -487,6 +489,41 @@ void View::resetWindowTitle() {
 
 void View::resizeDone() {
   QTimer::singleShot(5000, this, &View::resetWindowTitle);
+}
+
+void View::showEvent(QShowEvent *event) {
+  QMainWindow::showEvent(event);
+  if (m_previousDevicePixelRatio == 0.0) {
+    QWindow *window = this->windowHandle();
+    if (window) {
+      m_previousDevicePixelRatio = window->devicePixelRatio();
+      connect(window, &QWindow::screenChanged, this, &View::handleScreenChanged);
+    }
+  }  
+}
+
+void View::handleScreenChanged(QScreen *screen) {
+    Q_UNUSED(screen); 
+
+    QWindow *window = this->windowHandle();
+    if (!window) {
+        return;
+    }
+
+    qreal currentDevicePixelRatio = window->devicePixelRatio();
+
+    // if ratio changed, trigger a repaint
+    if (m_previousDevicePixelRatio != currentDevicePixelRatio) {
+      // calling update() alone is not enough, because the "_projection" needs to change with the new device pixel ratio
+      for (QVector<GLWidget *>::Iterator it = m_glWidgets.begin(); it != m_glWidgets.end(); ++it){
+        if ((*it) != nullptr){
+          (*it)->resetProjection((*it)->width(),(*it)->height());
+          update();
+        }
+      }
+    }
+
+    m_previousDevicePixelRatio = currentDevicePixelRatio;
 }
 
 void View::update() {
@@ -1260,10 +1297,10 @@ void View::SaveFrame(const char *fmt, int) {
       printer.setOutputFormat(QPrinter::PdfFormat);
       printer.setColorMode(QPrinter::Color);
       printer.setOutputFileName(filename);
-      printer.setPaperSize(QSizeF(image->size()), QPrinter::DevicePixel);
-      printer.setPageMargins(0, 0, 0, 0, QPrinter::Millimeter);
+      printer.setPageSize(QPageSize(image->size()));
+      printer.setPageMargins(QMarginsF(0, 0, 0, 0), QPageLayout::Millimeter);
       printer.setFullPage(true);
-      printer.setOrientation(QPrinter::Portrait);
+      printer.setPageOrientation(QPageLayout::Portrait);
 
       QPainter painter(&printer);
       painter.drawImage(QPoint(0, 0), *image);
