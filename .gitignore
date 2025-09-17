@@ -71,3 +71,11 @@ libs/*/comments
 
 #test files
 
+/.vscode
+config_lpfg.pri
+Rayshade/libshade/yacc.h
+vv/vvp2cpp/vvp.tab.c
+vv/vvp2cpp/vvp.tab.h
+vv/vvp2cpp/vvp_lex.cpp
+vv/vvp2cpp/yacc.cpp
+vv/vvp2cpp/yacc.h

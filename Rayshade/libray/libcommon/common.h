@@ -108,8 +108,8 @@ extern char *share_malloc(), *share_calloc();
 #define min(a, b) ((a) < (b) ? (a) : (b))
 #endif /* min */
 
-extern voidstar Malloc(), Calloc();
-extern char *strsave();
+extern voidstar Malloc(unsigned bytes), Calloc(unsigned nelem, unsigned elen);
+extern char *strsave(char *s);
 extern double drand48(); /* just in case */
 
 #endif /* COMMON_H */

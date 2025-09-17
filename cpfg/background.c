@@ -155,6 +155,8 @@ void InitializeBackgroundScene(void) {
 #define LINELEN 1024
 static char line[LINELEN];
 
+extern char defaultPreprocessor[8];
+
 /*************************************************************************/
 
 int ReadBackgroundSceneFile(const char *nms) {
@@ -174,10 +176,18 @@ int ReadBackgroundSceneFile(const char *nms) {
   InitializeBackgroundScene();
 
   while (token != NULL) {
+    /* preprocess the background scene file */
+    // by default cpfg uses vlabcpp, but that preprocessor inserts a space between a minus sign '-' and a user-defined macro
+    // for example, "#define STEP 35" in "translate -STEP 0 0", produces "translate - 35 0 0"
+    // the space between "-" and "35" causes cpfg to misinterpret the translation and print a warning message.
+    // Why does vlabcpp, insert a space there?
+    // A workaround is to use 'preproc', a different preprocessor for now...
+    clp.preprocessor = "preproc"; 
     if ((fp = PreprocessFile(token, "")) == NULL) {
       Message("Cannot open preprocessed data file %s.\n", token);
       return 0;
     }
+    clp.preprocessor = defaultPreprocessor;
 
     VERBOSE("Processing the primitive file.\n");
 
@@ -470,12 +480,13 @@ void DrawRectangle(float *p1, float *p2, float *p3, float *p4, DRAWPARAM *dr
 void DrawPrimitives(int run, DRAWPARAM *dr) {
   int i, j, x, y, z, c;
   float vec1[3], vec2[3], vec[2], norm[3], normc[3];
-  float zero[3] = {0}, zeroc[3];
+  float zero[3] = {0,0,0};
+  float zeroc[3] = {0,0,0};
   float rotmat[16];
   float P[2][2][2][3];
   char draw = 1, translucent;
   float rotate90[4] = {90, 1, 0, 0};
-  float translate[3] = {0};
+  float translate[3] = {0,0,0};
   float pt[4][PITEM];  /* for drawing triangles */
   TURTLE dummy_turtle; /* for positioning spheres */
 

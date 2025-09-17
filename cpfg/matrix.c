@@ -202,7 +202,8 @@ void Rotate(mtype *vals) {
   }
   mat[access(MAT_SIZE - 1, MAT_SIZE - 1)] = 1.0;
 
-  InverseMatrix(mat, invmat);
+  //InverseMatrix(mat, invmat); // QQQ gives nan for rotation 90 0 0 1
+  InverseMatrixFast(mat, invmat);
 
   /* set rot as rotation around x axis by vals[0] degrees */
   MakeUnitMatrix(rot);

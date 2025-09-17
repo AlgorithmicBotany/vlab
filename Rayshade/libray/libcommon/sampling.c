@@ -87,6 +87,7 @@ int frame;
  * jittered point in a unit square.
  */
 void UnitCirclePoint(pnt, sample) Vector *pnt;
+int sample;
 {
   /*
    * This picks a random point on a -1 to 1 square.  The jitter stuff

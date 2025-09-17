@@ -31,9 +31,6 @@
 #include <QTimer>
 #include <QGridLayout>
 
-// was included twice?!
-//#include "glwidget.h"
-
 #include "volume.h"
 #include "projection.h"
 #include "rect.h"
@@ -125,6 +122,7 @@ public:
 protected:
   void resizeEvent(QResizeEvent *) override;
   void closeEvent(QCloseEvent *)override{};
+  void showEvent(QShowEvent *) override;
 
 private:
   void _DrawExpired() const;
@@ -177,7 +175,6 @@ public:
 public:
   void StartTimer();
   void StopTimer();
-// NOT USED:  GLWidget *getGLWidget() { return _glWidget; }
   GLWidget *getGLWidget(const int i) { return m_glWidgets[i]; }
   void update();
   void SetTitle();
@@ -191,14 +188,14 @@ private:
   int _fileNameid;
   std::string _filename;
 
+  qreal m_previousDevicePixelRatio;
+
   QList<QDockWidget *> docks;
   std::string getExtension();
   bool OverwriteDialogBox(const char *sfilename);
   void updateFilename();
   void InitializeDocks();
 
-  //    friend class GLWidget;
-// NOT USED: GLWidget *_glWidget;
   QString _title;
   QVector<GLWidget *> m_glWidgets;
   QVector<QWidget *> layoutWidgets;
@@ -341,6 +338,8 @@ private slots:
   void mouseMoved(const QPoint &);
   void mouseReleased(const QPoint &);
   void resetWindowTitle();
+
+  void handleScreenChanged(QScreen *screen);
 
 protected:
   void contextMenuEvent(QContextMenuEvent *) override;

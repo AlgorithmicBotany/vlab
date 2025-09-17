@@ -221,7 +221,8 @@ int start_browser(int argc, char **argv, bool cleanTMP) {
       msgBox.setInformativeText("Discarding the folder will remove all files within open objects. You will lose any unsaved work!");
       // write out the names of the objects contained in the temp folder
       QString name_filter("VL*"); // all objects start with 'VL', see MakeTemp() in object.cpp
-      QString folder_names = dir.entryList(QStringList(name_filter), QDir::Dirs | QtDir::NoDotAndDotDot)).join("\n");
+      QStringList folder_list = dir.entryList(QStringList(name_filter), QDir::Dirs | QDir::NoDotAndDotDot);
+      QString folder_names = folder_list.join("\n");
       QString folder_str = "Object folders to be deleted:\n" + folder_names;
       msgBox.setDetailedText(folder_str);
       msgBox.setStandardButtons(QMessageBox::Save | QMessageBox::Discard | QMessageBox::Cancel);

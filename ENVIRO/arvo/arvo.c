@@ -775,11 +775,13 @@ void MainLoop(void) {
           fprintf(stderr, " %g", two_modules[0].params[i].value);
         fprintf(stderr, "\n");
 
-        fprintf(stderr, "arvo - next symbol '%s' has %d parameters:\n      ",
-                two_modules[1].symbol, two_modules[1].num_params);
-        for (i = 0; i < two_modules[1].num_params; i++)
-          fprintf(stderr, " %g", two_modules[1].params[i].value);
-        fprintf(stderr, "\n");
+        if (add_objects) {
+          fprintf(stderr, "arvo - next symbol '%s' has %d parameters:\n      ",
+                  two_modules[1].symbol, two_modules[1].num_params);
+          for (i = 0; i < two_modules[1].num_params; i++)
+            fprintf(stderr, " %g", two_modules[1].params[i].value);
+          fprintf(stderr, "\n");
+        }
       }
 
       StoreInput(&grid, master, module_id, two_modules, &turtle);

@@ -26,8 +26,9 @@ typedef struct {
   Color *colormap;
 } FBm;
 
-extern FBm *FBmCreate();
-void FBmApply(FBm *fbm, Geom *prim, Ray *ray, Vector *pos, Vector *norm,
+extern FBm *FBmCreate(Float offset, Float scale, Float h, Float lambda,
+  int octaves, Float thresh, char *mapname);
+void FBmApply(void *fbm, Geom *prim, Ray *ray, Vector *pos, Vector *norm,
               Vector *gnorm, Surface *surf);
 
 #endif /* FBM_H */

@@ -37,7 +37,7 @@ HEADERS = QTask_login.h \
     dos2unix.h \
     sgiFormat.h \
     lodepng.h \
-    lodepng_util.cpp  about.h
+    lodepng_util.h  about.h
 RESOURCES = logo.qrc about.qrc
 FORMS = UI_RALogin.ui about.ui
 MY_BASE = ../..

@@ -79,7 +79,7 @@ typedef struct {
   Float boundbox[2][3]; /* bounding box of Hf */
 } Hf;
 
-extern Hf *HfCreate();
+extern Hf *HfCreate(char *filename);
 extern int HfIntersect(), HfEnter();
 int HfNormal(Hf *hf, Vector *pos, Vector *nrm, Vector *gnrm);
 void HfUV(Hf *hf, Vector *pos, Vector *norm, Vec2d *uv, Vector *dpdu,

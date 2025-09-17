@@ -1,4 +1,5 @@
 TEMPLATE = lib
+LANGUAGE = C
 CONFIG  += staticlib
 CONFIG -= qt
 TARGET   = rayimage

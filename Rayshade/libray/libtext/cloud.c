@@ -43,12 +43,12 @@ int octaves;
   return cloud;
 }
 
-void CloudTextApply(CloudText *cloud, __attribute__((unused)) Geom *prim,
+void CloudTextApply(void *p_cloud, __attribute__((unused)) Geom *prim,
                     Ray *ray, Vector *pos, __attribute__((unused)) Vector *norm,
                     __attribute__((unused)) Vector *gnorm, Surface *surf) {
   Ray pray;
   Float alpha, beta, It, dsquared, d, limb;
-
+  CloudText *cloud = (CloudText *)p_cloud;
   /*
    * Transform ray to prim. space.
    */

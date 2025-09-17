@@ -25,7 +25,7 @@ Trans prim2model, model2text, prim2text, world2text;
 #define ApplyMapping(m, o, p, n, c, u, v) (*m->method)(m, o, p, n, c, u, v)
 
 Texture *TextCreate(data, meth) TextRef data;
-void (*meth)();
+void (*meth)(void *, Geom *, Ray *, Vector *, Vector *, Vector *, Surface *);
 {
   Texture *res;
 

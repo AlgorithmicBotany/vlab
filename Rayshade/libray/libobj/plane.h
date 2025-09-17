@@ -29,7 +29,7 @@ typedef struct {
   Float d;          /* Plane constant. */
 } Plane;
 
-extern Plane *PlaneCreate();
+extern Plane *PlaneCreate(Vector *pos, Vector *norm);
 extern int PlaneIntersect();
 int PlaneNormal(Plane *plane, Vector *pos, Vector *nrm, Vector *gnrm);
 extern void PlaneUV(), PlaneStats();

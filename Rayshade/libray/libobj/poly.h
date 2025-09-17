@@ -32,7 +32,8 @@ typedef struct {
   int npoints;    /* Number of vertices */
 } Polygon;
 
-extern Polygon *PolygonCreate();
+
+extern Polygon *PolygonCreate(PointList *plist, int npoints, int flipflag);
 extern Methods *PolygonMethods();
 extern int PolygonIntersect(), PolygonEnter();
 extern void PolygonBounds(), PolygonStats();

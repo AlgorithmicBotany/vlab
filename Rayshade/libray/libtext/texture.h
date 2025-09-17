@@ -63,7 +63,7 @@ typedef struct Texture {
   struct Texture *next; /* next in list */
 } Texture;
 
-extern Texture *TextCreate(), *TextAppend();
+extern Texture *TextCreate(TextRef data, void (*meth)(void *, Geom *, Ray *, Vector *, Vector *, Vector *, Surface *)), *TextAppend(Texture *text, Texture *list);
 extern void DNoise3(), VfBm(), TextApply(), MakeBump(), Wrinkled();
 extern Float Noise3(), Noise2(), Chaos(), Marble(), fBm();
 extern int TileValue();

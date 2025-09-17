@@ -181,7 +181,7 @@ void GLWindow::onlineHelp() {
 void GLWindow::about_cpfg_cb() {
   vlab::about(this,"Cpfg");
   return;
-  
+  /*
   QMessageBox box(NULL);
   std::string msg =
       "<p align=\"center\">\n"
@@ -201,4 +201,5 @@ void GLWindow::about_cpfg_cb() {
   box.setIconPixmap(QPixmap::fromImage(QImage(":/images/logo1.png")));
   box.show();
   box.exec();
+  */
 }

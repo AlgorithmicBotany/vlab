@@ -22,13 +22,12 @@ typedef struct {
   Color *colormap; /* colormap */
 } MarbleText;
 
-extern MarbleText *MarbleCreate();
-
-void
-MarbleApply(
-	 MarbleText *marble,
+extern MarbleText *MarbleCreate(char *mapname);
+void MarbleApply(
+	 void *marble,
 	 Geom *prim,
 	 Ray *ray,
 	 Vector *pos, Vector *norm, Vector *gnorm,
 	 Surface *surf);
+
 #endif /* MARBLE_H */

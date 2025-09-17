@@ -2113,7 +2113,9 @@ int main(int argc, char **argv) {
 /*
         Parse the command line.
 */
-static char defaultPreprocessor[8] =
+// name of defaultPreprocessor used in background.c
+//static 
+char defaultPreprocessor[8] =
 #if defined LINUX
     "vlabcpp"
 #elif defined WIN32
@@ -3603,7 +3605,7 @@ void SaveFile(char *name, int format) {
     clp.savefp[format] = stdout;
     Message("Standard output used.\n");
   } else if ((clp.savefp[format] = fopen(name, "w")) == NULL) {
-    Message("Can't open %s\n", name);
+    Message("(control.c) SaveFile - Can't open %s\n", name);
     return;
   }
 

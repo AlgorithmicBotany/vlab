@@ -26,7 +26,7 @@ typedef struct disc {
   Vector norm, pos;                    /* Normal, center */
 } Disc;
 
-extern Disc *DiscCreate();
+extern Disc *DiscCreate(Float ro, Float ri, Vector *pos, Vector *norm);
 extern Methods *DiscMethods();
 extern int DiscIntersect(), DiscEnter();
 extern void DiscBounds(), DiscUV(), DiscStats();

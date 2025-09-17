@@ -18,7 +18,7 @@
 #include "atmosphere.h"
 
 Atmosphere *AtmosCreate(data, method) char *data;
-void (*method)();
+void (*method)(void *fog, Ray *ray, Vector *pos, Float dist, Color *color);
 {
   Atmosphere *ef;
 

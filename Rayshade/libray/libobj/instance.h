@@ -32,7 +32,7 @@ typedef struct {
 extern char *InstanceName();
 extern int InstanceIntersect(), InstanceConvert();
 extern void InstanceBounds();
-extern Instance *InstanceCreate();
+extern Instance *InstanceCreate(Geom *obj);
 extern Methods *InstanceMethods();
 
 #endif /* INSTANCE_H */

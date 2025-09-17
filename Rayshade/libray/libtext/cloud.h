@@ -24,8 +24,10 @@ typedef struct {
   int octaves;
 } CloudText;
 
-extern CloudText *CloudTextCreate();
-void CloudTextApply(CloudText *cloud, Geom *prim, Ray *ray, Vector *pos,
+extern CloudText *CloudTextCreate(Float scale, Float h, Float lambda,
+                                  int octaves, Float cthresh, Float lthresh,
+                                  Float transcale);
+void CloudTextApply(void *cloud, Geom *prim, Ray *ray, Vector *pos,
                     Vector *norm, Vector *gnorm, Surface *surf);
 
 #endif /* CLOUDTEXT_H */

@@ -18,11 +18,12 @@ QMAKE_LEXFLAGS += -Pl --prefix=l2c
 
 QMAKE_CXXFLAGS += -Wno-deprecated-register
 
-macx: {
-  YACCSOURCES = l2c.y
-  QMAKE_YACCFLAGS += -p l2c -o l2c.tab.c
-}
-unix:!macx{
+# yacc, qmake, and Xcode command line tools are incompatible, so use bison manually...
+#macx: {
+#  YACCSOURCES = l2c.y
+#  QMAKE_YACCFLAGS += -p l2c -o l2c.tab.c
+#}
+#unix:!macx{
   BISONSOURCES = l2c.y
 
   bison_decl.name = bison_decl
@@ -44,7 +45,7 @@ unix:!macx{
   bison_impl.depends = l2c_yacc.h
   bison_impl.output = l2c_yacc.cpp 
   QMAKE_EXTRA_COMPILERS += bison_impl
- }
+# }
 
 MY_BASE  = ..
 MY_LIBS  =

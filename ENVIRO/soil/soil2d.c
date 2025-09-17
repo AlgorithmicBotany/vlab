@@ -17,6 +17,8 @@
 #include "soil3d.h"
 #include "comm_lib.h"
 #include "matrix.h"
+// include local copy of lodepng because the version in libmisc.a is compiled with C++ and not compatible with soil2d.c (C)
+#include "lodepng.h"
 
 /**** field specific variables ****/
 
@@ -155,15 +157,88 @@ CELL_TYPE *GetCell(grid_type *grid, int x, int y, int z) {
 /****************************************************************************/
 int LoadInitialData(char *imagename, grid_type *grid) {
   int x, y;
-  IMAGE *image;
-  unsigned short *buf;
-  unsigned short r, g, b;
+  //IMAGE *image;
+  //unsigned short *buf;
+  //unsigned short r, g, b;
   CELL_TYPE *ptr;
   int c;
   targa_params_type TGAspec;
 
-  if ((c = strlen(imagename)) > 3)
-    if (strcmp(imagename + c - 3, "tga") == 0) {
+  if ((c = strlen(imagename)) > 3) {
+
+    /* load in PNG image */
+    if (strcmp(imagename + c - 3, "png") == 0) {
+
+      // from lodepng / examples / example_decode.c
+      unsigned error;
+      unsigned char* image = 0;
+      unsigned width, height;
+
+      error = lodepng_decode32_file(&image, &width, &height, imagename);
+      if (error) {
+        fprintf(stderr, "soil: cannot open input PNG image %s.\n", imagename);
+        fprintf(stderr, "error %u: %s\n", error, lodepng_error_text(error));
+        return 0;
+      }  
+
+      grid->size[X] = width;
+      grid->size[Y] = height;
+
+      if ((grid->data = (CELL_TYPE *)malloc(grid->size[X] * grid->size[Y] *
+                                            sizeof(CELL_TYPE))) == NULL) {
+        fprintf(stderr, "Soil - cannot allocate memory for the grid!\n");
+        return 0;
+      }
+
+      /* read the image in */
+      for (y = 0; y < grid->size[Y]; y++) {
+
+        ptr = grid->data + y * grid->size[X];
+
+        for (x = 0; x < grid->size[X]; x++) {
+          unsigned char r = image[4 * (height-y-1) * width + 4 * x + 0];
+          unsigned char g = image[4 * (height-y-1) * width + 4 * x + 1];
+          unsigned char b = image[4 * (height-y-1) * width + 4 * x + 2];
+
+          if (obs_src) {
+            switch (r + g + b) {
+            case 765: /* 3*255 */
+              ptr->flag = SOURCE;
+              ptr->val = grid->max;
+              break;
+            case 165: /* 40 +55+70 */
+              ptr->flag = OBSTACLE;
+              ptr->val = 0;
+              if ((r == 40) && (g == 55) && (b == 70))
+                break;
+            default:
+              if ((r == b) && (r > 0)) {
+                ptr->flag = OBSTACLE;
+                ptr->val = 0;
+                break;
+              }
+              ptr->flag = DATA;
+              ptr->val = grid->min +
+                         (((DATA_TYPE)g) / 255.0) * (grid->max - grid->min);
+            }
+
+          } else {
+            ptr->flag = DATA;
+            ptr->val = grid->min + ((0.299 * (DATA_TYPE)r +
+                                     0.587 * (DATA_TYPE)g +
+                                     0.114 * (DATA_TYPE)b ) / 
+                                    255.0) *
+                                       (grid->max - grid->min);
+          }
+          ptr++;
+        }
+      }
+
+      free(image);
+      return 1;
+
+
+    } else if (strcmp(imagename + c - 3, "tga") == 0) {
       int xsize, ysize;
       unsigned char *rowbuf;
 
@@ -199,11 +274,11 @@ int LoadInitialData(char *imagename, grid_type *grid) {
         ptr = grid->data + y * grid->size[X];
 
         for (x = 0; x < grid->size[X]; x++) {
-          if (obs_src) {
-            r = rowbuf[x * 3 + 2];
-            g = rowbuf[x * 3 + 1];
-            b = rowbuf[x * 3 + 0];
+          unsigned char r = rowbuf[x * 3 + 2];
+          unsigned char g = rowbuf[x * 3 + 1];
+          unsigned char b = rowbuf[x * 3 + 0];
 
+          if (obs_src) {
             switch (r + g + b) {
             case 765: /* 3*255 */
               ptr->flag = SOURCE;
@@ -226,9 +301,9 @@ int LoadInitialData(char *imagename, grid_type *grid) {
             }
           } else {
             ptr->flag = DATA;
-            ptr->val = grid->min + ((0.299 * (DATA_TYPE)rowbuf[x * 3 + 2] +
-                                     0.587 * (DATA_TYPE)rowbuf[x * 3 + 1] +
-                                     0.114 * (DATA_TYPE)rowbuf[x * 3 + 0]) /
+            ptr->val = grid->min + ((0.299 * (DATA_TYPE)r +
+                                     0.587 * (DATA_TYPE)g +
+                                     0.114 * (DATA_TYPE)b) /
                                     255.0) *
                                        (grid->max - grid->min);
           }
@@ -240,96 +315,101 @@ int LoadInitialData(char *imagename, grid_type *grid) {
       free(rowbuf);
 
       return 1;
-    }
+    } else {
+
+      IMAGE *image;
+      unsigned short *buf;
 
 #ifndef SUN
-  if ((image = iopen(imagename, "r", 0, 0, 0, 0, 0)) == NULL) {
-    fprintf(stderr, "Soil - cannot open image %s!\n", imagename);
-    return 0;
-  }
-
-  grid->size[X] = image->xsize;
-  grid->size[Y] = image->ysize;
-
-  /* one line buffer */
-  if ((buf = (unsigned short *)malloc(3 * image->xsize *
-                                      sizeof(unsigned short))) == NULL) {
-    fprintf(stderr,
-            "Soil - cannot allocate memory for one line of the image %s!\n",
-            imagename);
-    return 0;
-  }
-
-  if ((grid->data = (CELL_TYPE *)malloc(grid->size[X] * grid->size[Y] *
-                                        sizeof(CELL_TYPE))) == NULL) {
-    fprintf(stderr, "Soil - cannot allocate memory for the grid!\n");
-    return 0;
-  }
-
-  /* read the image in */
-  /* image is stored in rows of R, G, and B. R,G,B is converted to b&w and */
-  /* and stored as a float (0-255) */
-  for (y = 0; y < grid->size[Y]; y++) {
-    /* red */
-    getrow(image, buf, y, 0);
-    /* green */
-    getrow(image, buf + image->xsize, y, 1);
-    /* blue */
-    getrow(image, buf + 2 * image->xsize, y, 2);
-
-    ptr = grid->data + y * grid->size[X];
-
-    for (x = 0; x < grid->size[X]; x++) {
-      if (obs_src) {
-        r = buf[x];
-        g = buf[x + image->xsize];
-        b = buf[x + 2 * image->xsize];
-
-        switch (r + g + b) {
-        case 765: /* 3*255 */
-          ptr->flag = SOURCE;
-          ptr->val = grid->max;
-          break;
-        case 165: /* 40 +55+70 */
-          ptr->flag = OBSTACLE;
-          ptr->val = 0;
-          if ((r == 40) && (g == 55) && (b == 70))
-            break;
-        default:
-          if ((r == b) && (r > 0)) {
-            ptr->flag = OBSTACLE;
-            ptr->val = 0;
-            break;
-          }
-          ptr->flag = DATA;
-          ptr->val = grid->min + (((DATA_TYPE)buf[x + image->xsize]) / 255.0) *
-                                     (grid->max - grid->min);
-        }
-      } else {
-        ptr->flag = DATA;
-        ptr->val = grid->min + ((0.299 * (DATA_TYPE)buf[x] +
-                                 0.587 * (DATA_TYPE)buf[x + image->xsize] +
-                                 0.114 * (DATA_TYPE)buf[x + 2 * image->xsize]) /
-                                255.0) *
-                                   (grid->max - grid->min);
+      if ((image = iopen(imagename, "r", 0, 0, 0, 0, 0)) == NULL) {
+        fprintf(stderr, "Soil - cannot open image %s!\n", imagename);
+        return 0;
       }
-      ptr++;
+
+      grid->size[X] = image->xsize;
+      grid->size[Y] = image->ysize;
+
+      /* one line buffer */
+      if ((buf = (unsigned short *)malloc(3 * image->xsize *
+                                          sizeof(unsigned short))) == NULL) {
+        fprintf(stderr,
+                "Soil - cannot allocate memory for one line of the image %s!\n",
+                imagename);
+        return 0;
+      }
+
+      if ((grid->data = (CELL_TYPE *)malloc(grid->size[X] * grid->size[Y] *
+                                            sizeof(CELL_TYPE))) == NULL) {
+        fprintf(stderr, "Soil - cannot allocate memory for the grid!\n");
+        return 0;
+      }
+
+      /* read the image in */
+      /* image is stored in rows of R, G, and B. R,G,B is converted to b&w and */
+      /* and stored as a float (0-255) */
+      for (y = 0; y < grid->size[Y]; y++) {
+        /* red */
+        getrow(image, buf, y, 0);
+        /* green */
+        getrow(image, buf + image->xsize, y, 1);
+        /* blue */
+        getrow(image, buf + 2 * image->xsize, y, 2);
+
+        ptr = grid->data + y * grid->size[X];
+
+        for (x = 0; x < grid->size[X]; x++) {
+          unsigned short r = buf[x];
+          unsigned short g = buf[x + image->xsize];
+          unsigned short b = buf[x + 2 * image->xsize];
+
+          if (obs_src) {
+            switch (r + g + b) {
+            case 765: /* 3*255 */
+              ptr->flag = SOURCE;
+              ptr->val = grid->max;
+              break;
+            case 165: /* 40 +55+70 */
+              ptr->flag = OBSTACLE;
+              ptr->val = 0;
+              if ((r == 40) && (g == 55) && (b == 70))
+                break;
+            default:
+              if ((r == b) && (r > 0)) {
+                ptr->flag = OBSTACLE;
+                ptr->val = 0;
+                break;
+              }
+              ptr->flag = DATA;
+              ptr->val = grid->min + (((DATA_TYPE)buf[x + image->xsize]) / 255.0) *
+                                         (grid->max - grid->min);
+            }
+          } else {
+            ptr->flag = DATA;
+            ptr->val = grid->min + ((0.299 * (DATA_TYPE)r +
+                                     0.587 * (DATA_TYPE)g +
+                                     0.114 * (DATA_TYPE)b) /
+                                    255.0) *
+                                       (grid->max - grid->min);
+          }
+          ptr++;
+        }
+      }
+
+      free(buf);
+      iclose(image);
+#else
+      /* SUN */
+      fprintf(stderr,
+              "Soil - reading of an rgb image not supported in Sun version.\n"
+              "       Initialized to uniform 64x32 grid of 0 values");
+
+      if ((grid->data = (CELL_TYPE *)malloc(64 * 32 * sizeof(CELL_TYPE))) == NULL) {
+        fprintf(stderr, "Soil - cannot allocate memory for the 64x32 grid.\n");
+        return 0;
+      }
+#endif
     }
   }
-
-  free(buf);
-  iclose(image);
-#else
-  /* SUN */
-  fprintf(stderr,
-          "Soil - reading of an rgb image not supported in Sun version.\n"
-          "       Initialized to uniform 64x32 grid of 0 values");
-
-  if ((grid->data = (CELL_TYPE *)malloc(64 * 32 * sizeof(CELL_TYPE))) == NULL) {
-    fprintf(stderr, "Soil - cannot allocate memory for the 64x32 grid.\n");
-    return 0;
-  }
-#endif
 
   return 1;
 }
@@ -354,8 +434,8 @@ int SaveImage(grid_type *grid) {
   while (grid->size[Y] > size[Y])
     size[Y] <<= 1;
 
-  if (((c = strlen(grid->outimagename)) > 3) &&
-      (strcmp(grid->outimagename + c - 3, "tga") == 0)) {
+  if ((c = strlen(grid->outimagename)) > 3) {
+    if (strcmp(grid->outimagename + c - 3, "tga") == 0) {
     /* save TGA image */
     TGAspec.type = TGA_TRUECOLOR_RLE;
     TGAspec.Xres = size[X];
@@ -414,6 +494,55 @@ int SaveImage(grid_type *grid) {
     if (verbose)
       fprintf(stderr, "soil - image %s saved.\n", grid->outimagename);
     return 1;
+
+    } else if (strcmp(grid->outimagename + c - 3, "png") == 0) {
+      unsigned char* image = malloc(grid->size[X] * grid->size[Y] * 4);
+      memset(image, 0, grid->size[X] * grid->size[Y] * 4);
+
+      for (y = 0; y < grid->size[Y]; y++) {
+        for (x = 0; x < grid->size[X]; x++) {
+
+          // set alpha first
+          image[4*grid->size[X]*y + 4*x + 3] = 255;
+
+          val = grid->data[y * grid->size[X] + x].val;
+          val = (val - grid->min) / (grid->max - grid->min) * 255.0;
+          if (val < 0)
+            val = 0;
+          if (val > 255)
+            val = 255;
+
+        int height = grid->size[Y];
+        switch (grid->data[y * grid->size[X] + x].flag) {
+            case DATA:
+              image[4*grid->size[X]*(height-y-1) + 4*x + 0] = (unsigned char)val;
+              image[4*grid->size[X]*(height-y-1) + 4*x + 1] = (unsigned char)val;
+              image[4*grid->size[X]*(height-y-1) + 4*x + 2] = (unsigned char)val;
+              break;
+            case SOURCE:
+              image[4*grid->size[X]*(height-y-1) + 4*x + 0] = 255;
+              image[4*grid->size[X]*(height-y-1) + 4*x + 1] = 255;
+              image[4*grid->size[X]*(height-y-1) + 4*x + 2] = 255;
+              break;
+            case OBSTACLE:
+              image[4*grid->size[X]*(height-y-1) + 4*x + 0] = 40;
+              image[4*grid->size[X]*(height-y-1) + 4*x + 1] = 55;
+              image[4*grid->size[X]*(height-y-1) + 4*x + 2] = 70;
+              break;
+            }
+        }
+      }
+      /*Encode the image*/
+      unsigned error = lodepng_encode32_file(grid->outimagename, image, size[X], size[Y]);
+      /*if there's an error, display it*/
+      if (error)
+        fprintf(stderr, "Cannot save image %s, error %u: %s\n", grid->outimagename, error, lodepng_error_text(error));
+      free(image);
+
+      if (verbose)
+        fprintf(stderr, "soil - image %s saved.\n", grid->outimagename);
+      return 1;
+    }
   }
 
   if ((row = (unsigned short *)malloc(
@@ -1144,12 +1273,12 @@ void SimulateDiffusion(grid_type *grid, int steps, DATA_TYPE tolerance) {
    */
 
 static int SaveFiles(int current_step) {
-  int ind;
-  printf("Current step: %d - from: %d - step: %d - end %d\n",current_step, intervals[ind].from, intervals[ind].step, intervals[ind].to);
+  int ind = 0;
+  
+  if (verbose)
+    fprintf(stderr, "Current step: %d - from: %d - step: %d - end %d\n",current_step, intervals[ind].from, intervals[ind].step, intervals[ind].to);
   if ((intervals[0].from <= 0) || (current_step == 0))
     return 1; /* no itervals, always save */
-
-  ind = 0;
 
   for (;;) {
     

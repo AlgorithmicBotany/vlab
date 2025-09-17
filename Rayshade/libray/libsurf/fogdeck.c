@@ -52,14 +52,14 @@ Color *color, *trans;
 /*
  * Add fogdeck to the given color.
  */
-void FogdeckApply(Fogdeck *fogdeck, Ray *ray,
+void FogdeckApply(void *p_fogdeck, Ray *ray,
                   __attribute__((unused)) Vector *pos, Float dist,
                   Color *color) {
   Float atten, hitdist, density;
   Color trans;
   Vector endp;
   extern Float ExpAtten(), PAChaos();
-
+  Fogdeck *fogdeck = (Fogdeck *)p_fogdeck;
   /*
    * Find distance from origin at which ray strikes
    * z = fogdeck->alt plane

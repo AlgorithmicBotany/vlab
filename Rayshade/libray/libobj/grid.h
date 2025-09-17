@@ -48,7 +48,7 @@ typedef struct {
 extern char *GridName();
 extern void *GirdBounds();
 extern int GridIntersect(), GridConvert();
-extern Grid *GridCreate();
+extern Grid *GridCreate(int x, int y, int z);
 extern Methods *GridMethods();
 
 #endif /* GRID_H */

@@ -14,7 +14,7 @@ SOURCES  = animparam.cpp colormap.cpp comlineparam.cpp configfile.cpp \
 	   semaphore.cpp succstor.cpp surface.cpp surfarr.cpp \
 	   terrain.cpp terrainPatch.cpp texture.cpp texturearr.cpp \
 	   tropism.cpp tropismarr.cpp \
-	   tropismdata.cpp turtle.cpp utils.cpp viewLnx.cpp viewtask.cpp \
+	   tropismdata.cpp turtle.cpp utils.cpp mainwindow.cpp viewLnx.cpp viewtask.cpp \
 	   volume.cpp vvturtle.cpp vector3d.cpp winparams.cpp lpfgparams.cpp \
 	   delay.cpp b_wrapper.cpp bsurfarr.cpp resources.cpp \
 	   ContextScanner.cpp TextFileTurtle.cpp SaveAs.cpp  glwidget.cpp \
@@ -42,10 +42,10 @@ macx: {
     LIBS += -framework GLUT -framework CoreFoundation -framework Carbon  -framework SystemConfiguration -liconv
     DEFINES += MACX_OPENGL_HEADERS
 
-    # to speed-up testing, make install will copy the lpfg.app bundle to the Distribution directory
+    # to speed up testing, make install will copy the lpfg.app bundle to the Distribution directory
     # this is much faster than calling ./compile-all.sh from the root vlab directory
-    # however, the vlab-x.x.x, version number has to be updated manually in the next line
-    lpfg_quick_install.path = ../Distribution/vlab-5.0/browser.app/Contents/Plug-ins/
+    # however, the vlab-x.x, version number has to be updated manually in the next line
+    lpfg_quick_install.path = ../Distribution/vlab-5.1/browser.app/Contents/Plug-ins/
     lpfg_quick_install.files = ../.binaries/lpfg.app
     INSTALLS += lpfg_quick_install
 }
@@ -65,14 +65,14 @@ else {
     } else { LIBS += -lglut }
 
     # lpfg quick install to distribution for testing
-    lpfg_quick_install.path = ../Distribution/vlab-5.0/bin/
+    lpfg_quick_install.path = ../Distribution/vlab-5.1/bin/
     lpfg_quick_install.files = ../.binaries/bin/lpfg
     INSTALLS += lpfg_quick_install 
   }
 
 
 
-# Add copying of ressources for mac
+# Add copying of resources for mac
 !isEmpty(MAKE_BUNDLE) {
 #  QMAKE_INFO_PLIST = Info.plist
 
@@ -93,12 +93,12 @@ else {
   l2cscripts.commands = $$DESTDIR/l2c.app/Contents/MacOS/l2c include/stdmods.h StdModulesStruct.h -ModulesOnly
 
 
-  QMAKE_EXTRA_TARGETS +=copyViewH copyViewCPP copyViewIMP copyLpfgH copyLpfgCPP copyLpfgIMP  copyTurtleH copyGLTurtleCPP copyLEngineH  copyhelp info_list doc_info_list l2cscripts
+  QMAKE_EXTRA_TARGETS += copyhelp info_list doc_info_list l2cscripts
 
 
   #PRE_TARGETDEPS += copyhelp info_list doc_info_list l2cscripts
   # modif from PBdR
-  PRE_TARGETDEPS += copyViewH copyViewCPP copyViewIMP copyLpfgH copyLpfgCPP copyLpfgIMP copyTurtleH copyGLTurtleCPP copyLEngineH copyhelp info_list doc_info_list StdModulesStruct.h
+  PRE_TARGETDEPS += copyhelp info_list doc_info_list StdModulesStruct.h
 
   # For some reason, optimisation for size crashes, but not optim for speed!
   QMAKE_CXXFLAGS_RELEASE -= -Os
@@ -115,10 +115,13 @@ else {
   message($$CONFIG)
   ARCH=""
   contains(CONFIG,x86) {
-    ARCH+=" -arch i386"
+    ARCH+=" -arch i386 -stdlib=libc++"
   }
   contains(CONFIG,x86_64) {
-    ARCH+=" -arch x86_64"
+    ARCH+=" -arch x86_64 -stdlib=libc++"
+  }
+  contains(CONFIG,arm64) {
+    ARCH+=" -arch arm64"
   }
 
   LPFG_SCRIPTS = scripts/Plug-in/cmpl.sh scripts/Plug-in/preproc.sh

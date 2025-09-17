@@ -695,6 +695,7 @@ int TurtleDrawNsteps(int counter) {
       return 1;
     }
 
+    // stop interpreting if "interpretation step" reached (maybe there should be a message)
     if ((counter -= sub) < 0)
       return 0;
 
@@ -2567,15 +2568,11 @@ int ReadViewData(char *filename, DRAWPARAM *drawPtr, VIEWPARAM *viewPtr) {
 
       case 42: /* background scene */
         fgets(tmpfile, TMPFILELEN, fp);
-	//if (access(tmpfile, F_OK) == 0) {
-          VERBOSE("Background scene from input file(s) %s.\n", tmpfile);
-	  viewPtr->backgroundFilename = malloc(strlen(tmpfile) + 1); 
-	  strcpy(viewPtr->backgroundFilename , tmpfile);
-
-          if (ReadBackgroundSceneFile(viewPtr->backgroundFilename ) == 0){
-	    Message("Can't read background scene file: %s\n",tmpfile);
-
-	  }
+        // save name of preprocessed file for rereading later
+        strcpy(viewPtr->backgroundFilename, tmpfile);
+        if (ReadBackgroundSceneFile(viewPtr->backgroundFilename ) == 0) {
+	      Message("Can't read background scene file: %s\n", tmpfile);
+	    }
         break;
 
       case 43: /* twist of generalized cylinders */

@@ -345,7 +345,10 @@ int ReadPrimitiveFile(char *name, int first_time) {
 #else
   strcpy(tmpfile, "/tmp/scene.XXXXXX");
   mkstemp(tmpfile);
-  sprintf(buffer, "vlabcpp %s %s", name, tmpfile);
+  //sprintf(buffer, "vlabcpp %s %s", name, tmpfile);
+  //vlabcpp inserts a space between a minus sign and user-defined macro, which breaks the file parsing in arvo
+  //so, for now, use preproc, which doesn't insert a space
+  sprintf(buffer, "preproc %s > %s", name, tmpfile);
   system(buffer);
 #endif
 

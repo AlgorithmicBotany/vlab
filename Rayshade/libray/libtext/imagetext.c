@@ -82,8 +82,8 @@ int component;
   text->component = component;
 }
 
-void ImageTextApply(ImageText *text, Geom *prim,
-                    __attribute__((unused)) Ray *ray, Vector *pos, Vector *norm,
+void ImageTextApply(void *p_text, Geom *prim,
+                    Ray *ray, Vector *pos, Vector *norm,
                     Vector *gnorm, Surface *surf) {
   Float fx, fy;
   Float outval[4], outval_u[4], outval_v[4];
@@ -92,7 +92,7 @@ void ImageTextApply(ImageText *text, Geom *prim,
   int ix, iy;
   int rchan, gchan, bchan;
   Vector dpdu, dpdv;
-
+  ImageText *text = (ImageText *)p_text;
   /*
    * First, find the floating point location in image coords.
    * Then set ix, iy to the integer location in image coords and

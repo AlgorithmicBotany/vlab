@@ -27,13 +27,13 @@ Gloss *GlossCreate(glossiness) Float glossiness;
   return gloss;
 }
 
-void GlossApply(Gloss *gloss, __attribute__((unused)) Geom *prim, Ray *ray,
+void GlossApply(void *p_gloss, __attribute__((unused)) Geom *prim, Ray *ray,
                 __attribute__((unused)) Vector *pos, Vector *norm,
                 __attribute__((unused)) Vector *gnorm,
                 __attribute__((unused)) Surface *surf) {
   Vector uaxis, vaxis, point, norminc;
   extern void UnitCirclePoint();
-
+  Gloss *gloss = (Gloss *)p_gloss;
   /*
    * Find coordinate system with norm as the Z axis.
    */

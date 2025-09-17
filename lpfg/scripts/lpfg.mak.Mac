@@ -1,6 +1,6 @@
 lsys.so: lsys.o
-	clang++  -std=gnu++11 -stdlib=libc++  -O3 -ARCH -dynamiclib -o lsys.so lsys.o
+	clang++  -std=gnu++11 -O3 -ARCH -dynamiclib -o lsys.so lsys.o
 
 lsys.o: lsys.ii
-	clang++ -std=gnu++11 -stdlib=libc++ -O3 -ARCH -c lsys.ii -Wno-return-type-c-linkage
+	clang++ -std=gnu++11 -O3 -ARCH -c lsys.ii -Wno-return-type-c-linkage
 

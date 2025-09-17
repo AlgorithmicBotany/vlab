@@ -29,7 +29,7 @@ typedef struct cone {
   Trans trans;
 } Cone;
 
-extern Cone *ConeCreate();
+extern Cone *ConeCreate(Float br, Vector *bot, Float ar, Vector *apex);
 extern int ConeIntersect(), ConeEnter(), ConeNormal();
 extern void ConeBounds(), ConeUV(), ConeStats();
 extern char *ConeName();

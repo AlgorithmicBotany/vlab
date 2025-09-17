@@ -49,7 +49,6 @@ fi
 
 platform=$(uname)
 
-CMAKEOPTS=()
 QMAKEOPTS=()
 
 function create_cache() {
@@ -62,7 +61,6 @@ function create_cache() {
     QMAKEOPTS=( "${QMAKEOPTS[@]}" "QMAKE_CC=${CC}" )
   fi
   echo "QMAKEOPTS=(${QMAKEOPTS[@]})" > config_cache.sh
-  echo "CMAKEOPTS=(${CMAKEOPTS[@]})" >> config_cache.sh
   cat >> config_cache.sh <<EOF
 function qmake_os() {
   $qmakebin "\${QMAKEOPTS[@]}" "\$@"
@@ -85,7 +83,7 @@ EOF
 
 function help() {
   echo "Usage: $0 [OPTION]"
-  echo "    -A x Compile for 32 and/or 64 bits. x should be one of '32', '64' or 'both'. Default is  the default of your compiler.'"
+  echo "    -A x Architecture setting: x should be one of 'arm64', 'x86', 'x86_64' or 'both' (x86 and x86_64). If not specified, will default to your compiler.'"
   echo "    -c   Clean all compilations"
   echo "    -M x Version of Max OS X to compile the system for (default: 10.15)"
   echo "    -h   Show this help"
@@ -126,13 +124,11 @@ while true; do
       case "$platform" in
         "Linux")
           case "$2" in
-            32)
+            x86)
               QTARCHS="-m32"
-              CMAKEARCHS="x86"
               ;;
-            64)
+            x86_64)
               QTARCHS="-m64"
-              CMAKEARCHS="x86_64"
               ;;
             both)
               echo "Error, multiple architecture is not available on Linux"
@@ -146,23 +142,27 @@ while true; do
           ;;
           "Darwin")
           case "$2" in
-            32)
+            arm64)
+              QTARCHS="arm64"
+              INSTALLOPTION="--64"
+	      rm config_lpfg.pri
+	      echo "CONFIG += arm64" > config_lpfg.pri
+              ;;
+
+            x86)
               QTARCHS="x86"
-              CMAKEARCHS="i386"
               INSTALLOPTION="--32"
 	      rm config_lpfg.pri
 	      echo "CONFIG += x86" > config_lpfg.pri
               ;;
-            64)
+            x86_64)
               QTARCHS="x86_64"
-              CMAKEARCHS="x86_64"
               INSTALLOPTION="--64"
 	      rm config_lpfg.pri
 	      echo "CONFIG += x86_64" > config_lpfg.pri
               ;;
             both)
               QTARCHS="'x86 x86_64'"
-              CMAKEARCHS="'i386;x86_64'"
               INSTALLOPTION="--both"
 	      rm config_lpfg.pri
 	      echo "CONFIG += x86 x86_64" > config_lpfg.pri
@@ -200,37 +200,18 @@ installdir=$(pwd)/.binaries
 
 case "$platform" in
   Darwin)
-echo $macVersion
-# the following env variable disabled specific compiling options ...
-#  QTARCHS="x86 x86_64"
-#    CMAKEARCHS="i386;x86_64"
-# PASCAL : DEPLOYMENT_TARGET A Modifier 
-deployment_target="10.15"
-# The following variable is used for the new  XCode version 4.3
+    echo "macOS deployment_target is '$macVersion'"
+    deployment_target=$macVersion
 
-MAC_SDK=/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform
-XCODE_CONTENTS=/Applications/Xcode.app/Contents
-if [ ! -d "$MAC_SDK" ]; then
-    MAC_SDK=""
-    XCODE_CONTENTS=""
-fi
-CMAKEOPTS+=(-D CMAKE_INSTALL_PREFIX="$installdir" -D CMAKE_OSX_DEPLOYMENT_TARGET=$deployment_target -D CMAKE_OSX_SYSROOT=$MAC_SDK/Developer/SDKs/MacOSX$macVersion.sdk -D CMAKE_OSX_ARCHITECTURES="$CMAKEARCHS" -D MAC_SDK=$XCODE_CONTENTS)
     QMAKEOPTS+=(-spec macx-clang QMAKE_MAC_SDK=macosx QMAKE_MACOSX_DEPLOYMENT_TARGET=$deployment_target CONFIG+="$QTARCHS" CONFIG+="c++11")
-#    QMAKEOPTS+=(-spec macx-g++ QMAKE_MAC_SDK=$MAC_SDK/Developer/SDKs/MacOSX$macVersion.sdk QMAKE_MACOSX_DEPLOYMENT_TARGET=$deployment_target CONFIG+="$QTARCHS")
-#    QMAKEOPTS=(-spec macx-g++ QMAKE_MAC_SDK=macosx QMAKE_MACOSX_DEPLOYMENT_TARGET=$deployment_target CONFIG+="$QTARCHS")
-    INSTALLSCRIPT="./make-standalone-bundle2.sh"
+    INSTALLSCRIPT="./vlab-macdeployqt.sh"
     ;;
   Linux)
-    CMAKEOPTS+=(-D CMAKE_INSTALL_PREFIX="$installdir")
-    if [ ! -z "${CMAKEARCHS}" ]; then
-      CMAKEOPTS=(${CMAKEOPTS[@]} -D TARGET_SYSTEM_PROCESSOR="${CMAKEARCHS}")
-    fi
     INSTALLSCRIPT=""
     INSTALLOPTION=""
     if [ ! -z "$QTARCHS" ]; then
       QMAKEOPTS+=(QMAKE_CXXFLAGS=$QTARCHS -stdlib=libc++ QMAKE_CFLAGS=$QTARCHS QMAKE_LFLAGS=$QTARCHS -stdlib=libc++  CONFIG+="c++11")
     fi
-    #QMAKEOPTS=(-spec linux-g++)
     ;;
   *)
     echo "Error, cannot compile for OS '$OS'"

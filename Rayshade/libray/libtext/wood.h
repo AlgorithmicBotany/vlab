@@ -21,7 +21,7 @@ typedef char Wood;
 extern Wood *WoodCreate();
 void
 WoodApply(
-	 Wood *wood,
+	 void *wood,
 	 Geom *prim,
 	 Ray *ray,
 	 Vector *pos, Vector *norm, Vector *gnorm,

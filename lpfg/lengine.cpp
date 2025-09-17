@@ -122,6 +122,7 @@ bool LEngine::ConnectToLsys() {
         exported.fCurveV3fPoint = Interface::CurveV3fPoint;
         exported.fCurveV3fNormal = Interface::CurveV3fNormal;
         exported.fCurveScale = Interface::CurveScale;
+        exported.fCurveGAL = Interface::CurveGAL;
         exported.fRun = Interface::RunCmnd;
         exported.fGetSurface = Interface::GetSurface;
         exported.fGetSurfacePoint = Interface::GetSurfacePoint;

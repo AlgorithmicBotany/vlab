@@ -1,4 +1,5 @@
 TEMPLATE = lib
+LANGUAGE = C
 CONFIG  += staticlib
 CONFIR -= qt
 TARGET   = raycommon

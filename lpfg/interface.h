@@ -42,6 +42,7 @@ void CurveScale(int, float, float, float);
 __lc_V2f CurveV2fPoint(int, float);
 __lc_V3f CurveV3fPoint(int, float);
 __lc_V3f CurveV3fNormal(int, float);
+float CurveGAL(int);
 SuccessorStorage &GetSuccessorStorage();
 SurfaceObj GetSurface(int);
 __lc_V3f GetSurfacePoint(int, int);

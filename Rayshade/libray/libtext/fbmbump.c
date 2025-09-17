@@ -29,12 +29,12 @@ int octaves;
 }
 
 /*ARGSUSED*/
-void FBmBumpApply(FBm *fbm, __attribute__((unused)) Geom *prim,
+void FBmBumpApply(void *p_fbm, __attribute__((unused)) Geom *prim,
                   __attribute__((unused)) Ray *ray, Vector *pos, Vector *norm,
                   __attribute__((unused)) Vector *gnorm,
                   __attribute__((unused)) Surface *surf) {
   Vector disp;
-
+  FBm *fbm = (FBm *)p_fbm;
   VfBm(pos, fbm->omega, fbm->lambda, fbm->octaves, &disp);
   norm->x += fbm->offset + disp.x * fbm->scale;
   norm->y += fbm->offset + disp.y * fbm->scale;

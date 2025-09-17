@@ -33,13 +33,13 @@ Bump *BumpCreate(size) Float size;
 /*
  * Apply a "bump" texture.
  */
-void BumpApply(Bump *bump, __attribute__((unused)) Geom *prim,
+void BumpApply(void *p_bump, __attribute__((unused)) Geom *prim,
                __attribute__((unused)) Ray *ray, Vector *pos,
                __attribute__((unused)) Vector *norm,
                __attribute__((unused)) Vector *gnorm,
                __attribute__((unused)) Surface *surf) {
   Vector disp;
-
+  Bump *bump = (Bump *)p_bump;
   DNoise3(pos, &disp);
   norm->x += disp.x * bump->size;
   norm->y += disp.y * bump->size;

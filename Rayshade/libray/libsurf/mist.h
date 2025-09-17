@@ -25,7 +25,7 @@ typedef struct Mist {
   Float scale, zero; /* Height scale, start Z */
 } Mist;
 
-extern Mist *MistCreate();
-extern void MistApply();
+extern Mist *MistCreate(Color *color, Color *trans, Float zero, Float scale);
+extern void MistApply(void *mist, Ray *ray, Vector *pos, Float dist, Color *color);
 
 #endif /* MIST_H */

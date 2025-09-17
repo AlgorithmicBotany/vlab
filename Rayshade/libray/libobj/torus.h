@@ -31,7 +31,7 @@ typedef struct {
   Trans trans;  /* general<-->canonical transform */
 } Torus;
 
-extern Torus *TorusCreate();
+extern Torus *TorusCreate(Float a, Float b, Vector *pos, Vector *norm);
 extern int TorusIntersect(), TorusEnter(), TorusNormal();
 extern void TorusBounds(), TorusUV(), TorusStats();
 extern char *TorusName();

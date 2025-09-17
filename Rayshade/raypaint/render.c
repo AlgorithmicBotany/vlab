@@ -29,6 +29,7 @@ Ray TopRay; /* Top-level ray. */
 int Rectmode = FALSE, Rectx0, Recty0, Rectx1, Recty1;
 int SuperSampleMode = 0, SuperSampling = 0;
 
+SSquare *SSquares;
 
 void Render(argc, argv) int argc;
 char **argv;

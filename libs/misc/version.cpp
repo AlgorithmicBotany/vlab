@@ -36,17 +36,17 @@ namespace vlab {
 
 int version_major() { return 5; }
 
-int version_minor() { return 0; }
+int version_minor() { return 1; }
 
 int version_minor_minor() { return 0; }
 
 int build_number() {
-  return 3609; // this build number is changed manually 
+  return 3614; // this build number is changed manually 
 }
 
 std::string build_date_string() {
   // Date of build is set manually
-  return "December 13th, 2022";
+  return "August 12th, 2025";
 }
 
 std::string version_string() {
@@ -72,6 +72,8 @@ std::string build_info() {
     if (lines[i].contains("i386"))
       has32 = true;
     else if (lines[i].contains("x86_64"))
+      has64 = true;
+    else if (lines[i].contains("arm64"))
       has64 = true;
   }
   /*

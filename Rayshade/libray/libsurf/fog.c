@@ -41,11 +41,11 @@ Fog *FogCreate(color, trans) Color *color, *trans;
 /*
  * Add fog to the given color.
  */
-void FogApply(Fog *fog, __attribute__((unused)) Ray *ray,
-              __attribute__((unused)) Vector *pos, Float dist, Color *color) {
+void FogApply(void *p_fog, Ray *ray, Vector *pos, Float dist, Color *color) {
   Float atten;
   extern Float ExpAtten();
-
+  Fog *fog = (Fog *)p_fog;
+  
   atten = ExpAtten(dist, fog->trans.r);
   if (fog->trans.r == fog->trans.g && fog->trans.r == fog->trans.b) {
     ColorBlend(color, &fog->color, atten, 1. - atten);

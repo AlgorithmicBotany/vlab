@@ -28,14 +28,14 @@
 #define CSG_DIFFERENCE 2
 
 typedef struct Csg {
-  char operator; /* Union, Intersect, or Difference */
+  char my_operator; /* Union, Intersect, or Difference */
   struct Geom *obj1, *obj2;
   int (*intmeth)(); /* Intersection method. */
-  Float bounds[2][3];
+  float bounds[2][3];
 } Csg;
 
 extern char *CsgName();
-extern Csg *CsgCreate();
+extern Csg *CsgCreate(int op);
 extern int CsgIntersect(), CsgConvert();
 extern void CsgBounds();
 int FirstCSGGeom(HitList *hitlist);

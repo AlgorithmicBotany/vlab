@@ -22,8 +22,8 @@ typedef struct {
   Float glossy; /* glossiness */
 } Gloss;
 
-extern Gloss *GlossCreate();
+extern Gloss *GlossCreate(Float glossiness);
 
-void GlossApply(Gloss *gloss, Geom *prim, Ray *ray, Vector *pos, Vector *norm,
+void GlossApply(void *gloss, Geom *prim, Ray *ray, Vector *pos, Vector *norm,
                 Vector *gnorm, Surface *surf);
 #endif /* GLOSS_H */

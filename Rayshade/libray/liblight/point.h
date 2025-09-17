@@ -25,7 +25,7 @@ typedef struct {
   Vector pos;
 } Pointlight;
 
-extern Pointlight *PointCreate();
+extern Pointlight *PointCreate(Vector *pos);
 extern LightMethods *PointMethods();
 extern int PointIntens();
 extern void PointDirection();

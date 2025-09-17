@@ -25,10 +25,11 @@ typedef struct {
   int octaves;
 } WindyText;
 
-extern WindyText *WindyCreate();
-void
-WindyApply(
-	 WindyText *windy,
+extern WindyText *WindyCreate(Float scale, Float wscale,
+							  Float cscale, Float bscale, int octaves,
+							  Float tscale, Float hscale, Float offset);
+void WindyApply(
+	 void *windy,
 	 Geom *prim,
 	 Ray *ray,
 	 Vector *pos, Vector *norm, Vector *gnorm,

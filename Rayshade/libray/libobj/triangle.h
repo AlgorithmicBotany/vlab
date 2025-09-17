@@ -41,7 +41,9 @@ typedef struct {
       type;         /* type (to detect if phong or flat) */
 } Triangle;
 
-extern Triangle *TriangleCreate();
+extern Triangle *TriangleCreate(int type, Vector *p1, Vector *p2, Vector *p3, 
+    Vector *n1, Vector *n2, Vector *n3, Vec2d *u1, Vec2d *u2, Vec2d *u3,
+    int flipflag);
 extern int TriangleIntersect();
 extern void TriangleBounds(), TriangleStats();
 extern Methods *TriangleMethods();

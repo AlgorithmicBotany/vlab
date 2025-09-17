@@ -24,7 +24,7 @@ typedef struct {
   Vector dir;
 } Infinite;
 
-extern Infinite *InfiniteCreate();
+extern Infinite *InfiniteCreate(Vector *dir);
 extern LightMethods *InfiniteMethods();
 int InfiniteIntens(Infinite *inf, Color *lcolor, ShadowCache *cache, Ray *ray,
                    Float dist, int noshadow, Color *color);

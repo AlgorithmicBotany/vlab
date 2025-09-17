@@ -37,6 +37,6 @@ typedef struct RSStats {
 } RSStats;
 
 extern RSStats Stats;
-extern void StatsPrint(), StatsAddRep();
+extern void StatsPrint(), StatsAddRep(Geom *obj);
 
 #endif /* STATS_H */

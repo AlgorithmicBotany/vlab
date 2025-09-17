@@ -46,14 +46,14 @@ int octaves;
  */
 void
 WindyApply(
-	 WindyText *windy,
+	 void *p_windy,
 	 __attribute__((unused))  Geom *prim,
 	 __attribute__((unused))  Ray *ray,
 	 Vector *pos, Vector *norm, __attribute__((unused)) Vector *gnorm,
 	 __attribute__((unused))  Surface *surf)
 {
   Vector bump;
-
+  WindyText *windy = (WindyText *)p_windy;
   Windy(pos, windy->windscale, windy->chaoscale, windy->bumpscale,
         windy->octaves, windy->tscale, windy->hscale, windy->offset, &bump);
 
