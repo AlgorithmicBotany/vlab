@@ -3,6 +3,7 @@
 
 #include <list>
 #include <set>
+#include <string>
 //#include <vvinterpreter/vvpviewer.hpp>
 
 namespace util {

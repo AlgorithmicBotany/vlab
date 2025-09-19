@@ -122,6 +122,12 @@ else
   echo 'FAILED on lpfg.mak'
   exit 1;
 fi
+if $cpbin ../vv/vvinterpreter/program_linux.mk $rootdir/config/program.mk ; then
+  echo -n '.'
+else
+  echo 'FAILED on vv program_linux.mk'
+  exit 1;
+fi
 vim_files="cpfg.vim lpfg.vim lsyntax.vim"
 for cfg in $vim_files; do
   if $cpbin ../config/vimfiles/$cfg $rootdir/config/vimfiles/. ; then

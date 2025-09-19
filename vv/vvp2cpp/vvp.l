@@ -2,7 +2,7 @@
 #include "vvp.tab.h"
 
 #include <string.h>
-#ifndef __APPLE__
+#ifdef WIN32
 #  include <malloc.h>
 #else
 #  include <unistd.h>

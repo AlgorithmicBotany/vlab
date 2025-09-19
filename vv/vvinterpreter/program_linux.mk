@@ -1,18 +1,20 @@
 # System portion of makefile for models
 #
-CXX = g++
-CXXFLAGS = -DQT3_SUPPORT -O3 -ffast-math
-INCDIRS = -I'$(QTDIR)/include' -I'$(QTDIR)/include/Qt' -I'$(QTDIR)/include/QtGui' -I'$(QTDIR)/include/Qt3Support' \
-   -I'$(VVDIR)/include/vvlib'
+RESOURCES=$(shell vvinterpreter -resources)
 
-LIBS_Linux = -lvvlib
-LIBS = -L'$(VVDIR)/lib' $(LIBS_Linux)
+VVLIBDIR=$(RESOURCES)/../lib
+VVHEADERS=$(RESOURCES)/../include/vv
+
+CXX = g++
+CXXFLAGS = -O2 -O3 -ffast-math -fPIC -std=gnu++11
+INCDIRS = -I'$(VVHEADERS)' -F'$(VVLIBDIR)'
+LIBS = -L'$(VVLIBDIR)' -lvv
 
 %.vv: %.o
-	$(CXX) -shared -o $@ $(OBJS) $(LIBDIRS) $(LIBS)
+	$(CXX) $(CXXFLAGS) $(INCDIRS) $(OBJS) $(LIBDIRS) $(LIBS) -shared -o $@
 
 %.o: %.cpp
-	$(CXX) -fpic -c -o $@ $< $(INCDIRS) $(CXXFLAGS)
+	$(CXX) $(CXXFLAGS) $(INCDIRS) -c -o $@ $< 
 
 %.cpp: %.vvp
 	vvp2cpp $< $@

@@ -147,16 +147,16 @@ QString getHelpDirectory()
 QString findResourcesPath()
 {
   QDir libdir = QString(getenv("VVDIR"));
-  if(!libdir.cd("share"))
+  if(!libdir.cd("config"))
   {
-    fprintf(stderr, "Error, no directory $VVDIR/share");
+    fprintf(stderr, "Error, no directory $VVDIR/config");
     exit(-2);
   }
-  if(!libdir.cd("vv"))
-  {
-    fprintf(stderr, "Error, no directory $VVDIR/share/vv");
-    exit(-2);
-  }
+  //if(!libdir.cd("vv"))
+  //{
+  //  fprintf(stderr, "Error, no directory $VVDIR/config/vv");
+  //  exit(-2);
+  //}
   return libdir.absolutePath();
 }
 
@@ -236,7 +236,7 @@ static void usage (const std::string & progname) {
     << "  -animate       Start in animate mode\n"
     << "  -makefile      Output the path to the default makefile\n"
 #ifdef __APPLE__
-    << "  -vvhelp        Open the helkp on VV\n"
+    << "  -vvhelp        Open the help on VV\n"
 #endif
     ;
 }
