@@ -1,0 +1,156 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<link type="text/css" rel="stylesheet" href="lstudio.css">
+<title>L-Studio User's Guide: Palette editors</title>
+</head>
+
+<body>
+<div class="navigation">
+<a href="sections.html">L-studio editors
+<img src="backward.gif" width="16" height="16" alt="Back"></a>
+<a href="index.html">
+<img src="home.gif" height="55" width="54" alt="Contents"></a>
+</div>
+<hr>
+
+<h1>Palette editors</h1>
+
+<p><i>cpfg</i> and <i>lpfg</i> models can use one of two color modes:
+<dfn>color map mode</dfn> or <dfn>material mode</dfn>. In each mode,
+colors are selected from a <dfn>palette</dfn> of 256 entries. In color
+map mode, these entries are simple colors &mdash; RGB triples. In
+material mode, these entries are <dfn>material properties</dfn>:
+ambient color, diffuse color, specular color, emitted color,
+shininess, and transparency.</p>
+
+<p>L-studio provides an editor for each of these modes. Both the color
+map editor and the material editor are accessed through the <em
+class="button">Color</em> tab. You can switch between them with the
+<em class="button">Use materials</em>&nbsp;/&nbsp;<em
+class="button">Use colormap</em> button in the bottom left corner of
+the editors.
+
+<h2>
+<a name="#colormap"></a>
+The color map editor
+</h2>
+
+<div class="largeimg">
+<img src="images/colormapeditor.png"
+     alt="Color map editor">
+</div>
+
+<p>The 256-entry palette is shown in the middle of the editor. A
+palette entry is selected by clicking on the corresponding square. The
+color number will be shown at the top left. Values for the RGB
+components of the selected entry are set using the three sliders
+located above the palette.</p>
+
+<p>Clicking the right mouse button on the palette pops up a menu with
+the following options:</p>
+
+<ul>
+<li><em class="menu">apply</em>: If a simulation is running, the
+changes in the color map will be applied to the image displayed by
+<i>cpfg</i>/<i>lpfg</i>.</li>
+
+<li><em class="menu">inverse</em>: Inverses (negates) the color in
+the selected entry (or entries).</li>
+</ul>
+
+<p>A range of palette entries can be selected by clicking on the first
+entry, then clicking on the last entry while holding down the Shift
+key. When a range is selected two additional commands are available
+through the popup menu:</p>
+
+<ul>
+<li><em class="menu">interpolate</em>: interpolates values for RGB
+components linearly from the first selected entry to the last;</li>
+
+<li><em class="menu">reverse</em>: reverses the order of entries in
+the selected range.</li>
+</ul>
+
+<p><i>cpfg</i> and <i>lpfg</i> use color 0 as the background color.</p>
+
+<p>To switch to material mode press the <em class="button">Use
+materials</em> button.</p>
+
+<h2>
+<a name="#material"></a>
+The material editor</h2>
+
+<div class="largeimg">
+<img src="images/materialeditor.png"
+     alt="Material editor">
+</div>
+
+<p>The material editor acts on a single material selected from the
+palette at the bottom of the window; the material's number is
+displayed below the sliders on the top right. A preview of the
+selected material is shown on the top left. The top three sliders are
+used to set the <dfn>ambient</dfn>, <dfn>diffuse</dfn>, and
+<dfn>specular</dfn> reflection coefficients. The fourth slider
+similarly controls the intensity of light <dfn>emitted</dfn>. To
+change the corresponding reflected and emitted colors, click the
+button on the right side of the respective slider. This brings up a <a
+href="pickcolor.html">color selection dialog box</a>. The bottom two
+sliders control the <dfn>shininess</dfn> and <dfn>transparency</dfn>
+of the material.</p>
+
+<p>All changes made using the sliders affect the preview version of
+the material (in the top left part of the editor) only. To
+save the new material parameters to the palette:</p>
+
+<ul>
+<li>right-click the preview window and select <em
+class="menu">Apply</em> from the popup menu, or</li>
+<li>select another material from the palette.</li>
+</ul>
+
+<p>To <em>discard</em> changes in the material:</p>
+
+<ul>
+<li>right-click the preview window and select <em
+class="menu">Retrieve original</em> from the popup menu, or</li>
+<li>re-select the same material from the palette.</li>
+</ul>
+
+<h4>Copy and paste:</h4>
+
+<p>To copy a single material, right-click on it in the palette and
+select <em class="menu">Copy</em> from the popup menu. To copy a range
+of materials, first select the range by clicking on the first
+material, then holding down the Shift key and clicking on the last
+material. Finally, right-click over the range, and select <em
+class="menu">Copy</em> from the popup menu.</p>
+
+<p>To paste materials, right-click on the first material in the
+palette into which you want the materials to be pasted and select
+<em class="menu">Paste</em> from the popup menu.</p>
+
+<h4>Interpolation:</h4>
+
+<p>To smoothly change material properties over a range of materials,
+select the range by clicking on the first material and then
+holding the Shift key down while clicking on the last
+material. Right-click over the range and select <em
+class="menu">Interpolate</em> from the popup menu.</p>
+
+<p><i>cpfg</i> and <i>lpfg</i> use the emission of material 0 as the
+background color.</p>
+
+<p>To switch to the colormap editor, push the <em class="button">Use
+colormap</em> button.</p>
+
+<hr>
+<div class="navigation">
+<a href="sections.html">L-studio editors
+<img src="backward.gif" width="16" height="16" alt="Back"></a>
+<a href="index.html">
+<img src="home.gif" height="55" width="54" alt="Contents"></a>
+</div>
+</body>
+</html>

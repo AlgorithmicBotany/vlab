@@ -1,0 +1,11 @@
+Decussate branching pattern
+
+This decussate pattern has been obtained by modifying
+the production of the recursive opposite pattern. Thus,
+the original production,
+
+A(t) : t >= D --> M(t-D) A(t-1)
+
+became
+
+A(t) : t >= D --> /(90) M(t-D) A(t-1)

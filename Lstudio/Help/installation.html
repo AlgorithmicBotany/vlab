@@ -1,0 +1,139 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<link type="text/css" rel="stylesheet" href="lstudio.css">
+<title>L-studio User's Guide: Installation</title>
+</head>
+
+<body>
+<div class="navigation">
+<a href="whatis.html">What is L-studio?
+<img src="backward.gif" width="16" height="16" alt="Back"></a>
+<a href="index.html">
+<img src="home.gif" height="55" width="54" alt="Contents"></a>
+<a href="gettingstarted.html">
+<img src="forward.gif" width="16" height="16" alt="Forward"
+>Getting started</a> 
+</div>
+
+<hr>
+
+<h1>Installation</h1>
+
+<h4>System requirements</h4>
+
+<p>To use L-studio you need:</p>
+
+<ul>
+<li>A PC running Windows 95/NT v.4 or later.</li>
+
+<li>A display adapter with at least 64K colors is strongly
+recommended. To obtain the best effects, use TrueColor (24- or 32-bit).</li>
+
+<li>OpenGL. This graphics library is included with all versions of
+Windows since Windows 95. If you have an older version of Windows 95
+you will need to <a href=
+"http://www.microsoft.com/windows95/downloads/default.asp">download
+the libraries from Microsoft</a>.</li>
+
+<li>If you are planning to develop models that use the environmental
+communication library and you want to create your own environmental
+programs, you will need a C or C++ compiler. The <i>comm_lib</i>
+library was created with Microsoft Visual C++ v.6.0.</li>
+
+<li>To use <i>lpfg</i> you will need a C++ compiler capable of
+creating Windows DLLs. <i>lpfg</i> was developed and tested using
+Microsoft Visual C++ v.6.0.</li>
+</ul>
+
+<h4>Files included in installation</h4>
+
+<p>The distribution CD contains the following folders:</p>
+
+<ul>
+<li><tt>bin</tt></li>
+<li><tt>enviro</tt></li>
+<li><tt>Help</tt></li>
+<li><tt>lpfg</tt></li>
+<li><tt>oofs</tt></li>
+</ul>
+
+<p>The contents of these folders are described below:</p>
+
+<ul>
+<li>
+<tt>bin</tt> contains all binaries necessary to use L-studio:<br/>
+
+<ul>
+<li><tt>cpfg.exe</tt> &mdash; <i>cpfg</i> executable</li>
+<li><tt>cpp.exe</tt> &mdash; C preprocessor</li>
+<li><tt>lpfg.exe</tt> &mdash; <i>lpfg</i> executable</li>
+<li><tt>LStudio.exe</tt> &mdash; L-studio executable</li>
+</ul>
+as well as the folder <tt>enviro.bin</tt>, which contains several
+environmental programs.
+</li>
+
+<li><tt>enviro</tt> contains the compiled communication library and
+the communication library header file.</li>
+
+<li><tt>Help</tt> contains these help files in <abbr>HTML</abbr> format, along
+with <abbr>PDF</abbr> versions of other manuals, such as the
+<cite>Cpfg User's Guide</cite>.</li>
+
+<li><tt>lpfg</tt> contains files and folders required to run
+<i>lpfg</i>.</li>
+
+<li><tt>oofs</tt> contains sample L-studio objects.</li>
+</ul>
+
+
+<h4>To install L-studio:</h4>
+
+<ul>
+<li>Create a folder for L-studio files, e.g.
+<tt>C:\Program&nbsp;Files\L-studio</tt></li>
+
+<li>Copy the contents of the CD to this folder. If you wish to keep
+your data files separately (e.g. in <tt>C:\My&nbsp;Documents</tt>),
+copy the <tt>oofs</tt> directory to this folder instead.</li>
+
+<li>
+In order to use <i>lpfg</i>, you will need a C++ compiler capable of
+generating Windows DLLs. If you intend to use Microsoft Visual C++,
+find the file <tt>vcvars32.bat</tt> in the directory where
+your copy of MSVC++ is installed. Copy this file to the
+<tt>lpfg\bin</tt> directory of your L-studio installation (overwriting
+the <tt>vcvars32.bat</tt> file that came with L-studio). This file
+defines environment variables needed by the compiler and linker.
+(In particular, it specifies the <tt>PATH</tt>, <tt>INCLUDE</tt>
+and <tt>LIB</tt> variables.) Note that you will have to do this again
+if you upgrade your L-studio installation.<br>
+If you intend to use a different compiler, see <a
+href="installlpfg2.html">this appendix</a> for instructions on how to
+set up <i>lpfg</i>.
+</li>
+</ul>
+
+<p>To create a shortcut to L-studio on your desktop, right-click on
+<tt>bin\Lstudio.exe</tt> in your L-studio directory and drag it to the
+desktop. Select <em class="menu">Create shortcut</em> from the popup
+menu. To add L-studio to your Start menu, consult <i>Add items to the
+Start Menu</i> in the Windows Help system.</p>
+
+<hr>
+
+<div class="navigation">
+<a href="whatis.html">What is L-studio?
+<img src="backward.gif" width="16" height="16" alt="Back"></a>
+<a href="index.html">
+<img src="home.gif" height="55" width="54" alt="Contents"></a>
+<a href="gettingstarted.html">
+<img src="forward.gif" width="16" height="16" alt="Forward"
+>Getting started</a>
+</div>
+
+</body>
+</html>
+

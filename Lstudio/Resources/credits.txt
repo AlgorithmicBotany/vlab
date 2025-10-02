@@ -1,0 +1,51 @@
+Project leader:
+Przemyslaw Prusinkiewicz
+
+L-studio framework design and implementation:
+  Radek Karwowski
+
+Advanced surface editor:
+  Lars Muendermann
+
+CPFG design and implementation:
+  Przemyslaw Prusinkiewicz
+  Jim Hanan
+  Mark James
+  Radomir Mech
+  Radek Karwowski
+  Lars Muendermann
+  
+LPFG design and implementation:
+  Radek Karwowski
+  
+L+C language design:
+  Przemyslaw Prusinkiewicz
+  Radek Karwowski
+  Jari Perttunen
+  Risto Sievanen
+
+Environmental programs:
+  Radomir Mech
+  Mik Cieslak
+
+Demo objects:
+  Przemyslaw Prusinkiewicz
+  Jim Hanan
+  Radomir Mech
+Additional contributors 
+  listed in the models
+Port to L+C
+  Brendan Lane
+
+Diverse extensions:
+  Mik Cieslak
+  Pascal Ferraro
+  Jason Kraft
+  Brendan Lane
+
+Documentation:
+  Radek Karwowski
+  Brendan Lane
+  Radomir Mech
+
+Contact: vlab@cpsc.ucalgary.ca

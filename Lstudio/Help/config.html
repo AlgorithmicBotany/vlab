@@ -1,0 +1,210 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<link type="text/css" rel="stylesheet" href="lstudio.css">
+<title>L-Studio User's Guide: Configuring L-studio</title>
+</head>
+<body>
+<div class="navigation">
+<a href="save.html">Saving objects
+<img src="backward.gif" width="16" height="16" alt="Back"></a>
+<a href="index.html">
+<img src="home.gif" height="55" width="54" alt="Contents"></a>
+<a href="difference.html">
+<img src="forward.gif" width="16" height="16" alt="Forward"
+>Differences between L-studio and <i>vlab</i></a>
+</div>
+
+<hr>
+
+<h1>Configuring L-studio</h1>
+
+<p>The <em class="menu">Preferences</em> menu has the following
+entries:</p>
+
+<div class="largeimg">
+<map name="preferencesmenu">
+<area shape="rect" coords="100,100,230,120" href="#saveto"
+      alt="Save to...">
+<area shape="rect" coords="100,80,230,100" href="#loadfrom"
+      alt="Load from...">
+<area shape="rect" coords="230,60,380,80" href="#general"
+      alt="General">
+<area shape="rect" coords="230,80,380,100" href="#currenteditor"
+      alt="Current editor">
+</map>
+<img src="images/preferences_menu.png"
+      usemap="#preferencesmenu" alt="Preferences menu">
+</div>
+
+<ul>
+<li><h4><a name="general"></a>General</h4>
+
+<p>The <em class="menu">General</em> command opens a window with which
+you can edit some global L-studio preferences:</p>
+
+<div class="largeimg">
+<img src="images/generaloptions.png"
+     alt="General options dialog box">
+</div>
+
+<ul>
+<li><em class="widget">On tabs show</em>: Choose what to show on the
+tabs which switch between L-studio's different editors: text labels,
+small icons, or both.</li>
+
+<li><p><em class="widget">Oofs-root directory</em>:
+The <dfn>oofs-root directory</dfn> is the directory which is used
+when first using the <em class="menu">Open</em> command from the <em
+class="menu">Object</em> menu.</p></li></ul>
+
+<li><h4><a name="currenteditor"></a>
+Current editor</h4>
+
+<p>This command lets you change the appearance of
+the currently active L-studio editor:</p>
+
+<ul>
+<li><p>For text editors (tabs <em class="widget">L-system</em>, <em
+class="widget">View</em>, <em class="widget">Description</em>, and <em
+class="widget">Text file</em>) it lets you specify the font
+used, as well as background and text colours:</p>
+<div class="largeimg">
+<img src="images/textoptions.png"
+     alt="Text editor options dialog box">
+</div>
+</li>
+
+<li><p>For the Contour and Function editors, you can specify the
+colors of the background, grid, axes, curve, line segments, control
+points, and labels:</p>
+<div class="largeimg">
+<img src="images/contouroptions.png"
+     alt="Contour/function editor options dialog box">
+</div>
+</li>
+</ul>
+
+<p>The <em class="menu">Current editor</em> command is not available
+for the other editors.</p>
+
+<li><h4><a name="loadfrom"></a>
+Load from...</h4>
+
+<p>This command lets you specify a configuration file that contains
+settings you want to use.</p></li>
+
+<li><h4><a name="saveto"></a>
+Save to...</h4>
+
+<p>This command lets you save the current configuration to a file.</p>
+</li>
+</ul>
+
+<p>The last file you saved your configuration to, or loaded it from,
+is the default configuration file; it will be loaded automatically
+every time you run L-studio. When you run L-studio for the first time
+on a machine, or if the last used configuration file cannot be read,
+L-studio will use the file <tt>lstudio.cfg</tt> in the L-studio
+installation. If this file cannot be read, the default configuration
+values (the same as the ones in the default <tt>lstudio.cfg</tt>) will
+be used.</p>
+
+<p class="warning"><strong>Note</strong>: If you change the default
+L-studio configuration, it is recommended that you save it to a
+location outside the L-studio installation, such as <tt>My
+Documents</tt>. This ensures that if you upgrade to a later version of
+L-studio, your configuration file will not be overwritten.</p>
+
+
+<h3>Other configuration options</h3>
+
+<p>There are other options which can be changed, but not through the
+<em class="menu">Options</em> menu. To modify these options you will
+need to manually edit your L-studio configuration file. The file has
+the form:</p>
+
+<pre>
+label1: [values]
+label2: [values]
+...
+</pre>
+
+<p>These other options use the labels:</p>
+
+<dl>
+<dt><tt>Warn gallery delete: [on | off]</tt></dt>
+<dd>Specifies whether a warning is given when deleting or resetting
+a component from a gallery. Defaults to on.</dd>
+
+<dt><tt>Ignored files:</tt> <i>file1</i> <i>file2</i> ...</dt>
+<dd>Specifies globally ignored files. Performs the same function
+globally as the <a
+href="difference.html#LSspecifications"><tt>LSSpecifications</tt></a>
+option <tt>ignore</tt> does for a particular model. It is useful, for
+instance, when working with <i>lpfg</i> models, which share a large
+set of ignored files.</dd>
+
+<dt><tt>Tab font size:</tt> <i>size</i></dt>
+<dd>Specifies the size of the font used for the labels of L-studio's tabs.
+If the tabs are displayed with icons only, then this command will have
+no effect.</dd>
+</dl>
+
+
+<h3><a name="browser"></a>
+Configuring the browser</h3>
+
+<p>Currently, there is no GUI support for manipulating browser
+preferences; these options must be changed by modifying the L-studio
+configuration file. The labels which are used by the browser are:</p>
+
+<dl>
+<dt><tt>cr-lf:</tt> [<i>extensions or filenames</i>]</dt>
+<dd><p>Specifies the files which need to be translated when transferring
+to or from an RA server. (See <a href="browser.html#textbox">the box above</a>
+regarding text files.) The values are space-separated names and are
+treated as both extensions and filenames. So, for example, if the
+option line reads:</p>
+<pre>
+cr-lf: txt
+</pre>
+<p>the browser will translate all files named <tt>*.txt</tt>, as well
+as a file named <tt>txt</tt>.</p>
+</dd>
+
+<dt><tt>Browser logon:</tt> <i>host</i> [<i>oofs-root</i> [<i>user</i>
+[<i>password</i>]]]]</dt>
+<dd>Specifies the default contents of the browser connect dialog box
+for <a href="#remote">remote connections</a>. The password is
+optional.</dd>
+
+<dt><tt>Browser icon width:</tt> <i>width</i></dt>
+<dd>Specifies the desired width of the icons displayed in the
+browser window in pixels.</dd>
+
+<dt><tt>Browser font:</tt> "<i>fontname</i>" <i>size</i></dt>
+<dd>Specifies the font which should be used in the browser.</dd>
+
+<dt><tt>Browser background:</tt> <i>red</i> <i>green</i> <i>blue</i></dt>
+<dd>Specifies the browser's background color. <i>red</i>,
+<i>green</i>, and <i>blue</i> are between 0 (no color) and 255 (full
+color); thus, a black background is specified by
+<tt>Browser&nbsp;background:&nbsp;0&nbsp;0&nbsp;0</tt>, and a white
+background by <tt>Browser&nbsp;background:&nbsp;255&nbsp;255&nbsp;255</tt>.
+</dl>
+
+<hr>
+<div class="navigation">
+<a href="save.html">Saving objects
+<img src="backward.gif" width="16" height="16" alt="Back"></a>
+<a href="index.html">
+<img src="home.gif" height="55" width="54" alt="Contents"></a>
+<a href="difference.html">
+<img src="forward.gif" width="16" height="16" alt="Forward"
+>Differences between L-studio and <i>vlab</i></a>
+</div>
+</body>
+</html>
+

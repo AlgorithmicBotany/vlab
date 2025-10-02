@@ -1,0 +1,16 @@
+L-system implementation of Ulam's model on the square grid
+
+This  is a simple example of a model that interacts with
+an environment
+
+The axiom initiates four branches, each terminated by 
+an apex A.  The apex is decomposed into three "tentacles" 
+f, each terminated by communication module E1(VIGOR).  
+The environment (handled by process honda81) returns value 
+1 (grow) if there is no collision, and 0 (don't grow)
+if there is a collision.  A tentacle that does not collide 
+is replaced by a permanent branch segment F with an apex A.
+A colliding tentacle remains unchanged.  The communication
+module remains at the end of that tentacle, to prevent 
+future branches from running into it.  
+

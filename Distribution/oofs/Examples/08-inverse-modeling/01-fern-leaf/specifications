@@ -1,0 +1,66 @@
+plant.l
+plant.v
+plant.a
+plant.mat
+leaf.con
+description.txt
+functions.fset
+*
+image:
+	generate:
+		cpfg -w 240 320 -M plant.mat plant.l plant.v plant.a
+
+functions:
+	int_length:
+		funcedit int_length.func
+	int_width:
+		funcedit int_width.func
+	curvature:
+		funcedit curvature.func
+	leaf_length:
+		funcedit leaf_length.func
+	leaf_width:
+		funcedit leaf_width.func
+	branch_angle:
+		funcedit brangle.func
+
+colormap:
+	loadmaps:
+		loadmap plant.map ; loadmap -c2 plant.map2
+	savemaps:
+		savemap plant.map ; savemap -c2 plant.map2
+	PALETTE
+
+
+material:
+	medit plant.mat
+
+L-system:
+	panel:
+		display:
+			panel panel.l | awkped plant.l
+		CHAR panel.l
+	CHAR plant.l
+
+view file:
+	panel:
+		display:
+			panel panel.v | ped plant.v
+		CHAR panel.v
+	CHAR plant.v
+
+animate file:
+	panel:
+		display:
+			panel panel.a | ped plant.a
+		CHAR panel.a
+	CHAR plant.a
+
+leaf_contour:
+	cuspy:
+		cuspy leaf.con
+	EDIT leaf.con
+
+
+description:
+	EDIT description.txt

@@ -1,0 +1,13 @@
+Emergence of the hierarchy of sizes
+
+This L-system is a variant of the model of self-thinning.
+The key new feature is that new small plants are added to
+the field in each step.  Most of them are dominated by 
+older plants and quickly die off, only to be replaced by
+new small plants, but some reach a large size.  Over time,
+a relatively stable equilibrium distribution emerges
+(the "hierarchy of sizes"), in which there are many small 
+plants and few large plants.  The formation of this 
+distribution is illustrated by an x-y plot, in which
+x is a size class, and y is the number of plants in this 
+class. 

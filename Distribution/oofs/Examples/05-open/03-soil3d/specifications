@@ -1,0 +1,16 @@
+description.txt
+from_env.dat
+ground.dat
+leaf.con
+roots.spec
+soil.mat
+soil.a
+soil.dat
+soil.e
+soil.l
+soil.sd
+soil.spec
+soil.v
+*
+generate:
+	cpfg -a -w 580 480 -M soil.mat -e soil.e soil.l soil.v soil.a

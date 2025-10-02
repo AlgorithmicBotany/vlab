@@ -1,0 +1,13 @@
+﻿  boundingbox.cpp
+  displists.cpp
+  fontlist.cpp
+  glutils.cpp
+  materialparams.cpp
+  oglcntxt.cpp
+  openglwnd.cpp
+  viewbox.cpp
+  gltask.cpp
+  gltrackball.cpp
+  liboglstrng.cpp
+  Generating Code...
+  fwogl.vcxproj -> C:\Users\jungle\Documents\L-studio\fw\fwogl\Release\fwogl.lib

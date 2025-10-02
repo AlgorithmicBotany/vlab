@@ -1,0 +1,47 @@
+mycelis.l
+mycelis.v
+panel.v
+mycelis.a
+line.s
+bud.s
+petal.s
+calyx.s
+fruit.s
+mycelis.map
+description.txt
+*
+demo:
+	cpfg -m mycelis.map mycelis.l mycelis.v mycelis.a
+image:
+	generate:
+		loadmap mycelis.map;cpfg mycelis.l mycelis.v mycelis.a
+
+colormap:
+	MAP mycelis.map
+	PALETTE
+
+water_panel:
+	display:
+		panel panel.v | ped mycelis.v
+	EDIT panel.v
+
+files:
+	L-system:
+		CHAR mycelis.l
+	view file:
+		CHAR mycelis.v
+	animate file:
+		CHAR mycelis.a
+	surfaces:
+		bud:
+			CHAR bud.s
+		calyx:
+			CHAR calyx.s
+		fruit:
+			CHAR fruit.s
+		line:
+			CHAR line.s
+		petal:
+			CHAR petal.s
+	specifications:
+		CHAR specifications

@@ -1,0 +1,9 @@
+target: file angle.txt
+
+type: SLIDER
+name: Angle
+colors: 255,255,255 255,0,0
+origin: 118 151
+min/max: 1 89
+value: 45
+message: 1 1 %d 1

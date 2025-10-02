@@ -1,0 +1,8 @@
+
+		acropetal   basipetal
+
+Plastochron 0	    2		2
+Propagation 0	    1		0
+
+Plastochron 1	    3		6
+Propagation 1	    1		3

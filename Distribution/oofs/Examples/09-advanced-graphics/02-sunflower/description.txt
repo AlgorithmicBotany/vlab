@@ -1,0 +1,6 @@
+A model of sunflower head, described in the "Algorithmic
+Beauty of Plants", p. 103.  Unfortunately, all predefined
+surfaces consist of more than one Bezier patch, and therefore
+cannot be edited using the current implementation of the surface
+editor for L-studio, which only supports surfaces consisting
+of a single patch.

@@ -1,0 +1,80 @@
+Cpfg-lpfg players
+
+Properly load vv objects via a browser
+
+v Position object command like in the object manager
+
+v Add support for endpoint-bsplines to the contour editor. Propagate this change to cpfg and lpfg
+
+v Save as without Browser saves on the same level
+
+v Rename object
+
+v Copy object (in addition to copy subtree) / paste (test thoroughly)
+
+v "Save as " should include "Browse for folder" button. Doesn't change identity.
+
+v "Save as " changes identity of the object (Windows style), "make extension" doesn't (vlab style)
+  "Save as " always saves locally (windows style). If the object was opened locally (Window style)
+  default location is the sibling. If it was opened from a browser, then the default location
+  is the Desktop.
+
+v Browser doesn't redraw properly when increasing width/height
+
+v Show all extensions command in the browser doesn't work properly
+
+v Command as in vlab browser.
+
+v When "make extension" changes identity select the new object in the browser. 
+
+v Warn if a directory opened via browser does not seem to be an L-studio project (no .l files)
+
+v When deleting an entry in the browser activate its parent (not oofs)
+
+v Allow external text editor to be used for L-system
+
+v Open explorer on the lab table
+
+v Open local, remote
+
+v Update documentation
+
+v Allow for large files in the text editor (increased to 512 kB, works on NT/2K/XP only).
+
+v Make sibling
+
+v When deleting an object in the browser close it in L-studio (warn before deleting?)
+
+v When expanding extensions show as far right as possible (same when creating extension), 
+  just like in vlab browser
+
+? Text editor options: font size not initialized properly
+
+4 * Add dynamic menu "Make extension in --> Browser 1, Browser 2 etc. "
+	(extension of the currently selected object in the given browser).
+	This implies that browser have numbers
+	
+* Player for cpfg
+
+* Player for lpfg
+
+Buttons in panels cannot have duplicate names (because group identifies buttons by names/labels)
+  This should be resolved in a smarter way. Currently the buttons receive consecutive numbers appended 
+  to the "button" word when created. And when renaming there is a check performed against duplicate
+  names.
+
+Add text box to panels
+
+Add "reset parameters" button to panels
+
+Redesign and rewrite RA server protocol. Should work on the level of objects, not files. 
+Every message/request should have a response (in do_paste_objects, RA_ARCHIV_BLOCKs are 
+accepted without responses, this can lead to a deadlock/crash).
+
+Gallery for multiple objects not necessarily linear
+
+Syntax highlighting: minimum comments.
+
+Surface gallery
+
+Ignored files: should be imported? Compared?

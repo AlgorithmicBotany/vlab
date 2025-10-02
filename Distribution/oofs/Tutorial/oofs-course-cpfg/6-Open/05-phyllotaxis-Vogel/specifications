@@ -1,0 +1,26 @@
+tree.l
+tree.v
+tree.a
+tree.map
+description.txt
+*
+image:
+	generate:
+		cpfg -m tree.map -e tree.e tree.l tree.v tree.a
+
+colormap:
+	palette:
+		palette tree.map
+
+L-system:
+	EDIT tree.l
+
+viewfile:
+	EDIT tree.v
+
+animation:
+	EDIT tree.a
+
+description:
+	EDIT description.txt
+

@@ -1,0 +1,17 @@
+target: ViewFile
+
+type: SLIDER
+name: X
+colors: 255,255,255 255,0,0
+origin: 183 156
+min/max: -100 100
+value: 0
+message: d VX %d 100
+
+type: SLIDER
+name: Y
+colors: 255,255,255 255,0,0
+origin: 183 210
+min/max: 0 100
+value: 50
+message: d VY %d 100

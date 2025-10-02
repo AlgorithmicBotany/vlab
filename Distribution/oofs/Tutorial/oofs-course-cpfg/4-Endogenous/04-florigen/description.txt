@@ -1,0 +1,10 @@
+Flower induction by florigen
+
+Florigen flows in a growing structure.  The vegetative 
+apex is transformed into a flowering bud when the apex is
+reached by florigen.
+
+In this model, the presence of a signal in an internode is
+represented by the internode type:
+I - without a signal,
+J - with a signal.

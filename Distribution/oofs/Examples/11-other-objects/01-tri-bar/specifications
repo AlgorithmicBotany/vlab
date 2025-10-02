@@ -1,0 +1,55 @@
+molecule.l
+molecule.v
+molecule.a
+panel.l
+panel.v
+panel.a
+molecule.mat
+description
+*
+image:
+	generate:
+		cpfg -M molecule.mat molecule.l molecule.v molecule.a
+	snap:
+		snap molecule.ras
+	ipaste:
+		ipaste molecule.ras
+
+raytrace:
+	rayview:
+		rayview molecule.ray
+	raypaint:
+		raypaint molecule.ray > molecule.rle
+	rayshade:
+		rayshade molecule.ray > molecule.rle
+	display:
+		getiris molecule.rle
+
+L-system:
+	panel:
+		display:
+			panel panel.l | awkped molecule.l
+		CHAR panel.l
+	CHAR molecule.l
+
+view file:
+	panel:
+		display:
+			panel panel.v | ped molecule.v
+		CHAR panel.v
+	CHAR molecule.v
+
+animate file:
+	panel:
+		display:
+			panel panel.a | ped molecule.a
+		CHAR panel.a
+	CHAR molecule.a
+
+materials:
+	edit:
+		medit molecule.mat
+
+description:
+	CHAR description
+

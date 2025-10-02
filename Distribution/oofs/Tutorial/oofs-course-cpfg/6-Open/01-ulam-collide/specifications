@@ -1,0 +1,34 @@
+tree.l
+tree.v
+tree.a
+tree.map
+tree.e
+density.spec
+description.txt
+*
+image:
+	generate:
+		cpfg -m tree.map -e tree.e tree.l tree.v tree.a
+
+colormap:
+	palette:
+		palette tree.map
+
+L-system:
+	EDIT tree.l
+
+viewfile:
+	EDIT tree.v
+
+animation:
+	EDIT tree.a
+
+field:
+	tree.e:
+		EDIT tree.e
+	density.spec:
+                EDIT density.spec
+
+description:
+	EDIT description.txt
+

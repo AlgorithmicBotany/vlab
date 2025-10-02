@@ -1,0 +1,13 @@
+Two decidious trees with branches competing for light.
+Based on the paper "A simulation model of tree architecture
+development based on growth response to local light environment"
+by A. Takenaka, Journal of Plant Research 107 (1994), pp. 321-330.
+The L-system implementation is described in the paper "Visual 
+models of plants interacting with their environment", by R. Mech 
+and P. Prusinkiewicz, Procedings of Siggraph 96, pp. 397-410.
+
+This model is too complicated to provide a useful starting 
+example of the construction of a plant model interacting 
+with its environment, but it was used to demonstrate the correctness
+of the port of the original UNIX version of cpfg and the environmental 
+program to the Windows environment.

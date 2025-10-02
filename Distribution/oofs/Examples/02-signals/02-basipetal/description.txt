@@ -1,0 +1,5 @@
+A model of flower initiation using a single acropetal
+signal, based on L-system 3.1, page 77 of the
+"Algorithmic beautry of plants."  A homomorphism defines
+the appearance of all elements.  For these parameter
+values, the flowering proceeds in a basipetal sequence.

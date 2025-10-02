@@ -1,0 +1,62 @@
+plant.l
+plant.v
+plant.a
+seed.s
+rayfloret.s
+petal1.s
+petal2.s
+description.txt
+plant.mat
+petal.rgb
+leaft.rgb
+base.con
+*
+image:
+	generate:
+		cpfg -M plant.mat plant.l plant.v plant.a
+
+L-system:
+	panel:
+		display:
+			panel panel.l | awkped plant.l
+		EDIT panel.l
+	EDIT plant.l
+
+view file:
+	EDIT plant.v
+
+animate file:
+	EDIT plant.a
+
+surfaces:
+	petal1:
+		SURFACE petal1.s ise.v
+	petal2:
+		SURFACE petal2.s ise.v
+	seed:
+		SURFACE seed.s ise.v
+	rayfloret:
+		SURFACE rayfloret.s ise.v
+
+materials:
+	edit:
+		medit plant.mat
+
+petal_paint:
+	paint:
+		xpaint petal.rgb
+
+petal_warp:
+	warp:
+                warp petal1.s petal.rgb
+
+description:
+	EDIT plant.text
+
+colormap:
+	loadmaps:
+		 loadmap plant.map ; loadmap -c2 plant.map2
+	savemaps:
+		 savemap plant.map ; savemap -c2 plant.map2
+	PALETTE
+

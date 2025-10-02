@@ -1,0 +1,50 @@
+description.txt
+plant.a
+plant.l
+plant.v
+material.mat
+LSspecifications
+internode.func
+leaf-length.func
+leaf.s
+branching-angle.func
+color.func
+leaf-width.func
+L-system.pnl
+*
+image:
+	generate:
+		cpfg -M material.mat plant.l plant.v plant.a
+
+materials:
+	MEDIT material.mat
+
+functions:
+	lengths:
+		internode:
+			FUNCEDIT internode.func
+		leaf:
+			FUNCEDIT leaf-length.func
+	branching_angle:
+		FUNCEDIT branching-angle.func
+	leaf_width:
+		FUNCEDIT leaf-width.func
+	color:
+		FUNCEDIT color.func
+
+surfaces:
+	leaf:
+		SURFACE leaf.s
+
+L-system:
+	EDIT plant.l
+
+viewfile:
+	EDIT plant.v
+
+animation:
+	EDIT plant.a
+
+description:
+	EDIT description.txt
+

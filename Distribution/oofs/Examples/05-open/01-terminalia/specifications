@@ -1,0 +1,42 @@
+tree.l
+tree.v
+tree.a
+tree.e
+density.spec
+panel.l
+panel.a
+tree.mat
+description.txt
+*
+image:
+	generate:
+		cpfg -a -w 640 480 -M tree.mat -e tree.e tree.l tree.v tree.a
+	ipaste:
+		ipaste tree.ras
+
+material:
+	medit plant.mat
+
+L-system:
+	panel:
+		display:
+			panel panel.l | awkped tree.l
+		EDIT panel.l
+	EDIT tree.l
+
+viewfile:
+	EDIT tree.v
+
+field:
+	EDIT tree.e
+	EDIT density.spec
+
+animation:
+	panel:
+		display:
+			panel panel.a | ped tree.a
+		EDIT panel.v
+	EDIT tree.a
+
+description:
+	EDIT tree.text

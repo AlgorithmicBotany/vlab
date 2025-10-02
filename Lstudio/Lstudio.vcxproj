@@ -1,0 +1,682 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|Win32">
+      <Configuration>Debug</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Debug|x64">
+      <Configuration>Debug</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|Win32">
+      <Configuration>Release</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|x64">
+      <Configuration>Release</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <ProjectGuid>{A9BAD374-4C96-42E5-891E-AAD74A977E5B}</ProjectGuid>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseOfMfc>false</UseOfMfc>
+    <CharacterSet>MultiByte</CharacterSet>
+    <PlatformToolset>v143</PlatformToolset>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseOfMfc>false</UseOfMfc>
+    <CharacterSet>MultiByte</CharacterSet>
+    <PlatformToolset>v143</PlatformToolset>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseOfMfc>false</UseOfMfc>
+    <CharacterSet>MultiByte</CharacterSet>
+    <PlatformToolset>v143</PlatformToolset>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseOfMfc>false</UseOfMfc>
+    <CharacterSet>MultiByte</CharacterSet>
+    <PlatformToolset>v143</PlatformToolset>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+    <Import Project="$(VCTargetsPath)Microsoft.CPP.UpgradeFromVC71.props" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+    <Import Project="$(VCTargetsPath)Microsoft.CPP.UpgradeFromVC71.props" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+    <Import Project="$(VCTargetsPath)Microsoft.CPP.UpgradeFromVC71.props" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+    <Import Project="$(VCTargetsPath)Microsoft.CPP.UpgradeFromVC71.props" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup>
+    <_ProjectFileVersion>10.0.30319.1</_ProjectFileVersion>
+    <OutDir Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">.\Debug\</OutDir>
+    <OutDir Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">.\Debug\</OutDir>
+    <IntDir Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">.\Debug\</IntDir>
+    <IntDir Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">.\Debug\</IntDir>
+    <LinkIncremental Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</LinkIncremental>
+    <LinkIncremental Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</LinkIncremental>
+    <OutDir Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">.\Release\</OutDir>
+    <OutDir Condition="'$(Configuration)|$(Platform)'=='Release|x64'">.\Release\</OutDir>
+    <IntDir Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">.\Release\</IntDir>
+    <IntDir Condition="'$(Configuration)|$(Platform)'=='Release|x64'">.\Release\</IntDir>
+    <LinkIncremental Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">false</LinkIncremental>
+    <LinkIncremental Condition="'$(Configuration)|$(Platform)'=='Release|x64'">false</LinkIncremental>
+  </PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <Midl>
+      <PreprocessorDefinitions>_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <MkTypLibCompatible>true</MkTypLibCompatible>
+      <SuppressStartupBanner>true</SuppressStartupBanner>
+      <TargetEnvironment>Win32</TargetEnvironment>
+      <TypeLibraryName>.\Debug/Lstudio.tlb</TypeLibraryName>
+    </Midl>
+    <ClCompile>
+      <Optimization>Disabled</Optimization>
+      <AdditionalIncludeDirectories>..\fw;..\fw\fwogl;..\libs\image;..\libs\scramble;..\lstudio-shared;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>_DEBUG;WIN32;_WINDOWS;STRICT;WIN32_LEAN_AND_MEAN;_WIN32_WINDOWS=0x0500;WINVER=0x0500;%(PreprocessorDefinitions);_CRT_SECURE_NO_WARNINGS</PreprocessorDefinitions>
+      <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
+      <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
+      <FunctionLevelLinking>false</FunctionLevelLinking>
+      <RuntimeTypeInfo>true</RuntimeTypeInfo>
+      <PrecompiledHeader>
+      </PrecompiledHeader>
+      <PrecompiledHeaderOutputFile>.\Debug/Lstudio.pch</PrecompiledHeaderOutputFile>
+      <AssemblerListingLocation>.\Debug/</AssemblerListingLocation>
+      <ObjectFileName>.\Debug/</ObjectFileName>
+      <ProgramDataBaseFileName>.\Debug/</ProgramDataBaseFileName>
+      <BrowseInformation>
+      </BrowseInformation>
+      <WarningLevel>Level3</WarningLevel>
+      <SuppressStartupBanner>true</SuppressStartupBanner>
+      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
+      <CompileAs>Default</CompileAs>
+    </ClCompile>
+    <ResourceCompile>
+      <PreprocessorDefinitions>_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <Culture>0x0409</Culture>
+      <AdditionalIncludeDirectories>%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+    </ResourceCompile>
+    <Link>
+      <AdditionalOptions>/MACHINE:I386 %(AdditionalOptions)</AdditionalOptions>
+      <AdditionalDependencies>opengl32.lib;fw.lib;fwogl.lib;glu32.lib;ws2_32.lib;comctl32.lib;scramble.lib;shared.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <ShowProgress>NotSet</ShowProgress>
+      <OutputFile>.\Debug/Lstudio.exe</OutputFile>
+      <SuppressStartupBanner>true</SuppressStartupBanner>
+      <AdditionalLibraryDirectories>..\fw\Debug;..\fw\fwogl\Debug;..\libs\image\DebugMT;..\libs\scramble\Debug;..\lstudio-shared\Debug;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <IgnoreSpecificDefaultLibraries>LIBCD;%(IgnoreSpecificDefaultLibraries)</IgnoreSpecificDefaultLibraries>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <ProgramDatabaseFile>.\Debug/Lstudio.pdb</ProgramDatabaseFile>
+      <SubSystem>Windows</SubSystem>
+      <OptimizeReferences>
+      </OptimizeReferences>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <Midl>
+      <PreprocessorDefinitions>_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <MkTypLibCompatible>true</MkTypLibCompatible>
+      <SuppressStartupBanner>true</SuppressStartupBanner>
+      <TypeLibraryName>.\Debug/Lstudio.tlb</TypeLibraryName>
+    </Midl>
+    <ClCompile>
+      <Optimization>Disabled</Optimization>
+      <AdditionalIncludeDirectories>..\fw;..\fw\fwogl;..\libs\image;..\libs\scramble;..\lstudio-shared;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>_DEBUG;WIN32;_WINDOWS;STRICT;WIN32_LEAN_AND_MEAN;_WIN32_WINDOWS=0x0500;WINVER=0x0500;%(PreprocessorDefinitions);_CRT_SECURE_NO_WARNINGS</PreprocessorDefinitions>
+      <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
+      <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
+      <FunctionLevelLinking>false</FunctionLevelLinking>
+      <RuntimeTypeInfo>true</RuntimeTypeInfo>
+      <PrecompiledHeader>
+      </PrecompiledHeader>
+      <PrecompiledHeaderOutputFile>.\Debug/Lstudio.pch</PrecompiledHeaderOutputFile>
+      <AssemblerListingLocation>.\Debug/</AssemblerListingLocation>
+      <ObjectFileName>.\Debug/</ObjectFileName>
+      <ProgramDataBaseFileName>.\Debug/</ProgramDataBaseFileName>
+      <BrowseInformation>
+      </BrowseInformation>
+      <WarningLevel>Level3</WarningLevel>
+      <SuppressStartupBanner>true</SuppressStartupBanner>
+      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
+      <CompileAs>Default</CompileAs>
+    </ClCompile>
+    <ResourceCompile>
+      <PreprocessorDefinitions>_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <Culture>0x0409</Culture>
+      <AdditionalIncludeDirectories>%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+    </ResourceCompile>
+    <Link>
+      <AdditionalOptions>/MACHINE:I386 %(AdditionalOptions)</AdditionalOptions>
+      <AdditionalDependencies>opengl32.lib;fw.lib;fwogl.lib;glu32.lib;ws2_32.lib;comctl32.lib;scramble.lib;shared.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <ShowProgress>NotSet</ShowProgress>
+      <OutputFile>.\Debug/Lstudio.exe</OutputFile>
+      <SuppressStartupBanner>true</SuppressStartupBanner>
+      <AdditionalLibraryDirectories>..\fw\Debug;..\fw\fwogl\Debug;..\libs\image\DebugMT;..\libs\scramble\Debug;..\lstudio-shared\Debug;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <IgnoreSpecificDefaultLibraries>LIBCD;%(IgnoreSpecificDefaultLibraries)</IgnoreSpecificDefaultLibraries>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <ProgramDatabaseFile>.\Debug/Lstudio.pdb</ProgramDatabaseFile>
+      <SubSystem>Windows</SubSystem>
+      <OptimizeReferences>
+      </OptimizeReferences>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <Midl>
+      <PreprocessorDefinitions>NDEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <MkTypLibCompatible>true</MkTypLibCompatible>
+      <SuppressStartupBanner>true</SuppressStartupBanner>
+      <TargetEnvironment>Win32</TargetEnvironment>
+      <TypeLibraryName>.\Release/Lstudio.tlb</TypeLibraryName>
+    </Midl>
+    <ClCompile>
+      <InlineFunctionExpansion>OnlyExplicitInline</InlineFunctionExpansion>
+      <AdditionalIncludeDirectories>..\fw;..\fw\fwogl;..\libs\image;..\libs\scramble;..\lstudio-shared;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>NDEBUG;WIN32;_WINDOWS;STRICT;WIN32_LEAN_AND_MEAN;_WIN32_WINDOWS=0x0500;WINVER=0x0500;%(PreprocessorDefinitions);_CRT_SECURE_NO_WARNINGS</PreprocessorDefinitions>
+      <StringPooling>true</StringPooling>
+      <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <RuntimeTypeInfo>true</RuntimeTypeInfo>
+      <PrecompiledHeaderOutputFile>.\Release/Lstudio.pch</PrecompiledHeaderOutputFile>
+      <AssemblerListingLocation>.\Release/</AssemblerListingLocation>
+      <ObjectFileName>.\Release/</ObjectFileName>
+      <ProgramDataBaseFileName>.\Release/</ProgramDataBaseFileName>
+      <WarningLevel>Level3</WarningLevel>
+      <SuppressStartupBanner>true</SuppressStartupBanner>
+      <CompileAs>Default</CompileAs>
+    </ClCompile>
+    <ResourceCompile>
+      <PreprocessorDefinitions>NDEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <Culture>0x0409</Culture>
+    </ResourceCompile>
+    <Link>
+      <AdditionalOptions>/MACHINE:I386 %(AdditionalOptions)</AdditionalOptions>
+      <AdditionalDependencies>opengl32.lib;fw.lib;fwogl.lib;glu32.lib;image.lib;ws2_32.lib;comctl32.lib;scramble.lib;shared.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <OutputFile>.\Release/Lstudio.exe</OutputFile>
+      <SuppressStartupBanner>true</SuppressStartupBanner>
+      <AdditionalLibraryDirectories>..\fw\Release;..\fw\fwogl\Release;..\libs\image\Release;..\libs\scramble\Release;..\lstudio-shared\Release;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <IgnoreSpecificDefaultLibraries>LIBC;%(IgnoreSpecificDefaultLibraries)</IgnoreSpecificDefaultLibraries>
+      <ProgramDatabaseFile>.\Release/Lstudio.pdb</ProgramDatabaseFile>
+      <SubSystem>Windows</SubSystem>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <Midl>
+      <PreprocessorDefinitions>NDEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <MkTypLibCompatible>true</MkTypLibCompatible>
+      <SuppressStartupBanner>true</SuppressStartupBanner>
+      <TypeLibraryName>.\Release/Lstudio.tlb</TypeLibraryName>
+    </Midl>
+    <ClCompile>
+      <InlineFunctionExpansion>OnlyExplicitInline</InlineFunctionExpansion>
+      <AdditionalIncludeDirectories>..\fw;..\fw\fwogl;..\libs\image;..\libs\scramble;..\lstudio-shared;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>NDEBUG;WIN32;_WINDOWS;STRICT;WIN32_LEAN_AND_MEAN;_WIN32_WINDOWS=0x0500;WINVER=0x0500;%(PreprocessorDefinitions);_CRT_SECURE_NO_WARNINGS</PreprocessorDefinitions>
+      <StringPooling>true</StringPooling>
+      <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <RuntimeTypeInfo>true</RuntimeTypeInfo>
+      <PrecompiledHeaderOutputFile>.\Release/Lstudio.pch</PrecompiledHeaderOutputFile>
+      <AssemblerListingLocation>.\Release/</AssemblerListingLocation>
+      <ObjectFileName>.\Release/</ObjectFileName>
+      <ProgramDataBaseFileName>.\Release/</ProgramDataBaseFileName>
+      <WarningLevel>Level3</WarningLevel>
+      <SuppressStartupBanner>true</SuppressStartupBanner>
+      <CompileAs>Default</CompileAs>
+    </ClCompile>
+    <ResourceCompile>
+      <PreprocessorDefinitions>NDEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <Culture>0x0409</Culture>
+    </ResourceCompile>
+    <Link>
+      <AdditionalOptions>/MACHINE:I386 %(AdditionalOptions)</AdditionalOptions>
+      <AdditionalDependencies>opengl32.lib;fw.lib;fwogl.lib;glu32.lib;image.lib;ws2_32.lib;comctl32.lib;scramble.lib;shared.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <OutputFile>.\Release/Lstudio.exe</OutputFile>
+      <SuppressStartupBanner>true</SuppressStartupBanner>
+      <AdditionalLibraryDirectories>..\fw\Release;..\fw\fwogl\Release;..\libs\image\Release;..\libs\scramble\Release;..\lstudio-shared\Release;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <IgnoreSpecificDefaultLibraries>LIBC;%(IgnoreSpecificDefaultLibraries)</IgnoreSpecificDefaultLibraries>
+      <ProgramDatabaseFile>.\Release/Lstudio.pdb</ProgramDatabaseFile>
+      <SubSystem>Windows</SubSystem>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <ClCompile Include="aboutdlg.cpp" />
+    <ClCompile Include="banner.cpp" />
+    <ClCompile Include="choosetextfmt.cpp" />
+    <ClCompile Include="comlineparam.cpp" />
+    <ClCompile Include="drpdwnpalette.cpp" />
+    <ClCompile Include="evalverdlg.cpp" />
+    <ClCompile Include="gridpreview.cpp" />
+    <ClCompile Include="lstudioapp.cpp" />
+    <ClCompile Include="lstudioctrl.cpp" />
+    <ClCompile Include="lstudioptns.cpp" />
+    <ClCompile Include="main.cpp" />
+    <ClCompile Include="openbrwsrdlg.cpp" />
+    <ClCompile Include="optionsdlg.cpp" />
+    <ClCompile Include="stdout.cpp" />
+    <ClCompile Include="Tests.cpp" />
+    <ClCompile Include="TestSuite.cpp" />
+    <ClCompile Include="viewoptnsdlg.cpp" />
+    <ClCompile Include="gridview.cpp" />
+    <ClCompile Include="gridviewtask.cpp" />
+    <ClCompile Include="animdata.cpp" />
+    <ClCompile Include="animedit.cpp" />
+    <ClCompile Include="colormap.cpp" />
+    <ClCompile Include="colormapedit.cpp" />
+    <ClCompile Include="colormapwnd.cpp" />
+    <ClCompile Include="material.cpp" />
+    <ClCompile Include="materialedit.cpp" />
+    <ClCompile Include="matgallery.cpp" />
+    <ClCompile Include="matparamcb.cpp" />
+    <ClCompile Include="matpreview.cpp" />
+    <ClCompile Include="linethumb.cpp" />
+    <ClCompile Include="patch.cpp" />
+    <ClCompile Include="patchclrinfo.cpp" />
+    <ClCompile Include="surface.cpp" />
+    <ClCompile Include="surfaceedit.cpp" />
+    <ClCompile Include="surfaceview.cpp" />
+    <ClCompile Include="surfgallery.cpp" />
+    <ClCompile Include="surfthumbcb.cpp" />
+    <ClCompile Include="surfviewtsk.cpp" />
+    <ClCompile Include="thumbtask.cpp" />
+    <ClCompile Include="traditional.cpp" />
+    <ClCompile Include="contour.cpp" />
+    <ClCompile Include="contouredit.cpp" />
+    <ClCompile Include="contourgallery.cpp" />
+    <ClCompile Include="contourview.cpp" />
+    <ClCompile Include="contourvwtsk.cpp" />
+    <ClCompile Include="inputcntrpnt.cpp" />
+    <ClCompile Include="matrix.cpp" />
+    <ClCompile Include="funcedit.cpp" />
+    <ClCompile Include="funcgallery.cpp" />
+    <ClCompile Include="funcpts.cpp" />
+    <ClCompile Include="function.cpp" />
+    <ClCompile Include="functionview.cpp" />
+    <ClCompile Include="funcviewtask.cpp" />
+    <ClCompile Include="setfncpntdlg.cpp" />
+    <ClCompile Include="edlin.cpp" />
+    <ClCompile Include="panelbtnprpdlg.cpp" />
+    <ClCompile Include="panelctrl.cpp" />
+    <ClCompile Include="paneldesign.cpp" />
+    <ClCompile Include="panelgallery.cpp" />
+    <ClCompile Include="panelgrprpdlg.cpp" />
+    <ClCompile Include="panelitem.cpp" />
+    <ClCompile Include="panellblprpdlg.cpp" />
+    <ClCompile Include="panelprms.cpp" />
+    <ClCompile Include="panelsedit.cpp" />
+    <ClCompile Include="panelsldprpdlg.cpp" />
+    <ClCompile Include="panelview.cpp" />
+    <ClCompile Include="panelvtskadditem.cpp" />
+    <ClCompile Include="panelvwtsk.cpp" />
+    <ClCompile Include="ped.cpp" />
+    <ClCompile Include="pnlitmsel.cpp" />
+    <ClCompile Include="anytextedit.cpp" />
+    <ClCompile Include="Ball.c" />
+    <ClCompile Include="BallAux.c" />
+    <ClCompile Include="BallMath.c" />
+    <ClCompile Include="CAGD.cpp" />
+    <ClCompile Include="curvedlg.cpp" />
+    <ClCompile Include="curveedit.cpp" />
+    <ClCompile Include="curvegallery.cpp" />
+    <ClCompile Include="curveview.cpp" />
+    <ClCompile Include="curveXYZ.cpp" />
+    <ClCompile Include="curveXYZv.cpp" />
+    <ClCompile Include="glgallery.cpp" />
+    <ClCompile Include="objfgvedit.cpp" />
+    <ClCompile Include="objfgvgallery.cpp" />
+    <ClCompile Include="objfgvobject.cpp" />
+    <ClCompile Include="objfgvview.cpp" />
+    <ClCompile Include="contmodedit.cpp" />
+    <ClCompile Include="difflist.cpp" />
+    <ClCompile Include="experimental.cpp" />
+    <ClCompile Include="lprjctrl.cpp" />
+    <ClCompile Include="lprjload.cpp" />
+    <ClCompile Include="lprjsave.cpp" />
+    <ClCompile Include="newextdlg.cpp" />
+    <ClCompile Include="savechngdlg.cpp" />
+    <ClCompile Include="snapicon.cpp" />
+    <ClCompile Include="snaptsk.cpp" />
+    <ClCompile Include="specifications.cpp" />
+    <ClCompile Include="waitsmphrdlg.cpp" />
+    <ClCompile Include="finddlg.cpp" />
+    <ClCompile Include="cmndefs.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="aboutdlg.h" />
+    <ClInclude Include="banner.h" />
+    <ClInclude Include="choosetextfmt.h" />
+    <ClInclude Include="cmndefs.h" />
+    <ClInclude Include="comlineparam.h" />
+    <ClInclude Include="drpdwnpalette.h" />
+    <ClInclude Include="evalverdlg.h" />
+    <ClInclude Include="gridpreview.h" />
+    <ClInclude Include="lstudioapp.h" />
+    <ClInclude Include="lstudioctrl.h" />
+    <ClInclude Include="lstudioptns.h" />
+    <ClInclude Include="menuids.h" />
+    <ClInclude Include="openbrwsrdlg.h" />
+    <ClInclude Include="optionsdlg.h" />
+    <ClInclude Include="params.h" />
+    <ClInclude Include="stdout.h" />
+    <ClInclude Include="TestSuite.h" />
+    <ClInclude Include="viewoptnsdlg.h" />
+    <ClInclude Include="resource.h" />
+    <ClInclude Include="descredit.h" />
+    <ClInclude Include="gridview.h" />
+    <ClInclude Include="gridviewtask.h" />
+    <ClInclude Include="lsysedit.h" />
+    <ClInclude Include="viewedit.h" />
+    <ClInclude Include="animdata.h" />
+    <ClInclude Include="animedit.h" />
+    <ClInclude Include="colormap.h" />
+    <ClInclude Include="colormapedit.h" />
+    <ClInclude Include="colormapwnd.h" />
+    <ClInclude Include="material.h" />
+    <ClInclude Include="materialedit.h" />
+    <ClInclude Include="matgallery.h" />
+    <ClInclude Include="matparamcb.h" />
+    <ClInclude Include="matpreview.h" />
+    <ClInclude Include="linethcb.h" />
+    <ClInclude Include="linethumb.h" />
+    <ClInclude Include="patch.h" />
+    <ClInclude Include="patchclrinfo.h" />
+    <ClInclude Include="surface.h" />
+    <ClInclude Include="surfaceedit.h" />
+    <ClInclude Include="surfaceview.h" />
+    <ClInclude Include="surfgallery.h" />
+    <ClInclude Include="surfthumbcb.h" />
+    <ClInclude Include="surfviewtsk.h" />
+    <ClInclude Include="thumbtask.h" />
+    <ClInclude Include="traditional.h" />
+    <ClInclude Include="contour.h" />
+    <ClInclude Include="contouredit.h" />
+    <ClInclude Include="contourgallery.h" />
+    <ClInclude Include="contourview.h" />
+    <ClInclude Include="contourvwtsk.h" />
+    <ClInclude Include="inputcntrpnt.h" />
+    <ClInclude Include="knot.h" />
+    <ClInclude Include="matrix.h" />
+    <ClInclude Include="funcedit.h" />
+    <ClInclude Include="funcgallery.h" />
+    <ClInclude Include="funcpts.h" />
+    <ClInclude Include="function.h" />
+    <ClInclude Include="functionview.h" />
+    <ClInclude Include="funcviewtask.h" />
+    <ClInclude Include="setfncpntdlg.h" />
+    <ClInclude Include="edlin.h" />
+    <ClInclude Include="panelbtnprpdlg.h" />
+    <ClInclude Include="panelctrl.h" />
+    <ClInclude Include="paneldesign.h" />
+    <ClInclude Include="panelgallery.h" />
+    <ClInclude Include="panelgrprpdlg.h" />
+    <ClInclude Include="panelitem.h" />
+    <ClInclude Include="panellblprpdlg.h" />
+    <ClInclude Include="panelprms.h" />
+    <ClInclude Include="panelsedit.h" />
+    <ClInclude Include="panelsldprpdlg.h" />
+    <ClInclude Include="panelview.h" />
+    <ClInclude Include="panelvwtsk.h" />
+    <ClInclude Include="ped.h" />
+    <ClInclude Include="pnlitmsel.h" />
+    <ClInclude Include="anytextedit.h" />
+    <ClInclude Include="Ball.h" />
+    <ClInclude Include="BallAux.h" />
+    <ClInclude Include="BallMath.h" />
+    <ClInclude Include="CAGD.h" />
+    <ClInclude Include="curvedlg.h" />
+    <ClInclude Include="curveedit.h" />
+    <ClInclude Include="curvegallery.h" />
+    <ClInclude Include="curveview.h" />
+    <ClInclude Include="curveXYZ.h" />
+    <ClInclude Include="curveXYZv.h" />
+    <ClInclude Include="glgallery.h" />
+    <ClInclude Include="objfgvedit.h" />
+    <ClInclude Include="objfgvgallery.h" />
+    <ClInclude Include="objfgvobject.h" />
+    <ClInclude Include="objfgvview.h" />
+    <ClInclude Include="contmodedit.h" />
+    <ClInclude Include="difflist.h" />
+    <ClInclude Include="lprjctrl.h" />
+    <ClInclude Include="newextdlg.h" />
+    <ClInclude Include="prjnotifysnk.h" />
+    <ClInclude Include="savechngdlg.h" />
+    <ClInclude Include="snapicon.h" />
+    <ClInclude Include="snaptsk.h" />
+    <ClInclude Include="specifications.h" />
+    <ClInclude Include="waitsmphrdlg.h" />
+    <ClInclude Include="finddlg.h" />
+    <ClInclude Include="tedit.h" />
+    <ClInclude Include="dt.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="..\lstudio-splash\dino256.bmp" />
+    <None Include="Resources\credits.txt" />
+    <None Include="Resources\alignbot.ico" />
+    <None Include="Resources\crv_add_.ico" />
+    <None Include="Resources\crv_addp.ico" />
+    <None Include="Resources\crv_adds.ico" />
+    <None Include="Resources\crv_brig.ico" />
+    <None Include="Resources\crv_cagd.ico" />
+    <None Include="Resources\crv_dcur.ico" />
+    <None Include="Resources\crv_del_.ico" />
+    <None Include="Resources\crv_divi.ico" />
+    <None Include="Resources\crv_dpoi.ico" />
+    <None Include="Resources\crv_grid.ico" />
+    <None Include="Resources\crv_init.ico" />
+    <None Include="Resources\crv_inse.ico" />
+    <None Include="Resources\crv_pcon.ico" />
+    <None Include="Resources\crv_pcur.ico" />
+    <None Include="Resources\crv_pope.ico" />
+    <None Include="Resources\crv_ppoi.ico" />
+    <None Include="Resources\crv_redo.ico" />
+    <None Include="Resources\crv_sele.ico" />
+    <None Include="Resources\crv_spap.ico" />
+    <None Include="Resources\crv_turt.ico" />
+    <None Include="Resources\crv_type.ico" />
+    <None Include="Resources\crv_undo.ico" />
+    <None Include="Resources\crv_var_.ico" />
+    <None Include="Resources\curve.ico" />
+    <None Include="Resources\curveloa.ico" />
+    <None Include="Resources\deleteic.ico" />
+    <None Include="Resources\distribu.ico" />
+    <None Include="Resources\dupldown.ico" />
+    <None Include="Resources\duplrigh.ico" />
+    <None Include="Resources\ico00001.ico" />
+    <None Include="Resources\ico00002.ico" />
+    <None Include="Resources\ico00003.ico" />
+    <None Include="Resources\ico00004.ico" />
+    <None Include="Resources\ico00005.ico" />
+    <None Include="Resources\ico00006.ico" />
+    <None Include="Resources\ico00007.ico" />
+    <None Include="Resources\ico00008.ico" />
+    <None Include="Resources\ico00009.ico" />
+    <None Include="Resources\ico00010.ico" />
+    <None Include="Resources\ico00011.ico" />
+    <None Include="Resources\ico00012.ico" />
+    <None Include="Resources\ico00013.ico" />
+    <None Include="Resources\ico00014.ico" />
+    <None Include="Resources\ico00015.ico" />
+    <None Include="Resources\ico00016.ico" />
+    <None Include="Resources\ico00017.ico" />
+    <None Include="Resources\ico00018.ico" />
+    <None Include="Resources\ico00019.ico" />
+    <None Include="Resources\ico00020.ico" />
+    <None Include="Resources\ico00021.ico" />
+    <None Include="Resources\ico00022.ico" />
+    <None Include="Resources\ico00023.ico" />
+    <None Include="Resources\ico00024.ico" />
+    <None Include="Resources\ico00025.ico" />
+    <None Include="Resources\ico00026.ico" />
+    <None Include="Resources\ico00027.ico" />
+    <None Include="Resources\ico00028.ico" />
+    <None Include="Resources\ico00029.ico" />
+    <None Include="Resources\ico00030.ico" />
+    <None Include="Resources\ico00031.ico" />
+    <None Include="Resources\ico00032.ico" />
+    <None Include="Resources\ico00033.ico" />
+    <None Include="Resources\ico00034.ico" />
+    <None Include="Resources\ico00035.ico" />
+    <None Include="Resources\ico00036.ico" />
+    <None Include="Resources\ico00037.ico" />
+    <None Include="Resources\ico00038.ico" />
+    <None Include="Resources\ico00039.ico" />
+    <None Include="Resources\ico00040.ico" />
+    <None Include="Resources\ico00041.ico" />
+    <None Include="Resources\ico00042.ico" />
+    <None Include="Resources\ico00043.ico" />
+    <None Include="Resources\ico00044.ico" />
+    <None Include="Resources\ico00045.ico" />
+    <None Include="Resources\ico00046.ico" />
+    <None Include="Resources\ico00047.ico" />
+    <None Include="Resources\ico00048.ico" />
+    <None Include="Resources\ico00049.ico" />
+    <None Include="Resources\ico00050.ico" />
+    <None Include="Resources\ico00051.ico" />
+    <None Include="Resources\ico00052.ico" />
+    <None Include="Resources\ico00053.ico" />
+    <None Include="Resources\ico00054.ico" />
+    <None Include="Resources\ico00055.ico" />
+    <None Include="Resources\ico00056.ico" />
+    <None Include="Resources\ico00057.ico" />
+    <None Include="Resources\ico00058.ico" />
+    <None Include="Resources\ico00059.ico" />
+    <None Include="Resources\ico00060.ico" />
+    <None Include="Resources\ico00061.ico" />
+    <None Include="Resources\ico00062.ico" />
+    <None Include="Resources\ico00063.ico" />
+    <None Include="Resources\ico00064.ico" />
+    <None Include="Resources\ico00065.ico" />
+    <None Include="Resources\ico00066.ico" />
+    <None Include="Resources\ico00067.ico" />
+    <None Include="Resources\ico00068.ico" />
+    <None Include="Resources\ico00069.ico" />
+    <None Include="Resources\ico00070.ico" />
+    <None Include="Resources\ico00071.ico" />
+    <None Include="Resources\ico00072.ico" />
+    <None Include="Resources\ico00073.ico" />
+    <None Include="Resources\ico00074.ico" />
+    <None Include="Resources\ico00075.ico" />
+    <None Include="Resources\ico00076.ico" />
+    <None Include="Resources\ico00077.ico" />
+    <None Include="Resources\ico00078.ico" />
+    <None Include="Resources\ico00079.ico" />
+    <None Include="Resources\ico00080.ico" />
+    <None Include="Resources\ico00081.ico" />
+    <None Include="Resources\ico00082.ico" />
+    <None Include="Resources\ico00083.ico" />
+    <None Include="Resources\ico00084.ico" />
+    <None Include="Resources\ico00085.ico" />
+    <None Include="Resources\ico00086.ico" />
+    <None Include="Resources\ico00087.ico" />
+    <None Include="Resources\icon1.ico" />
+    <None Include="Resources\icon2.ico" />
+    <None Include="Resources\icon3.ico" />
+    <None Include="Resources\idb_axis.ico" />
+    <None Include="Resources\idc_conn.ico" />
+    <None Include="Resources\labels.ico" />
+    <None Include="Resources\lstudio1.ico" />
+    <None Include="Resources\anim.bmp" />
+    <None Include="Resources\animmask.bmp" />
+    <None Include="Resources\bmp00001.bmp" />
+    <None Include="Resources\bmp00002.bmp" />
+    <None Include="Resources\bmp00003.bmp" />
+    <None Include="Resources\colors.bmp" />
+    <None Include="Resources\colorsma.bmp" />
+    <None Include="Resources\contour.bmp" />
+    <None Include="Resources\contourm.bmp" />
+    <None Include="Resources\descript.bmp" />
+    <None Include="Resources\dino256.bmp" />
+    <None Include="Resources\function.bmp" />
+    <None Include="Resources\lsystem.bmp" />
+    <None Include="Resources\lsystemm.bmp" />
+    <None Include="Resources\panel.bmp" />
+    <None Include="Resources\panelmas.bmp" />
+    <None Include="Resources\surface.bmp" />
+    <None Include="Resources\surfacem.bmp" />
+    <None Include="Resources\textfile.bmp" />
+    <None Include="Resources\toolbar1.bmp" />
+    <None Include="Resources\view.bmp" />
+    <None Include="Resources\viewmask.bmp" />
+    <None Include="Resources\vlbicon48.bmp" />
+    <None Include="Resources\vlbicon64.bmp" />
+    <None Include="Resources\vlbicon96.bmp" />
+    <None Include="Resources\cur00001.cur" />
+    <None Include="Resources\cur00002.cur" />
+    <None Include="Resources\cur00003.cur" />
+    <None Include="Resources\cur00004.cur" />
+    <None Include="Resources\cur00005.cur" />
+    <None Include="Resources\cur00006.cur" />
+    <None Include="Resources\cur00007.cur" />
+    <None Include="Resources\cur00008.cur" />
+    <None Include="Resources\cur00009.cur" />
+    <None Include="Resources\cur00010.cur" />
+    <None Include="Resources\cur00011.cur" />
+    <None Include="Resources\cur00012.cur" />
+    <None Include="Resources\cur00013.cur" />
+    <None Include="Resources\cur00014.cur" />
+    <None Include="Resources\cur00015.cur" />
+    <None Include="Resources\cur00016.cur" />
+    <None Include="Resources\cur00017.cur" />
+    <None Include="Resources\cur00018.cur" />
+    <None Include="Resources\cur00019.cur" />
+    <None Include="Resources\cursor1.cur" />
+    <None Include="Resources\cursor2.cur" />
+    <None Include="Resources\grab.cur" />
+    <None Include="ra_design.txt" />
+    <None Include="todo.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="LStudio.rc">
+      <AdditionalIncludeDirectories Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">..\fw;..\lstudio-shared;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">..\fw;..\lstudio-shared;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">..\fw;..\lstudio-shared;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories Condition="'$(Configuration)|$(Platform)'=='Release|x64'">..\fw;..\lstudio-shared;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+    </ResourceCompile>
+    <ResourceCompile Include="rc Lstudio.rc" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\fw\fw.vcxproj">
+      <Project>{92a3b5b3-7c1d-44a2-8e97-919334c8b862}</Project>
+      <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
+    </ProjectReference>
+    <ProjectReference Include="..\fw\fwogl\fwogl.vcxproj">
+      <Project>{6c551e40-8213-4c28-a9ef-5c1a62dc87f0}</Project>
+      <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
+    </ProjectReference>
+    <ProjectReference Include="..\libs\image\image.vcxproj">
+      <Project>{fe34fd43-7dd2-4b13-9532-0cd918ad9b0e}</Project>
+      <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
+    </ProjectReference>
+    <ProjectReference Include="..\libs\scramble\scramble.vcxproj">
+      <Project>{c73a7219-a344-4021-950b-c08e1c2d28b6}</Project>
+      <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
+    </ProjectReference>
+    <ProjectReference Include="..\lstudio-shared\shared.vcxproj">
+      <Project>{978cea86-94d7-41b0-9fdf-1cf192fd1a40}</Project>
+      <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
+    </ProjectReference>
+    <ProjectReference Include="..\lstudio-splash\splash-image.vcxproj">
+      <Project>{897f64a7-12ba-4990-803c-f13a593cd4bc}</Project>
+      <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
+</Project>

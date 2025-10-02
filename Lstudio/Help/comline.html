@@ -1,0 +1,164 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<link type="text/css" rel="stylesheet" href="lstudio.css">
+<title>L-Studio User's Guide: Appendix B: Command line options</title>
+</head>
+<body>
+<div class="navigation">
+<a href="menus.html">Appendix A
+<img src="backward.gif" width="16" height="16" alt="Back"></a>
+<a href="index.html">
+<img src="home.gif" height="55" width="54" alt="Contents"></a>
+</div>
+
+<hr>
+
+<h1>Appendix B</h1>
+<h2>Command line options</h2>
+
+<p>Although you can run L-studio by double-clicking its icon,
+it is possible to run it from the command line. There are several
+options that can be set when running L-studio from the command line;
+they are useful if you want to run L-studio from another application,
+such as a Powerpoint presentation. These options can be given
+in any order:</p>
+
+<table border="1"
+       summary="Description of command line options to L-studio">
+<tr>
+<th>Command-line option</th>
+<th>Effect</th>
+</tr>
+
+<tr>
+<td><tt>-spl</tt></td>
+<td>Do not display the splash screen when starting L-studio.</td>
+</tr>
+
+<tr>
+<td><tt>-w</tt>&nbsp;<i>width</i>&nbsp;<i>height</i></td>
+<td>The initial L-studio window will be <i>width</i> pixels wide
+and <i>height</i> pixels high.</td>
+</tr>
+
+<tr>
+<td><tt>-wp</tt>&nbsp;<i>x</i>&nbsp;<i>y</i></td>
+<td>The left side of the L-studio window will be <i>x</i> pixels
+from the left side of the screen, and the top of the window will be
+<i>y</i> pixels from the top of the screen.</td>
+</tr>
+
+<tr>
+<td><tt>-wr</tt>&nbsp;<i>rwidth</i>&nbsp;<i>rheight</i></td>
+<td>The width of the initial L-studio window will be <i>rwidth</i>
+times the width of the screen, and its height will be <i>rheight</i>
+times the height of the screen. For example, <tt>-wr 1 1</tt> will make
+the initial window the full size of the screen, while <tt>-wr 0.5 0.5</tt>
+will make the initial window half the height and half the width of the
+screen.</td>
+</tr>
+
+<tr>
+<td><tt>-wpr</tt>&nbsp;<i>xpos</i>&nbsp;<i>ypos</i></td>
+<td>The left side of the L-studio window will be a fraction of <i>xpos</i>
+from the left side of the screen, and the top of the window will be
+a fraction of <i>ypos</i> from the top of the screen. For instance,
+<tt>-wpr 0 0</tt> will place the L-studio window at the top left corner
+of the screen, while <tt>-wpr 0.5 0.5</tt> will place the top left corner
+of the L-studio window in the middle of the screen.</td>
+</tr>
+
+<tr>
+<td><tt>-demo</tt></td>
+<td>Runs L-studio in <dfn>demo mode</dfn>. In this mode, L-studio will
+never prompt if you want to save an object when closing it, nor will
+you be asked to confirm quitting L-studio. This global behaviour is
+similar to the per-object behaviour of the <tt>demo mode</tt>
+parameter in the <a
+href="difference.html#LSspecifications">LSspecifications
+file</a>.</td>
+</tr>
+
+<tr>
+<td><i>directory</i></td>
+<td>Giving a directory on the command line specifies the initial
+object. This object is loaded when L-studio starts. Specifying an
+initial object implies <tt>-spl</tt>.</td>
+</tr>
+</table>
+
+<h4>Running <i>cpfg</i> and <i>lpfg</i> from the command line</h4>
+
+<p>You can also run <i>cpfg</i> and <i>lpfg</i> from the command line.
+Most of the options available are described in the
+<cite>CPFG User's Manual</cite> and the <cite>LPFG User's Manual</cite>.
+There are also some options specific to running these programs
+in Windows, without L-studio:</p>
+
+<table border="1"
+       summary="Description of command line options to cpfg and lpfg">
+<tr>
+<th>Command-line option</th>
+<th>Effect</th>
+</tr>
+
+<tr>
+<td><tt>-w</tt>&nbsp;<i>width</i>&nbsp;<i>height</i></td>
+<td rowspan="4">The window positioning options work in exactly
+the same way in <i>cpfg</i> and <i>lpfg</i> as in L-studio.</td>
+</tr>
+
+<tr>
+<td><tt>-wp</tt>&nbsp;<i>x</i>&nbsp;<i>y</i></td>
+</tr>
+
+<tr>
+<td><tt>-wr</tt>&nbsp;<i>rwidth</i>&nbsp;<i>rheight</i></td>
+</tr>
+
+<tr>
+<td><tt>-wpr</tt>&nbsp;<i>xpos</i>&nbsp;<i>ypos</i></td>
+</tr>
+
+<tr>
+<td><tt>-wnm</tt></td>
+<td><em>No message window</em>. This option tells <i>cpfg</i>/<i>lpfg</i>
+not to display the message log window.</td>
+</tr>
+
+<tr>
+<td><tt>-wnb</tt></td>
+<td><em>No border</em>. This option runs <i>cpfg</i>/<i>lpfg</i> without the
+title bar and border. It is useful if you want the simulator to look
+like part of a presentation, rather than an external program.</td>
+</tr>
+</table>
+
+<p>In addition, <i>lpfg</i> needs to know the path to its binaries and
+include files. (This is usually in the <tt>lpfg</tt> directory in your
+L-studio installation.) When running from L-studio, this information
+is provided automatically, but if you run <i>lpfg</i> from the command
+line, you have to provide it yourself; either in the <tt>LPFGPATH</tt>
+environment variable, or through a command line option:</p>
+
+<table border="1"
+       summary="Description of the -lp command line option to lpfg">
+<tr>
+<td><tt>-lp&nbsp;<i>path</i></tt></td>
+<td>Provides the path to <i>lpfg</i>'s binaries and include files.
+This will typically be in the <tt>lpfg</tt> folder in your L-studio
+installation, for example at <tt>C:\Program&nbsp;Files\L-studio\lpfg</tt>.</td>
+</table>
+
+<hr>
+<div class="navigation">
+<a href="menus.html">Appendix A
+<img src="backward.gif" width="16" height="16" alt="Back"></a>
+<a href="index.html">
+<img src="home.gif" height="55" width="54" alt="Contents"></a>
+</div>
+</body>
+</html>
+

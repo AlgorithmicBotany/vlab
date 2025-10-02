@@ -1,0 +1,5 @@
+To produce the demo version of L-studio:
+1. Change the return value of PrjVar::IsEvalVer in cmndefs.cpp to true;
+2. Change the values of EvalYear, EvalMnth, and EvalDay in dt.h to the
+   required expiration date;
+3. Recompile L-studio, lpfg, and cpfg.

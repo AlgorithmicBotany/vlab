@@ -1,0 +1,9 @@
+lpfg lsystem.l view.v color.map
+ignore:
+lsys.dll
+lsys.i
+lsys.lib
+input.i
+lsys.obj
+lsys.exp
+*

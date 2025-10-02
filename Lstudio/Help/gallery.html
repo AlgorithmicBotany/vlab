@@ -1,0 +1,826 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<link type="text/css" rel="stylesheet" href="lstudio.css">
+<title>L-Studio User's Guide: Editors with Galleries</title>
+</head>
+
+<body>
+<div class="navigation">
+<a href="sections.html">L-studio editors
+<img src="backward.gif" width="16" height="16" alt="Back"></a>
+<a href="index.html">
+<img src="home.gif" height="55" width="54" alt="Contents"></a>
+</div>
+<hr>
+
+<h1>Editors with galleries</h1>
+
+<div class="largeimg">
+<img src="images/gallery.png"
+     alt="The gallery interface">
+</div>
+
+<p>The <a href="#surfaces">surface</a>, <a
+href="#contours">contour</a>, <a href="#functions">function</a>, and
+<a href="#panels">panel</a> editors share a user interface paradigm:
+the <dfn>gallery</dfn>.  At the top left of the editor window is the
+<dfn>preview</dfn>; to its right are all of the <dfn>controls</dfn>
+for altering it. Below the preview and controls is the gallery. This
+is a window which shows all of the surfaces, contours, functions, or
+panels (respectively) which are part of the object.</p>
+
+<h4>Working with the gallery</h4>
+
+<p>The gallery lets you see all of the components of a particular
+type which are part of the object. Clicking on one will bring it
+up in the preview window, where it can be altered with the editing
+controls. Right-clicking on the preview window brings up a popup
+menu which includes the commands:</p>
+
+<ul>
+<li><em class="menu">Apply</em> saves whatever changes have been made
+to this component to the version in the gallery. Note that the changes
+are also saved to the gallery when you choose another component to
+edit.</li>
+<li><em class="menu">Retrieve from gallery</em> abandons any changes
+you have made to the current component since it was last saved to
+the gallery; it brings the version currently in the gallery into the
+preview window.</li>
+<li><em class="menu">Add as new</em> saves the current component as a
+new component added to the end of the gallery.</li>
+</ul>
+
+<p>Each component has a <dfn>name</dfn>; a new component's name is
+"unnamed". <!--********Add in more here--></p>
+
+<p>Right-clicking in the gallery brings up the gallery popup menu,
+which includes the commands:</p>
+
+<ul>
+<li><em class="menu">New</em> creates a new component, named "unnamed",
+at the end of the gallery.</li>
+
+<li><em class="menu">Delete</em> deletes the currently selected
+component. If there is only one entry in the gallery, the <em
+class="menu">Reset</em> command replaces <em class="menu">Delete</em>:
+it resets the single component to its default state (as if newly
+created).</li>
+
+<li><em class="menu">Cut</em>, <em class="menu">Copy</em>, and <em
+class="menu">Paste</em> perform basic clipboard operations on the
+gallery. <em class="menu">Paste</em> has two sub-options, <em
+class="menu">Before</em>, which inserts the copied or cut component to
+the left of the currently selected object, and <em
+class="menu">After</em>, which inserts it to the right.  Note that if
+you <em class="menu">Cut</em> the only component in the gallery, it
+will be reset to the default state instead of deleted.</li>
+</ul>
+
+<p>You can also move a gallery entry by selecting it, then dragging
+it to a new position.</p>
+
+
+<h4>Component sets</h4>
+
+<p>Each panel in the gallery is saved to a file <tt>name.pnl</tt>
+on the lab table, where <tt>name</tt> is the name given to the
+panel. Panels called "unnamed", however, are <em>not</em> saved.
+This is also the default behaviour for surfaces (which are saved
+as <tt>name.s</tt>) and contours (<tt>name.con</tt>). However,
+surfaces, contours, and functions can be <dfn>bound</dfn> into
+<dfn>sets</dfn>, which are saved as single files.
+<!--******Why use sets?-->
+</p>
+
+
+<p>The gallery popup menu of the surface, contour, and function
+editors has an extra command. <em class="menu">Bind</em> toggles the
+state of the components: if on, they are bound to a set; if off, they
+will be saved as individual files. Note that if the components have
+been saved as individual files, then are bound, the individual files
+will not be deleted; similarly, if they are unbound, the set will not
+be deleted.</p>
+
+
+<h2>
+<a name="surfaces"></a>
+Surfaces</h2>
+
+<p>Surfaces in L-studio are implemented as Bezier patches. There are
+two surface editors available: the <dfn>basic</dfn> surface editor,
+and the <dfn>advanced</dfn> editor. With the basic editor,
+you can edit and manipulate surfaces with a single Bezier patch.
+Surfaces made from more than one Bezier patch must be edited
+using the advanced editor. To switch between the basic and advanced
+editors, press the <em class="button">Advanced</em> or <em
+class="button">Basic</em> button in the top right corner of the
+editor.</p>
+
+<p>For more information about surfaces in <i>cpfg</i>, see the
+<cite>Cpfg User's Manual</cite>. More information can also be
+found at <a
+href="http://www.cpsc.ucalgary.ca/Research/bmv/vlab/ise.html"
+>http://www.cpsc.ucalgary.ca/Research/bmv/vlab/ise.html</a>.</p>
+
+
+<h3>
+<a name="basicsurfaces"></a>
+The basic surface editor</h3>
+
+<div class="largeimg">
+<img src="images/basic_surf.png"
+     alt="Basic surface editor">
+</div>
+
+<h4>The editor window</h4>
+
+<p>In the top left of the editor is the preview window, which shows
+the current state of the surface currently being edited. To the right
+of the preview window are the controls: the <em
+class="button">Advanced</em> button switches to the <a
+href="#advancedsurfaces">advanced surface editor</a>; below it is an
+array of buttons to select which Bezier patch control point is
+currently being edited; and below that is the name of the current
+surface. Under the preview window and controls are three sliders which
+display (and can be used to set) the X, Y, and Z position of the
+currently selected control point. At the bottom of the editor is the
+gallery of surfaces. If a gallery entry is in white, it was created
+with the advanced editor, and cannot be loaded into the basic editor;
+attempting to select such an entry will merely display a message in
+the preview window indicating this.</p>
+
+
+<h4>Manipulating the view</h4>
+
+<p>The preview window can be in one of two modes:</p>
+
+<ul>
+<li><em class="mode">Rotate</em></li>
+<li><em class="mode">Lock XY</em></li>
+</ul>
+
+<p>The default mode is <em class="mode">Rotate</em>. To enter <em
+class="mode">Lock XY</em> mode, right-click on the preview window and
+select <em class="menu">Lock XY Design</em> from the popup menu. To
+return to <em class="mode">Rotate</em> mode, select <em
+class="menu">Lock XY Design</em> again.</p>
+
+<p>In <em class="mode">Rotate</em> mode, you can rotate the view of
+the surface by dragging on the preview window with the mouse.  To
+reset the display to its default parallel projection, right-click on
+the preview window and select <em class="menu">Reset rotation</em>
+from the popup menu. In <em class="mode">Lock XY</em> mode, the
+surface cannot be rotated: it is presented in parallel projection on
+the X&ndash;Y plane.</p>
+
+<p>You can pan and zoom the preview window. In both modes, pan by
+dragging the mouse while holding the Shift key on the keyboard.  To
+zoom in or out, either drag with the middle mouse button, or drag with
+the left mouse button while holding the Ctrl key on the
+keyboard. Dragging the mouse up zooms in, while dragging down zooms
+out.</p>
+
+
+<h4>Display options</h4>
+
+<p>You can choose to display or not display the control mesh, the
+control points, or the control points' numbers. You can also show the
+surface in one of three densities of wireframe, or as a shaded
+surface. These options are chosen through the <em
+class="menu">Display</em> submenu of the preview window's popup menu.
+
+
+<h4>Modifying the surface</h4>
+
+<p>The surface can be edited in both modes. In <em
+class="mode">Rotate</em> mode, select a control point using the
+buttons labeled 1&ndash;16. The three sliders located below the
+preview window can be used to change the X, Y and Z coordinates of the
+selected point. In <em class="mode">Lock XY</em> mode, a control point
+can be edited directly by clicking to selct it, then dragging it.
+(Note that in <em class="mode">Lock XY</em> mode, you can only drag a
+control point within the X&ndash;Y plane; to change its Z coordinate,
+select it and use the Z slider.)</p>
+
+<p>You can also change the <dfn>contact point</dfn> associated
+with the surface. When <i>cpfg</i>/<i>lpfg</i> draws the surface,
+the turtle position corresponds to the contact point. See the
+<cite>Cpfg User's Manual</cite> for more information.</p>
+
+<p>If you choose the command <em class="menu">Keep symmetric</em> from
+the popup menu, any change you make to a control point's position will
+be mirrored in point opposite it in the plane defined by the Heading
+and Up vectors.  The result of applying <em class="menu">Keep
+symmetric</em> to a surface which is not symmetric to start with is
+undefined.</p>
+
+
+<h3>
+<a name="advancedsurfaces"></a>
+The advanced surface editor</h3>
+
+
+<div class="largeimg">
+<img src="images/adv_surf.png"
+     alt="Advanced surface editor">
+</div>
+
+<p>Again, the preview window is at the top left, the controls are to
+its right, and the gallery is at the bottom. The <em
+class="button">Basic</em> button, at the top left, switches back to the
+<a href="#basicsurfaces">basic surface editor</a>. The button panel
+below it offers many controls for editing the surface:</p>
+
+<ul>
+<li><img SRC="images/3de/initbspline.jpg" height=26 width=24 alt="Init
+B-Spline"> <em class="button">Init B-spline</em> clears the current
+surface and creates a new B-spline curve.</li>
+
+<li><img SRC="images/3de/initbzsurface.jpg" height=26 width=24
+alt="Init Bz-Surface"> <em class="button">Init Bz-Surface</em> clears
+the current surface and creates a new surface.</li>
+
+<li><img SRC="images/3de/open.jpg" height=26 width=24 alt="Open"> <em
+class="button">Open</em> opens a dialog box which lets you chose a
+file to open as the current surface.</li>
+
+<li><img SRC="images/3de/save.jpg" height=26 width=24 alt="Save"> <em
+class="button">Save</em> lets you save the current surface to a
+file.</li>
+
+<li><img SRC="images/3de/initview.jpg" height=26 width=24 alt="Init
+view"> <em class="button">Init view</em> resets the view in the
+preview window.  The view is set to look down on the X&ndash;Y plane,
+and the pan and scaling is set so that the entire surface can be
+seen.</li>
+
+<li><img SRC="images/3de/initfit.jpg" height=26 width=24 alt="Fit
+view"> <em class="button">Fit view</em> adjusts pan and scaling so
+that the entire surface can be seen in the preview window.</li>
+
+<li><img SRC="images/3de/undo.jpg" height=26 width=24 alt="Undo"> <em
+class="button">Undo</em> undoes the last change you made to the
+surface. You can undo more than once.</li>
+
+<li><img SRC="images/3de/redo.jpg" height=26 width=24 alt="Redo"> <em
+class="button">Redo</em> redoes an operation you just undid with <em
+class="button">Undo</em>.</li>
+
+<li><img SRC="images/3de/pointer.jpg" height=26 width=24 alt="Select">
+<em class="button">Select</em> switches the editor into <em
+class="mode">Select</em> mode. In this mode, you can select control
+points by left-clicking them. A selected control point offers three
+handles: dragging the red handle moves the point in the X dimension,
+dragging the green handle moves the point in the Y dimension, and
+dragging the blue handle moves the point in the Z dimension. While in
+<em class="mode">Select</em> mode, dragging the mouse while holding
+Alt rotates the view.</li>
+
+<li><img SRC="images/3de/rotate.jpg" height=26 width=24 alt="Rotate">
+<em class="button">Rotate</em> switches the editor into <em
+class="mode">Rotate</em> mode. In this mode, you can drag the mouse on
+the preview window to rotate the view of the surface.</li>
+
+<li><img SRC="images/3de/scale.jpg" height=26 width=24 alt="Zoom"> <em
+class="button">Zoom</em> switches the editor into <em
+class="mode">Zoom</em> mode. In this mode, dragging the mouse up in
+the preview window zooms in on the surface, while dragging down zooms
+out.</li>
+
+<li><img SRC="images/3de/translate.jpg" height=26 width=24
+alt="Translate"> <em class="button">Translate</em> switches the editor
+into <em class="mode">Translate</em> mode. In this mode, you can pan
+the view of the surface by dragging the mouse in the preview
+window.</li>
+
+<li><img SRC="images/3de/axes.jpg" height=26 width=24 alt="Axes"> <em
+class="button">Axes</em> toggles the display of the Cartesian axes.
+The red arrow points along the positive X axis, the green arrow points
+along the positive Y axis, and the blue arrow points along the
+positive Z axis.</li>
+
+<li><img SRC="images/3de/grid.jpg" height=26 width=24 alt="Grid"><em
+class="button">Grid</em> opens a submenu which lets you choose which
+grids you want to display. You can independently turn on or off the
+X&ndash;Y grid, the Y&ndash;Z grid, and the X&ndash;Z grid. Choosing
+<em class="menu">Grid</em> from the submenu toggles all active grids
+on or off.</li>
+
+<li><img SRC="images/3de/insert.jpg" height=26 width=24 alt="Insert">
+<em class="button">Insert</em> brings up a submenu offering three
+options:
+
+<ul>
+<li><em class="menu">Point</em> inserts a control point. Within the
+<em class="menu">Point</em> submenu, <em class="menu">Pred</em>
+inserts a point before the currently selected control point, while
+<em class="menu">Succ</em> inserts a control point after the
+currently selected one.</li>
+
+<li><em class="menu">Surface</em> inserts a Bezier patch. Pick an
+option from the submenu to choose the relation of the new patch to the
+patch containing the currently selected control point.</li>
+
+<li><em class="menu">Variation</em> inserts a variation.</li>
+<!--******What is a variation?-->
+</ul>
+
+If no control point is selected, the commands have no effect.
+</li>
+
+<li><img SRC="images/3de/delete.jpg" height=26 width=24 alt="Delete">
+<em class="button">Delete</em> brings up a submenu with three options:
+
+<ul>
+<li><em class="menu">Point</em> deletes the currently selected control
+point.</li>
+<li><em class="menu">Surface</em> deletes the Bezier patch containing
+the currently selected control point.</li>
+<li><em class="menu">Variation</em> deletes the variation containing
+the currently selected control point.</li></ul>
+
+If no control point is selected, the commands have no effect.
+</li>
+
+<li><img SRC="images/3de/multiplicity.jpg" height=26 width=24
+alt="Multiplicity"> <em class="button">Multiplicity</em> opens a
+submenu from which you can choose the multiplicity of the currently
+selected control point.</li>
+
+<li><img SRC="images/3de/type.jpg" height=26 width=24 alt="Type">
+<em class="button">Type</em> brings up a submenu which lets you
+change the type of the curve containing the currently selected
+control vertex. You can change it to a bezier patch, or any
+of several types of B-spline.</li>
+
+<li><img SRC="images/3de/select.jpg" height=26 width=24 alt="Select">
+<em class="button">Select</em> opens a submenu which lets you select
+every control point, including control points of variations; all
+control points on the currently selected curve or surface; or a single
+one of the currently selected control points. This last option is
+useful if there are several control points close together, and
+distinguishing them graphically is difficult.</li>
+
+<li><img SRC="images/3de/align.jpg" height=26 width=24 alt="Align">
+<em class="button">Align</em> moves all currently selected control
+points to the position of the active control point &mdash; that is,
+the control point currently displaying directional arrows.</li>
+
+<li><img SRC="images/3de/dpoints.jpg" height=26 width=24 alt="Display
+Points"> <em class="button">Display Points</em> toggles whether
+control points are displayed in the preview window.</li>
+
+<li><img SRC="images/3de/dconvex.jpg" height=26 width=24 alt="Display
+Convex"> <em class="button">Display Polygon</em> toggles whether
+control polygons are displayed in the preview window.</li>
+
+<li><img SRC="images/3de/dcurve.jpg" height=26 width=24 alt="Display
+Curve"> <em class="button">Display Curve</em> toggles whether curves
+and surfaces are displayed in the preview window.</li>
+
+<li><img SRC="images/3de/divide.jpg" height=26 width=24 alt="Divide">
+<em class="button">Divide</em> subdivides the curve or surface which
+contains the currently selected point.</li>
+ <!--******What kind of subdivision?-->
+
+<li><img SRC="images/3de/show.jpg" height=26 width=24 alt="Show">
+<em class="button">Show</em> selects which portions of the surface
+to show on the display. It opens a submenu from which you can choose
+<em class="menu">All</em>, to show the entire surface and all of
+its components;
+<em class="menu">Curve</em>, to show only the currently selected
+curve or surface;
+<em class="menu">Patch</em>, to show only the currently selected patch
+of curve or surface;
+and <em class="menu">Point</em>, to show only the currently selected
+control points.</li>
+
+<li><img SRC="images/3de/hide.jpg" height=26 width=24 alt="Hide">
+<em class="button">Hide</em> brings up a submenu which lets you
+hide the current surface, the currently selected patch, or the
+currently selected control points. Hidden components cannot be
+selected with the mouse.</li>
+
+<li><img SRC="images/3de/bright.jpg" height=26 width=24 alt="Bright">
+<em class="button">Brighten</em> opens a submenu which lets you
+brighten the entire surface and all of its components, or just the
+currently selected surface, patch, or control point.</li>
+
+<li><img SRC="images/3de/darken.jpg" height=26 width=24 alt="Dark">
+<em class="button">Darken</em> brings up a submenu which lets you
+darken the current surface, the currently selected patch, or the
+currently selected control points. Darkened components can still be
+selected with the mouse.</li>
+
+<li><img SRC="images/3de/turtle.jpg" height=26 width=24 alt="Turtle">
+<em class="button">Turtle</em> opens a dialog box in which you
+can specify the surface's contact point, end point, heading vector,
+up vector, and initial size. These parameters are described in
+the <cite>Cpfg User's Manual</cite>.
+</li>
+
+<li><img SRC="images/3de/transform.jpg" height=26 width=24
+alt="Transform"> <p><em class="button">Transform</em> opens a dialog
+box in which you can specify various transformations to directly apply
+to the currently selected control points.</p>
+
+<div class="largeimg">
+<img src="images/transform_dialog.png"
+     alt="Transform dialog box">
+</div>
+
+<p>To rotate an angle &alpha; about a vector <i>v</i>, enter &alpha;
+in degrees in the <em class="button">Alpha</em> box, and the
+components of <i>v</i> as <em class="button">Vector</em>, then press
+the <em class="button">Rot</em> button. To scale from the origin,
+enter the scaling factors along the X, Y, and Z axes as <em
+class="button">Scale</em>, then press the <em
+class="button">Scale</em> button. To translate, enter the X, Y, and Z
+offsets as <em class="button">Trans</em>, then press the <em
+class="button">Trans</em> button. Finally, you can directly set the
+coordinates; enter them in the <em class="button">Set</em> fields,
+then press the <em class="button">Set</em> button.</p></li>
+
+<!--******Other three buttons??-->
+</ul>
+
+
+<hr>
+<h2><a name="contours"></a>
+Contours</h2>
+
+<div class="largeimg">
+<img src="images/contour_editor.png"
+     alt="Contour editor">
+</div>
+
+<p>Contours in L-studio are defined by B-spline curves. The contour
+editor lets you manipulate the curve's control points; you can
+add or delete control points, move them, or change their
+<dfn>multiplicity</dfn> (strength of attraction). You can also select
+between several types of B-spline curve.</p>
+
+
+<h4>Selecting the type of curve</h4>
+
+<p>L-studio lets you create contours which are <dfn>closed</dfn> or
+<dfn>open</dfn>; to switch between them, check or uncheck the <em
+class="button">Closed contour</em> check box, in the top right corner
+of the editor. In addition, you can force the B-spline to pass through
+the first and last control points by selecting <em
+class="button">Endpoint interp.</em> in the <em
+class="button">B-spline type</em> group; the normal, non-interpolating
+behaviour is selected with the <em class="button">Regular</em> button.
+
+
+<h4>Manipulating control points</h4>
+
+<p>Points can be manipulated in one of four <dfn>edit modes</dfn>.
+The current edit mode is selected using the buttons at the top
+right. The available modes are <em class="mode">move points</em>, <em
+class="mode">add points</em>, <em class="mode">delete
+points</em>, and <em class="mode">set coordinates</em>.</p>
+
+<ul>
+<li>In <em class="mode">add points</em> mode, click anywhere to add a
+new point. The point will be inserted into the closest segment of the
+control polygon.</li>
+
+<li>In <em class="mode">delete points</em> mode, click on a point to
+delete it. You cannot delete a point if doing so would reduce the
+number of points below four; a point of multiplicity two counts as two
+points, and a point of multiplicity three counts as three
+points. </li>
+
+<li>In <em class="mode">move points</em> mode, you can drag a control
+point to a new position. In this mode, you can also change a point's
+multiplicity by double clicking it. Points with multiplicity one are
+white, green indicates a multiplicity of two, and red indicates a
+multiplicity of three. You cannot lower a point's multiplicity if
+doing so would reduce the number of points below four; see the
+previous point.</li>
+
+<li>Finally, in <em class="mode">set coordinates</em> mode, clicking
+on a control point lets you explicitly set its X and Y coordinates.</li>
+</ul>
+
+
+<h4>Manipulating the view</h4> 
+
+<ul>
+<li>To pan the view, drag in the view window while holding Shift.</li>
+
+<li>To zoom in or out, drag in the view window while holding Ctrl, or
+drag while pressing the middle mouse button. Dragging up zooms in,
+while dragging down zooms out.</li>
+</ul>
+
+<p>You can toggle the display of the control points, the control
+polygon, the edited curve, the coordinate system axes, the grid and
+the labels on the grid using buttons grouped in the <em
+class="button">Display</em> section.</p>
+
+
+<hr>
+<h2>
+<a name="functions"></a>
+Functions</h2> 
+
+<div class="largeimg">
+<img src="images/function_editor.png"
+     alt="Function editor">
+</div>
+
+<p>The function editor is very similar to the contour editor. The
+objects being edited are also cubic spline contours, but have some
+additional constraints:</p>
+
+<ul>
+<li>The X-coordinate of the first point is equal to 0 (zero);</li>
+<li>The X-coordinate of the last point is equal to 1; and</li>
+<li>For any two consecutive points p<sub>i</sub> and
+p<sub>i+1</sub> on the curve,
+X<sub>pi</sub>&nbsp;&le;&nbsp;X<sub>pi+1</sub>.</li>
+</ul>
+
+<p>These conditions assure that the curve can be interpreted as a
+function of X.</p>
+
+<h4>Manipulating control points</h4>
+
+<p>Points can be manipulated in one of four <dfn>edit modes</dfn>.
+The current edit mode is selected using the buttons at the top
+right. The available modes are <em class="mode">move points</em>, <em
+class="mode">add points</em>, <em class="mode">delete
+points</em>, and <em class="mode">set coordinates</em>.</p>
+
+<ul>
+<li>In <em class="mode">add points</em> mode, click anywhere to add a
+new point. The point will be inserted into the closest segment of the
+control polygon.</li>
+
+<li>In <em class="mode">delete points</em> mode, click on a point to
+delete it. You cannot delete a point if doing so would reduce the
+number of points below four.</li>
+
+<li><p>In <em class="mode">move points</em> mode, you can drag a
+control point to a new position. The X coordinate of the point will
+always be held between the X coordinates of its neighbours.</li>
+
+<li><p>Finally, in <em class="mode">set coordinates</em> mode, clicking
+on a control point lets you explicitly set its X and Y coordinates.
+The Y coordinate can be set to any value, but the X coordinate must
+be between the X coordinates of the neighbouring points.</p>
+<img src="images/fn_setpoint.png"
+     alt="Set point dialog">
+</li>
+</ul>
+
+
+<h4>Manipulating the view</h4> 
+
+<ul>
+<li>To pan the view, drag in the view window while holding Shift.</li>
+
+<li>To zoom in or out, drag in the view window while holding Ctrl, or
+drag while pressing the middle mouse button. Dragging up zooms in,
+while dragging down zooms out.</li>
+</ul>
+
+<p>You can toggle the display of the control points, the control
+polygon, the edited function, the coordinate system axes, the grid and
+the labels on the grid using buttons grouped in the <em
+class="button">Display</em> section.</p>
+
+
+<h4>Flip view</h4>
+
+<p>The functions can be displayed in two ways. Traditionally, the
+domain (X) of the function y=f(x) is associated with the horizontal
+axis, while the range (Y) is associated with the vertical axis.  In
+some cases, it is convenient to assume that X is the vertical axis and
+Y is the horizontal axis. To do this you can check the <em
+class="button">Flip view</em> check box. Flip view is a
+property of a function, so it is possible to have only some of
+the functions flipped. This property is saved together with a function
+only if the gallery of functions is bound into a function set.</p>
+
+<h4>Samples</h4>
+
+<p>This is the number of samples to be precomputed by
+<i>cpfg</i>/<i>lpfg</i> for a function. For more information, refer to
+the section <cite>Function galleries</cite> in <a
+href="CPFGwhatsnew.pdf">What's new in <i>cpfg</i></a>.</p>
+
+
+<hr>
+<h2>
+<a name="panels"></a>
+Panels</h2>
+
+<div class="largeimg">
+<img src="images/paneleditor.png"
+     alt="Panel editor">
+</div>
+
+<p>Panels are used to control parameters during experiments. An
+extensive description of panels can be found in <a href=
+"http://www.cpsc.ucalgary.ca/Research/bmv/vlab/panel.html">
+the <i>vlab</i> panels documentation</a>.
+The description provided here focuses on the user's perspective of the
+panels editor, as well as on the differences between <i>vlab</i> and
+L-studio implementations.</p>
+
+<h4><a name="panelworkingmode"></a>
+Working mode</h4>
+
+<p>The current working mode is determined by the buttons <em
+class="button">Execute</em> and <em class="button">Design</em>.  In
+<em class="mode">Execute</em> mode, the user can interactively change
+the displayed values; these changes are immediately applied to the
+relevant files on the lab table. In <em class="mode">Design</em> mode,
+the panels themselves can be modified, and the commands along the
+right side of the editor are accessible.</p>
+
+
+<h4><a name="paneleditmodebtns"></a>
+Edit mode</h4>
+
+<dl>
+<dt><img src="images/panel/panel-select.gif" height="31" width="29"
+         alt="Select button"></dt>
+<dd><em class="mode">Select</em> mode is the default. In this mode you
+can select widgets by clicking on them. You can also click and drag a
+box to select one or more widgets. A selected widget or widgets can be
+moved by dragging it. If you double click on an widget in <em
+class="mode">Select</em> mode, the <a href="#panelcntrlprprts">widget
+properties</a> dialog box pops up. From this dialog box, you can
+change widget-specific attributes.</dd>
+
+<dt><img src="images/panel/panel-delete.gif" height="31" width="29"
+         alt="Delete button"></dt>
+<dd><em class="mode">Delete</em>. When this button is pressed, all
+currently selected widgets are deleted. After deletion, the mode
+switches back to <em class="mode">Select</em>.</dd>
+
+<dt><img src="images/panel/panel-slider.gif" height="31" width="29"
+         alt="Create slider button"></dt>
+<dd><em class="mode">Create slider</em> mode. While in this mode,
+clicking on the panel editor window will place a new slider.</dd>
+
+<dt><img src="images/panel/panel-button.gif" height="31" width="29"
+         alt="Create button button"></dt>
+<dd><em class="mode">Create button</em> mode. While in this mode,
+clicking on the panel editor window will place a new button.</dd>
+
+<dt><img src="images/panel/panel-group.gif" height="31" width="29"
+         alt="Create group button"></dt>
+<dd><em class="mode">Create group</em> mode. While in this mode,
+dragging a box around one or more buttons will associate them in a
+group. (In <em class="mode">Execute</em> mode, only one button in a
+group will be active at a time.) Widgets that are not buttons will not
+be associated in the group.</dd>
+
+<dt><img src="images/panel/panel-label.gif" height="31" width="29"
+         alt="Create label button"></dt>
+<dd><em class="mode">Create label</em> mode. While in this mode,
+clicking on the panel editor window will create a new label, whose
+text defaults to "Label".</dd>
+</dl>
+
+<h4><a name="panelmodifybuttons"></a>
+Modify buttons</h4>
+
+<dl>
+<dt><img src="images/panel/panel-algnhrz.gif" height="31" width="29"
+         alt="Align Horizontally button"></dt>
+<dd><em class="button">Align Horizontally</em>. Clicking this button
+presents you with three options: <em>align to left</em>, <em>align to
+right</em>, and <em>center horizontally</em>. <em>Align to left</em>
+moves all of the currently selected widgets to the left so that their
+left edges are at the same horizontal position. <em>Align to
+right</em> moves all of the currently selected widgets to the right so
+that their right edges are at the same horizontal position. <em>Center
+horizontally</em> moves all of the currently selected widgets
+horizontally so that they are centered on the same horizontal
+position.</dd>
+
+<dt><img src="images/panel/panel-algnvrt.gif" height="31" width="29"
+         alt="Align Vertically button"></dt>
+<dd><em class="button">Align Vertically</em>. Clicking this button
+presents you with three options: <em>align to top</em>, <em>align to
+bottom</em>, and <em>center vertically</em>. <em>Align to top</em>
+moves all of the currently selected widgets up so that their top edges
+are at the same vertical position. <em>Align to bottom</em> moves all
+of the currently selected widgets down so that their bottom edges are
+at the same vertical position. <em>Center Vertically</em> moves all of
+the currently selected widgets up or down so that they are centered on
+the same vertical position.</dd>
+
+<dt><img src="images/panel/panel-distrvert.gif" height="31" width="29"
+         alt="Distribute Vertically button"></dt>
+<dd><em class="button">Distribute Vertically</em>. Pushing this button
+moves the selected widgets so that they are evenly spaced
+vertically. The topmost and bottommost widgets do not move.</dd>
+
+<dt><img src="images/panel/panel-distrhorz.gif" height="31" width="29"
+         alt="Distribute Horizontally button"></dt>
+<dd><em class="button">Distribute Horizontally</em>. Pushing this
+button moves the selected widgets so that they are evenly spaced
+horizontally. The leftmost and rightmost widgets do not move.</dd>
+
+<dt><img src="images/panel/panel-dpldown.gif" height="31" width="29"
+         alt="Duplicate Down button"></dt>
+<dd><em class="button">Duplicate Down</em>. When this button is
+pressed, duplicates of all of the currently selected widgets will be
+created immediately below the current selection. The duplicated
+widgets are identical to the originals, except that their names will
+be changed to "Copy of" the original name. If a group is selected, its
+buttons will be duplicated, but the group will not.</dd>
+
+<dt><img src="images/panel/panel-dplrght.gif" height="31" width="29"
+         alt="Duplicate Right button"></dt>
+<dd><em class="button">Duplicate Right</em>. When this button is
+pressed, duplicates of all of the currently selected widgets will be
+created immediately to the right of the current selection. The
+duplicated widgets are identical to the originals, except that their
+names will be changed to "Copy of" the original name. If a group is
+selected, its buttons will be duplicated, but the group will not.</dd>
+</dl>
+
+<h4><a name="panelassociate"></a>
+File association</h4>
+
+<p>The <em class="button">Associate with</em> area lets you choose
+which file is modified by the current panel: the L-system file, the
+View file, or another file (whose filename is typed in the text
+box).</p>
+
+
+<h4><a name="panelcntrlprprts"></a>
+Widget properties</h4>
+
+<p>To modify the properties of an widget, double-click on the
+widget. This will open the widget's <em>Properties</em> dialog
+box. Each type of widget has its own dialog box:</p>
+
+<div>
+<img src="images/slider_prop.png"
+     alt="Slider Properties dialog">
+</div>
+
+<p>The <em>Slider Properties</em> dialog lets the user change the
+properties of slider widgets:</p>
+
+<ul>
+<li>the name (the label of the slider),</li>
+<li>outline and fill colors,</li>
+<li>minimum, maximum and default values, and</li>
+<li>the <em>message</em>. For a detailed description of
+the messages used in panels refer to the <a href=
+"http://www.cpsc.ucalgary.ca/Research/bmv/vlab/panel.html">
+<i>vlab</i> panels documentation</a>.</li>
+</ul>
+
+<div>
+<img src="images/button_prop.png"
+     alt="Button Properties dialog">
+</div>
+
+<p>The <em>Button Properties</em> dialog lets the user change the
+properties of button widgets:</p>
+
+<ul>
+<li>the name (the button label),</li>
+<li>outline and fill colors,</li>
+<li>the default state (<em>On</em>, <em>Off</em>, or <em>Monostable</em>),
+and</li>
+<li>the message.</li>
+</ul>
+
+<div>
+<img src="images/label_prop.png"
+     alt="Label Properties dialog">
+</div>
+
+<p>The <em>Label Properties</em> dialog lets the user change the
+properties of text labels:</p>
+
+<ul>
+<li>label text, and</li>
+<li>color.</li>
+</ul>
+
+
+
+<hr>
+<div class="navigation">
+<a href="sections.html">L-studio editors
+<img src="backward.gif" width="16" height="16" alt="Back"></a>
+<a href="index.html">
+<img src="home.gif" height="55" width="54" alt="Contents"></a>
+</div>
+</body>
+</html>

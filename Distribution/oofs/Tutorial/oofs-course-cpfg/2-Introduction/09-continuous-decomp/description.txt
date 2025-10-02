@@ -1,0 +1,10 @@
+FRACTAL FERN LEAF - USING DECOMPOSITION
+
+A parametric L-system generating a family of compound 
+branching structures that resemble fern leaves.
+This model operates in continuous time, with time 
+increment dt.  The advancement of time and the elongation 
+of internodes are captured by "standard" L-system 
+productions.  The creation of a metamer by an apex 
+that has reached the threshold age and the components
+of metamers are specified by decomposition rules.

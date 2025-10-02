@@ -1,0 +1,70 @@
+plant.l
+plant.v
+plant.a
+leaf.s
+bud.s
+petal.s
+calyx.s
+fruit.s
+line.s
+ise.v
+plant.text
+panel.l
+panel.v
+panel.a
+plant.ras.Z
+plant.map
+plant.map2
+*
+image:
+	generate:
+		cpfg plant.l plant.v plant.a
+	snap:
+		snap plant.ras;rm plant.ras.Z;compress plant.ras
+	ipaste:
+		uncompress plant.ras;ipaste plant.ras;compress plant.ras
+
+colormap:
+	loadmaps:
+		 loadmap plant.map ; loadmap -c2 plant.map2
+	savemaps:
+		 savemap plant.map ; savemap -c2 plant.map2
+	PALETTE
+
+L-system:
+	panel:
+		display:
+			panel panel.l | awkped plant.l
+		EDIT panel.l
+	CHAR plant.l
+
+view file:
+	panel:
+		display:
+			panel panel.v | ped plant.v
+		CHAR panel.v
+	CHAR plant.v
+
+animate file:
+	panel:
+		display:
+			panel panel.a | ped plant.a
+		CHAR panel.a
+	CHAR plant.a
+
+description:
+	CHAR plant.text
+
+surfaces:
+	leaf:
+		SURFACE leaf.s ise.v
+	bud:
+		SURFACE bud.s ise.v
+	petal:
+		SURFACE petal.s ise.v
+	calyx:
+		SURFACE calyx.s ise.v
+	fruit:
+		SURFACE fruit.s ise.v
+	stem:
+		SURFACE line.s ise.v

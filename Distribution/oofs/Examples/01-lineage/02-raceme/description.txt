@@ -1,0 +1,7 @@
+A generic (but old) model of a racemose inflorescence.
+Constants T0 to T3 affect the proportions of the structure
+in an intuitive manner (see the L-system).  
+
+This L-system could probably be made clearer through the
+use of homomorphisms.  Also, comments in the L-system are 
+needed.

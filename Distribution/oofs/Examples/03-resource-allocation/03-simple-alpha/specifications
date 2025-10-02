@@ -1,0 +1,40 @@
+tree.l
+tree.v
+tree.a
+tree2.l
+tree2.v
+tree2.a
+panel.l
+panel.v
+panel.a
+tree.text
+tree.map
+*
+image:
+	single:
+		cpfg -m tree.map tree.l tree.v tree.a
+
+colormap:
+	loadmap:
+		loadmap tree.map 
+	savemap:
+		savemap tree.map
+	PALETTE
+
+L-system:
+	EDIT tree.l
+
+viewfile:
+	EDIT tree.v
+
+animation:
+	panel:
+		display:
+			panel panel.a | ped tree.a
+		EDIT panel.v
+	EDIT tree.a
+
+description:
+	view:
+		viewtext tree.text
+	EDIT tree.text

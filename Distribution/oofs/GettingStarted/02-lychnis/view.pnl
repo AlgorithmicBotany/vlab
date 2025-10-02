@@ -1,0 +1,69 @@
+target: ViewFile
+
+type: SLIDER
+name: Line width
+colors: 255,255,255 255,0,0
+origin: 20 60
+min/max: 1 50
+value: 20
+message: n 4 1 0 %d
+
+type: BUTTON
+name: Simple fill
+colors: 255,255,255 0,0,255
+origin: 178 51
+value: 1
+message: 15 1 1 1
+
+type: BUTTON
+name: Interpolated
+colors: 255,255,255 0,0,255
+origin: 178 95
+value: 0
+message: 15 1 2 1
+
+type: BUTTON
+name: Gouraud
+colors: 255,255,255 0,0,255
+origin: 178 139
+value: 0
+message: 15 1 3 1
+
+type: BUTTON
+name: B-spline
+colors: 255,255,255 0,0,255
+origin: 178 184
+value: 0
+message: 15 1 4 1
+
+type: BUTTON
+name: closed B-spl
+colors: 255,255,255 0,0,255
+origin: 178 228
+value: 0
+message: 15 1 5 1
+
+type: BUTTON
+name: Two sided
+colors: 255,255,255 0,0,255
+origin: 178 272
+value: 0
+message: 15 1 6 1
+
+type: BUTTON
+name: Wireframe
+colors: 255,255,255 0,0,255
+origin: 178 317
+value: 0
+message: 15 1 7 1
+
+type: GROUP
+color: 192,192,192
+Simple fill
+Interpolated
+Gouraud
+B-spline
+closed B-spl
+Two sided
+Wireframe
+ENDGROUP

@@ -1,0 +1,76 @@
+plant.l
+plant.v
+plant.a
+plant.mat
+leaf1.con
+leaf2.con
+petal_base.con
+petal_tip.con
+gynoecium.con
+anther.con
+leaft.rgb
+description.txt
+*
+image:
+	generate:
+		cpfg -M plant.mat plant.l plant.v plant.a
+	ipaste:
+		ipaste plant.rgb
+
+material:
+	medit plant.mat
+
+L-system:
+	panel:
+		display:
+			panel panel.l | awkped plant.l
+		CHAR panel.l
+	EDIT plant.l
+
+contours:
+	leaf_1:
+		cuspy:
+			cuspy leaf1.con
+		EDIT leaf1.con
+
+	leaf_2:
+		cuspy:
+			cuspy leaf2.con
+		EDIT leaf2.con
+
+	petal_base:
+		cuspy:
+			cuspy petal_base.con
+		EDIT petal_base.con
+
+	petal_tip:
+		cuspy:
+			cuspy petal_tip.con
+		EDIT petal_tip.con
+
+	gynoecium:
+		cuspy:
+			cuspy gynoecium.con
+		EDIT gynoecium.con
+
+	anther:
+		cuspy:
+			cuspy anther.con
+		EDIT anther.con
+
+view file:
+	panel:
+		display:
+			panel panel.v | ped plant.v
+		CHAR panel.v
+	EDIT plant.v
+
+animate file:
+	panel:
+		display:
+			panel panel.a | ped plant.a
+		CHAR panel.a
+	CHAR plant.a
+
+description:
+	EDIT description.txt

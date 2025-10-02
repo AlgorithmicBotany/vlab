@@ -1,0 +1,9 @@
+L-system implementation of the spiral phyllotaxis model
+based on Vogel's formmula.
+
+The entire phyllotactic pattern is created at once, using
+a decomposition rule.  Primordia C are replaced by disks
+by a regular L-system rule (rather than a homomorphism).
+This organization of the model makes it easy to implement
+canalization resulting from collisions between primordia
+(next example).

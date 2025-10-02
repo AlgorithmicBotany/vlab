@@ -1,0 +1,310 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<link type="text/css" rel="stylesheet" href="lstudio.css">
+<title>L-Studio User's Guide: Object browser</title>
+</head>
+<body>
+<div class="navigation">
+<a href="gettingstarted.html">Getting Started
+<img src="backward.gif" width="16" height="16" alt="Back"></a>
+<a href="index.html">
+<img src="home.gif" height="55" width="54" alt="Contents"></a>
+<a href="sections.html">
+<img src="forward.gif" width="16" height="16" alt="Forward"
+>L-studio editors</a>
+</div>
+
+<hr>
+
+<h1>Object browser</h1>
+
+<p>The <dfn>object browser</dfn> is a tool for accessing and navigating
+databases of L-studio objects. An object database is stored in an
+<dfn>object oriented file system</dfn>, or <dfn><abbr>oofs</abbr></dfn>. (This
+system is <em>object oriented</em> because it uses a
+<dfn>prototype-extension</dfn> paradigm; if an object is a refinement
+(<em>extension</em>) of another (the <em>prototype</em>), then the
+extension is stored in a subdirectory of the prototype.)
+This section discusses:</p>
+
+<ul>
+<li><a href="#open">Opening the browser</a></li>
+<li><a href="#navigate">Navigating in the browser</a></li>
+<li><a href="#icons">Object Icons</a></li>
+<li><a href="#openobj">Opening objects</a></li>
+<li><a href="#manipulate">Organizing the <abbr>oofs</abbr></a></li>
+<li><a href="#config">Configuring the browser</a></li>
+</ul>
+
+<h2><a name="open"></a>
+Opening the browser</h2>
+
+<p>The object browser can open an object database stored on a
+local file system, or on a remote filesystem via a <dfn>remote access
+(RA) server</dfn>. An RA server can be used to access a centrally-stored
+object databse from many locations; this is useful if several people
+are collaborating on one model. <a href=
+"http://pages.cpsc.ucalgary.ca/~pwp/bmv/vlab-for-linux/html-docs/raserver.html"
+>See here for more information on RA servers.</a></p>
+
+<h4>Local filesystem</h4>
+
+<p>To open the object browser on a local file system, select <em
+class="menu">Open local</em> from the <em class="menu">Browser</em>
+submenu of the <em class="menu">Tools</em> menu. This opens the "Open
+local browser" dialog:</p>
+
+<div class="largeimg">
+<img src="images/openlocal.png"
+     alt="Open local browser dialog box">
+</div>
+
+<p>Type in the full path or use the Browse button to select the root
+directory of your L-studio <abbr>oofs</abbr>.</p>
+
+<h4><a name="remote"></a>
+Remote filesystem</h4>
+
+<p>To open the object browser on a remote filesystem via an RA server,
+select <em class="menu">Open remote</em> from the <em
+class="menu">Browser</em> submenu of the <em class="menu">Tools</em>
+menu. This will open the "Open remote browser" dialog:</p>
+
+<div class="largeimg">
+<img src="images/openremote.png"
+     alt="Open remote browser dialog box">
+</div>
+
+<p>The following information is required to open a browser on an
+RA server:</p>
+
+<ul>
+<li><em class="widget">Host</em>: name or IP address of the host machine
+running the RA server.</li>
+
+<li><em class="widget">User/password</em>: user name and password as
+registered on the server (<a href=
+"http://pages.cpsc.ucalgary.ca/~pwp/bmv/vlab-for-linux/html-docs/raserver.html#SETUP"
+>see here</a> for information on setting up accounts on an RA server).</li>
+
+<li><em class="widget">Oofs</em>: The root directory of the L-studio
+<abbr>oofs</abbr> on the server.</li>
+</ul>
+
+<h2><a name="navigate"></a>
+Navigating in the browser</h2>
+
+<p>After the object browser has successfully connected to the RA
+server or local filesystem, the browser window may look like this
+(where <tt>oofs</tt> is the root folder name):</p>
+
+<div class="largeimg">
+<img src="images/browser_init.png"
+     alt="Initial browser window">
+</div>
+
+<p>The <abbr>oofs</abbr> is a hierarchical structure of objects and
+non-object directories, called <dfn>folders</dfn>. Objects can contain
+other objects, according to the prototype-extension paradigm; however,
+objects can also be contained in folders. Folders are used to arrange
+objects which are related, but are not extensions of a single
+prototype object.</p>
+
+<p>To select a folder or object, click on the name with the left mouse
+button. You can also use the arrow keys to navigate the object tree:
+the <em class="key">left arrow</em> selects the parent object or
+folder, the <em class="key">right arrow</em> selects the first object
+or folder of the next level (if the next level is displayed), the <em
+class="key">down arrow</em> selects the next object or folder at the
+same level, and the <em class="key">up arrow</em> selects the previous
+object or folder at the same level. If you press a letter or number
+key, the first name at the current level starting with the given
+character is selected.</p>
+
+<p>To display the next level of the hierarchy, select an object or
+folder and either</p>
+
+<ul>
+<li>select <em class="menu">Show extensions</em> from the <em
+class="menu">View</em> menu, or</li>
+
+<li>press the <em class="key">plus</em> (+) key on the number pad,
+or</li>
+
+<li>click on the right arrow icon <img
+src="images/browser/rarrow.gif" width="15" height="14" alt="->"> to
+the right of the name.</li>
+</ul>
+
+<p>To display all remaining levels of a folder or object, select
+its name and</p>
+
+<ul>
+<li>select <em class="menu">Show all extensions</em> from the <em
+class="menu">View</em> menu, or</li>
+<li>hold the <em class="key">Shift</em> key down and press the <em class="key">plus</em> (+) key on the
+number pad, or</li>
+<li>click on the right arrow icon while holding the <em class="key">Shift</em> key.</li>
+</ul>
+
+<p><strong>Note:</strong> objects that are links (denoted by the link
+icon <img src="images/browser/link.gif" width="19" height="17"
+alt="">) are not automatically expanded.</p>
+
+<p>After expanding some objects the browser window may look like
+this:</p>
+
+<div class="largeimg">
+<img src="images/browser_expanded.png"
+     alt="Browser with some objects expanded">
+</div>
+
+<h2><a name="icons"></a>
+Object icons</h2>
+
+<p>The objects can have icons associated with them. To display the
+icon associated with an object, select it by left-clicking its name,
+then</p>
+
+<ul>
+<li>select <em class="menu">Show icon</em> from the <em
+class="menu">View</em> menu, or</li>
+<li>press the <em class="key">star</em> (*) key on the number pad, or</li>
+<li>right-click the object's name.</li>
+</ul>
+
+<p>Folders and objects with no icons will display a default icon with
+a large question mark: <img class="inline"
+src="images/default_icon.png" alt="Default icon"></p>
+
+<p>The figure below shows the browser with some objects displaying
+their icons.</p>
+
+<div class="largeimg">
+<img src="images/browser_icons.png"
+     alt="Browser displaying icons">
+</div>
+
+<p>To show all the icons associated with a given object
+and its currently-displayed extensions, select the object and</p>
+
+<ul>
+<li>select <em class="menu">Show all icons</em> from the <em
+class="menu">View</em> menu, or</li>
+<li>hold the <em class="key">Shift</em> key and press the <em class="key">star</em> (*) key on the number pad, or</li>
+<li>right-click the object's name while holding the
+<em class="key">Shift</em> key.</li>
+</ul>
+
+<p>To hide an icon associated with an object, select the object and:</p>
+
+<ul>
+<li>select <em class="menu">Hide icon</em> command from the
+<em class="menu">View</em> menu, or</li>
+<li>press the <em class="key">star</em> (*) key on the number pad, or</li>
+<li>right-click the object's name.</li>
+</ul>
+
+<p>To hide all icons in the hierarchy, select a name and:</p>
+
+<ul>
+<li>select <em class="menu">Hide all icons</em> from the <em
+class="menu">View</em> menu, or</li>
+<li>hold the <em class="key">Shift</em> key and right-click on the name.</li>
+</ul>
+
+<h4><a name="makingicons"></a>
+Making your own icons</h4>
+
+<p>You can make icons for your own objects. An icon is an image named
+<tt>icon</tt>, stored in SGI RGB format, in the object
+directory. L-studio has a tool which lets you create an icon from a
+screenshot. Select the <em class="menu">Snap icon</em> command from
+the <em class="menu">Tools</em> menu. This will create a red frame
+which can be dragged around the screen. Place it over the image
+(perhaps a <i>cpfg</i> simulation) which you want to use as your icon,
+then right-click on the frame and choose <em class="menu">Snap now</em>
+from the popup menu. This will create the <tt>icon</tt> file on the
+lab table. Close the frame by selecting <em class="menu">Snap icon</em>
+from the <em class="menu">Tools</em> menu again.</p>
+
+
+<h2><a name="openobj"></a>
+Opening objects</h2>
+
+<p>To open an object in L-studio from the browser:</p>
+
+<ul>
+<li>select the object and then select <em class="menu">Open</em> from
+the <em class="menu">Object</em> menu, or</li>
+<li>double-click on the object name.</li>
+</ul>
+
+<div class="boxed">
+<a name="textbox"></a> <p>If the object being opened is accessed using
+the RA server it is assumed that the text files are stored using the
+Unix convention: every line is terminated with a single line-feed
+character. When transferring the text files from the server to the
+local machine these files are converted by adding a carriage-return
+character before every line-feed character to follow the Windows
+text file convention. For more information about specifying
+which files are text files, read <a
+href="config.html#browser">Configuring the browser</a>.</p>
+</div>
+
+<p>Once you have opened several objects in L-studio, it may be
+difficult to find immediately where in the browser hierarchy any one
+of them is situated. You can select the command <em
+class="menu">Position in the browser</em> from L-studio's <em
+class="menu">Object</em> menu to select and show the object
+in the browser.</p>
+
+<p>When you save an object that you opened with the browser, you can
+use <em class="menu">Save</em> and <em class="menu">Save as</em>, as
+with any object. However, the command <em class="menu">Make
+extension</em> is also available from the <em class="menu">Object</em>
+menu. This command will save the modified object as an extension of the
+original object. For more information on this command, see
+<a href="save.html">Saving objects</a>.</p>
+
+
+<h2><a name="manipulate"></a>
+Organizing the <abbr>oofs</abbr></h2>
+
+<p>To delete an object or folder, select <em class="menu">Delete</em>
+from the <em class="menu">Object</em> menu. You will be prompted to
+confirm this command. If the selected object or folder has extensions
+then the extensions will be deleted as well.</p>
+
+<p>To rename an object or folder, select <em class="menu">Rename</em>
+from the <em class="menu">Object</em> menu.</p>
+
+<p>To copy an object to a different location, select the object and
+then choose <em class="menu">Copy object</em> from the <em
+class="menu">Object</em> menu.  If you want to copy the object or
+folder and all of its extensions, choose <em class="menu">Copy
+subtree</em> from the <em class="menu">Object</em> menu.</p>
+
+<p>To paste the copied object(s) and/or folder(s) into the new
+location, select the new parent object, then choose <em
+class="menu">Paste object(s)</em> from the <em
+class="menu">Object</em> menu. This copy/paste function can be used to
+copy objects between two browsers. This is useful if you want to
+transfer an object (or a set of objects) from one location to
+another (for example, from a local disk to an RA server).</p>
+
+<hr>
+<div class="navigation">
+<a href="gettingstarted.html">Getting Started
+<img src="backward.gif" width="16" height="16" alt="Back"></a>
+<a href="index.html">
+<img src="home.gif" height="55" width="54" alt="Contents"></a>
+<a href="sections.html">
+<img src="forward.gif" width="16" height="16" alt="Forward"
+>L-studio editors</a>
+</div>
+</body>
+</html>
+

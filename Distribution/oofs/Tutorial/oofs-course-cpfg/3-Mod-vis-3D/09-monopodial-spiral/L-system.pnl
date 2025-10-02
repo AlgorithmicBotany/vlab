@@ -1,0 +1,17 @@
+target: Lsystem
+
+type: SLIDER
+name: Plastochron
+colors: 255,255,255 255,0,0
+origin: 111 183
+min/max: 0 100
+value: 50
+message: d PL %d 100
+
+type: SLIDER
+name: Max int. length
+colors: 255,255,255 255,0,0
+origin: 111 242
+min/max: 0 100
+value: 50
+message: d MAX_INT_LEN %d 100

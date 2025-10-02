@@ -1,0 +1,274 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<link type="text/css" rel="stylesheet" href="lstudio.css">
+<title>L-studio User's Guide: Running a simulation</title>
+</head>
+<body>
+<div class="navigation">
+<a href="sections.html">L-studio editors
+<img src="backward.gif" width="16" height="16" alt="Back"></a>
+<a href="index.html">
+<img src="home.gif" height="55" width="54" alt="Contents"></a>
+<a href="save.html">
+<img src="forward.gif" width="16" height="16" alt="Forward">Saving objects</a>
+</div>
+
+<hr>
+
+<h1>Running a simulation</h1>
+
+<p>To perform a simulation of an L-system model, select <em
+class="menu">Go!</em> from the <em class="menu">Cpfg</em> or <em
+class="menu">Lpfg</em> menu. (Only one of these menus will be present,
+depending on whether the current object is a <i>cpfg</i> or
+<i>lpfg</i> object.) L-studio will then update all of the lab table
+files that are needed by the simulation program:</p>
+
+<ul>
+<li>the L-system file,</li>
+<li>the view file,</li>
+<li>the animation file,</li>
+<li>the color map or material file,</li>
+</ul>
+
+<p>and, if present,</p>
+
+<ul>
+<li>surface files,</li>
+<li>contour files, and</li>
+<li>function files.</li>
+</ul>
+
+<p>L-studio then runs the <i>cpfg</i> or <i>lpfg</i> simulation
+program.</p>
+
+
+<h4>
+<a name="#changing"></a>
+Changing the model</h4>
+
+<p>After <i>cpfg</i>/<i>lpfg</i> has been launched, you may edit any
+components of the object (e.g. the L-system, view file, color map,
+etc.). To apply the changes to the simulator, you have two
+options:</p>
+
+<ul>
+<li>Select one of the <em class="menu">New...</em> commands from the
+<em class="menu">Cpfg</em>/<em class="menu">Lpfg</em> menu. Each of
+these options has a different effect:<ul>
+
+<li><em class="menu">New model</em> saves all of the object's components,
+then makes the simulator reload them and rerun the entire simulation.</li>
+
+<li><em class="menu">New L-system</em> saves the L-system, then makes
+the simulator reload it and rerun the entire simulation.</li>
+
+<li><em class="menu">New homomorphism</em> saves the L-system, then
+makes the simulator reload it, but merely redraw the current string using
+the new homomorphisms. (For more on homomorphisms, see the <cite>Cpfg
+User's Manual</cite>.) This command is ignored by <i>lpfg</i>.</li>
+
+<li><em class="menu">New view</em> saves the view file, along with the
+colormap or material file, then makes the simulator reload them and
+redraw the current string using the new colors and view settings.
+<strong>Warning</strong>: the view file contains information about,
+among other things, the functions referred to by the L-system.  If you
+change this information in the view file, <em class="menu">New
+view</em> will have it read in to the simulator, but it will not be
+used to regenerate the model. To do so, choose <em class="menu">New
+model</em>.</li>
+
+<li><em class="menu">New projection</em> saves the view file, then
+makes the simulator reload only those options which relate to the
+view projection.</li>
+
+<li><em class="menu">New render</em> saves the view file, then
+makes the simulator reload only those options which relate to
+rendering parameters.</li>
+
+<li><em class="menu">New animate</em> saves the animation file, then
+makes the simulator reload it and rerun the animation.</li>
+</ul></li>
+
+<li><p><a name="continuous"></a>Run L-studio in <em
+class="mode">Continuous modeling</em> mode.  To activate this mode,
+select <em class="menu">Continuous modeling</em> from the <em
+class="menu">Cpfg</em>/<em class="menu">Lpfg</em> menu. In <em
+class="mode">Continuous modeling</em> mode, any changes you make to
+colors, materials, contours, surfaces, or functions, or any changes
+you make with a panel, are immediately applied to the
+<i>cpfg</i>/<i>lpfg</i> simulation. Whether the entire model is
+regenerated, or merely redrawn, depends on what is changed:</p>
+<div class="largeimg">
+<table border="1"
+       summary="Effects of changing components under continuous modeling mode">
+<tr class="head">
+<td>Element modified</td>
+<td>Effect on simulator</td>
+</tr>
+
+<tr>
+<td>L-system (via a panel)</td>
+<td>Regenerates and redraws</td>
+</tr>
+
+<tr>
+<td>View (via a panel)</td>
+<td>Redraws only</td>
+</tr>
+
+<tr>
+<td>Colormap</td>
+<td>Redraws only</td>
+</tr>
+
+<tr>
+<td>Materials</td>
+<td>Redraws only</td>
+</tr>
+
+<tr>
+<td>Surface</td>
+<td>Redraws only</td>
+</tr>
+
+<tr>
+<td>Contour</td>
+<td>Redraws only</td>
+</tr>
+
+<tr>
+<td>Function</td>
+<td>Regenerates and redraws</td>
+</tr>
+
+<tr>
+<td>Other text file (via a panel)</td>
+<td>Regenerates and redraws</td>
+</tr>
+</table>
+</div>
+
+<p>If you alter the L-system, view file, or other text file using the text
+editor, the changes will not automatically propagate to the simulator; you
+must use <em class="menu">New...</em>.</p>
+</li></ul>
+
+
+<h4>Closing the simulator</h4>
+
+<p><i>cpfg</i>/<i>lpfg</i> and the message log window will remain open
+until you either:</p>
+
+<ul>
+<li>close <i>cpfg</i>/<i>lpfg</i> explicitly,</li>
+<li>close the object in L-studio, or</li>
+<li>quit L-studio.</li>
+</ul>
+
+<p>For detailed information on the use of <i>cpfg</i> see the <cite>Cpfg
+User's Manual</cite>. For detailed information on <i>lpfg</i>, see
+the <cite>Lpfg User's Manual</cite>.</p>
+
+
+<h4>The <tt>specifications</tt> file</h4>
+
+<p>Under <i>vlab</i>, the special file <tt>specifications</tt> is used
+to describe an object and all of the operations which can be performed
+on it. (See the <a
+href="http://www.cpsc.ucalgary.ca/Research/bmv/vlab/object.html#SPECS"
+><i>vlab</i> documentation</a>.) L-studio performs the same function
+using file extensions; however, to maintain compatibility, L-studio is
+capable of running objects containing a <tt>specifications</tt> file.
+If the object contains such a file, L-studio tries to do the
+following:</p>
+
+<ol>
+<li>Find a line that starts with letters <tt>cpfg</tt>. (These
+letters might be preceded by blank characters).</li>
+
+<li>If the string <tt>cpfg</tt> is followed by some other
+characters (e.g. <tt>cpfg3.4</tt>) then the additional characters
+are skipped.</li>
+
+<li>Check if the line contains <tt>-m</tt> or <tt>-M</tt>. If it
+doesn't then <tt>-m</tt> followed by the name of the colormap file
+present in the object is inserted. <i>(Explanation: In the original
+<abbr>SGI-IRIX</abbr> version of cpfg, it is possible to instruct
+<i>cpfg</i> to use a colormap maintained by the windowing system,
+rather than by <i>cpfg</i> itself. This mechanism is not available in
+the Windows version, so <i>cpfg</i> must handle its own
+colormap.)</i></li>
+
+<li>Call <i>cpfg</i> using this command line.</li>
+</ol>
+
+<p class="warning"><strong>Important:</strong> this mechanism, while
+useful, might also cause some problems if the command line in the
+<tt>specifications</tt> file contains some <abbr>UNIX</abbr>-specific
+commands, such as calling more than one program (e.g. <tt>cpfg plant.l
+plant.v &amp;; tail -F cpfg.out</tt>) or stream redirection (<tt>cpfg
+plant.l plant.v &gt; dump.txt</tt>). L-studio passes the entire
+command line to <i>cpfg</i>, which will not start with incorrect
+parameters.</p>
+
+
+<h4>The <tt>LSspecifications</tt> file</h4>
+
+<p>The special file <tt>LSspecifications</tt> holds object-specific
+L-studio preferences. If there is an <tt>LSspecifications</tt> file
+present in the object, L-studio will look for a line which starts with
+the string "cpfg" or "lpfg". The text following this string is assumed
+to be the command line for the simulation program. The simulation
+program will be called with the parameters specified in this line. The
+menu label (<em class="menu">Cpfg</em> or <em class="menu">Lpfg</em>)
+shows which program was read from the <tt>LSspecifications</tt> when
+the object was loaded or the <tt>LSspecifications</tt> file was last
+saved.</p>
+
+<p>If the object contains neither <tt>LSspecifications</tt> nor
+<tt>specifications</tt> files, or if one or both exist, but don't
+contain a line starting with "cpfg" or "lpfg", then the following
+algorithm is used to generate command line parameters for the
+simulation program:</p>
+
+<p>The simulation program is assumed to be cpfg, with parameters</p>
+<ul>
+<li><tt>-m color.map lsystem.l view.v anim.a</tt> in color map mode,
+or</li>
+<li><tt>-M material.mat lsystem.l view.v anim.a</tt> in material
+mode.</li>
+</ul>
+
+<p>If there is a <tt>*.e</tt> file in the object directory then the parameters
+will be:</p>
+<ul>
+<li><tt>-e <i>filename</i>.e -m color.map lsystem.l view.v anim.a</tt>,
+or</li>
+<li><tt>-e <i>filename</i>.e -M material.mat lsystem.l view.v
+anim.a</tt>.</li>
+</ul>
+
+<p>A full description of <i>cpfg</i>'s command line parameters is
+given in the <cite>Cpfg User's Manual</cite>.</p>
+
+<p>When the <i>cpfg</i>/<i>lpfg</i> window has appeared, a log
+window appears immediately below it to display any messages the simulator
+generates.</p>
+
+ 
+
+<hr>
+<div class="navigation">
+<a href="sections.html">L-studio components
+<img src="backward.gif" width="16" height="16" alt="Back"></a>
+<a href="index.html">
+<img src="home.gif" height="55" width="54" alt="Contents"></a>
+<a href="save.html">
+<img src="forward.gif" width="16" height="16" alt="Forward">Saving objects</a>
+</div>
+</body>
+</html>
+

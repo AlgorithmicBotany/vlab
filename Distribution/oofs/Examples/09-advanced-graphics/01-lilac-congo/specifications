@@ -1,0 +1,72 @@
+plant.l
+plant.p
+plant.v
+plant.a
+petal.s
+calyx.s
+plant.map
+description.txt
+*
+image:
+	generate:
+		cpfg -m plant.map plant.l plant.v plant.a
+	snap:
+		snap plant.ras
+	ipaste:
+		ipaste plant.ras
+
+colormap:
+	loadmap:
+		loadmap plant.map ; loadmap -c2 panel.map2
+	savemap:
+		savemap plant.map ; savemap -c2 panel.map2
+	PALETTE
+
+L-system:
+	panel:
+		display:
+			panel panel.l | awkped plant.l
+		CHAR panel.l
+	CHAR plant.l
+
+parameters:
+	panel:
+		display:
+			panel panel.p | awkped plant.p
+		CHAR panel.p
+	CHAR plant.p
+
+view:
+	panel:
+		display:
+			panel panel.v | ped plant.v
+		CHAR panel.v
+	CHAR plant.v
+
+animate:
+	panel:
+		display:
+			panel panel.a | ped plant.a
+		CHAR panel.a
+	CHAR plant.a
+
+surfaces:
+	petal:
+		sCalc:
+			compute:
+				sCalc petal.e > petal.s
+			panel:
+				display:
+					panel panel.e | awkped petal.e
+				EDIT panel.e
+			EDIT petal.e
+		SURFACE petal.s petal.zv
+	calyx:
+		SURFACE calyx.s calyx.yv
+	leaf:
+		SURFACE leaf.s leaf.zv
+	line:
+		EDIT line.s
+
+text:
+	TEXT text

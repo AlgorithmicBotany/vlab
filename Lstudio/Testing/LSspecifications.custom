@@ -1,0 +1,8 @@
+ignore:
+CopyOfnoname.con
+CopyOfnoname.func
+*
+simulator command: "Run" vvrun.bat
+simulator command: "Build everything" vvshell.bat
+simulator command: "This will not write to lab table" -w DoOtherStuff.bat
+simulator command: "This will write to lab table" +w DoMoreStuff.bat

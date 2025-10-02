@@ -1,0 +1,42 @@
+img {border-style: none; }
+
+body { color: black; background-color: #DDD; }
+a:link { color: #00c; }
+a:visited { color: #81a; }
+
+h1 {font-weight: bold; font-size: 200%; font-family: sans-serif;
+    text-align: center;}
+h2 {font-weight: bold; font-size: 150%; font-family: sans-serif;
+    text-align: center;}
+h3 {font-weight: bold; font-size: 120%; font-family: sans-serif;
+    text-align: center;}
+h4 {font-weight: bold; font-size: 100%; font-family: sans-serif;}
+h5 {font-weight: bold;}
+
+em.menu {font-weight: bold; font-style: normal;}
+em.key {font-weight: bold; font-style: normal;}
+em.mode {}
+em.button {}
+em.widget {}
+
+div.boxed { border: solid; border-width: thin;
+            padding-left: 1em; padding-right: 1em;}
+div.largeimg { text-align: center; }
+div.navigation {}
+
+ol.letters { list-style-type: upper-alpha; }
+
+p.warning { padding-left: 0.2em; padding-right: 0.2em;
+            border-left: solid; border-right: solid;
+            border-left-width: thin; border-right-width: thin;
+            border-top: none; border-bottom: none;
+            border-color: red; }
+
+address { text-align: center; }
+
+tr.head  { text-align: center; font-weight: bold; }
+
+img.inline { vertical-align: middle; }
+
+
+p.change { font-size: 120%; color: red; }

@@ -1,0 +1,97 @@
+target: Lsystem
+
+type: SLIDER
+name: Steps
+colors: 255,255,255 255,0,0
+origin: 20 60
+min/max: 0 300
+value: 300
+message: d STEPS %d 1
+
+type: SLIDER
+name: View angle
+colors: 255,255,255 255,0,0
+origin: 20 120
+min/max: -180 180
+value: 45
+message: d VANG %d 1
+
+type: SLIDER
+name: Segment length
+colors: 255,255,255 255,0,0
+origin: 20 180
+min/max: 50 150
+value: 100
+message: d S0 %d 1
+
+type: SLIDER
+name: Branching angle
+colors: 255,255,255 255,0,0
+origin: 20 240
+min/max: 0 61
+value: 31
+message: d ANG %d 1
+
+type: SLIDER
+name: Max leaf size
+colors: 255,255,255 255,0,0
+origin: 20 300
+min/max: 0 20
+value: 15
+message: d L_SIZE %d 10
+
+type: SLIDER
+name: Delay 1
+colors: 255,255,255 255,0,0
+origin: 20 360
+min/max: 0 30
+value: 3
+message: d D1 %d 1
+
+type: SLIDER
+name: Delay 1
+colors: 255,255,255 255,0,0
+origin: 172 60
+min/max: 0 30
+value: 7
+message: d D2 %d 1
+
+type: SLIDER
+name: Axis growth time
+colors: 255,255,255 255,0,0
+origin: 172 120
+min/max: 1 30
+value: 10
+message: d LEN2 %d 1
+
+type: SLIDER
+name: Branch growth time
+colors: 255,255,255 255,0,0
+origin: 172 180
+min/max: 1 30
+value: 20
+message: d LEN1 %d 1
+
+type: SLIDER
+name: Bud opening time
+colors: 255,255,255 255,0,0
+origin: 172 240
+min/max: 1 12
+value: 1
+message: d T1 %d 1
+
+type: SLIDER
+name: Flowering time
+colors: 255,255,255 255,0,0
+origin: 172 300
+min/max: 1 30
+value: 5
+message: d T2 %d 1
+
+type: SLIDER
+name: Fruit form. time
+colors: 255,255,255 255,0,0
+origin: 172 360
+min/max: 1 30
+value: 11
+message: d T3 %d 1

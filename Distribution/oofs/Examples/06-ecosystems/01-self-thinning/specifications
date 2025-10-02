@@ -1,0 +1,57 @@
+tree.l
+tree.v
+tree.a
+tree.e
+density.spec
+tree.map
+*
+image:
+	generate:
+		cpfg -w 480 480 -m tree.map -e tree.e tree.l tree.v tree.a
+	display:
+		xv tree.rgb
+
+L-system:
+	panel:
+		display:
+			panel panel.l | awkped tree.l
+		EDIT panel.l
+	EDIT tree.l
+
+viewfile:
+	EDIT tree.v
+
+field:
+	EDIT tree.e
+	EDIT density.spec
+
+animation:
+	panel:
+		display:
+			panel panel.a | ped tree.a
+		EDIT panel.v
+	EDIT tree.a
+
+materials:
+	edit:
+		medit tree.mat
+
+raytrace:
+	raypaint:
+		raypaint tree.ray > tree.rle
+	rayview:
+		rayview tree.ray
+	rayshade:
+		rayshade tree.ray > tree.rle
+	display:
+		xv tree.rle
+
+colormap:
+	loadmaps:
+		loadmap tree.map; loadmap -c2 tree.map2
+	savemaps:
+		savemap tree.map; savemap -c2 tree.map2
+	PALETTE
+
+description:
+	EDIT tree.text

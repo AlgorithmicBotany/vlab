@@ -1,0 +1,30 @@
+target: ViewFile
+
+type: SLIDER
+name: Branching angle
+colors: 255,255,255 255,0,0
+origin: 110 155
+min/max: 0 100
+value: 45
+message: 1 1 %d 1
+
+type: SLIDER
+name: Line width
+colors: 255,255,255 128,255,0
+origin: 110 216
+min/max: 1 5
+value: 2
+message: 4 1 %d 1
+
+type: SLIDER
+name: Scale factor [%]
+colors: 255,255,255 128,0,128
+origin: 110 276
+min/max: 0 100
+value: 90
+message: 5 1 %d 100
+
+type: LABEL
+name: Viewing file parameters
+color: 255,255,0
+origin: 82 341

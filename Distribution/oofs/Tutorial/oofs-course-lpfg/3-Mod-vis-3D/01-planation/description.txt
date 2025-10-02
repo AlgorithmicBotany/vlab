@@ -1,0 +1,13 @@
+Planation - monopodial branching
+
+This animation illustrates the relation between a 3D 
+branching structure and a 2D structure obtained by 
+changing the divergence angle.  A transition from
+3D to 2D, or planation, is one of the evolutionary 
+modifications predicted by Zimmermann's telome theory
+of plant evolution (cf. W. N. Stewart and G. W. 
+Rothwell, "Paleobotany and the evolution of plants 
+(second edition)", Cambridge University Press, 1993).
+Here this transition is illustrated using monopodial
+branching, showing the relation between opposite and
+opposite-decussate branching patterns.

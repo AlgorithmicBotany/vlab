@@ -1,0 +1,5 @@
+*
+cpfg -m fractal.map fractal.l fractal.v fractal.a
+active tab: description
+auto run: on
+continuous mode: on

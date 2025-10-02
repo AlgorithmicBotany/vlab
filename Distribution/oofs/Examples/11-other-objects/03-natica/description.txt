@@ -1,0 +1,19 @@
+Natica enzona
+
+Note: The image appears as a result of "animating" the model.
+
+Pigmentation pattern of the shell Natica enzona created using 
+an activator-substrate reaction-diffusion model with the activator
+decay, substrate production, and coefficient of proportionality
+modulated using a sinusoidal function.  See H. Meinhardt and 
+M. Klinger, "A model for pattern formation on the shells of
+molluscs", Journal of Theoretical Biology 126 (1987), pp. 63-89,
+Figure 12.
+
+This example illustrates the possibility of using L-systems to
+generate reaction-diffusion patterns and, more generally, to 
+numerically solve partial differential equations (in this case,
+using the forward Euler method).  For more information about
+these applications of L-systems see M. Hammel and P. Prusinkiewicz,
+"Visualization of developmental processes by extrusion in 
+space-time", Proceedings of Graphics Interface 1996, pp. 246-258.

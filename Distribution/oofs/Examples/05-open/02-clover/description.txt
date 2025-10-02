@@ -1,0 +1,6 @@
+A generic model of clover growing on a terrain with different 
+intensity of incoming light (darker areas can be thought
+of as being shadowed by the trees above). The model is 
+described in detail the paper "Visual models of plants 
+interacting with their  environment", by R. Mech and 
+P. Prusinkiewicz, Proceedings of Siggraph 96, pp. 397-410.

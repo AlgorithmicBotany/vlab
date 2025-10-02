@@ -1,0 +1,13 @@
+Hints 
+
+Examples of L-systems 
+that produce interessting curves
+
+1) F --> F+F-F-FF+F+F-F
+2) F --> FF+F+F+F+F+F-F
+3) F --> FF+F+F+F+FF
+4) F --> FF+F-F+F+FF
+5) F --> FF+F++F+F
+6) F --> F+FF++F+F
+7) F --> F+F-F+F+F
+

@@ -1,0 +1,4 @@
+cpfg -m leaf.map leaf.l leaf.v leaf.a
+active tab: description
+auto run: on
+continuous mode: on

@@ -1,0 +1,8 @@
+Perspective projection
+
+Cpfg also supports perspective viewing, although
+it is more difficult to properly set parameter values.
+
+Note: the front and back distance do not work properly -
+the closer to zero these values are, the larger the
+"distance" between the front and back planes becomes.

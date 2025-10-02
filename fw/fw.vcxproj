@@ -1,0 +1,507 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|Win32">
+      <Configuration>Debug</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Debug|x64">
+      <Configuration>Debug</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|Win32">
+      <Configuration>Release</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|x64">
+      <Configuration>Release</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="STDebug|Win32">
+      <Configuration>STDebug</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="STDebug|x64">
+      <Configuration>STDebug</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="STRelease|Win32">
+      <Configuration>STRelease</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="STRelease|x64">
+      <Configuration>STRelease</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <ProjectGuid>{92A3B5B3-7C1D-44A2-8E97-919334C8B862}</ProjectGuid>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='STRelease|Win32'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <UseOfMfc>false</UseOfMfc>
+    <CharacterSet>MultiByte</CharacterSet>
+    <PlatformToolset>v143</PlatformToolset>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='STRelease|x64'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <UseOfMfc>false</UseOfMfc>
+    <CharacterSet>MultiByte</CharacterSet>
+    <PlatformToolset>v143</PlatformToolset>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='STDebug|Win32'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <UseOfMfc>false</UseOfMfc>
+    <CharacterSet>MultiByte</CharacterSet>
+    <PlatformToolset>v143</PlatformToolset>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='STDebug|x64'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <UseOfMfc>false</UseOfMfc>
+    <CharacterSet>MultiByte</CharacterSet>
+    <PlatformToolset>v143</PlatformToolset>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <UseOfMfc>false</UseOfMfc>
+    <CharacterSet>MultiByte</CharacterSet>
+    <PlatformToolset>v143</PlatformToolset>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <UseOfMfc>false</UseOfMfc>
+    <CharacterSet>MultiByte</CharacterSet>
+    <PlatformToolset>v143</PlatformToolset>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <UseOfMfc>false</UseOfMfc>
+    <CharacterSet>MultiByte</CharacterSet>
+    <PlatformToolset>v143</PlatformToolset>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <UseOfMfc>false</UseOfMfc>
+    <CharacterSet>MultiByte</CharacterSet>
+    <PlatformToolset>v143</PlatformToolset>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='STRelease|Win32'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+    <Import Project="$(VCTargetsPath)Microsoft.CPP.UpgradeFromVC71.props" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='STRelease|x64'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+    <Import Project="$(VCTargetsPath)Microsoft.CPP.UpgradeFromVC71.props" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='STDebug|Win32'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+    <Import Project="$(VCTargetsPath)Microsoft.CPP.UpgradeFromVC71.props" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='STDebug|x64'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+    <Import Project="$(VCTargetsPath)Microsoft.CPP.UpgradeFromVC71.props" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+    <Import Project="$(VCTargetsPath)Microsoft.CPP.UpgradeFromVC71.props" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+    <Import Project="$(VCTargetsPath)Microsoft.CPP.UpgradeFromVC71.props" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+    <Import Project="$(VCTargetsPath)Microsoft.CPP.UpgradeFromVC71.props" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+    <Import Project="$(VCTargetsPath)Microsoft.CPP.UpgradeFromVC71.props" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup>
+    <_ProjectFileVersion>10.0.30319.1</_ProjectFileVersion>
+    <OutDir Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">.\Debug\</OutDir>
+    <OutDir Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">.\Debug\</OutDir>
+    <IntDir Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">.\Debug\</IntDir>
+    <IntDir Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">.\Debug\</IntDir>
+    <OutDir Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">.\Release\</OutDir>
+    <OutDir Condition="'$(Configuration)|$(Platform)'=='Release|x64'">.\Release\</OutDir>
+    <IntDir Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">.\Release\</IntDir>
+    <IntDir Condition="'$(Configuration)|$(Platform)'=='Release|x64'">.\Release\</IntDir>
+    <OutDir Condition="'$(Configuration)|$(Platform)'=='STDebug|Win32'">STDebug\</OutDir>
+    <OutDir Condition="'$(Configuration)|$(Platform)'=='STDebug|x64'">STDebug\</OutDir>
+    <IntDir Condition="'$(Configuration)|$(Platform)'=='STDebug|Win32'">STDebug\</IntDir>
+    <IntDir Condition="'$(Configuration)|$(Platform)'=='STDebug|x64'">STDebug\</IntDir>
+    <OutDir Condition="'$(Configuration)|$(Platform)'=='STRelease|Win32'">STRelease\</OutDir>
+    <OutDir Condition="'$(Configuration)|$(Platform)'=='STRelease|x64'">STRelease\</OutDir>
+    <IntDir Condition="'$(Configuration)|$(Platform)'=='STRelease|Win32'">STRelease\</IntDir>
+    <IntDir Condition="'$(Configuration)|$(Platform)'=='STRelease|x64'">STRelease\</IntDir>
+  </PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <ClCompile>
+      <Optimization>Disabled</Optimization>
+      <PreprocessorDefinitions>_DEBUG;WIN32;_LIB;STRICT;WIN32_LEAN_AND_MEAN;_WIN32_WINDOWS=0x0500;WINVER=0x0500;%(PreprocessorDefinitions);_CRT_SECURE_NO_WARNINGS</PreprocessorDefinitions>
+      <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
+      <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
+      <RuntimeTypeInfo>true</RuntimeTypeInfo>
+      <PrecompiledHeader>
+      </PrecompiledHeader>
+      <PrecompiledHeaderOutputFile>.\Debug/fw.pch</PrecompiledHeaderOutputFile>
+      <AssemblerListingLocation>.\Debug/</AssemblerListingLocation>
+      <ObjectFileName>.\Debug/</ObjectFileName>
+      <ProgramDataBaseFileName>.\Debug/</ProgramDataBaseFileName>
+      <WarningLevel>Level3</WarningLevel>
+      <SuppressStartupBanner>true</SuppressStartupBanner>
+      <DebugInformationFormat>EditAndContinue</DebugInformationFormat>
+    </ClCompile>
+    <ResourceCompile>
+      <PreprocessorDefinitions>_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <Culture>0x0409</Culture>
+    </ResourceCompile>
+    <Lib>
+      <OutputFile>.\Debug\fw.lib</OutputFile>
+      <SuppressStartupBanner>true</SuppressStartupBanner>
+    </Lib>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <ClCompile>
+      <Optimization>Disabled</Optimization>
+      <PreprocessorDefinitions>_DEBUG;WIN32;_LIB;STRICT;WIN32_LEAN_AND_MEAN;_WIN32_WINDOWS=0x0500;WINVER=0x0500;%(PreprocessorDefinitions);_CRT_SECURE_NO_WARNINGS</PreprocessorDefinitions>
+      <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
+      <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
+      <RuntimeTypeInfo>true</RuntimeTypeInfo>
+      <PrecompiledHeader>
+      </PrecompiledHeader>
+      <PrecompiledHeaderOutputFile>.\Debug/fw.pch</PrecompiledHeaderOutputFile>
+      <AssemblerListingLocation>.\Debug/</AssemblerListingLocation>
+      <ObjectFileName>.\Debug/</ObjectFileName>
+      <ProgramDataBaseFileName>.\Debug/</ProgramDataBaseFileName>
+      <WarningLevel>Level3</WarningLevel>
+      <SuppressStartupBanner>true</SuppressStartupBanner>
+      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
+    </ClCompile>
+    <ResourceCompile>
+      <PreprocessorDefinitions>_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <Culture>0x0409</Culture>
+    </ResourceCompile>
+    <Lib>
+      <OutputFile>.\Debug\fw.lib</OutputFile>
+      <SuppressStartupBanner>true</SuppressStartupBanner>
+    </Lib>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <ClCompile>
+      <InlineFunctionExpansion>OnlyExplicitInline</InlineFunctionExpansion>
+      <PreprocessorDefinitions>NDEBUG;WIN32;_LIB;STRICT;WIN32_LEAN_AND_MEAN;_WIN32_WINDOWS=0x0500;WINVER=0x0500;%(PreprocessorDefinitions);_CRT_SECURE_NO_WARNINGS</PreprocessorDefinitions>
+      <StringPooling>true</StringPooling>
+      <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <RuntimeTypeInfo>true</RuntimeTypeInfo>
+      <PrecompiledHeader>
+      </PrecompiledHeader>
+      <PrecompiledHeaderOutputFile>.\Release/fw.pch</PrecompiledHeaderOutputFile>
+      <AssemblerListingLocation>.\Release/</AssemblerListingLocation>
+      <ObjectFileName>.\Release/</ObjectFileName>
+      <ProgramDataBaseFileName>.\Release/</ProgramDataBaseFileName>
+      <WarningLevel>Level3</WarningLevel>
+      <SuppressStartupBanner>true</SuppressStartupBanner>
+    </ClCompile>
+    <ResourceCompile>
+      <PreprocessorDefinitions>NDEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <Culture>0x0409</Culture>
+    </ResourceCompile>
+    <Lib>
+      <OutputFile>.\Release\fw.lib</OutputFile>
+      <SuppressStartupBanner>true</SuppressStartupBanner>
+    </Lib>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <ClCompile>
+      <InlineFunctionExpansion>OnlyExplicitInline</InlineFunctionExpansion>
+      <PreprocessorDefinitions>NDEBUG;WIN32;_LIB;STRICT;WIN32_LEAN_AND_MEAN;_WIN32_WINDOWS=0x0500;WINVER=0x0500;%(PreprocessorDefinitions);_CRT_SECURE_NO_WARNINGS</PreprocessorDefinitions>
+      <StringPooling>true</StringPooling>
+      <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <RuntimeTypeInfo>true</RuntimeTypeInfo>
+      <PrecompiledHeader>
+      </PrecompiledHeader>
+      <PrecompiledHeaderOutputFile>.\Release/fw.pch</PrecompiledHeaderOutputFile>
+      <AssemblerListingLocation>.\Release/</AssemblerListingLocation>
+      <ObjectFileName>.\Release/</ObjectFileName>
+      <ProgramDataBaseFileName>.\Release/</ProgramDataBaseFileName>
+      <WarningLevel>Level3</WarningLevel>
+      <SuppressStartupBanner>true</SuppressStartupBanner>
+    </ClCompile>
+    <ResourceCompile>
+      <PreprocessorDefinitions>NDEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <Culture>0x0409</Culture>
+    </ResourceCompile>
+    <Lib>
+      <OutputFile>.\Release\fw.lib</OutputFile>
+      <SuppressStartupBanner>true</SuppressStartupBanner>
+    </Lib>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='STDebug|Win32'">
+    <ClCompile>
+      <Optimization>Disabled</Optimization>
+      <PreprocessorDefinitions>_DEBUG;WIN32;_LIB;STRICT;WIN32_LEAN_AND_MEAN;_WIN32_WINDOWS=0x0500;WINVER=0x0500;FW_STHREAD;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
+      <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
+      <RuntimeTypeInfo>true</RuntimeTypeInfo>
+      <PrecompiledHeader>
+      </PrecompiledHeader>
+      <PrecompiledHeaderOutputFile>.\STDebug/fw.pch</PrecompiledHeaderOutputFile>
+      <AssemblerListingLocation>.\STDebug/</AssemblerListingLocation>
+      <ObjectFileName>.\STDebug/</ObjectFileName>
+      <ProgramDataBaseFileName>.\STDebug/</ProgramDataBaseFileName>
+      <WarningLevel>Level3</WarningLevel>
+      <SuppressStartupBanner>true</SuppressStartupBanner>
+      <DebugInformationFormat>EditAndContinue</DebugInformationFormat>
+    </ClCompile>
+    <ResourceCompile>
+      <PreprocessorDefinitions>_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <Culture>0x0409</Culture>
+    </ResourceCompile>
+    <Lib>
+      <OutputFile>.\STDebug\fw.lib</OutputFile>
+      <SuppressStartupBanner>true</SuppressStartupBanner>
+    </Lib>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='STDebug|x64'">
+    <ClCompile>
+      <Optimization>Disabled</Optimization>
+      <PreprocessorDefinitions>_DEBUG;WIN32;_LIB;STRICT;WIN32_LEAN_AND_MEAN;_WIN32_WINDOWS=0x0500;WINVER=0x0500;FW_STHREAD;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
+      <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
+      <RuntimeTypeInfo>true</RuntimeTypeInfo>
+      <PrecompiledHeader>
+      </PrecompiledHeader>
+      <PrecompiledHeaderOutputFile>.\STDebug/fw.pch</PrecompiledHeaderOutputFile>
+      <AssemblerListingLocation>.\STDebug/</AssemblerListingLocation>
+      <ObjectFileName>.\STDebug/</ObjectFileName>
+      <ProgramDataBaseFileName>.\STDebug/</ProgramDataBaseFileName>
+      <WarningLevel>Level3</WarningLevel>
+      <SuppressStartupBanner>true</SuppressStartupBanner>
+      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
+    </ClCompile>
+    <ResourceCompile>
+      <PreprocessorDefinitions>_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <Culture>0x0409</Culture>
+    </ResourceCompile>
+    <Lib>
+      <OutputFile>.\STDebug\fw.lib</OutputFile>
+      <SuppressStartupBanner>true</SuppressStartupBanner>
+    </Lib>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='STRelease|Win32'">
+    <ClCompile>
+      <InlineFunctionExpansion>OnlyExplicitInline</InlineFunctionExpansion>
+      <PreprocessorDefinitions>NDEBUG;WIN32;_LIB;STRICT;WIN32_LEAN_AND_MEAN;_WIN32_WINDOWS=0x0500;WINVER=0x0500;FW_STHREAD;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <StringPooling>true</StringPooling>
+      <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <RuntimeTypeInfo>true</RuntimeTypeInfo>
+      <PrecompiledHeader>
+      </PrecompiledHeader>
+      <PrecompiledHeaderOutputFile>.\STRelease/fw.pch</PrecompiledHeaderOutputFile>
+      <AssemblerListingLocation>.\STRelease/</AssemblerListingLocation>
+      <ObjectFileName>.\STRelease/</ObjectFileName>
+      <ProgramDataBaseFileName>.\STRelease/</ProgramDataBaseFileName>
+      <WarningLevel>Level3</WarningLevel>
+      <SuppressStartupBanner>true</SuppressStartupBanner>
+    </ClCompile>
+    <ResourceCompile>
+      <PreprocessorDefinitions>NDEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <Culture>0x0409</Culture>
+    </ResourceCompile>
+    <Lib>
+      <OutputFile>.\STRelease\fw.lib</OutputFile>
+      <SuppressStartupBanner>true</SuppressStartupBanner>
+    </Lib>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='STRelease|x64'">
+    <ClCompile>
+      <InlineFunctionExpansion>OnlyExplicitInline</InlineFunctionExpansion>
+      <PreprocessorDefinitions>NDEBUG;WIN32;_LIB;STRICT;WIN32_LEAN_AND_MEAN;_WIN32_WINDOWS=0x0500;WINVER=0x0500;FW_STHREAD;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <StringPooling>true</StringPooling>
+      <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <RuntimeTypeInfo>true</RuntimeTypeInfo>
+      <PrecompiledHeader>
+      </PrecompiledHeader>
+      <PrecompiledHeaderOutputFile>.\STRelease/fw.pch</PrecompiledHeaderOutputFile>
+      <AssemblerListingLocation>.\STRelease/</AssemblerListingLocation>
+      <ObjectFileName>.\STRelease/</ObjectFileName>
+      <ProgramDataBaseFileName>.\STRelease/</ProgramDataBaseFileName>
+      <WarningLevel>Level3</WarningLevel>
+      <SuppressStartupBanner>true</SuppressStartupBanner>
+    </ClCompile>
+    <ResourceCompile>
+      <PreprocessorDefinitions>NDEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <Culture>0x0409</Culture>
+    </ResourceCompile>
+    <Lib>
+      <OutputFile>.\STRelease\fw.lib</OutputFile>
+      <SuppressStartupBanner>true</SuppressStartupBanner>
+    </Lib>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <ClCompile Include="app.cpp" />
+    <ClCompile Include="appctrl.cpp" />
+    <ClCompile Include="bitmap.cpp" />
+    <ClCompile Include="canvas.cpp" />
+    <ClCompile Include="cursor.cpp" />
+    <ClCompile Include="gdiobjs.cpp" />
+    <ClCompile Include="logfont.cpp" />
+    <ClCompile Include="button.cpp" />
+    <ClCompile Include="colorslider.cpp" />
+    <ClCompile Include="combobox.cpp" />
+    <ClCompile Include="huecircle.cpp" />
+    <ClCompile Include="imagelist.cpp" />
+    <ClCompile Include="ShellShortcut.cpp" />
+    <ClCompile Include="spinctrl.cpp" />
+    <ClCompile Include="splitter.cpp" />
+    <ClCompile Include="statusbar.cpp" />
+    <ClCompile Include="tabctrl.cpp" />
+    <ClCompile Include="tooltip.cpp" />
+    <ClCompile Include="clipboard.cpp" />
+    <ClCompile Include="dropfiles.cpp" />
+    <ClCompile Include="email.cpp" />
+    <ClCompile Include="emailmsg.cpp" />
+    <ClCompile Include="findfile.cpp" />
+    <ClCompile Include="folderbrowser.cpp" />
+    <ClCompile Include="gconstrain.cpp" />
+    <ClCompile Include="memoryfile.cpp" />
+    <ClCompile Include="menu.cpp" />
+    <ClCompile Include="newprocess.cpp" />
+    <ClCompile Include="owndrwbtn.cpp" />
+    <ClCompile Include="registry.cpp" />
+    <ClCompile Include="resstrng.cpp" />
+    <ClCompile Include="timer.cpp" />
+    <ClCompile Include="window.cpp" />
+    <ClCompile Include="winmaker.cpp" />
+    <ClCompile Include="wndclass.cpp" />
+    <ClCompile Include="comdlgclss.cpp" />
+    <ClCompile Include="ctrl.cpp" />
+    <ClCompile Include="formctrl.cpp" />
+    <ClCompile Include="genctrl.cpp" />
+    <ClCompile Include="mdichctrl.cpp" />
+    <ClCompile Include="mdiclient.cpp" />
+    <ClCompile Include="mdictrl.cpp" />
+    <ClCompile Include="mdimenus.cpp" />
+    <ClCompile Include="scrollctrl.cpp" />
+    <ClCompile Include="dialog.cpp" />
+    <ClCompile Include="pickclrdlg.cpp" />
+    <ClCompile Include="cmndline.cpp" />
+    <ClCompile Include="configfile.cpp" />
+    <ClCompile Include="exception.cpp" />
+    <ClCompile Include="file.cpp" />
+    <ClCompile Include="fwuser.cpp" />
+    <ClCompile Include="libstrng.cpp" />
+    <ClCompile Include="log.cpp" />
+    <ClCompile Include="lstring.cpp" />
+    <ClCompile Include="rawmemory.cpp" />
+    <ClCompile Include="scrnpnt.cpp" />
+    <ClCompile Include="strbuf.cpp" />
+    <ClCompile Include="tmpdir.cpp" />
+    <ClCompile Include="tmpfile.cpp" />
+    <ClCompile Include="writergb.c" />
+    <ClCompile Include="event.cpp" />
+    <ClCompile Include="mutex.cpp" />
+    <ClCompile Include="semaphore.cpp" />
+    <ClCompile Include="thread.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="app.h" />
+    <ClInclude Include="appctrl.h" />
+    <ClInclude Include="bitmap.h" />
+    <ClInclude Include="canvas.h" />
+    <ClInclude Include="gdiobjs.h" />
+    <ClInclude Include="logfont.h" />
+    <ClInclude Include="button.h" />
+    <ClInclude Include="colorslider.h" />
+    <ClInclude Include="combobox.h" />
+    <ClInclude Include="editline.h" />
+    <ClInclude Include="huecircle.h" />
+    <ClInclude Include="imagelist.h" />
+    <ClInclude Include="listbox.h" />
+    <ClInclude Include="listview.h" />
+    <ClInclude Include="progressbar.h" />
+    <ClInclude Include="ShellShortcut.h" />
+    <ClInclude Include="spinctrl.h" />
+    <ClInclude Include="splitter.h" />
+    <ClInclude Include="statusbar.h" />
+    <ClInclude Include="tabctrl.h" />
+    <ClInclude Include="tooltip.h" />
+    <ClInclude Include="trackbarctrl.h" />
+    <ClInclude Include="childenum.h" />
+    <ClInclude Include="clipboard.h" />
+    <ClInclude Include="dropfiles.h" />
+    <ClInclude Include="email.h" />
+    <ClInclude Include="emailmsg.h" />
+    <ClInclude Include="findfile.h" />
+    <ClInclude Include="folderbrowser.h" />
+    <ClInclude Include="gconstrain.h" />
+    <ClInclude Include="keystate.h" />
+    <ClInclude Include="memoryfile.h" />
+    <ClInclude Include="menu.h" />
+    <ClInclude Include="newprocess.h" />
+    <ClInclude Include="owndrwbtn.h" />
+    <ClInclude Include="registry.h" />
+    <ClInclude Include="resrc.h" />
+    <ClInclude Include="resstrng.h" />
+    <ClInclude Include="sizestate.h" />
+    <ClInclude Include="timer.h" />
+    <ClInclude Include="window.h" />
+    <ClInclude Include="winmaker.h" />
+    <ClInclude Include="wndclass.h" />
+    <ClInclude Include="comdlgclss.h" />
+    <ClInclude Include="ctrl.h" />
+    <ClInclude Include="formctrl.h" />
+    <ClInclude Include="genctrl.h" />
+    <ClInclude Include="mdichctrl.h" />
+    <ClInclude Include="mdiclient.h" />
+    <ClInclude Include="mdictrl.h" />
+    <ClInclude Include="mdimenus.h" />
+    <ClInclude Include="ownerdraw.h" />
+    <ClInclude Include="scrollctrl.h" />
+    <ClInclude Include="dialog.h" />
+    <ClInclude Include="pickclrdlg.h" />
+    <ClInclude Include="cmndline.h" />
+    <ClInclude Include="colors.h" />
+    <ClInclude Include="configfile.h" />
+    <ClInclude Include="exception.h" />
+    <ClInclude Include="file.h" />
+    <ClInclude Include="flagset.h" />
+    <ClInclude Include="fw.h" />
+    <ClInclude Include="fwdefs.h" />
+    <ClInclude Include="fwtmplts.h" />
+    <ClInclude Include="fwuser.h" />
+    <ClInclude Include="globals.h" />
+    <ClInclude Include="libstrng.h" />
+    <ClInclude Include="log.h" />
+    <ClInclude Include="lstring.h" />
+    <ClInclude Include="rawmemory.h" />
+    <ClInclude Include="scrnpnt.h" />
+    <ClInclude Include="strbuf.h" />
+    <ClInclude Include="tmpdir.h" />
+    <ClInclude Include="tmpfile.h" />
+    <ClInclude Include="warningset.h" />
+    <ClInclude Include="writergb.h" />
+    <ClInclude Include="comtmplts.h" />
+    <ClInclude Include="dynlib.h" />
+    <ClInclude Include="event.h" />
+    <ClInclude Include="mutex.h" />
+    <ClInclude Include="prcss.h" />
+    <ClInclude Include="semaphore.h" />
+    <ClInclude Include="thread.h" />
+    <ClInclude Include="fwres.h" />
+  </ItemGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
+</Project>

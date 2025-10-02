@@ -1,0 +1,26 @@
+plant.l
+plant.v
+plant.a
+description.txt
+plant.map
+*
+demo:
+	generate:
+		cpfg -m plant.map plant.l plant.v plant.a
+	description:
+		viewtext description.txt
+colourmap:
+	MAP plant.map
+	PALETTE
+
+L-system:
+	EDIT plant.l
+
+viewfile:
+	EDIT plant.v
+
+animation:
+	EDIT plant.a
+
+description:
+	EDIT description.txt

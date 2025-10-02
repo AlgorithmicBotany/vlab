@@ -1,0 +1,30 @@
+An L-system implementation of the Tabebuia branch 
+from Borchert and Honda, 1984. The red signal flowing up 
+represents growth flux, with flow to sibling branches 
+determined by an asymetric branching pattern and 
+the relative number of terminals supported by each 
+branch. The blue signal flowing down accumulates and 
+records the number of terminals supported by each branch.
+Bifurcation at a terminal depends on whether there is 
+"enough" flux. Growth flux increases over time using a 
+formula (sigmoidal) from the paper. If a given terminal 
+doesn't branch for a certain number of steps it dies,
+turning brown.  Note that each generation takes 2 steps 
+more than the previous.
+
+The width of branches is determined using the pipe model.
+
+The first version of this model was implementd by 
+Jim Hanan.
+
+A detailed description of this L-system is presented
+in the paper "Visual Models of Plant Development" by 
+P. Prusinkiewicz, M. Hammel, J. Hanan, and R. Mech, 
+published in G. Rozenberg and A. Salomaa (Eds.): 
+Handbook of Formal Languages Vol III, 
+Springer, Berlin 1997, pp. 535-597.
+
+Bugs:  This model adds at most one level of branches per
+generation, even when the flux reaching an apex is large.
+Decomposition rules could be used to allow for multi-segment
+axes to be added in single steps.

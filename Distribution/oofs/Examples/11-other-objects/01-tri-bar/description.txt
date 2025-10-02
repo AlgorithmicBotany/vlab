@@ -1,0 +1,5 @@
+Tri-bar is one of classical "impossible objects".
+Here it has been modeled as a collection of cubes
+and surfaces, carefully positioned in space to create
+the  illusion.  Reference: Bruno Ernst, "The eye 
+beguiled", Benedikt Taschen, Koln, 1992.

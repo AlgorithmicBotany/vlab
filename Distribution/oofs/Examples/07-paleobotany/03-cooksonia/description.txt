@@ -1,0 +1,8 @@
+A model of Cooksonia inspired by the reconstructions 
+of Cooksonia and Zosterophyllum in White, 
+Greening of Gondwana, pp. 64-65.
+
+This model illustrates the use of:
+- materials
+- generalized cylinders
+- arrays

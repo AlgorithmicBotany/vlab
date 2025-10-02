@@ -1,0 +1,7 @@
+Sympodial branching
+
+The generic sympodial branching structure from the previous
+example (10-sympodial) with two enhancements:
+- asymmetry caused by a delay between the development 
+  of branches on the two sides of the branching point,
+- addition of a pair of leaves at each branching point.

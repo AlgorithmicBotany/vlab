@@ -1,0 +1,13 @@
+#define XSIZE  60
+#define XSIZE2 120
+#define YSIZE  80
+#define SIZE 12
+ 
+/* setting areas of a certain concentration */
+#define TR 0.5
+material 0.1  0.1  0.1  TR 0.16 0.21 0.27 TR
+0 0 0 TR 0 0 0 TR 0
+
+translate -60 -80 -60
+prism XSIZE2 YSIZE XSIZE2
+

@@ -1,0 +1,21 @@
+plant.l
+plant.v
+plant.map
+text
+*
+image:
+	generate:
+		cpfg -m plant.map plant.l plant.v
+
+colormap:
+	MAP plant.map
+	PALETTE
+
+L-system:
+	CHAR plant.l
+
+view file:
+	CHAR plant.v
+
+text:
+	TEXT text

@@ -1,0 +1,205 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<link type="text/css" rel="stylesheet" href="lstudio.css">
+<title>L-studio User's Guide: What is L-studio?</title>
+</head>
+
+<body>
+<div class="navigation">
+<a href="index.html">
+<img src="home.gif" height="55" width="54" alt="Contents"></a>
+<a href="installation.html">
+<img src="forward.gif" width="16" height="16" alt="Forward"
+>Installation</a><br>
+</div>
+ 
+
+<hr> 
+
+<h1>What is L-studio?</h1>
+
+<div class="largeimg">
+<img src="images/lstudio_cpfg_demo.png"
+     alt="L-studio screenshot"></div>
+
+<p>L-studio is Windows software for creating simulation models and
+performing virtual experiments using L-systems. It consists of:</p>
+
+<ul>
+<li>two L-system&ndash;based <dfn>simulators</dfn>, <i>cpfg</i> and
+<i>lpfg</i>;</li>
+<li>a set of sample models, primarily of plants, each stored as an
+L-studio <dfn>object</dfn>;</li>
+<li>a graphical <dfn>browser</dfn> for organizing and accessing objects on
+local and remote machines;</li>
+<li>a series of <dfn>editors</dfn> and other modeling tools for
+creating and modifying objects; and</li>
+<li>a library of <dfn>environmental programs</dfn> which simulate
+environmental processes that affect plant development.</li>
+</ul>
+
+<div class="largeimg">
+<img src="images/lstudio_schematic.png"
+     alt="Schematic diagram of the components of L-studio">
+</div>
+
+<h4>The simulators <i>cpfg</i> and <i>lpfg</i></h4>
+
+<p>At the heart of L-studio are the simulator programs <i>cpfg</i> and
+<i>lpfg</i>. These programs take as input an L-system file, usually
+along with one or more related files, 
+
+comprised in an L-studio
+object.
+The simulators produce a visual representation of the model.
+Depending on
+the L-system, the models may be animated and/or interactively manipulated.
+
+Optionally, the simulators may also produce various output data files.
+
+<i>cpfg</i> and <i>lpfg</i> share a common interface (L-studio
+proper). <i>cpfg</i> is more suitable for the rapid creation of simple
+models. <i>lpfg</i> is particularly useful when creating complex
+models.
+
+
+<h4>L-studio objects</h4>
+
+<p>An L-studio object is a set of files kept together in a common
+directory. Each of these files specifies one component of the object;
+some of these files are required, and some are optional.</p>
+
+<ul>
+<li>The <dfn>L-system file</dfn> (<tt>*.l</tt>) is a text file
+containing the L-system which will serve as the primary input to
+<i>cpfg</i> or <i>lpfg</i>. Every object must have an L-system
+file.</li>
+
+<li>The <dfn>view file</dfn> (<tt>*.v</tt>) specifies drawing and
+rendering options, as well as other general parameters for <i>cpfg</i>
+or <i>lpfg</i>. Every object must have a view file, though it may be
+empty.</li>
+
+<li>The <dfn>animation file</dfn> (<tt>*.a</tt>) contains parameters
+which define how <i>cpfg</i>/<i>lpfg</i> will animate the
+simulation. Every object must have an animation file, though L-studio
+will set up a default file automatically.</li>
+
+<li>A <dfn>color map</dfn> (<tt>*.map</tt>) defines a 256-color palette
+which is used by the simulator to draw the model in colormap mode.</li>
+
+<li>Alternately, a <dfn>material file</dfn> (<tt>*.mat</tt>) can be
+used if the model is rendered with shaded polygons. Every object must
+have either a color map or a material file.</li>
+
+<li><dfn>Surfaces</dfn> (<tt>*.s</tt>) are user-defined Bezier surfaces
+which can be incorporated into 3D models; for example, to capture
+the shape of leaves or flower petals.</li>
+
+<li><dfn>Contours</dfn> (<tt>*.con</tt> or <tt>*.cset</tt>)
+are used to describe the axis or cross-section of elongated limbs,
+such as stems.</li>
+
+<li><dfn>Functions</dfn> (<tt>*.func</tt> or <tt>*.fset</tt>) are
+graphically-defined functions of a single variable that can be
+incorporated into L-system models.</li>
+
+<li><dfn>Control panels</dfn> (<tt>*.pnl</tt>) are used to interact
+with the model by manipulating parameters, or turning model features
+on or off.</li>
+
+<li>An <dfn>environmental communication specification file</dfn>
+(<tt>*.e</tt>) defines how the model will communicate with an external
+<dfn>environmental program</dfn> (<tt>*.exe</tt>). The environmental
+process may optionally use additional input files.</li>
+
+<li>The <dfn>object description</dfn> (<tt>description.txt</tt>) is a
+text file which is typically used to describe the object, how it
+works, how it was constructed, and so on. All objects must have a
+description, though it may be empty.</li>
+
+<li>The <dfn>object specification files</dfn> (<tt>specifications</tt>
+and <tt>LSspecifications</tt>) are text files which define
+object-specific parameters and are used by L-studio to determine how
+to handle each particular object. Under the <abbr>UNIX</abbr>-based
+system <i>vlab</i>, the <tt>specifications</tt> file is mandatory;
+however, neither file is required in an L-studio object.</li>
+</ul>
+
+<p>All L-studio objects will contain an L-system, a view file, an
+animation file, an object description, and either a color map or
+material file, although these may be empty or contain nothing more
+than default values.</p>
+
+
+
+<h4>The object browser</h4>
+
+<p>The <dfn>object browser</dfn> is a tool for accessing and navigating
+databases of L-studio objects. An object database is stored in an
+<dfn>object oriented file system</dfn>, or <dfn>oofs</dfn>. (This
+system is <em>object oriented</em> because it uses a
+<dfn>prototype-extension</dfn> paradigm; if an object is a refinement
+(<em>extension</em>) of another (the <em>prototype</em>), then the
+extension is stored in a subdirectory of the prototype.) Using the
+browser, you can navigate the oofs and open objects in L-studio.</p>
+
+
+
+<h4>Modifying an object in L-studio</h4>
+
+<p>When an object is opened in L-studio, it is copied to a temporary
+location called the <dfn>lab table</dfn>. The lab table version can
+be experimented upon in any way, and the changes will not be reflected
+in the original object until the open object is saved.</p>
+
+<p>When on the lab table, an object's component files can be modified
+with L-studio's integrated <dfn>editors</dfn>. L-studio has tools to
+edit almost all of the files listed above: text files such as the
+L-system or object description; 2D or 3D shape files, such as
+surfaces, contours, or functions; color files; panels; and options
+files, like the animation file or the object's specifications.</p>
+
+
+
+<h4>Environmental programs</h4>
+
+<p>Environmental programs are one object component that is not edited
+in L-studio. Instead, these environmental programs must be written in
+an external programming language, and the resulting executables placed
+somewhere accessible to the object: either in the object's directory,
+or in a central environmental program location. L-studio comes with
+several useful environmental programs: see the <a
+href="enviro.pdf"><cite>User's manual for environmental
+programs</cite></a> for more information on them and how to use them.</p>
+
+
+<h4>More information</h4>
+
+<p>More information about modeling using L-systems can be found in the
+<cite>CPFG User's Manual</cite> and the <cite>LPFG user's
+manual</cite>.  The manuals are available in PDF format:</p>
+
+<ul>
+<li><a href="CPFGman.pdf">CPFG user's manual</a> (1.45 MB)</li>
+<li><a href="LPFGman.pdf">LPFG user's manual</a> (235 KB)</li>
+<li><a href="enviro.pdf">User's manual for environmental
+programs</a> (310 KB)</li>
+<li><a href="graph.pdf">Extensions to the graphical interpretation
+of L-systems based on turtle geometry</a> (1.04 MB).</li>
+</ul>
+
+<hr>
+
+<div class="navigation">
+<a href="index.html">
+<img src="home.gif" height="55" width="54" alt="Contents"></a>
+<a href="installation.html">
+<img src="forward.gif" width="16" height="16" alt="Forward"
+>Installation</a><br>
+</div>
+</body>
+</html>
+

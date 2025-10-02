@@ -1,0 +1,46 @@
+tree.l
+tree.v
+tree.a
+tree.map
+description.txt
+density.spec
+lpfg.mak
+LSspecifications
+Makefile
+tree.e
+ignore:
+lsys.so
+lpfg.log
+lsys.ii
+lsysinp.cpp
+lsys.o
+input.i
+*.swp
+.to*
+.from*
+*
+image:
+	generate:
+		lpfg tree.map tree.l tree.v tree.a tree.e
+
+colormap:
+	PALETTE tree.map
+
+L-system:
+	EDIT tree.l
+
+viewfile:
+	EDIT tree.v
+
+animation:
+	EDIT tree.a
+
+environment:
+	e-file:
+		EDIT tree.e
+	spec-file:
+		EDIT density.spec
+
+description:
+	EDIT description.txt
+

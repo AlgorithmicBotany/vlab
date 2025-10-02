@@ -1,0 +1,15 @@
+A combination of the Borchert and Slade model of 
+branching with the pipe model of branch width.
+
+Each apex is characterized by a "vigor" value 
+that decreases by a constant factor at each step.  
+The vigor value determines the length of (long) shoots.
+
+The main problem now is that the early stages of 
+development do not look good - there should be small 
+twigs that later fall off.
+
+Parameters (branching angles, internode length and 
+width, branching probablities) were chosen 
+without much playing - the parameter space should be 
+explored.

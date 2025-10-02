@@ -1,0 +1,47 @@
+description.txt
+leaf.a
+leaf.l
+leaf.v
+material.mat
+LSspecifications
+internode.func
+leaf-length.func
+leaf.s
+int-pos.func
+leaf-pos.func
+*
+image:
+	generate:
+		cpfg -M material.mat leaf.l leaf.v leaf.a
+
+materials:
+	MEDIT material.mat
+
+functions:
+	growth-curve:
+		internode:
+			FUNCEDIT internode.func
+		leaf:
+			FUNCEDIT leaf-length.func
+	size-vs-position:
+		internode:
+			FUNCEDIT int-pos.func
+		leaf:
+			FUNCEDIT leaf-pos.func
+
+surfaces:
+	leaf:
+		SURFACE leaf.s
+
+L-system:
+	EDIT leaf.l
+
+viewfile:
+	EDIT leaf.v
+
+animation:
+	EDIT leaf.a
+
+description:
+	EDIT description.txt
+

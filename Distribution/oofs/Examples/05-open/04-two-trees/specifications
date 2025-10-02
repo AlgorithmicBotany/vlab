@@ -1,0 +1,17 @@
+bark1.rgb
+bark2.rgb
+description.txt
+ground.dat
+leaf.rgb
+leaf.s
+light.spec
+panel.a
+panel.l
+tree.mat
+tree.a
+tree.e
+tree.l
+tree.v
+*
+generate:
+	cpfg -a -w 640 480 -M tree.mat -e tree.e tree.l tree.v tree.a

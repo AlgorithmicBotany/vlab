@@ -1,0 +1,102 @@
+plant.l
+plant.v
+plant.a
+plant.mat
+leaf.con
+description.txt
+width.func
+density.func
+turn.func
+bend.func
+torque.func
+bang.func
+lwidth.func
+ldensity.func
+lturn.func
+leaflet_width.func
+stem_width.func
+lbend.func
+asym.func
+lenscale.func
+color.func
+*
+image:
+	generate:
+		cpfg -w 240 320 -M plant.mat plant.l plant.v plant.a
+
+	off_screen:
+		cpfg -g -sb -w 800 1600 -rgb plant.rgb -M plant.mat plant.l plant.v plant.a
+functions:
+	width:
+		funcedit width.func
+	density:
+		funcedit density.func
+	asym:
+		funcedit asym.func
+	turn:
+		funcedit turn.func
+	bend:
+		funcedit bend.func
+	torque:
+		funcedit torque.func
+	br_angle:
+		funcedit bang.func
+	leaflet_width:
+		funcedit leaflet_width.func
+	stem_width:
+		funcedit stem_width.func
+	length_scale:
+		funcedit lenscale.func
+	color:
+		funcedit color.func
+
+leaf_functions:
+	lwidth:
+		funcedit lwidth.func
+	ldensity:
+		funcedit ldensity.func
+	lturn:
+		funcedit lturn.func
+	lbend:
+		funcedit lbend.func
+
+colormap:
+	loadmaps:
+		loadmap plant.map ; loadmap -c2 plant.map2
+	savemaps:
+		savemap plant.map ; savemap -c2 plant.map2
+	PALETTE
+
+
+material:
+	medit plant.mat
+
+L-system:
+	panel:
+		display:
+			panel panel.l | awkped plant.l
+		CHAR panel.l
+	CHAR plant.l
+
+view file:
+	panel:
+		display:
+			panel panel.v | ped plant.v
+		CHAR panel.v
+	CHAR plant.v
+
+animate file:
+	panel:
+		display:
+			panel panel.a | ped plant.a
+		CHAR panel.a
+	CHAR plant.a
+
+leaf_contour:
+	cuspy:
+		cuspy leaf.con
+	EDIT leaf.con
+
+
+description:
+	EDIT description.txt

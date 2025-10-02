@@ -1,0 +1,6 @@
+ignore:
+CopyOfnoname.con
+CopyOfnoname.func
+*
+vvrun.bat
+build command: vvshell.bat

@@ -1,0 +1,4 @@
+A "science fiction plant"
+
+It is interesting to compare it with its mutation,
+called sfmutant (located in the same directory).

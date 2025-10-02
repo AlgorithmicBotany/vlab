@@ -1,0 +1,7 @@
+Context-sensitivity - basipetal signal flow (down)
+
+An basipetal signal flow is captured by a right-context-sensitive
+production, complemented by a context-free production that
+erases the existing signal after one step.  This mode of 
+signal propagation critically relies on the synchronous operation
+of L-systems.

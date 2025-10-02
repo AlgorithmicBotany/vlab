@@ -1,0 +1,143 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<link type="text/css" rel="stylesheet" href="lstudio.css">
+<title>L-Studio User's Guide: Text editors</title>
+</head>
+
+<body>
+<div class="navigation">
+<a href="sections.html">L-studio editors
+<img src="backward.gif" width="16" height="16" alt="Back"></a>
+<a href="index.html">
+<img src="home.gif" height="55" width="54" alt="Contents"></a>
+</div>
+<hr>
+
+<h1>Text editors</h1>
+
+<div class="largeimg">
+<img src="images/texteditor.png"
+     alt="The L-system editor"></div>
+
+<p>Four of the L-studio tabs allow you to edit text files which are
+part of the object. Three of these tabs are special-purpose, and edit
+only one file: the <a href="#lsystem">L-system</a>, <a
+href="#view">view file</a>, and <a href="#description">description</a>
+tabs allow you to edit the L-system, view parameters file, and object
+description, respectively. The <a href="#general">general text
+editor</a> tab lets you edit any text file in the object.</p>
+
+<p>The text editor used in L-studio is very simple; its editing
+capabilities and user interface are similar to those of
+Microsoft Notepad. Above the text area are some additional fields:</p>
+
+<ul>
+<li>The name of the file currently being edited.</li>
+<li>The current <dfn>line number</dfn> &mdash; that is, the line the
+cursor is on. You can enter a new number here to go to the beginning
+of that line.</li>
+
+<li>
+<p>The <em class="widget">find box</em>. If you type in a word or
+sequence of characters (a <dfn>search string</dfn>) here, then push
+the <em class="button">Find</em> button next to it, or the Enter key
+on your keyboard, the next instance of the search string after the
+current cursor position will be highlighted. You can repeatedly press
+Enter or the <em class="button">Find</em> button to go to each
+successive instance of the search string; you can also use the
+keyboard shortcut Ctrl+Shift+F.  If the search string cannot be found
+in the text file, you will be given the error "Pattern not found".</p>
+
+<div class="largeimg">
+<img src="images/finddlg.png"
+     alt="Find dialog box">
+</div>
+
+<p>You can also search with the <em class="window">Find dialog
+box</em>.  Pressing the <em class="widget">...</em> button next to the
+<em class="widget">find</em> box will bring up this window. The Find
+dialog box has an option to consider or disregard letter case; if the
+<em class="button">Match case</em> option is switched off, lowercase
+"a" will match uppercase "A" and vice versa; if it is on, lowercase
+"a" will match only lowercase "a".</p>
+</li>
+</ul>
+
+<h4>
+<a name="#lsystem"></a>
+<a name="#view"></a>
+<a name="#description"></a>
+The L-system, View file, and description editors</h4>
+
+<p>These tabs open the text editor on specific files. The L-system
+filename defaults to <tt>lsystem.l</tt>, and contains the L-system
+used by the model. The View file, by default, is <tt>view.v</tt>; it
+describes viewing and rendering parameters. For information about the
+format and content of the L-system and View files, see the <cite>Cpfg
+User's Manual</cite>. The description file contains a description of the
+object; it is called <tt>description.txt</tt>.</p>
+
+<h4>
+<a name="#general"></a>
+The general text file editor</h4>
+
+<p>The general text file editor lets you edit any text file on the lab
+table. It has four more buttons to the right of the <em
+class="button">Find</em> button above the text area:</p>
+
+<ul>
+
+<li><img src="images/textopen.png" alt="Open file"><em
+class="button">Open file</em>. When you push this button, the current
+file (if any) is closed, and a new file opened. If you have changed
+the current file, you are asked if you want to save it before it is
+closed.  Otherwise, you are presented with a file browser in the lab
+table directory.  Choosing a file opens it in the text editor.</li>
+
+<li><img src="images/textclose.png" alt="Close file"><em
+class="button">Close file</em>. This button closes the current
+file. If you have changed it, you are asked if you want to save it
+before closing it.</li>
+
+<li><img src="images/textsave.png" alt="Save file"><em
+class="button">Save file</em>. Pressing this button saves the current
+file. If the file has no name (that is, if you entered text without
+opening a new file), you are prompted to enter a filename.</li>
+
+<li><img src="images/textsaveas.png" alt="Save file as"><em
+class="button">Save file as</em>. This button saves the current file
+to a new file name, regardless of whether or not it currently has
+one. You are prompted for the new name.</li>
+</ul>
+
+<p class="warning">
+<strong>Note</strong>: The general text file editor lets you edit any
+text file on the lab table, including the L-system file, the view
+file, and any of the surface, contour, function, and panel
+definitions. These files are opened by L-studio when the object is
+opened, and written when the object is closed or
+<i>cpfg</i>/<i>lpfg</i> is run. If you change and save them in the
+general text file editor, you must use the command <em
+class="menu">Read from lab table</em> from the <em
+class="menu">Object</em> menu to explicitly read the file back into the
+specific L-studio editor.</p>
+
+<p class="warning">
+Also note that if you use the general text file editor to edit a file
+which is used in generating the model, but is not a standard
+<i>cpfg</i>/<i>lpfg</i> file (for instance, a file that is
+<code>#include</code>d by the L-system), you will have to explicitly
+save it in order for any changes to be used by
+<i>cpfg</i>/<i>lpfg</i>.</p>
+
+<hr>
+<div class="navigation">
+<a href="sections.html">L-studio editors
+<img src="backward.gif" width="16" height="16" alt="Back"></a>
+<a href="index.html">
+<img src="home.gif" height="55" width="54" alt="Contents"></a>
+</div>
+</body>
+</html>

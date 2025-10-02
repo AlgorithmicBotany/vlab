@@ -81,3 +81,12 @@ The home page for vlab is:
 http://www.algorithmicbotany.org/virtual_laboratory/
 
 Email: vlab.algorithmicbotany@gmail.com
+
+# L-studio
+
+L-studio can be compiled on Windows 10/11 using Microsoft Visual Studio.
+The current source code was tested with Microsoft Visual Studio Community 2022 (64-bit) Version 17.14.12.
+To build, open `Distribution.sln` in the `Distribution` folder, select `Release` and `Win32` as the configuration (`x64` is not currently supported), and then Build Solution.
+Ensure that `flex` and `bison` are installed and can be run from the command line (https://github.com/lexxmark/winflexbison).
+To create the distributable zip files, install `7z` from https://www.7-zip.org/ and ensure the `7z.exe` is accessible from the command line.
+

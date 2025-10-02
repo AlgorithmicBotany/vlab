@@ -1,0 +1,349 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<link type="text/css" rel="stylesheet" href="lstudio.css">
+<title>L-Studio User's Guide: Appendix A: L-studio menu commands</title>
+</head>
+<body>
+<div class="navigation">
+<a href="difference.html">Differences between L-studio and <i>vlab</i>
+<img src="backward.gif" width="16" height="16" alt="Back"></a>
+<a href="index.html">
+<img src="home.gif" height="55" width="54" alt="Contents"></a>
+<a href="comline.html">
+<img src="forward.gif" width="16" height="16" alt="Forward"
+>Appendix B</a>
+</div>
+<hr>
+
+<h1>Appendix A</h1>
+<h2>L-studio menu commands</h2>
+
+<p>At the top of the L-studio window is the L-studio menu bar.
+When no object has been opened, it has four menus:</p>
+
+<div class="largeimg">
+<map name="menubar_simple">
+<area shape="rect" coords="3,36,60,60" href="#object"
+      alt="Object">
+<area shape="rect" coords="60,36,142,60" href="#preferences"
+      alt="Preferences">
+<area shape="rect" coords="142,36,200,60" href="#tools"
+      alt="Tools">
+<area shape="rect" coords="325,36,368,60" href="#help"
+      alt="Help">
+</map>
+<img src="images/menubar_simple.png" usemap="#menubar_simple"
+     alt="L-studio menu bar">
+</div>
+
+<p>With an object open, two more menus are added:</p>
+
+<div class="largeimg">
+<map name="menubar">
+<area shape="rect" coords="3,36,60,60" href="#object"
+      alt="Object">
+<area shape="rect" coords="60,36,106,60" href="#cpfg"
+      alt="Cpfg / Lpfg">
+<area shape="rect" coords="106,36,190,60" href="#preferences"
+      alt="Preferences">
+<area shape="rect" coords="190,36,240,60" href="#tools"
+      alt="Tools">
+<area shape="rect" coords="240,36,305,60" href="#window"
+      alt="Window">
+<area shape="rect" coords="325,36,368,60" href="#help"
+      alt="Help">
+</map>
+<img src="images/menubar.png" usemap="#menubar"
+     alt="L-studio menu bar">
+</div>
+
+<p>In addition, when an object has been opened, more commands are available
+in the <em class="menu">Object</em> and <em class="menu">Tools</em>
+menus.</p>
+
+<h2><a name="object"></a>
+Object</h2>
+
+<div class="largeimg">
+<map name="object_menu">
+<area shape="rect" coords="5,60,250,85" href="#object_new"
+      alt="New">
+<area shape="rect" coords="5,85,250,105" href="#object_open"
+      alt="Open">
+<area shape="rect" coords="5,104,250,125" href="#object_save"
+      alt="Save">
+<area shape="rect" coords="5,125,250,145" href="#object_save"
+      alt="Save as">
+<area shape="rect" coords="5,145,250,173" href="#object_save"
+      alt="Make extension">
+<area shape="rect" coords="5,173,250,200" href="#object_position"
+      alt="Position in the browser">
+<area shape="rect" coords="5,200,250,227" href="#object_demo"
+      alt="Create a demo file">
+<area shape="rect" coords="5,227,250,255" href="#object_write"
+      alt="Write to lab table">
+<area shape="rect" coords="5,255,250,275" href="#object_write"
+      alt="Read from lab table">
+<area shape="rect" coords="5,275,250,302" href="#object_show"
+      alt="Show lab table">
+<area shape="rect" coords="5,302,250,335" href="#object_close"
+      alt="Close">
+<area shape="rect" coords="5,335,250,367" href="#object_exit"
+      alt="Exit">
+</map>
+<img src="images/object_menu.png" usemap="#object_menu" alt="Object menu">
+</div>
+
+<p>The <em class="menu">Object</em> menu has the following options:</p>
+
+<ul>
+<li><a name="object_new"></a>
+<em class="menu">New</em> creates a new object. Until it is saved,
+the object is not connected to any object directory; it is only held
+on the lab table.</li>
+
+<li><a name="object_open"></a>
+<p><em class="menu">Open</em> brings up the <em class="window">Browse
+for object</em> dialog box. You can browse to an object's directory
+and select it to open the object in L-studio.</p>
+<div class="largeimg">
+<img src="images/opendlg.png" alt="Browse for object dialog box">
+</div>
+</li>
+
+<li><a name="object_save"></a>
+<em class="menu">Save</em>, <em class="menu">Save as</em>, and
+<em class="menu">Make extension</em> are described in the section
+<a href="save.html">Saving objects</a>.</li>
+
+<li><a name="object_position"></a>
+If the object has been opened with the browser, then the command
+<em class="menu">Position in browser</em> selects and shows the object's
+position in the browser.</li>
+
+<li><a name="object_demo"></a>
+<em class="menu">Create a demo file</em> is currently unsupported.</li>
+
+<li><a name="object_write"></a>
+<em class="menu">Write to lab table</em> and <em class="menu">Read
+from lab table</em> write and read the current versions of the
+components in the L-studio editors to and from the lab table,
+respectively. This is useful if you use an external editor, or the
+L-studio generic text editor, to change an object component, and want
+the L-studio version to reflect these changes.</li>
+
+<li><a name="object_show"></a>
+<em class="menu">Show lab table</em> opens a Windows file browser
+which shows the lab table of the current object.</li>
+
+<li><a name="object_close"></a>
+<em class="menu">Close</em> closes the current object. If it has
+not been saved, you will be prompted if you want to save it.</li>
+
+<li><a name="object_exit"></a>
+<em class="menu">Exit</em> quits L-studio. All objects will be
+closed, so if you have not saved them, you will be prompted to do
+so.</li>
+</ul>
+
+
+<h2><a name="cpfg"></a>
+Cpfg / Lpfg</h2>
+
+<div class="largeimg">
+<map name="cpfg_menu">
+<area shape="rect" coords="62,60,242,85" href="#cpfg_go"
+      alt="Go!">
+<area shape="rect" coords="62,85,242,110" href="#cpfg_kill"
+      alt="Kill">
+<area shape="rect" coords="62,110,242,143" href="#cpfg_continuous"
+      alt="Continuous modeling">
+<area shape="rect" coords="62,143,242,170" href="#cpfg_continuous"
+      alt="New model">
+<area shape="rect" coords="62,170,242,191" href="#cpfg_continuous"
+      alt="New L-system">
+<area shape="rect" coords="62,191,242,212" href="#cpfg_continuous"
+      alt="New homomorphism">
+<area shape="rect" coords="62,212,242,233" href="#cpfg_continuous"
+      alt="New view">
+<area shape="rect" coords="62,233,242,254" href="#cpfg_continuous"
+      alt="New projection">
+<area shape="rect" coords="62,254,242,275" href="#cpfg_continuous"
+      alt="New render">
+<area shape="rect" coords="62,275,242,296" href="#cpfg_continuous"
+      alt="New animate">
+<area shape="rect" coords="62,296,242,320" href="#cpfg_rerun"
+      alt="Rerun">
+</map>
+<img src="images/cpfg_menu.png" alt="Cpfg menu">
+</div>
+
+<p>The <em class="menu">Cpfg/Lpfg</em> menu is only present when an
+object has been opened. The menu title depends on the current object:
+if the current object uses <i>cpfg</i>, the title is <em
+class="menu">Cpfg</em>; if it uses <i>lpfg</i>, the title is <em
+class="menu">Lpfg</em>. The menus are otherwise identical.</p>
+
+<ul>
+<li><a name="cpfg_go"></a>
+<em class="menu">Go!</em> runs the simulator (<i>cpfg</i> or
+<i>lpfg</i>). If the simulator is already running, this command
+is ghosted out.</li>
+
+<li><a name="cpfg_kill"></a>
+<em class="menu">Kill</em> closes the simulator. If the simulator
+for this object is not currently running, this command is ghosted out.</li>
+
+<li><a name="cpfg_continuous"></a>
+<em class="menu">Continuous modeling</em> and <em
+class="menu">New...</em> are discussed in <a
+href="invoke.html#changin">Running a simulation</a>.</li>
+
+<li><a name="cpfg_rerun"></a>
+<em class="menu">Rerun</em> reruns the simulation.</li>
+</ul>
+
+
+<h2><a name="preferences"></a>
+Preferences</h2>
+
+<div class="largeimg">
+<img src="images/preferences_menu.png" alt="Preferences menu">
+</div>
+
+<p>The <em class="menu">Preferences</em> menu is discussed completely
+in the section <a href="config.html">Configuring L-studio</a>.</p>
+
+
+<h2><a name="tools"></a>
+Tools</h2>
+
+<div class="largeimg">
+<img src="images/tools_menu.png" alt="Tools menu">
+</div>
+
+<p>The <em class="menu">Tools</em> menu lets you access some peripheral
+programs, including the object browser.</p>
+
+<ul>
+<li><em class="menu">Snap icon</em> is discussed in the section
+<a href="browser.html#makingicons">Making your own icons</a>. It
+is available only when an object has been opened.</li>
+
+<li>The <em class="menu">Browser</em> submenu contains commands which
+let you start the object browser. See <a
+href="browser.html#open">Opening the object browser</a> for more
+information.</li>
+</ul>
+
+
+<h2><a name="window"></a>
+Window</h2>
+
+<div class="largeimg">
+<map name="window_menu">
+<area shape="rect" coords="242,60,434,83" href="#window_tileh"
+      alt="Tile Horizontally">
+<area shape="rect" coords="242,83,434,104" href="#window_tilev"
+      alt="Tile Vertically">
+<area shape="rect" coords="242,104,434,125" href="#window_cascade"
+      alt="Cascade">
+<area shape="rect" coords="242,125,434,152" href="#window_closeall"
+      alt="Close all">
+<area shape="rect" coords="242,152,434,202" href="#window_windows"
+      alt="List of objects">
+</map>
+<img src="images/window_menu.png" usemap="#window_menu" alt="Window menu">
+</div>
+
+<p>The <em class="menu">Window</em> menu has commands for changing
+the display of L-studio's object windows.</p>
+
+<ul>
+<li><a name="window_tileh"></a>
+<p><em class="menu">Tile Horizontally</em> arranges multiple
+object windows by making them the full width of the L-studio
+window, and stacked on top of one another:</p>
+<div class="largeimg">
+<img src="images/tileh.png" alt="Three windows, tiled horizontally">
+</div>
+</li>
+
+<li><a name="window_tilev"></a>
+<p><em class="menu">Tile Vertically</em> arranges multiple
+object windows by making them the full height of the L-studio
+window, and placed in a row:</p>
+<div class="largeimg">
+<img src="images/tilev.png" alt="Three windows, tiled vertically">
+</div>
+</li>
+
+<li><a name="window_cascade"></a>
+<p><em class="menu">Cascade</em> arranges multiple
+object windows by making them smaller than the L-studio window,
+and partially overlapping them:</p>
+<div class="largeimg">
+<img src="images/cascade.png" alt="Three windows, cascaded">
+</div>
+</li>
+
+<li><a name="window_closeall"></a>
+<em class="menu">Close all</em> closes all of the currently
+opened objects. You may be prompted to save them.</li>
+
+<li><a name="window_windows"></a>
+At the bottom of the <em class="menu">Window</em> menu is a list
+of all of the currently open objects. Selecting one brings it to the
+front.</li>
+</ul>
+
+
+<h2><a name="help"></a>
+Help</h2>
+
+<div class="largeimg">
+<img src="images/help_menu.png" alt="Help menu">
+</div>
+
+<p>The <em class="menu">Help</em> menu's commands show all of the
+manuals in the <tt>Help</tt> directory:</p>
+
+<ul>
+<li><em class="menu">L-studio
+manual</em> is this <abbr>HTML</abbr> documentation.</li>
+
+<li><em
+class="menu">Lpfg manual</em> is the <cite><a href="LPFGman.pdf">LPFG
+user's manual</a></cite>.</li>
+
+<li>On the <em class="menu">Cpfg manuals</em>
+submenu are:<ul>
+<li><em class="menu">User's manual</em>, the <cite><a
+href="CPFGman.pdf">CPFG user's manual</a></cite>;</li>
+<li><em
+class="menu">Environmental programs</em>, which displays the <cite><a
+href="enviro.pdf">user's manual for environmental programs</a></cite>; and</li>
+<li><em class="menu">Graphics extensions</em>, which shows <cite><a
+href="graph.pdf">Extensions to the graphical interpretation of
+L-systems based on turtle geometry</a></cite>.</li></ul>
+
+<li>Finally, <em class="menu">About</em> shows some information about
+L-studio and <i>cpfg</i>'s creators.</li>
+</ul>
+
+
+<hr>
+<div class="navigation">
+<a href="difference.html">Differences between L-studio and <i>vlab</i>
+<img src="backward.gif" width="16" height="16" alt="Back"></a>
+<a href="index.html">
+<img src="home.gif" height="55" width="54" alt="Contents"></a>
+<a href="comline.html">
+<img src="forward.gif" width="16" height="16" alt="Forward"
+>Appendix B</a>
+</div>
+</body>
+</html>
+

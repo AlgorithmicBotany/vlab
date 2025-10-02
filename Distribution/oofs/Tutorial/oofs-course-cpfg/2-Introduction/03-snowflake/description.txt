@@ -1,0 +1,5 @@
+Fractal snowflake curve
+
+Fractal snowflake curve is one of the fractals discovered
+or popularized by Mandelbrot.  It provides a simple 
+example of a cpfg model (object).

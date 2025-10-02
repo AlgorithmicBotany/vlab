@@ -1,0 +1,42 @@
+Times New Roman
+bold italic
+36
+255 255 255
+L-studio
+-1 19
+center
+Times New Roman
+bold
+20
+255 255 255
+Copyright © 1998-2016
+-1 109
+center
+Times New Roman
+bold 
+20
+255 255 255
+Przemyslaw Prusinkiewicz
+-1 131
+center
+Times New Roman
+bold 
+20
+255 255 255
+University of Calgary
+-1 159
+center
+Times New Roman
+bold italic
+20
+255 255 255
+version \`version.exe -v`
+3 360
+left
+Times New Roman
+bold italic
+20
+255 255 255
+build #\`version.exe -b`: \`version.exe -d`
+380 360
+right

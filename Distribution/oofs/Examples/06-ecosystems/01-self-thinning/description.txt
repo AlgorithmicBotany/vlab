@@ -1,0 +1,20 @@
+An individual-based model of self-thinning
+
+This is a simplified version of the model of self-thinning
+proposed by Firbank and Watkinson in "A model of interference
+within plant monocultures", Journal of Theoretical Biology
+116 (1985), pp. 291-311.  A closely related open-L-system 
+implementation is described in "Realistic modeling and
+rendering of plant ecosystems" by O. Deussen, P. Hanrahan, 
+B. Lintermann, R. Mech, M. Pharr, and P. Prusinkiewicz,
+Proceedings of Siggraph '98, pp. 275 - 286.  
+
+The simulation starts with an initial set of plants (represented 
+by green circles), distributed at random in a square field, and 
+assigned random initial radii.  If the circles representing two 
+plants intersect, the smallercircle changes to red to indicate 
+that the plant is dominated.  In the next simulation
+step the red circle disappears, to indicate that the plant 
+has died.  Plants that have reached a predefined limit size 
+are represented by yellow circles and no longer increase
+in diameter.

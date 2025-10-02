@@ -1,0 +1,43 @@
+fractal.l
+fractal.v
+fractal.a
+panel.l
+panel.v
+panel.a
+bud.s
+fractal.map
+fractal.map2
+description.txt
+*
+image:
+	generate:
+		cpfg -m fractal.map fractal.l fractal.v fractal.a
+
+colormap:
+	loadmaps:
+		loadmap fractal.map; loadmap -c2 fractal.map2
+	savemaps:
+		savemap fractal.map; savemap -c2 fractal.map2
+	palette:
+		palette
+
+L-system:
+	panel:
+		display:
+			panel panel.l | awkped fractal.l
+		CHAR panel.l
+	CHAR fractal.l
+
+view-file:
+	panel:
+		display:
+			panel panel.v | ped fractal.v
+		CHAR panel.v
+	CHAR fractal.v
+
+animate-file:
+	panel:
+		display:
+			panel panel.a | ped fractal.a
+		CHAR panel.a
+	CHAR fractal.a

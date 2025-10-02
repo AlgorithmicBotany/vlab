@@ -1,0 +1,9 @@
+A stylized model of a lily
+
+The model illustrates the use of generalized cylinders, which 
+have been employed to create all surfaces.  Their profile can be
+changed using the contour editor.  Also, the model illustrates
+the use of separate colors at both sides of the petals.
+
+Note: The random number generator is invoked each time when the
+plant is rotated, causing slight changes in its shape.

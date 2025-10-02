@@ -1,0 +1,82 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<link type="text/css" rel="stylesheet" href="lstudio.css">
+<title>L-Studio User's Guide: Saving objects</title>
+</head>
+<body>
+<div class="navigation">
+<a href="invoke.html">Running a simulation
+<img src="backward.gif" width="16" height="16" alt="Back"></a>
+<a href="index.html">
+<img src="home.gif" height="55" width="54" alt="Contents"></a>
+<a href="config.html">
+<img src="forward.gif" width="16" height="16" alt="Forward"
+>Configuring L-studio</a>
+</div>
+
+<hr>
+
+<h1>Saving objects</h1>
+
+<p>An object can be saved either by overwriting its previous version
+or by creating a new L-studio object. To overwrite the previous
+version, select <em class="menu">Save</em> from the <em
+class="menu">Object</em> menu. To create a new version, select <em
+class="menu">Save as</em> from the <em class="menu">Object</em>
+menu. You will be prompted to name the new version:</p>
+
+<div class="largeimg">
+<img src="images/saveas.png"
+     alt="Save as dialog box">
+</div>
+
+<p>The new version will be saved as a directory with the given name,
+and it will include all files on the lab table except for:</p>
+
+<ul>
+<li><i>cpfg</i> log file (<tt>cpfg.log</tt>),</li>
+<li>files used when communicating with environmental programs
+(<tt>.to_field*</tt> and <tt>.from_field*</tt>), and</li>
+<li>files included in the <tt><b>ignore:</b></tt> section of the <a
+href="difference.html#LSSpecifications"><tt>LSspecifications</tt>
+file</a>.</li>
+</ul>
+
+<p>If the object was opened with the browser, the command <em
+class="menu">Make extension</em> is available on the <em
+class="menu">Object</em> menu. It will save the object in a new
+directory within the original version's directory. (This convention
+follow the prototype-extension paradigm which is used in the design of
+the browser. More information can be found in the <a
+href="http://pages.cpsc.ucalgary.ca/~pwp/bmv/vlab-for-linux/html-docs/environment.html#ORGANIZATION">vlab
+documentation</a>.) The dialog box also provides a checkbox labeled
+<em class="widget">Move to new object</em>.</p>
+
+<div class="largeimg">
+<img src="images/movetonew.png"
+     alt="Move to new object dialog">
+</div>
+
+<p>In its default state, the
+current object will not be changed: if you have been editing object
+"Parent", and make an extension called "Child" without checking the
+<em class="widget">Move to new object</em> box, L-studio will keep
+editing "Parent". If the box is checked when saving "Child", L-studio
+will now be editing "Child". This latter is the standard behaviour of
+the <em class="widget">Save As</em> command in other applications.</p>
+
+<hr>
+<div class="navigation">
+<a href="invoke.html">Running a simulation
+<img src="backward.gif" width="16" height="16" alt="Back"></a>
+<a href="index.html">
+<img src="home.gif" height="55" width="54" alt="Contents"></a>
+<a href="config.html">
+<img src="forward.gif" width="16" height="16" alt="Forward"
+>Configuring L-studio</a>
+</div>
+</body>
+</html>
+

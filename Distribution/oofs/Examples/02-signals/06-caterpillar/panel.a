@@ -1,0 +1,48 @@
+panel name: Animation
+background: 512
+size: 170 400
+
+type: SLIDER
+name: First frame
+colors: 513 517
+origin: 20 330
+min/max: 0 10
+value: 0
+message: n 5 1 0 %d
+
+type: SLIDER
+name: Last frame
+colors: 513 517 
+origin: 20 265
+min/max: 0 10
+value: 4
+message: n 6 1 0 %d
+
+type: SLIDER
+name: Swap interval
+colors: 513 517
+origin: 20 200
+min/max: 0 100
+value: 40
+message: n 4 1 0 %d
+
+type: BUTTON
+name: dbl buffer
+colors: 515 516
+origin: 35 130
+value: 1
+message: o 1 %d
+
+type: BUTTON
+name: scale
+colors: 515 516
+origin: 35 80
+value: 1
+message: o 3 %d
+
+type: BUTTON
+name: clear
+colors: 515 516
+origin: 35 30
+value: 1
+message: o 2 %d

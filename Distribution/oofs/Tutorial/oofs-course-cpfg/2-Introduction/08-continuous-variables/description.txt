@@ -1,0 +1,7 @@
+FRACTAL FERN LEAVES - CONTINUOUS-TIME DEVELOPMENT
+
+A simple parametric L-system generating a family of 
+compound branching structures that resemble fern leaves.
+This model operates in continuous time, with the time 
+increment dt.  The model is expressed using productions 
+with local variables and statement blocks. 

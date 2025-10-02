@@ -1,0 +1,9 @@
+COMPOUND LEAF (USING INTERPRETATION RULES)
+
+Example of a very simple L-system generating a compound
+branching structure.  Ordinary L-system productions
+use intuitive symbols (A for apex, I for internode).
+The graphical interpretation of these symbols is 
+specified using interpretation rules (after the keyword
+"interpretation"). 
+

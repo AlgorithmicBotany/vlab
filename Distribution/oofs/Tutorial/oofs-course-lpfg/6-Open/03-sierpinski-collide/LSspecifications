@@ -1,0 +1,9 @@
+ignore:
+lsys.dll
+lsys.i
+lsys.lib
+input.i
+lsys.obj
+lsys.exp
+*
+lpfg tree.l tree.v tree.a tree.map tree.e

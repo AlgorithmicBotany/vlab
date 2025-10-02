@@ -1,0 +1,92 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<link type="text/css" rel="stylesheet" href="lstudio.css">
+<title>L-studio User's Guide: Appendix</title>
+</head>
+<body>
+<div class="navigation">
+<a href="index.html">
+<img src="home.gif" height="55" width="54" alt="Contents"></a>
+</div>
+
+<hr>
+
+<h1>Appendix: Alternate installation of <i>lpfg</i></h1>
+
+<p>This appendix contains information you need if you want to use
+<i>lpfg</i> with a C++ compiler other than Microsoft Visual C++.</p>
+
+<h2>Using L-studio with MinGW</h2>
+
+<p><a href="http://www.mingw.org">MinGW</a> is a port of the GNU
+compilers and build tools to Windows. It can be downloaded for no cost
+from the website <a href="http://www.mingw.org">http://www.mingw.org</a>.
+MinGW can be used to compile L+C programs if you do not have access to or
+do not wish to use Visual C++. To use MinGW with <i>lpfg</i>:</p>
+
+<ol>
+<li>Install MinGW. You'll need at least the C++ compiler <tt>g++</tt>
+and the GNU <tt>make</tt> program.</li>
+<li>Unzip the files from <a href="lpfg-mingw.zip">lpfg-mingw.zip</a>
+into the <tt>lpfg/bin</tt> subdirectory in your L-studio directory.</li>
+<li>Change the definition of MINGW in the files <tt>Makefile</tt> and
+<tt>mingw.bat</tt> to the location of your MinGW installation. The default
+is <t>C:\MinGW</tt>, so if that's where you installed it, nothing has to
+be changed.</li>
+</ol>
+
+<p>Now run an <i>lpfg</i> model. L-studio should use MinGW to compile
+the L+C program. If there are troubles, check if there is a
+<tt>Makefile</tt> in the lab table directory. If present, this file
+will override the new MinGW <tt>Makefile</tt>. You may have to alter
+the <tt>Makefile</tt> on the lab table to call the MinGW tools, or, if
+it does not link in any external libraries, it may suffice to simply
+delete it.</p>
+
+<h2>Using L-studio with another compiler</h2>
+
+<p><i>lpfg</i> requires two batch files: <tt>preproc.bat</tt> and
+<tt>cmpl.bat</tt>. The contents of these files depends on the C++
+compiler you are using. <tt>preproc.bat</tt> is the command
+<i>lpfg</i> will execute in order to apply the C++ preprocessor to
+a file (in particular, the L+C source file). The syntax for this
+command is:</p>
+
+<p><kbd>
+preproc.bat source target
+</kbd></p>
+
+<p>where <tt>source</tt> is the file to be preprocessed and
+<tt>target</tt> is the name of the output file. You will need to edit
+the <tt>preproc.bat</tt> file so that it applies <em>your</em> C++
+preprocessor to the <tt>source</tt> file to produce
+<tt>target</tt>.</p>
+
+<p>The <tt>cmpl.bat</tt> file is called by <i>lpfg</i> to compile the
+translated L+C source file into a DLL. There are no parameters. The
+preprocessed C++ file that is to be compiled is called
+<tt>lsys.i</tt>. Additional <code>-D</code> flags (for instance, to
+<code>#define</code> a function's name to its ID value) may be found
+in the file <tt>clopt</tt>; using VC++, they are added to the argument
+list with the <code>@clopt</code> argument. A successful compilation
+should produce a DLL named <tt>lsys.dll</tt>.</p>
+
+<p>The <tt>cmpl.bat</tt> file provided with L-studio
+calls the command <tt>make</tt>, and attempts to use the
+<tt>Makefile</tt> on the lab table; if this <tt>Makefile</tt> does not
+exist, it uses the "default" <tt>Makefile</tt>, in the
+same directory as <tt>cmpl.bat</tt>.  You may need to edit both
+<tt>cmpl.bat</tt> and this "default" <tt>Makefile</tt>, as
+well as your objects' own <tt>Makefile</tt>s, to properly use your
+C++ compiler with <i>lpfg</i>.</p>
+
+<hr>
+
+<div class="navigation">
+<a href="index.html">
+<img src="home.gif" height="55" width="54" alt="Contents"></a>
+</div>
+</body>
+</html>

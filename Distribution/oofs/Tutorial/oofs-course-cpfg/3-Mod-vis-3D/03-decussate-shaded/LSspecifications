@@ -1,0 +1,3 @@
+cpfg -M material.mat leaf.l leaf.v leaf.a
+continuous mode: on
+active tab: description

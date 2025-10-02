@@ -1,0 +1,59 @@
+plant.l
+plant.v
+plant.a
+seed.s
+rayfloret.s
+petal1.s
+petal2.s
+petal3.s
+leaf.s
+line.s
+description.txt
+plant.map
+*
+image:
+	generate:
+		cpfg -m plant.map plant.l plant.v plant.a
+	snap:
+		snap plant.ras;rm plant.ras.Z;compress plant.ras
+	ipaste:
+		uncompress plant.ras;ipaste plant.ras;compress plant.ras
+
+colormap:
+	loadmaps:
+		 loadmap plant.map ; loadmap -c2 plant.map2
+	savemaps:
+		 savemap plant.map ; savemap -c2 plant.map2
+	PALETTE
+
+L-system:
+	panel:
+		display:
+			panel panel.l | awkped plant.l
+		EDIT panel.l
+	EDIT plant.l
+
+view file:
+	EDIT plant.v
+
+animate file:
+	EDIT plant.a
+
+description:
+	EDIT plant.text
+
+surfaces:
+	seed:
+		SURFACE seed.s ise.v
+	rayfloret:
+		SURFACE rayfloret.s ise.v
+	petal 1:
+		SURFACE petal1.s ise.v
+	petal 2:
+		SURFACE petal2.s ise.v
+	petal 3:
+		SURFACE petal3.s ise.v
+	leaf:
+		SURFACE leaf.s ise.v
+	stem:
+		SURFACE line.s ise.v

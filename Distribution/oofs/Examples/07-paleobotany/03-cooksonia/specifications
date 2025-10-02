@@ -1,0 +1,56 @@
+plant.l
+plant.v
+plant.a
+panel.l
+panel.v
+panel.a
+plant.mat
+leaf.s
+description
+*
+image:
+	generate:
+		cpfg -M plant.mat plant.l plant.v plant.a
+	snap:
+		snap plant.ras
+	ipaste:
+		ipaste plant.ras
+
+raytrace:
+	rayview:
+		rayview plant.ray
+	raypaint:
+		raypaint plant.ray > plant.rle
+	rayshade:
+		rayshade plant.ray > plant.rle
+	display:
+		getiris plant.rle
+
+L-system:
+	panel:
+		display:
+			panel panel.l | awkped plant.l
+		CHAR panel.l
+	CHAR plant.l
+
+view file:
+	panel:
+		display:
+			panel panel.v | ped plant.v
+		CHAR panel.v
+	CHAR plant.v
+
+animate file:
+	panel:
+		display:
+			panel panel.a | ped plant.a
+		CHAR panel.a
+	CHAR plant.a
+
+materials:
+	edit:
+		medit plant.mat
+
+description:
+	CHAR description
+

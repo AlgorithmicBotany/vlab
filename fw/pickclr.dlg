@@ -1,0 +1,78 @@
+
+PICKCOLOR DIALOG DISCARDABLE  0, 0, 189, 298
+STYLE WS_POPUP | WS_CAPTION | WS_SYSMENU
+CAPTION "Pick color"
+FONT 8, "MS Sans Serif"
+BEGIN
+    CONTROL         "Custom1",IDC_HUECIRCLE,"HueCircle",WS_BORDER | 
+                    WS_TABSTOP,7,7,175,162
+    CONTROL         "Slider1",IDC_REDSLIDER,"ColorSlider",WS_BORDER | 
+                    WS_TABSTOP | 0x1,17,174,133,12
+    EDITTEXT        IDC_RED,157,173,25,12,ES_AUTOHSCROLL
+    CONTROL         "Slider1",IDC_GREENSLIDER,"ColorSlider",WS_BORDER | 
+                    WS_TABSTOP | 0x1,17,189,133,12
+    EDITTEXT        IDC_GREEN,157,188,25,12,ES_AUTOHSCROLL
+    CONTROL         "Slider1",IDC_BLUESLIDER,"ColorSlider",WS_BORDER | 
+                    WS_TABSTOP | 0x1,17,204,133,12
+    EDITTEXT        IDC_BLUE,157,203,25,12,ES_AUTOHSCROLL
+    CONTROL         "Slider1",IDC_HUESLIDER,"ColorSlider",WS_BORDER | 
+                    WS_TABSTOP | 0x3,17,227,133,12
+    EDITTEXT        IDC_HUE,157,226,25,12,ES_AUTOHSCROLL
+    CONTROL         "Slider1",IDC_SATURATIONSLIDER,"ColorSlider",WS_BORDER | 
+                    WS_TABSTOP | 0x1,17,242,133,12
+    EDITTEXT        IDC_SATURATION,157,241,25,12,ES_AUTOHSCROLL
+    CONTROL         "Slider1",IDC_VALUESLIDER,"ColorSlider",WS_BORDER | 
+                    WS_TABSTOP | 0x1,17,257,133,12
+    EDITTEXT        IDC_VALUE,157,256,25,12,ES_AUTOHSCROLL
+    DEFPUSHBUTTON   "Apply",IDC_APPLY,7,277,50,14,NOT WS_VISIBLE
+    PUSHBUTTON      "Close",IDCANCEL,73,277,50,14
+    LTEXT           "H",IDC_HLABEL,7,228,8,8
+    LTEXT           "S",IDC_SLABEL,7,242,8,8
+    LTEXT           "V",IDC_VLABEL,7,257,8,8
+    LTEXT           "R",IDC_RLABEL,7,174,8,8
+    LTEXT           "G",IDC_GLABEL,7,189,8,8
+    LTEXT           "B",IDC_BLABEL,7,204,8,8
+    PUSHBUTTON      "Undo",IDC_UNDO,132,277,50,14
+END
+
+
+PICKCOLORMODAL DIALOG DISCARDABLE  0, 0, 189, 298
+STYLE DS_MODALFRAME | WS_POPUP | WS_CAPTION | WS_SYSMENU
+CAPTION "Pick color"
+FONT 8, "MS Sans Serif"
+BEGIN
+    CONTROL         "Custom1",IDC_HUECIRCLE,"HueCircle",WS_BORDER | 
+                    WS_TABSTOP,7,7,175,162
+    CONTROL         "Slider1",IDC_REDSLIDER,"ColorSlider",WS_BORDER | 
+                    WS_TABSTOP | 0x1,17,174,133,12
+    EDITTEXT        IDC_RED,157,173,25,12,ES_AUTOHSCROLL
+    CONTROL         "Slider1",IDC_GREENSLIDER,"ColorSlider",WS_BORDER | 
+                    WS_TABSTOP | 0x1,17,189,133,12
+    EDITTEXT        IDC_GREEN,157,188,25,12,ES_AUTOHSCROLL
+    CONTROL         "Slider1",IDC_BLUESLIDER,"ColorSlider",WS_BORDER | 
+                    WS_TABSTOP | 0x1,17,204,133,12
+    EDITTEXT        IDC_BLUE,157,203,25,12,ES_AUTOHSCROLL
+    CONTROL         "Slider1",IDC_HUESLIDER,"ColorSlider",WS_BORDER | 
+                    WS_TABSTOP | 0x3,17,227,133,12
+    EDITTEXT        IDC_HUE,157,226,25,12,ES_AUTOHSCROLL
+    CONTROL         "Slider1",IDC_SATURATIONSLIDER,"ColorSlider",WS_BORDER | 
+                    WS_TABSTOP | 0x1,17,242,133,12
+    EDITTEXT        IDC_SATURATION,157,241,25,12,ES_AUTOHSCROLL
+    CONTROL         "Slider1",IDC_VALUESLIDER,"ColorSlider",WS_BORDER | 
+                    WS_TABSTOP | 0x1,17,257,133,12
+    EDITTEXT        IDC_VALUE,157,256,25,12,ES_AUTOHSCROLL
+    DEFPUSHBUTTON   "Apply",IDC_APPLY,7,277,50,14,NOT WS_VISIBLE
+    PUSHBUTTON      "OK",IDOK,75,277,50,14
+    PUSHBUTTON      "Cancel",IDCANCEL,132,277,50,14
+    LTEXT           "H",IDC_HLABEL,7,228,8,8
+    LTEXT           "S",IDC_SLABEL,7,242,8,8
+    LTEXT           "V",IDC_VLABEL,7,257,8,8
+    LTEXT           "R",IDC_RLABEL,7,174,8,8
+    LTEXT           "G",IDC_GLABEL,7,189,8,8
+    LTEXT           "B",IDC_BLABEL,7,204,8,8
+END
+
+
+HUE0128             BITMAP  DISCARDABLE     "..\\fw\\Resources\\hue0128.bmp"
+HUE0256             BITMAP  DISCARDABLE     "..\\fw\\Resources\\hue0256.bmp"
+HUE0512             BITMAP  DISCARDABLE     "..\\fw\\Resources\\hue0512.bmp"

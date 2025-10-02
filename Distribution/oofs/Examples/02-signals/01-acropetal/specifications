@@ -1,0 +1,27 @@
+acrobasi.a
+acrobasi.l
+acrobasi.v
+acrobasi.map
+acrobasi_hints.txt
+description.txt
+*
+image:
+	generate:
+		cpfg -m acrobasi.map acrobasi.l acrobasi.v acrobasi.a
+
+colormap:
+	MAP acrobasi.map
+	PALETTE
+
+L-system:
+	CHAR acrobasi.l
+
+view file:
+	CHAR acrobasi.v
+
+animate file:
+	CHAR acrobasi.a
+
+other files:
+	hints:
+		HINTS acrobasi_hints.txt

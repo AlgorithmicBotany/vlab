@@ -1,0 +1,9 @@
+An L-system model of a the Thatcheria mirabilis shell,
+implemented as a generalized cylinder.  The original
+version of this model (expressed without L-systems)
+was described by D.R. Fowler, H. Meinhardt and 
+P. Prusinkiewicz in "Modeling seashells", 
+Proceedings of Siggraph 92, pp. 379-387.
+
+The shape of the opening is defined as a contour and
+can be interactively changed.

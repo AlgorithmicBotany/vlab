@@ -1,0 +1,21 @@
+funcgalleryver 1 1
+items: 2
+fver 1 1
+name: internode_length
+samples: 100
+flip: off
+points: 4
+0.000000 0.000000
+0.051413 0.001421
+0.717629 0.997195
+1.000000 1.003176
+fver 1 1
+name: leaf_length
+samples: 100
+flip: off
+points: 5
+0.000000 0.000000
+0.200955 0.009112
+0.535950 0.099922
+0.535950 1.001753
+1.000000 1.003176

@@ -1,0 +1,27 @@
+description.txt
+leaf.a
+leaf.l
+leaf.v
+leaf.map
+view.pnl
+LSspecifications
+*
+image:
+	generate:
+		cpfg -m leaf.map leaf.l leaf.v leaf.a
+
+colormap:
+	PALETTE leaf.map
+
+L-system:
+	EDIT leaf.l
+
+viewfile:
+	EDIT leaf.v
+
+animation:
+	EDIT leaf.a
+
+description:
+	EDIT description.txt
+

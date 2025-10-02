@@ -1,0 +1,7 @@
+Visualization of the construction of the Hilbert curve 
+as described by P. Prusinkiewicz, A. Lindenmayer, 
+and F. D. Fracchia in "Synthesis of space-filling 
+curves on the square grid", in H.-O. Peitgen, 
+J. M. Henriques, and L. F. Penedo (Eds.),
+"Fractals in the fundamental and applied sciences", 
+North-Holland, Amsterdam 1991, pp. 341-366.

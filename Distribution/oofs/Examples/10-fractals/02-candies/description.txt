@@ -1,0 +1,10 @@
+Bag of Candies
+
+Construction of this and other kolam patterns were 
+described by P. Prusinkiewicz and J. Hanan in 
+"Lindenmayer systems, fractals, and plants", 
+Lecture Notes in Biomathematics 79,
+Springer, New York 1989, Chapter 6.2
+
+Note the use of symbols {(4) and }(4) to interpret 
+a sequence of turtle locations as a spline curve.

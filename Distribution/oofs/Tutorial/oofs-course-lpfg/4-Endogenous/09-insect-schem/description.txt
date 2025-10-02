@@ -1,0 +1,11 @@
+Foraging insect
+
+Insect performs depth-first search of a growing sympodial
+branching structure.  It eats apices, which terminates
+the growth of a given branch.
+
+- information about where the insect came from, and where it is going,
+  is entirely represented by the insect's state (U,V,D), without leaving
+  "pheromone"-like information (L,R) at the nodes.
+- interpretation rules are used to dissociate the logical state
+  of the insect (U,V,D) from the visual representation of the insect.

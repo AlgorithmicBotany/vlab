@@ -1,0 +1,11 @@
+A monopodial branching structure
+
+So far, we have only considered models with a single 
+apex type.  This resulted in highly recursive, polypodial
+branching structures.  In reality, different apices may 
+have different fates.  In the case of monopodial branching, 
+lateral buds produce organs that do not branch further.
+
+This model employs graphically defined growth functions.
+Changes in growth functions and related parameters may
+modify the outline of the growing structure.

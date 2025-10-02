@@ -1,0 +1,11 @@
+Formation of an acrotonic branching structure
+
+Florigen flows in a growing structure.  The vegetative 
+apex is transformed into a flowering bud when the apex is
+reached by florigen.  At this time, the apex induces
+a second signal that propagates downwards and gradually 
+enables the lateral branches to grow by lifting apical 
+dominance.
+
+The florigen and the auxin-related signal are represented
+by two parameters (f and a) associated with the internodes.

@@ -1,0 +1,49 @@
+plant.l
+plant.v
+plant.a
+leaf.s
+bud.s
+petal.s
+calyx.s
+fruit.s
+line.s
+ise.v
+description.txt
+plant.map
+*
+image:
+	generate:
+		cpfg -m plant.map plant.l plant.v plant.a
+
+colormap:
+	loadmaps:
+		 loadmap plant.map
+	savemaps:
+		 savemap plant.map
+	PALETTE
+
+L-system:
+	CHAR plant.l
+
+view file:
+	CHAR plant.v
+
+animate file:
+	CHAR plant.a
+
+description:
+	CHAR description.txt
+
+surfaces:
+	leaf:
+		SURFACE leaf.s ise.v
+	bud:
+		SURFACE bud.s ise.v
+	petal:
+		SURFACE petal.s ise.v
+	calyx:
+		SURFACE calyx.s ise.v
+	fruit:
+		SURFACE fruit.s ise.v
+	stem:
+		SURFACE line.s ise.v

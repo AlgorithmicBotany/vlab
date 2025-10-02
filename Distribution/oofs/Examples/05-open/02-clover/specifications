@@ -1,0 +1,56 @@
+bell.l
+bell.v
+bell.a
+bell.e
+bell.spec
+bell.ras
+panel.l
+panel.v
+panel.a
+bell.mat
+bell.text
+light.rgb
+light08.rgb
+*
+image:
+	generate:
+		cpfg -a -w 480 480 -M bell.mat -e bell.e bell.l bell.v bell.a
+	off-screen:
+		cpfg3.2 -sb -g -a -w 960 960 -rgb "/home/jungle1/mech/SIGGRAPH96/clover.anim/cloverC%03d.rgb" -M bell.mat -e bell.e bell.l bell.v bell.a
+	ipaste:
+		ipaste bell.ras
+	iconfromras:
+		imscale -xsize 139 -ysize 139 -infile bell.ras -rgb -outfile icon
+
+material:
+	medit bell.mat
+
+L-system:
+	panel:
+		display:
+			panel panel.l | awkped bell.l
+		CHAR panel.l
+	CHAR bell.l
+
+view file:
+	panel:
+		display:
+			panel panel.v | ped bell.v
+		CHAR panel.v
+	CHAR bell.v
+
+animate file:
+	panel:
+		display:
+			panel panel.a | ped bell.a
+		CHAR panel.a
+	CHAR bell.a
+
+field:
+	bell.e:
+		CHAR bell.e
+	specification:
+		CHAR bell.spec
+
+description:
+	CHAR bell.text

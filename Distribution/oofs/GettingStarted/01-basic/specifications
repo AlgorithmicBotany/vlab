@@ -1,0 +1,41 @@
+leaf.l
+leaf.v
+leaf.a
+leaf.text
+panel.a
+panel.l
+leaf.ras.Z
+leaf.map
+*
+image:
+	generate:
+		cpfg -s1000000 leaf.l leaf.v leaf.a
+	snap:
+		snap leaf.ras;rm leaf.ras.Z;compress leaf.ras
+	ipaste:
+		uncompress leaf.ras;ipaste leaf.ras;compress leaf.ras
+
+colormap:
+	MAP leaf.map
+	PALETTE
+
+L-system:
+	panel:
+		display:
+			panel panel.l | awkped leaf.l
+		EDIT panel.l
+	EDIT leaf.l
+
+viewfile:
+	EDIT leaf.v
+
+animation:
+	panel:
+		display:
+			panel panel.a | ped leaf.a
+		EDIT panel.a
+	EDIT leaf.a
+
+description:
+	EDIT leaf.text
+

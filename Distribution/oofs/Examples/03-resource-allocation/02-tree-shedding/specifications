@@ -1,0 +1,53 @@
+plant.l
+plant.v
+plant.a
+leaf.s
+petal.s
+line.s
+ise.v
+plant.text
+plant.map
+plant.map2
+panel.l
+panel.v
+panel.a
+*
+plant:
+	generate:
+		cpfg -w 640 480 -m plant.map plant.l plant.v plant.a
+
+colormap:
+	loadmap:
+		loadmap plant.map
+	savemap:
+		savemap plant.map
+	PALETTE
+
+L-system:
+	panel:
+		display:
+			panel panel.l | awkped plant.l
+		EDIT panel.l
+	EDIT plant.l
+
+view:
+	EDIT plant.v
+
+animate:
+	panel:
+		display:
+			panel panel.a | ped plant.a
+		EDIT panel.a
+	EDIT plant.a
+
+surfaces:
+	leaf:
+		SURFACE leaf.s ise.v 
+	petal:
+		SURFACE petal.s ise.v 
+	stem:
+		SURFACE line.s ise.v 
+
+text:
+	TEXT plant.text
+

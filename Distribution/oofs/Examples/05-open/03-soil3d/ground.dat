@@ -1,0 +1,18 @@
+#define TR 0.4
+material
+ 0.25 0.1 0.05 TR
+ 1.25 0.5 0.25 TR
+ 1.25 1.25 1.25 TR
+ 0  0 0 0
+ 50
+
+
+#define SIZE 36
+pushmatrix
+translate -2 -2 0
+polygon
+-36 0  36
+-36 0  -36
+36  0  -36
+36 0  36
+popmatrix

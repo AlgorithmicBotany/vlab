@@ -1,0 +1,11 @@
+Multi-user, synchronized, transactioned access
+
+Interface on the level of objects, not files
+
+interface independent from the method used for storing oofs (/ext considered 
+irrelevant implementation detail on the level of interface)
+
+Connection tied to the given database (currently some RA messages require 
+oofs root as parameter, some don't. This may be related to the fact
+that some commands update .dbase file e.g. RA_RENAME and some don't)
+

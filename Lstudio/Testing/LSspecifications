@@ -1,0 +1,18 @@
+ignore:
+lsys.dll
+lsys.i
+lsys.lib
+input.i
+lsys.obj
+lsys.exp
+*
+always save:
+lsystem.str
+*
+lpfg lsystem.l color.map
+model file: lsystem.l
+simulator name: Super Cool Simulator
+simulator command: "Go" run.bat
+simulator command: "Kill" shoot.bat
+simulator command: "Rerun" run.bat -again
+

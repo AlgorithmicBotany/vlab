@@ -1,0 +1,31 @@
+A preliminary model of Indian Blanket - Gaillardia pulchella (Asteraceae)
+
+According to a photograph in the Canadian Wildflowers 1997 Calendar
+
+The model features three-patch petals with textures.  
+The shape of the petals can be modified using ISE.  
+Material properties can be manipulated using medit.
+The textures can be modified using xpaint.
+Their layout can be changed using warp.
+
+TO DO:
+
+The flower base (with sepals?) and the stem are obviously missing.
+
+The central part of the real flower looks somewhat diferently; in particular
+it has a "bald area" in the center.  The L-system is ready for this, but 
+proper surfaces (called "seed" and "rayfloret" because of the model's 
+history) should be created.
+
+The L-system has reasonable parameters for manipulating the shape
+of the flower head, the angle of insertion of the petals, numbers of
+organs, etc.  It would be nice to create a corresponding control panel.
+(Color map is maintained for this purpose, otherwise it is not needed).
+
+It would be interesting to create the petal texture algorithmically
+for example, using an L-system implementation of the cellular automaton
+model by Young (check).
+
+The warp program does not place the texture in the same manner as
+it is placed by cpfg (also, it must be restarted after each Save operation,
+because it bombs during the second one).

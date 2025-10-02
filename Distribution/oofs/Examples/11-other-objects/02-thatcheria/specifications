@@ -1,0 +1,43 @@
+shell.l
+shell.v
+shell.a
+contour.fig
+contour.txt
+runxfig
+panel.l
+panel.v
+panel.a
+shell.mat
+description
+*
+image:
+	generate:
+		cpfg -M shell.mat shell.l shell.v shell.a
+	snap:
+		snap shell.ras
+	ipaste:
+		ipaste shell.ras
+
+contour:
+	create:
+		chmod a+x runxfig;runxfig
+	convert:
+		fig2con <contour.fig >contour.txt
+	EDIT contour.txt
+
+L-system:
+	CHAR shell.l
+
+view file:
+	CHAR shell.v
+
+animate file:
+	CHAR shell.a
+
+materials:
+	edit:
+		medit shell.mat
+
+description:
+	CHAR description
+

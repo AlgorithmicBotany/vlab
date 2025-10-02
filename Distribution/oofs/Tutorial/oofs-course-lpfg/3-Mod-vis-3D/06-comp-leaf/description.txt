@@ -1,0 +1,6 @@
+A single-compound leaf
+
+In this model, individual leaflets are modeled using 
+parametric surfaces.  They are assumed to be flat, 
+which makes specification of leaflet shape using an
+interactive surface editor particularly easy.

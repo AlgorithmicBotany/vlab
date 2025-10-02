@@ -1,0 +1,35 @@
+tree.l
+tree.v
+tree.a
+material.mat
+tree.e
+density.spec
+description.txt
+*
+image:
+	generate:
+		cpfg -M material.mat -e tree.e tree.l tree.v tree.a
+
+colormap:
+	palette:
+		palette tree.map
+
+L-system:
+	EDIT tree.l
+
+viewfile:
+	EDIT tree.v
+
+animation:
+	EDIT tree.a
+
+field:
+	tree.e:
+		EDIT tree.e
+	specification:
+		EDIT density.spec
+
+
+description:
+	EDIT description.txt
+

@@ -1,0 +1,6 @@
+FRACTAL FERN LEAVES
+
+A simple parametric L-system generating a family of 
+compound branching structures that resemble fern leaves.
+Parameters control derivation length, internode elongation
+rate, and branching delay.

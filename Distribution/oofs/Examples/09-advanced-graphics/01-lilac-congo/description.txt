@@ -1,0 +1,12 @@
+Syringa vulgaris Congo - modeled with arrays
+This is joint work with Campbell Davidson, based on
+measurements of a real lilac inflorescence made
+on May 29, 1993 at the Agriculture/Agrifood Canada
+Research Station in Morden, Manitoba.
+
+The internode lengths are read from a file to two arrays, 
+corresponding to the main axis and first-order branches.
+
+This model shows how to read measured data from a file 
+to an L-system model.  It also gives an example of using 
+arrays.

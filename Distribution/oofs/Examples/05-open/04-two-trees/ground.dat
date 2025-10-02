@@ -1,0 +1,22 @@
+material
+ 0 0 0  1
+ 0.1 0.7 0.1 1
+ 0 0 0 1
+ 0 0 0 1
+ 25
+
+pushmatrix
+translate -2 0 0
+polygon 
+2 0 -15
+2 0  15
+8  0  15
+8  0 -15
+popmatrix
+
+translate 2 0 0
+polygon 
+-8 0 -15
+-8 0  15
+-2  0  15
+-2  0 -15

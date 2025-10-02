@@ -1,0 +1,5 @@
+FRACTAL FERN LEAF - ALTERNATING BRANCHING
+
+A fractal fern leaf with an alternating branching
+pattern.
+
