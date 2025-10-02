@@ -121,7 +121,9 @@ MODIFIED:       Oct 94   BY: Radek
 #include "userfiles.h"
 #include "object.h"
 #include "writergb.h"
+#ifdef WIN32
 #include "rand.h"
+#endif
 #include "shaders.h" // MC - July 2016 - added GLSL shaders for shadow mapping
 
 #ifdef CPFG_ENVIRONMENT
@@ -306,7 +308,11 @@ void FirstRun(void) {
     //[PASCAL] initialize random generator
     if (LsystemList->seed != 0){
       unsigned short seed[3] = {LsystemList->seed,0,155};
+#ifdef WIN32
       srand48(&seed[0]);
+#else
+      seed48(&seed[0]);
+#endif
     }
 
     /* Generate the string to the desired depth */
@@ -593,7 +599,11 @@ void SelectInMenu(int pupval) {
       //[PASCAL] initialize random generator
       if (LsystemList->seed != 0){
         unsigned short seed[3] = {LsystemList->seed,0,155};
+#ifdef WIN32
 	    srand48(&seed[0]);
+#else
+      seed48(&seed[0]);
+#endif
       }
 
       Rewind(&currentString, &currentStringEnd, LsystemList);
