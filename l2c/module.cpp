@@ -448,7 +448,7 @@ int BuildProdProtos(int iGroup, ProductionType prodType) {
   if (count == 0)
     ProductionProto::GenerateEmptyProtoEntry(fOut);
   fputs("\n};\n", fOut);
-#pragma message("Why aren't the iterators deleted???")
+//#pragma message("Why aren't the iterators deleted???")
   //  delete iter;
   //  delete tableOfType;
   return count;
