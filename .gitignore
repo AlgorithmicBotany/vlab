@@ -107,3 +107,7 @@ Distribution/L-studio-ATE-5.1-3614.zip
 /Lstudio/Release
 /version/Debug
 /vlabcpp/Release
+cpfg/lex.lsys_input.c
+cpfg/lsys_input_lex.c
+cpfg/lsys_input_yacc.c
+l2c/lex_l.cpp

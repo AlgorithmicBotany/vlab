@@ -121,7 +121,7 @@ IMAGE *iopen(const char *file, const char *mode, unsigned int type,
   return pRes;
 }
 
-IMAGE *OpenForWriting(const char *file, __attribute__((unused)) const char *mode, __attribute__((unused)) unsigned int type,
+IMAGE *OpenForWriting(const char *file, char *mode, unsigned int type,
                       unsigned int dim, unsigned int xsize, unsigned int ysize,
                       unsigned int zsize) {
   static char dummy[404];
@@ -253,4 +253,4 @@ int putrow(IMAGE *pIMG, uint16_t *bf, unsigned int row, unsigned int z) {
   return 0;
 }
 
-void isetname(__attribute__((unused)) IMAGE *pImg,__attribute__((unused)) char *name) {}
+void isetname(IMAGE *pImg,char *name) {}

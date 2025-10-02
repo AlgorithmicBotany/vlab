@@ -20,8 +20,8 @@
 #include <fstream>
 
 #ifdef _WINDOWS
-#include <GL/gl.h>
 #include <windows.h>
+#include <GL/gl.h>
 #else
 #include <qgl.h>
 #endif

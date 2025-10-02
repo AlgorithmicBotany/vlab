@@ -217,7 +217,7 @@ void ReleaseSemaphores(field_type *env_field) {
 /****************************************************************************/
 /* code to establish a socket; originally from bzs@bu-cs.bu.edu
    Returns the socket's fd or -1 when it fails. */
-int *EstablishSocket(__attribute__((unused)) field_type *env_field,__attribute__((unused)) char *hostname) {
+int *EstablishSocket(field_type *env_field,char *hostname) {
 #ifndef WIN32
 #ifndef VLAB_MACX
   char myname[MAXHOSTNAME + 1];
@@ -330,7 +330,7 @@ int *EstablishSocket(__attribute__((unused)) field_type *env_field,__attribute__
 }
 
 /****************************************************************************/
-int GetSocketConnection(__attribute__((unused)) int s) /* socket created with EstablishSocket() */
+int GetSocketConnection(int s) /* socket created with EstablishSocket() */
 {
 #ifdef WIN32
   assert(!"Sockets not implemented under Win32");
@@ -357,7 +357,7 @@ int GetSocketConnection(__attribute__((unused)) int s) /* socket created with Es
 }
 
 /****************************************************************************/
-int CallSocket(__attribute__((unused)) char *hostname,__attribute__((unused)) u_short portnum) {
+int CallSocket(char *hostname,u_short portnum) {
 #ifdef WIN32
   assert(!"Sockets not implemented under Win32");
   return -1;
