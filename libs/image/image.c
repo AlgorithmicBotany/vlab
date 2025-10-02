@@ -19,8 +19,7 @@
 #define SWAP_LONG_BYTES(x)                                                     \
   (((((x)&0xff) << 24) | (((x)&0xff00) << 8)) |                                \
    ((((x)&0xff0000) >> 8) | (((x)&0xff000000) >> 24)))
-
-
+  
 static IMAGE *OpenForWriting(const char *file, const char *mode,
                              unsigned int type, unsigned int dim,
                              unsigned int xsize, unsigned int ysize,
@@ -121,7 +120,7 @@ IMAGE *iopen(const char *file, const char *mode, unsigned int type,
   return pRes;
 }
 
-IMAGE *OpenForWriting(const char *file, char *mode, unsigned int type,
+IMAGE *OpenForWriting(const char *file, const char *mode, unsigned int type,
                       unsigned int dim, unsigned int xsize, unsigned int ysize,
                       unsigned int zsize) {
   static char dummy[404];
