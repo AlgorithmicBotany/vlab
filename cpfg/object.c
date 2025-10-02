@@ -197,9 +197,9 @@ int objSetup(TURTLE *tu, DRAWPARAM *dr, VIEWPARAM *vw) {
 /* Called when F or f encountered in l-system                       */
 /********************************************************************/
 
-void objStartNode(TURTLE *tu, __attribute__((unused)) DRAWPARAM *dr,
-                  __attribute__((unused)) VIEWPARAM *vw, float length,
-                  __attribute__((unused)) char symbol) {
+void objStartNode(TURTLE *tu, DRAWPARAM *dr,
+                  VIEWPARAM *vw, float length,
+                  char symbol) {
   obj_startCylinder(tu, length);
   connectNode = TRUE;
 }
@@ -210,8 +210,8 @@ void objStartNode(TURTLE *tu, __attribute__((unused)) DRAWPARAM *dr,
 /********************************************************************/
 
 void objEndNode(TURTLE *tu, DRAWPARAM *dr,
-                __attribute__((unused)) VIEWPARAM *vw,
-                __attribute__((unused)) char symbol) {
+                VIEWPARAM *vw,
+                char symbol) {
   if (connectNode) {
     obj_endCylinder(tu, dr);
     connectNode = FALSE;
@@ -223,9 +223,9 @@ void objEndNode(TURTLE *tu, DRAWPARAM *dr,
 /* Called when [ encountered in l-system                            */
 /********************************************************************/
 
-void objStartBranch(__attribute__((unused)) TURTLE *tu,
-                    __attribute__((unused)) DRAWPARAM *dr,
-                    __attribute__((unused)) VIEWPARAM *vw) {
+void objStartBranch(TURTLE *tu,
+                    DRAWPARAM *dr,
+                    VIEWPARAM *vw) {
   objCreateTriMesh(MESH_SIZE);
 }
 
@@ -234,9 +234,9 @@ void objStartBranch(__attribute__((unused)) TURTLE *tu,
 /* Called when ] encountered in l-system                            */
 /********************************************************************/
 
-void objEndBranch(__attribute__((unused)) TURTLE *tu,
-                  __attribute__((unused)) DRAWPARAM *dr,
-                  __attribute__((unused)) VIEWPARAM *vw) {
+void objEndBranch(TURTLE *tu,
+                  DRAWPARAM *dr,
+                  VIEWPARAM *vw) {
   objWriteTriMesh();
 }
 
@@ -245,10 +245,10 @@ void objEndBranch(__attribute__((unused)) TURTLE *tu,
 /* No action                                                        */
 /********************************************************************/
 
-void objStartPolygon(__attribute__((unused)) POLYGON *polygon,
-                     __attribute__((unused)) TURTLE *tu,
-                     __attribute__((unused)) DRAWPARAM *dr,
-                     __attribute__((unused)) VIEWPARAM *vw) {
+void objStartPolygon(POLYGON *polygon,
+                     TURTLE *tu,
+                     DRAWPARAM *dr,
+                     VIEWPARAM *vw) {
   obj_printSurface();
 }
 
@@ -257,37 +257,37 @@ void objStartPolygon(__attribute__((unused)) POLYGON *polygon,
 /* Output polygon vertices                                          */
 /********************************************************************/
 
-void objEndPolygon(__attribute__((unused)) POLYGON *polygon,
-                   __attribute__((unused)) TURTLE *tu,
-                   __attribute__((unused)) DRAWPARAM *dr,
-                   __attribute__((unused)) VIEWPARAM *vw) {}
+void objEndPolygon(POLYGON *polygon,
+                   TURTLE *tu,
+                   DRAWPARAM *dr,
+                   VIEWPARAM *vw) {}
 
 /********************************************************************/
 /* Function: objSetColour                                           */
 /* No action                                                        */
 /********************************************************************/
 
-void objSetColour(__attribute__((unused)) const TURTLE *tu,
-                  __attribute__((unused)) const DRAWPARAM *dr,
-                  __attribute__((unused)) const VIEWPARAM *vw) {}
+void objSetColour(const TURTLE *tu,
+                  const DRAWPARAM *dr,
+                  const VIEWPARAM *vw) {}
 
 /********************************************************************/
 /* Function: objSetTexture                                          */
 /* No action                                                        */
 /********************************************************************/
 
-void objSetTexture(__attribute__((unused)) TURTLE *tu,
-                   __attribute__((unused)) DRAWPARAM *dr,
-                   __attribute__((unused)) VIEWPARAM *vw) {}
+void objSetTexture(TURTLE *tu,
+                   DRAWPARAM *dr,
+                   VIEWPARAM *vw) {}
 
 /********************************************************************/
 /* Function: objSetLineWidth                                        */
 /* No action                                                        */
 /********************************************************************/
 
-void objSetLineWidth(__attribute__((unused)) const TURTLE *tu,
-                     __attribute__((unused)) const DRAWPARAM *dr,
-                     __attribute__((unused)) const VIEWPARAM *vw) {}
+void objSetLineWidth(const TURTLE *tu,
+                     const DRAWPARAM *dr,
+                     const VIEWPARAM *vw) {}
 
 /********************************************************************/
 /* Function: objCircle2D                                            */
@@ -379,10 +379,10 @@ static void obj_circle (const DRAWPARAM *dr, const double *left,
 
 
 
-void objCircle2D(__attribute__((unused)) const TURTLE *tu,
-                 __attribute__((unused)) const DRAWPARAM *dr,
-                 __attribute__((unused)) VIEWPARAM *vw,
-                 __attribute__((unused)) float diameter) {
+void objCircle2D(const TURTLE *tu,
+                 const DRAWPARAM *dr,
+                 VIEWPARAM *vw,
+                 float diameter) {
     const double l[3] = {-1.,0.,0.};
     const double h[3] = {0.,1.,0.};
     const double u[3] = {0.,0.,1.};
@@ -494,11 +494,11 @@ static void obj_circleB (const DRAWPARAM *dr, const double *left,
   curMesh->verNum += nv;
 }
 
-void objCircleB2D(__attribute__((unused)) const TURTLE *tu,
-                  __attribute__((unused)) const DRAWPARAM *dr,
-                  __attribute__((unused)) const VIEWPARAM *vw,
-                  __attribute__((unused)) float diameter,
-                  __attribute__((unused)) float width) {
+void objCircleB2D(const TURTLE *tu,
+                  const DRAWPARAM *dr,
+                  const VIEWPARAM *vw,
+                  float diameter,
+                  float width) {
   const double l[3] = {-1.,0.,0.};
   const double h[3] = {0.,1.,0.};
   const double u[3] = {0.,0.,1.};
@@ -506,11 +506,11 @@ void objCircleB2D(__attribute__((unused)) const TURTLE *tu,
 
 }
 
-void objCircleB3D(__attribute__((unused)) const TURTLE *tu,
-                  __attribute__((unused)) const DRAWPARAM *dr,
-                  __attribute__((unused)) const VIEWPARAM *vw,
-                  __attribute__((unused)) float diameter,
-                  __attribute__((unused)) float width) {
+void objCircleB3D(const TURTLE *tu,
+                  const DRAWPARAM *dr,
+                  const VIEWPARAM *vw,
+                  float diameter,
+                  float width) {
   obj_circleB(dr,tu->left,tu->heading,tu->up,tu->position,diameter,width);
 }
 
@@ -711,44 +711,44 @@ void objSphere(const TURTLE *tu, const DRAWPARAM *dr, VIEWPARAM *vw,
 /* Function: objBLackBox                                            */
 /********************************************************************/
 
-void objBlackBox(__attribute__((unused)) const TURTLE *tu,
-                 __attribute__((unused)) const DRAWPARAM *dr,
-                 __attribute__((unused)) const VIEWPARAM *vw,
-                 __attribute__((unused)) const StringModule *module,
-                 __attribute__((unused)) const StringModule *submodule) {}
+void objBlackBox(const TURTLE *tu,
+                 const DRAWPARAM *dr,
+                 const VIEWPARAM *vw,
+                 const StringModule *module,
+                 const StringModule *submodule) {}
 
 /********************************************************************/
 /* Function: objLabel                   JH1                         */
 /********************************************************************/
 
-void objLabel(__attribute__((unused)) const TURTLE *tu,
-              __attribute__((unused)) DRAWPARAM *dr,
-              __attribute__((unused)) const VIEWPARAM *vw,
-              __attribute__((unused)) const char *label,
-              __attribute__((unused)) int parameteri,
-              __attribute__((unused)) const float values[]) {}
+void objLabel(const TURTLE *tu,
+              DRAWPARAM *dr,
+              const VIEWPARAM *vw,
+              const char *label,
+              int parameteri,
+              const float values[]) {}
 
 /********************************************************************/
 /* Function: objStartTexture                                        */
 /* Initializes texture                                              */
 /********************************************************************/
 
-int objStartTexture(__attribute__((unused)) int index) { return 1; }
+int objStartTexture(int index) { return 1; }
 
-void obj_finish_up_texture(__attribute__((unused)) int index,
-                           __attribute__((unused)) int map_type) {}
+void obj_finish_up_texture(int index,
+                           int map_type) {}
 
 /********************************************************************/
-void objEndTexture(__attribute__((unused)) int index) {}
+void objEndTexture(int index) {}
 
 /********************************************************************/
 /* Function: objPredefinedSurface                                   */
 /********************************************************************/
 
 void objPredefinedSurface(TURTLE *tu, DRAWPARAM *dr,
-                          __attribute__((unused)) VIEWPARAM *vw, char id,
-                          double scale, __attribute__((unused)) double sy,
-                          __attribute__((unused)) double sz) {
+                          VIEWPARAM *vw, char id,
+                          double scale, double sy,
+                          double sz) {
   if (scale != 0.0)
     o_object(fp, tu, id, scale, dr);
 }
@@ -769,10 +769,10 @@ void objLdefinedSurface(StringModule *module, TURTLE *tu, DRAWPARAM *dr,
 }
 
 /********************************************************************/
-void objStartNewGrid(__attribute__((unused)) TURTLE *tu,
-                     __attribute__((unused)) DRAWPARAM *dr,
-                     __attribute__((unused)) VIEWPARAM *vw,
-                     __attribute__((unused)) int *size) {
+void objStartNewGrid(TURTLE *tu,
+                     DRAWPARAM *dr,
+                     VIEWPARAM *vw,
+                     int *size) {
   // int c;
 
   /* no segment created yet */
@@ -784,10 +784,10 @@ void objStartNewGrid(__attribute__((unused)) TURTLE *tu,
 /* No action                                                        */
 /********************************************************************/
 
-void objDefineMaterial(__attribute__((unused)) TURTLE *tu,
-                       __attribute__((unused)) DRAWPARAM *dr,
-                       __attribute__((unused)) VIEWPARAM *vw,
-                       __attribute__((unused)) Material *mat) {
+void objDefineMaterial(TURTLE *tu,
+                       DRAWPARAM *dr,
+                       VIEWPARAM *vw,
+                       Material *mat) {
   return;
 }
 
@@ -796,9 +796,9 @@ void objDefineMaterial(__attribute__((unused)) TURTLE *tu,
 /* No action                                                        */
 /********************************************************************/
 
-void objFinishUp(__attribute__((unused)) TURTLE *tu,
-                 __attribute__((unused)) DRAWPARAM *dr,
-                 __attribute__((unused)) VIEWPARAM *vw) {
+void objFinishUp(TURTLE *tu,
+                 DRAWPARAM *dr,
+                 VIEWPARAM *vw) {
   objWriteTriMesh();
   obj_cleanUp();
   if (clp.savefp[SAVE_OBJ] != stdin) {
@@ -1085,12 +1085,12 @@ static void obj_printSurface() {
 
 /* Print a desired color or surface state */
 
-static void obj_printSurfaceNum(__attribute__((unused)) int surfaceNum) {}
+static void obj_printSurfaceNum(int surfaceNum) {}
 
 /* Instantiate an object/surface at the place specified by the turtle
 for the purpose of ray-tracing. */
 
-static void o_object(__attribute__((unused)) FILE *fp, TURTLE *tu,
+static void o_object(FILE *fp, TURTLE *tu,
                      char desired_surface, double scale_factor,
                      const DRAWPARAM *dr) {
   int i, j;
@@ -1245,8 +1245,8 @@ void obj_setTransformation(const double *left, const double *heading,
 /* settings depending on drawing and viewing parameters, such as    */
 /* the drawing parameter shade mode.                                */
 /********************************************************************/
-turtleDrawDispatcher *objSetDispatcher(__attribute__((unused)) DRAWPARAM *dr,
-                                       __attribute__((unused)) VIEWPARAM *vw) {
+turtleDrawDispatcher *objSetDispatcher(DRAWPARAM *dr,
+                                       VIEWPARAM *vw) {
   return (&objDrawRoutines);
 }
 

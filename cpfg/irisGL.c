@@ -808,9 +808,9 @@ int iGlSetup(TURTLE *tu, DRAWPARAM *dr, VIEWPARAM *vw) {
 char set_gllighting_back;
 
 void iGlStartNode(TURTLE *tu, DRAWPARAM *dr,
-                  __attribute__((unused)) VIEWPARAM *vw,
-                  __attribute__((unused)) float length,
-                  __attribute__((unused)) char symbol) {
+                  VIEWPARAM *vw,
+                  float length,
+                  char symbol) {
   if (dr->gllighting) {
     /* switch off gl lighting  */
     glDisable(GL_LIGHTING);
@@ -841,7 +841,7 @@ void iGlStartNode(TURTLE *tu, DRAWPARAM *dr,
 /********************************************************************/
 
 void iGlEndNode(TURTLE *tu, DRAWPARAM *dr, VIEWPARAM *vw,
-                __attribute__((unused)) char symbol) {
+                char symbol) {
   if (connectNode) {
     if (dr->render_mode == RM_INTERPOLATED)
       if (changeColour) {
@@ -890,10 +890,10 @@ void iGlEndNode(TURTLE *tu, DRAWPARAM *dr, VIEWPARAM *vw,
 /* Handles drawing of segments specified as a surface: Obsolete??   */
 /********************************************************************/
 
-void iGlStartSurfaceNode(__attribute__((unused)) TURTLE *tu,
-                         __attribute__((unused)) DRAWPARAM *dr,
-                         __attribute__((unused)) VIEWPARAM *vw, float length,
-                         __attribute__((unused)) char symbol) {
+void iGlStartSurfaceNode(TURTLE *tu,
+                         DRAWPARAM *dr,
+                         VIEWPARAM *vw, float length,
+                         char symbol) {
 #ifdef DEPTH_CUEING
   if (dr->shade_mode > SIMPLE_FILL)
     depthcue(FALSE);
@@ -920,8 +920,8 @@ void iGlStartSurfaceNode(__attribute__((unused)) TURTLE *tu,
 /********************************************************************/
 
 void iGlEndFlatNode(TURTLE *tu, DRAWPARAM *dr,
-                    __attribute__((unused)) VIEWPARAM *vw,
-                    __attribute__((unused)) char symbol) {
+                    VIEWPARAM *vw,
+                    char symbol) {
   static Matrix rotate = {{0.0, 0.0, 0.0, 0.0},
                           {0.0, 0.0, 0.0, 0.0},
                           {0.0, 0.0, 0.0, 0.0},
@@ -1048,9 +1048,9 @@ void iGlEndFlatNode(TURTLE *tu, DRAWPARAM *dr,
 /* Saves turtle state for use when the segment is ended             */
 /********************************************************************/
 
-void iGlStartCylOrFlatNode(TURTLE *tu, __attribute__((unused)) DRAWPARAM *dr,
-                           __attribute__((unused)) VIEWPARAM *vw, float length,
-                           __attribute__((unused)) char symbol) {
+void iGlStartCylOrFlatNode(TURTLE *tu, DRAWPARAM *dr,
+                           VIEWPARAM *vw, float length,
+                           char symbol) {
   TurtleCopy(&startNode, tu);
   segmentLength = length;
 
@@ -1065,8 +1065,8 @@ void iGlStartCylOrFlatNode(TURTLE *tu, __attribute__((unused)) DRAWPARAM *dr,
 /********************************************************************/
 
 void iGlEndCylNode(TURTLE *tu, DRAWPARAM *dr,
-                   __attribute__((unused)) VIEWPARAM *vw,
-                   __attribute__((unused)) char symbol) {
+                   VIEWPARAM *vw,
+                   char symbol) {
   static Matrix rotate = {{0.0, 0.0, 0.0, 0.0},
                           {0.0, 0.0, 0.0, 0.0},
                           {0.0, 0.0, 0.0, 0.0},
@@ -1246,9 +1246,9 @@ void iGlEndCylNode(TURTLE *tu, DRAWPARAM *dr,
 /* No action                                                        */
 /********************************************************************/
 
-void iGlStartBranch(__attribute__((unused)) TURTLE *tu,
-                    __attribute__((unused)) DRAWPARAM *dr,
-                    __attribute__((unused)) VIEWPARAM *vw) {}
+void iGlStartBranch(TURTLE *tu,
+                    DRAWPARAM *dr,
+                    VIEWPARAM *vw) {}
 
 /********************************************************************/
 /* Function: iGlEndBranch                                           */
@@ -1256,7 +1256,7 @@ void iGlStartBranch(__attribute__((unused)) TURTLE *tu,
 /********************************************************************/
 
 void iGlEndBranch(TURTLE *tu, DRAWPARAM *dr,
-                  __attribute__((unused)) VIEWPARAM *vw) {
+                  VIEWPARAM *vw) {
 #ifdef DEPTH_CUEING
   if (dr->shade_mode > SIMPLE_FILL && dr->cue_range != 0) {
     depthcue(TRUE);
@@ -1406,9 +1406,9 @@ void CALLBACK tessCombine(GLdouble coords[3], const GLdouble *vertexData[4],
 /* No action                                                        */
 /********************************************************************/
 
-void iGlStartPolygon(__attribute__((unused)) POLYGON *polygon,
-                     __attribute__((unused)) TURTLE *tu,
-                     __attribute__((unused)) DRAWPARAM *dr, VIEWPARAM *vw) {
+void iGlStartPolygon(POLYGON *polygon,
+                     TURTLE *tu,
+                     DRAWPARAM *dr, VIEWPARAM *vw) {
   // Only make a tesselator if we actually need it (hence why this is not in
   //   a constructor), don't make more than one.
   if (vw->concavePolygons && !tess) {
@@ -1428,7 +1428,7 @@ void iGlStartPolygon(__attribute__((unused)) POLYGON *polygon,
 /* Function: iGlEndPolygon                                          */
 /********************************************************************/
 
-void iGlEndPolygon(POLYGON *polygon, __attribute__((unused)) TURTLE *tu,
+void iGlEndPolygon(POLYGON *polygon, TURTLE *tu,
                    DRAWPARAM *dr, VIEWPARAM *vw) {
   GLdouble coords[3];
   float cos_theta;
@@ -1528,8 +1528,8 @@ void iGlEndPolygon(POLYGON *polygon, __attribute__((unused)) TURTLE *tu,
 /*   The polygon is closed if necessary.                            */
 /********************************************************************/
 
-void iGlPolyBspline(POLYGON *polygon, __attribute__((unused)) TURTLE *tu,
-                    DRAWPARAM *dr, __attribute__((unused)) VIEWPARAM *vw) {
+void iGlPolyBspline(POLYGON *polygon, TURTLE *tu,
+                    DRAWPARAM *dr, VIEWPARAM *vw) {
   int i;
   Coord geom[4][3];
 
@@ -1579,7 +1579,7 @@ void NewGeom(Coord geom[4][3], double position[]) {
 /* add code */ /* is this useful???? */
 /********************************************************************/
 
-void iGlPolyTwosided(POLYGON *polygon, __attribute__((unused)) TURTLE *tu,
+void iGlPolyTwosided(POLYGON *polygon, TURTLE *tu,
                      DRAWPARAM *dr, VIEWPARAM *vw) {
   float cos_theta, cos2_theta;
   int i;
@@ -1684,11 +1684,11 @@ void iGlTriangle(const float *p1, const float *p2, const float *p3,
 /********************************************************************/
 
 #ifndef DEPTHCUE
-void iGlSetColour(const TURTLE *tu, __attribute__((unused)) const DRAWPARAM *dr,
-                  __attribute__((unused)) const VIEWPARAM *vw) {
+void iGlSetColour(const TURTLE *tu, const DRAWPARAM *dr,
+                  const VIEWPARAM *vw) {
 #else
 void iGlSetColour(const TURTLE *tu, const DRAWPARAM *dr,
-                  __attribute__((unused)) const VIEWPARAM *vw) {
+                  const VIEWPARAM *vw) {
 #endif
   /* check that we're not inside a node */
   if (!connectNode) {
@@ -1714,7 +1714,7 @@ void iGlSetColour(const TURTLE *tu, const DRAWPARAM *dr,
 /********************************************************************/
 
 void iGlSetLineWidth(const TURTLE *tu, const DRAWPARAM *dr,
-                     __attribute__((unused)) const VIEWPARAM *vw) {
+                     const VIEWPARAM *vw) {
   if (!connectNode) {
     if (dr->render_mode != RM_WIREFRAME)
       glLineWidth(tu->line_width);
@@ -1731,7 +1731,7 @@ void iGlSetLineWidth(const TURTLE *tu, const DRAWPARAM *dr,
 /********************************************************************/
 
 void iGlCircle2D(const TURTLE *tu, const DRAWPARAM *dr,
-                 __attribute__((unused)) VIEWPARAM *vw, float diameter) {
+                 VIEWPARAM *vw, float diameter) {
   switch (dr->render_mode) {
   case RM_FAST:
   case RM_WIREFRAME:
@@ -1743,7 +1743,7 @@ void iGlCircle2D(const TURTLE *tu, const DRAWPARAM *dr,
   }
 }
 void iGlCircleB2D(const TURTLE *tu, const DRAWPARAM *dr,
-                  __attribute__((unused)) const VIEWPARAM *vw, float diameter,
+                  const VIEWPARAM *vw, float diameter,
                   float width) {
   switch (dr->render_mode) {
   case RM_FAST:
@@ -1760,7 +1760,7 @@ void iGlCircleB2D(const TURTLE *tu, const DRAWPARAM *dr,
 /********************************************************************/
 
 void iGlCircle3D(const TURTLE *tu, const DRAWPARAM *dr,
-                 __attribute__((unused)) VIEWPARAM *vw, float diameter) {
+                 VIEWPARAM *vw, float diameter) {
   int vertex;
   static Matrix rotate = {{0.0, 0.0, 0.0, 0.0},
                           {0.0, 0.0, 0.0, 0.0},
@@ -1791,7 +1791,7 @@ void iGlCircle3D(const TURTLE *tu, const DRAWPARAM *dr,
   glPopMatrix();
 }
 void iGlCircleB3D(const TURTLE *tu, const DRAWPARAM *dr,
-                  __attribute__((unused)) const VIEWPARAM *vw, float diameter,
+                  const VIEWPARAM *vw, float diameter,
                   float width) {
   int vertex;
   static Matrix rotate = {{0.0, 0.0, 0.0, 0.0},
@@ -1828,7 +1828,7 @@ void iGlCircleB3D(const TURTLE *tu, const DRAWPARAM *dr,
 /********************************************************************/
 
 void iGlSphere(const TURTLE *tu, const DRAWPARAM *dr,
-               __attribute__((unused)) VIEWPARAM *vw, float diameter) {
+               VIEWPARAM *vw, float diameter) {
   int t, v;
   float radius, cos_theta, nlightdir[3];
 
@@ -1941,18 +1941,18 @@ the shading will better match cylinders it caps.
 /* Function: iGlBLackBox                                             */
 /********************************************************************/
 
-void iGlBlackBox(__attribute__((unused)) const TURTLE *tu,
-                 __attribute__((unused)) const DRAWPARAM *dr,
-                 __attribute__((unused)) const VIEWPARAM *vw,
-                 __attribute__((unused)) const StringModule *module,
-                 __attribute__((unused)) const StringModule *submodule) {}
+void iGlBlackBox(const TURTLE *tu,
+                 const DRAWPARAM *dr,
+                 const VIEWPARAM *vw,
+                 const StringModule *module,
+                 const StringModule *submodule) {}
 
 /********************************************************************/
 /* Function: iGlLabel       JH1                                     */
 /********************************************************************/
 
 void iGlLabel(const TURTLE *tu, DRAWPARAM *dr,
-              __attribute__((unused)) const VIEWPARAM *vw, const char *label,
+              const VIEWPARAM *vw, const char *label,
               int parameters, const float *values) {
   char *str;
 
@@ -2030,10 +2030,10 @@ void iGlPredefinedSurface(TURTLE *tu, DRAWPARAM *dr, VIEWPARAM *vw, char id,
 /********************************************************************/
 
 void iGlStartPatches(TURTLE *tu, DRAWPARAM *dr,
-                     __attribute__((unused)) VIEWPARAM *vw,
-                     __attribute__((unused)) int sPrecision,
-                     __attribute__((unused)) int tPrecision,
-                     __attribute__((unused)) int basisFunctionID) {
+                     VIEWPARAM *vw,
+                     int sPrecision,
+                     int tPrecision,
+                     int basisFunctionID) {
   patchbasis(basisFunctionID, basisFunctionID);
   patchprecision(sPrecision, tPrecision);
   patchcurves(sPrecision, tPrecision);
@@ -2047,9 +2047,9 @@ void iGlStartPatches(TURTLE *tu, DRAWPARAM *dr,
 /* Renders a wireframe patch                                        */
 /********************************************************************/
 
-void iGlRenderPatch(__attribute__((unused)) TURTLE *tu,
-                    __attribute__((unused)) DRAWPARAM *dr,
-                    __attribute__((unused)) VIEWPARAM *vw, double xPoints[4][4],
+void iGlRenderPatch(TURTLE *tu,
+                    DRAWPARAM *dr,
+                    VIEWPARAM *vw, double xPoints[4][4],
                     double yPoints[4][4], double zPoints[4][4]) {
   Message("Patches are not supported %f %f %f\n", xPoints[0][0], yPoints[0][0],
          zPoints[0][0]);
@@ -2062,7 +2062,7 @@ void iGlRenderPatch(__attribute__((unused)) TURTLE *tu,
 /********************************************************************/
 
 void iGlEndPatches(TURTLE *tu, DRAWPARAM *dr,
-                   __attribute__((unused)) VIEWPARAM *vw) {
+                   VIEWPARAM *vw) {
   if (dr->render_mode != RM_WIREFRAME)
     glLineWidth(tu->line_width);
 }
@@ -2118,9 +2118,9 @@ void iGlLdefinedSurface(StringModule *module, TURTLE *tu, DRAWPARAM *dr,
 /* No action                                                        */
 /********************************************************************/
 
-void iGlFinishUp(__attribute__((unused)) TURTLE *tu,
-                 __attribute__((unused)) DRAWPARAM *dr,
-                 __attribute__((unused)) VIEWPARAM *vw) {
+void iGlFinishUp(TURTLE *tu,
+                 DRAWPARAM *dr,
+                 VIEWPARAM *vw) {
   glFlush();
   if (expired)
     DrawExpired();
@@ -2135,7 +2135,7 @@ void iGlFinishUp(__attribute__((unused)) TURTLE *tu,
 /********************************************************************/
 
 turtleDrawDispatcher *iGlSetDispatcher(DRAWPARAM *dr,
-                                       __attribute__((unused)) VIEWPARAM *vw) {
+                                       VIEWPARAM *vw) {
   int shade_model;
 
   /* set line style function depending on line style as defined

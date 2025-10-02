@@ -121,6 +121,7 @@ MODIFIED:       Oct 94   BY: Radek
 #include "userfiles.h"
 #include "object.h"
 #include "writergb.h"
+#include "rand.h"
 #include "shaders.h" // MC - July 2016 - added GLSL shaders for shadow mapping
 
 #ifdef CPFG_ENVIRONMENT
@@ -210,9 +211,9 @@ RECTANGLE viewWindow;
 char *type_strings[SAVE_COUNT] = {
 				  "rgb", "png", "bmp", "gif", "jpg", "pbm", "tiff", "ras",    "tga",         "rle",         "rayshade",
     "postscript", "string", "view volume", "string dump", "gls format",
-#ifdef WIN32
-    "BMP",
-#endif
+//#ifdef WIN32
+//    "BMP",
+//#endif
     "OBJ"};
 
 char *extension_strings[SAVE_COUNT] = {
@@ -305,7 +306,7 @@ void FirstRun(void) {
     //[PASCAL] initialize random generator
     if (LsystemList->seed != 0){
       unsigned short seed[3] = {LsystemList->seed,0,155};
-      seed48(&seed[0]);
+      srand48(&seed[0]);
     }
 
     /* Generate the string to the desired depth */
@@ -592,7 +593,7 @@ void SelectInMenu(int pupval) {
       //[PASCAL] initialize random generator
       if (LsystemList->seed != 0){
         unsigned short seed[3] = {LsystemList->seed,0,155};
-	    seed48(&seed[0]);
+	    srand48(&seed[0]);
       }
 
       Rewind(&currentString, &currentStringEnd, LsystemList);

@@ -133,7 +133,7 @@ int gls_print_float(char *format, float val) {
 /* return non-zero if there are problems                            */
 /********************************************************************/
 
-int glsSetup(__attribute__((unused)) TURTLE *tu, DRAWPARAM *dr, VIEWPARAM *vw) {
+int glsSetup(TURTLE *tu, DRAWPARAM *dr, VIEWPARAM *vw) {
   float volumeCentre[3];
   mtype matrix[16];
   material_type *mat;
@@ -221,9 +221,9 @@ struct {
 
 float segmentLength;
 
-void glsStartNode(TURTLE *tu, __attribute__((unused)) DRAWPARAM *dr,
-                  __attribute__((unused)) VIEWPARAM *vw, float length,
-                  __attribute__((unused)) char symbol) {
+void glsStartNode(TURTLE *tu, DRAWPARAM *dr,
+                  VIEWPARAM *vw, float length,
+                  char symbol) {
   int c;
 
   for (c = 0; c < 3; c++) {
@@ -246,9 +246,9 @@ void glsStartNode(TURTLE *tu, __attribute__((unused)) DRAWPARAM *dr,
 /* Function: glsEndNode                                             */
 /********************************************************************/
 
-void glsEndNode(TURTLE *tu, __attribute__((unused)) DRAWPARAM *dr,
-                __attribute__((unused)) VIEWPARAM *vw,
-                __attribute__((unused)) char symbol) {
+void glsEndNode(TURTLE *tu, DRAWPARAM *dr,
+                VIEWPARAM *vw,
+                char symbol) {
   int c;
 
   if (connectNode) {
@@ -292,28 +292,28 @@ void glsEndNode(TURTLE *tu, __attribute__((unused)) DRAWPARAM *dr,
 /* No action                                                        */
 /********************************************************************/
 
-void glsStartBranch(__attribute__((unused)) TURTLE *tu,
-                    __attribute__((unused)) DRAWPARAM *dr,
-                    __attribute__((unused)) VIEWPARAM *vw) {}
+void glsStartBranch(TURTLE *tu,
+                    DRAWPARAM *dr,
+                    VIEWPARAM *vw) {}
 
 /********************************************************************/
 /* Function: glsEndBranch                                           */
 /* No action                                                        */
 /********************************************************************/
 
-void glsEndBranch(__attribute__((unused)) TURTLE *tu,
-                  __attribute__((unused)) DRAWPARAM *dr,
-                  __attribute__((unused)) VIEWPARAM *vw) {}
+void glsEndBranch(TURTLE *tu,
+                  DRAWPARAM *dr,
+                  VIEWPARAM *vw) {}
 
 /********************************************************************/
 /* Function: glsStartPolygon                                        */
 /* No action                                                        */
 /********************************************************************/
 
-void glsStartPolygon(__attribute__((unused)) POLYGON *polygon,
-                     __attribute__((unused)) TURTLE *tu,
-                     __attribute__((unused)) DRAWPARAM *dr,
-                     __attribute__((unused)) VIEWPARAM *vw) {}
+void glsStartPolygon(POLYGON *polygon,
+                     TURTLE *tu,
+                     DRAWPARAM *dr,
+                     VIEWPARAM *vw) {}
 
 /********************************************************************/
 /* Function: glsEndPolygon                                          */
@@ -321,8 +321,8 @@ void glsStartPolygon(__attribute__((unused)) POLYGON *polygon,
 /********************************************************************/
 
 void glsEndPolygon(POLYGON *polygon, TURTLE *tu,
-                   __attribute__((unused)) DRAWPARAM *dr,
-                   __attribute__((unused)) VIEWPARAM *vw) {
+                   DRAWPARAM *dr,
+                   VIEWPARAM *vw) {
   int i, j;
 
   output_material(tu->color_index);
@@ -341,8 +341,8 @@ void glsEndPolygon(POLYGON *polygon, TURTLE *tu,
 /* No action ???????????                                            */
 /********************************************************************/
 
-void glsSetColour(const TURTLE *tu, __attribute__((unused)) const DRAWPARAM *dr,
-                  __attribute__((unused)) const VIEWPARAM *vw) {
+void glsSetColour(const TURTLE *tu, const DRAWPARAM *dr,
+                  const VIEWPARAM *vw) {
   output_material(tu->color_index);
 }
 
@@ -351,17 +351,17 @@ void glsSetColour(const TURTLE *tu, __attribute__((unused)) const DRAWPARAM *dr,
 /* No action                                                        */
 /********************************************************************/
 
-void glsSetLineWidth(__attribute__((unused)) const TURTLE *tu,
-                     __attribute__((unused)) const DRAWPARAM *dr,
-                     __attribute__((unused)) const VIEWPARAM *vw) {}
+void glsSetLineWidth(const TURTLE *tu,
+                     const DRAWPARAM *dr,
+                     const VIEWPARAM *vw) {}
 
 /********************************************************************/
 /* Function: glsCircle2D                                            */
 /********************************************************************/
 
-void glsCircle2D(const TURTLE *tu, __attribute__((unused)) const DRAWPARAM *dr,
-                 __attribute__((unused)) VIEWPARAM *vw,
-                 __attribute__((unused)) float diameter) {
+void glsCircle2D(const TURTLE *tu, const DRAWPARAM *dr,
+                 VIEWPARAM *vw,
+                 float diameter) {
   output_material(tu->color_index);
   /* NOT FINISHED! */
 }
@@ -370,9 +370,9 @@ void glsCircle2D(const TURTLE *tu, __attribute__((unused)) const DRAWPARAM *dr,
 /* Function: glsCircle3D                                            */
 /********************************************************************/
 
-void glsCircle3D(const TURTLE *tu, __attribute__((unused)) const DRAWPARAM *dr,
-                 __attribute__((unused)) VIEWPARAM *vw,
-                 __attribute__((unused)) float diameter) {
+void glsCircle3D(const TURTLE *tu, const DRAWPARAM *dr,
+                 VIEWPARAM *vw,
+                 float diameter) {
   output_material(tu->color_index);
   /* NOT FINISHED! */
 }
@@ -381,24 +381,24 @@ void glsCircle3D(const TURTLE *tu, __attribute__((unused)) const DRAWPARAM *dr,
 /* Function: objCircle2D                                            */
 /********************************************************************/
 
-void glsCircleB2D(__attribute__((unused)) const TURTLE *tu,
-                  __attribute__((unused)) const DRAWPARAM *dr,
-                  __attribute__((unused)) const VIEWPARAM *vw,
-                  __attribute__((unused)) float diameter,
-                  __attribute__((unused)) float width) {}
+void glsCircleB2D(const TURTLE *tu,
+                  const DRAWPARAM *dr,
+                  const VIEWPARAM *vw,
+                  float diameter,
+                  float width) {}
 
-void glsCircleB3D(__attribute__((unused)) const TURTLE *tu,
-                  __attribute__((unused)) const DRAWPARAM *dr,
-                  __attribute__((unused)) const VIEWPARAM *vw,
-                  __attribute__((unused)) float diameter,
-                  __attribute__((unused)) float width) {}
+void glsCircleB3D(const TURTLE *tu,
+                  const DRAWPARAM *dr,
+                  const VIEWPARAM *vw,
+                  float diameter,
+                  float width) {}
 
 /********************************************************************/
 /* Function: glsSphere                                              */
 /********************************************************************/
 
-void glsSphere(const TURTLE *tu, __attribute__((unused)) const DRAWPARAM *dr,
-               __attribute__((unused)) VIEWPARAM *vw, float diameter) {
+void glsSphere(const TURTLE *tu, const DRAWPARAM *dr,
+               VIEWPARAM *vw, float diameter) {
   int j;
 
   output_material(tu->color_index);
@@ -414,34 +414,34 @@ void glsSphere(const TURTLE *tu, __attribute__((unused)) const DRAWPARAM *dr,
 /* Function: glsBLackBox                                             */
 /********************************************************************/
 
-void glsBlackBox(__attribute__((unused)) const TURTLE *tu,
-                 __attribute__((unused)) const DRAWPARAM *dr,
-                 __attribute__((unused)) const VIEWPARAM *vw,
-                 __attribute__((unused)) const StringModule *module,
-                 __attribute__((unused)) const StringModule *submodule) {}
+void glsBlackBox(const TURTLE *tu,
+                 const DRAWPARAM *dr,
+                 const VIEWPARAM *vw,
+                 const StringModule *module,
+                 const StringModule *submodule) {}
 
 /********************************************************************/
 /* Function: glsLabel                  JH1                          */
 /********************************************************************/
 
-void glsLabel(__attribute__((unused)) const TURTLE *tu,
-              __attribute__((unused)) DRAWPARAM *dr,
-              __attribute__((unused)) const VIEWPARAM *vw,
-              __attribute__((unused)) const char *label,
-              __attribute__((unused)) int parameteri,
-              __attribute__((unused)) const float values[]) {}
+void glsLabel(const TURTLE *tu,
+              DRAWPARAM *dr,
+              const VIEWPARAM *vw,
+              const char *label,
+              int parameteri,
+              const float values[]) {}
 
 /********************************************************************/
 /* Function: glsStartTexture                                        */
 /* No action.                                                       */
 /********************************************************************/
-int glsStartTexture(__attribute__((unused)) int index) {
+int glsStartTexture(int index) {
   /* textures ignored */
   return 0;
 }
 
 /********************************************************************/
-void glsEndTexture(__attribute__((unused)) int index) {}
+void glsEndTexture(int index) {}
 
 /********************************************************************/
 /* Function: glsPredefinedSurface                                    */
@@ -511,9 +511,9 @@ void glsLdefinedSurface(StringModule *module, TURTLE *tu, DRAWPARAM *dr,
 /* No action                                                        */
 /********************************************************************/
 
-void glsFinishUp(__attribute__((unused)) TURTLE *tu,
-                 __attribute__((unused)) DRAWPARAM *dr,
-                 __attribute__((unused)) VIEWPARAM *vw) {
+void glsFinishUp(TURTLE *tu,
+                 DRAWPARAM *dr,
+                 VIEWPARAM *vw) {
 
   if (output_type == TYPE_GLS) {
     if (clp.savefp[SAVE_GLS] != stdin)
@@ -629,8 +629,7 @@ static void output_material(int index) {
 /* settings depending on drawing and viewing parameters, such as    */
 /* the drawing parameter shade mode.                                */
 /********************************************************************/
-turtleDrawDispatcher *glsSetDispatcher(__attribute__((unused)) DRAWPARAM *dr,
-                                       __attribute__((unused))
+turtleDrawDispatcher *glsSetDispatcher(DRAWPARAM *dr,
                                        const VIEWPARAM *vw) {
   return (&glsDrawRoutines);
 }

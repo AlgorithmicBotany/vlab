@@ -49,42 +49,52 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='cpfgv|Win32'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
     <UseOfMfc>false</UseOfMfc>
+    <PlatformToolset>v143</PlatformToolset>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='cpfgv|x64'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
     <UseOfMfc>false</UseOfMfc>
+    <PlatformToolset>v143</PlatformToolset>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
     <UseOfMfc>false</UseOfMfc>
+    <PlatformToolset>v143</PlatformToolset>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
     <UseOfMfc>false</UseOfMfc>
+    <PlatformToolset>v143</PlatformToolset>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Eval|Win32'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
     <UseOfMfc>false</UseOfMfc>
+    <PlatformToolset>v143</PlatformToolset>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Eval|x64'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
     <UseOfMfc>false</UseOfMfc>
+    <PlatformToolset>v143</PlatformToolset>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='NoJimDebug|Win32'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
     <UseOfMfc>false</UseOfMfc>
+    <PlatformToolset>v143</PlatformToolset>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='NoJimDebug|x64'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
     <UseOfMfc>false</UseOfMfc>
+    <PlatformToolset>v143</PlatformToolset>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
     <UseOfMfc>false</UseOfMfc>
+    <PlatformToolset>v143</PlatformToolset>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
     <UseOfMfc>false</UseOfMfc>
+    <PlatformToolset>v143</PlatformToolset>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
   <ImportGroup Label="ExtensionSettings">
@@ -582,6 +592,8 @@
     <ClCompile Include="dummies.c" />
     <ClCompile Include="file.cpp" />
     <ClCompile Include="lodepng.c" />
+    <ClCompile Include="lsys_input_lex.c" />
+    <ClCompile Include="lsys_input_yacc.c" />
     <ClCompile Include="Main.cpp" />
     <ClCompile Include="mainwindow.cpp" />
     <ClCompile Include="msglogwnd.cpp" />
@@ -590,6 +602,7 @@
     <ClCompile Include="platformmenuWin.c" />
     <ClCompile Include="platformWin.c" />
     <ClCompile Include="shaders.c" />
+    <ClCompile Include="utils.cpp" />
     <ClCompile Include="View.cpp" />
     <ClCompile Include="wininterface.cpp" />
     <ClCompile Include="Wndproc.cpp" />
@@ -631,8 +644,6 @@
     <ClCompile Include="utility.c" />
     <ClCompile Include="viewVol.c" />
     <ClCompile Include="writergb.c" />
-    <ClCompile Include="lsys_input_lex.c" />
-    <ClCompile Include="lsys_input_yacc.c" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="App.h" />
@@ -640,11 +651,13 @@
     <ClInclude Include="classnames.h" />
     <ClInclude Include="file.h" />
     <ClInclude Include="lodepng.h" />
+    <ClInclude Include="lsys_input_yacc.h" />
     <ClInclude Include="mainwindow.h" />
     <ClInclude Include="msglogwnd.h" />
     <ClInclude Include="msgrow.h" />
     <ClInclude Include="myexception.h" />
     <ClInclude Include="shaders.h" />
+    <ClInclude Include="utils.h" />
     <ClInclude Include="View.h" />
     <ClInclude Include="warningset.h" />
     <ClInclude Include="wininterface.h" />
@@ -703,7 +716,6 @@
     <ClInclude Include="viewVol.h" />
     <ClInclude Include="writergb.h" />
     <ClInclude Include="resource.h" />
-    <ClInclude Include="lsys_input_yacc.h" />
   </ItemGroup>
   <ItemGroup>
     <CustomBuild Include="lsys_input.l">

@@ -278,7 +278,7 @@ void draw_tsurface(const TURTLE *tu, char desired_surface, DRAWPARAM *dr,
 static void determine_vertex_shading(float *vertex, Colorindex *color_index,
                                      Colorindex *color_index_back,
                                      const TURTLE *tu, const DRAWPARAM *dr,
-                                     __attribute__((unused)) VIEWPARAM *vw) {
+                                     VIEWPARAM *vw) {
   int color_value;
   int hue;
   float intensity;

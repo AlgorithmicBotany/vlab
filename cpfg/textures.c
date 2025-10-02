@@ -853,7 +853,7 @@ int iGLStartTexture(int index) {
 }
 
 /* ------------------------------------------------------------------------ */
-void iGLEndTexture(__attribute__((unused)) int index) {
+void iGLEndTexture(int index) {
   glDisable(GL_TEXTURE_2D);
   // MC Oct. 2015 - need to bind default texture for shadow mapping
   glBindTexture(GL_TEXTURE_2D,0);
@@ -912,8 +912,8 @@ void SetPolygonTextureParams(POLYGON *polygon, double *s_axis, double *t_axis,
 }
 
 /* ------------------------------------------------------------------------ */
-int voidStartTexture(__attribute__((unused)) int index) {
+int voidStartTexture(int index) {
   return 0; /* no texture */
 }
 
-void voidEndTexture(__attribute__((unused)) int index) {}
+void voidEndTexture(int index) {}

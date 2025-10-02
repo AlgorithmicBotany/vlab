@@ -416,9 +416,9 @@ lab1:
 /********************************************************************/
 
 void psStartNode(TURTLE *tu, DRAWPARAM *dr,
-                 __attribute__((unused)) VIEWPARAM *vw,
-                 __attribute__((unused)) float length,
-                 __attribute__((unused)) char symbol) {
+                 VIEWPARAM *vw,
+                 float length,
+                 char symbol) {
   short red, green, blue;
   double pos[2];
   double width;
@@ -461,8 +461,8 @@ void psStartNode(TURTLE *tu, DRAWPARAM *dr,
 /* Function: psEndNode                                              */
 /********************************************************************/
 
-void psEndNode(TURTLE *tu, DRAWPARAM *dr, __attribute__((unused)) VIEWPARAM *vw,
-               __attribute__((unused)) char symbol) {
+void psEndNode(TURTLE *tu, DRAWPARAM *dr, VIEWPARAM *vw,
+               char symbol) {
   double pos[2];
 
   if (connectNode) {
@@ -489,9 +489,9 @@ void psEndNode(TURTLE *tu, DRAWPARAM *dr, __attribute__((unused)) VIEWPARAM *vw,
 static TURTLE startNode;
 static float segmentLength;
 
-void psStartCylOrFlatNode(TURTLE *tu, __attribute__((unused)) DRAWPARAM *dr,
-                          __attribute__((unused)) VIEWPARAM *vw, float length,
-                          __attribute__((unused)) char symbol) {
+void psStartCylOrFlatNode(TURTLE *tu, DRAWPARAM *dr,
+                          VIEWPARAM *vw, float length,
+                          char symbol) {
   TurtleCopy(&startNode, tu);
 
   segmentLength = length;
@@ -505,8 +505,8 @@ void psStartCylOrFlatNode(TURTLE *tu, __attribute__((unused)) DRAWPARAM *dr,
 /********************************************************************/
 
 void psEndFlatNode(TURTLE *tu, DRAWPARAM *dr,
-                   __attribute__((unused)) VIEWPARAM *vw,
-                   __attribute__((unused)) char symbol) {
+                   VIEWPARAM *vw,
+                   char symbol) {
   extern float unitRectTopCoord[2][3];
   extern float unitRectBaseCoord[2][3];
   extern float unitRectNormal[3];
@@ -637,8 +637,8 @@ void psEndFlatNode(TURTLE *tu, DRAWPARAM *dr,
 /********************************************************************/
 
 void psEndCylNode(TURTLE *tu, DRAWPARAM *dr,
-                  __attribute__((unused)) VIEWPARAM *vw,
-                  __attribute__((unused)) char symbol) {
+                  VIEWPARAM *vw,
+                  char symbol) {
   static Matrix rotate = {{0.0, 0.0, 0.0, 0.0},
                           {0.0, 0.0, 0.0, 0.0},
                           {0.0, 0.0, 0.0, 0.0},
@@ -797,18 +797,18 @@ void psEndCylNode(TURTLE *tu, DRAWPARAM *dr,
 /* No action                                                        */
 /********************************************************************/
 
-void psStartBranch(__attribute__((unused)) TURTLE *tu,
-                   __attribute__((unused)) DRAWPARAM *dr,
-                   __attribute__((unused)) VIEWPARAM *vw) {}
+void psStartBranch(TURTLE *tu,
+                   DRAWPARAM *dr,
+                   VIEWPARAM *vw) {}
 
 /********************************************************************/
 /* Function: psEndBranch                                            */
 /* Reset for new turtle position                                    */
 /********************************************************************/
 
-void psEndBranch(__attribute__((unused)) TURTLE *tu,
-                 __attribute__((unused)) DRAWPARAM *dr,
-                 __attribute__((unused)) VIEWPARAM *vw) {
+void psEndBranch(TURTLE *tu,
+                 DRAWPARAM *dr,
+                 VIEWPARAM *vw) {
   changeColour = TRUE;
   changeLineWidth = TRUE;
 }
@@ -818,9 +818,9 @@ void psEndBranch(__attribute__((unused)) TURTLE *tu,
 /* No action                                                        */
 /********************************************************************/
 
-void psStartPolygon(__attribute__((unused)) POLYGON *polygon, TURTLE *tu,
-                    __attribute__((unused)) DRAWPARAM *dr,
-                    __attribute__((unused)) VIEWPARAM *vw) {
+void psStartPolygon(POLYGON *polygon, TURTLE *tu,
+                    DRAWPARAM *dr,
+                    VIEWPARAM *vw) {
   short red, green, blue;
   // save polygon colors
   if (changeColour) {
@@ -840,7 +840,7 @@ void psStartPolygon(__attribute__((unused)) POLYGON *polygon, TURTLE *tu,
 /********************************************************************/
 
 void psEndPolygon(POLYGON *polygon, TURTLE *tu, DRAWPARAM *dr,
-                  __attribute__((unused)) VIEWPARAM *vw) {
+                  VIEWPARAM *vw) {
   int i;
   float cos_theta;
   double pos[2];
@@ -941,8 +941,8 @@ void psEndPolygon(POLYGON *polygon, TURTLE *tu, DRAWPARAM *dr,
 /* Convert colour to gray scale and output                          */
 /********************************************************************/
 
-void psSetColour(const TURTLE *tu, __attribute__((unused)) const DRAWPARAM *dr,
-                 __attribute__((unused)) const VIEWPARAM *vw) {
+void psSetColour(const TURTLE *tu, const DRAWPARAM *dr,
+                 const VIEWPARAM *vw) {
   changeColour = TRUE;
   currentColor = tu->color_index;
 }
@@ -1020,9 +1020,9 @@ void psRenderTriangle(const float *p1, const float *p2, const float *p3,
 /* Function: psSetLineWidth                                         */
 /********************************************************************/
 
-void psSetLineWidth(__attribute__((unused)) const TURTLE *tu,
-                    __attribute__((unused)) const DRAWPARAM *dr,
-                    __attribute__((unused)) const VIEWPARAM *vw) {
+void psSetLineWidth(const TURTLE *tu,
+                    const DRAWPARAM *dr,
+                    const VIEWPARAM *vw) {
   changeLineWidth = TRUE;
 }
 
@@ -1033,7 +1033,7 @@ void psSetLineWidth(__attribute__((unused)) const TURTLE *tu,
 /********************************************************************/
 
 void psCircle2D(const TURTLE *tu, const DRAWPARAM *dr,
-                __attribute__((unused)) VIEWPARAM *vw, float diameter) {
+                VIEWPARAM *vw, float diameter) {
   short red, green, blue;
   double pos[2];
   char type[8];
@@ -1065,7 +1065,7 @@ void psCircle2D(const TURTLE *tu, const DRAWPARAM *dr,
 /********************************************************************/
 
 void psCircleB2D(const TURTLE *tu, const DRAWPARAM *dr,
-                 __attribute__((unused)) const VIEWPARAM *vw, float diameter,
+                 const VIEWPARAM *vw, float diameter,
                  float width) {
   short red, green, blue;
   double pos[2];
@@ -1099,8 +1099,8 @@ void psCircleB2D(const TURTLE *tu, const DRAWPARAM *dr,
 /* Z coordinate is just dropped                                     */
 /********************************************************************/
 
-void psCircleB3D(const TURTLE *tu, __attribute__((unused)) const DRAWPARAM *dr,
-                 __attribute__((unused)) const VIEWPARAM *vw, float diameter,
+void psCircleB3D(const TURTLE *tu, const DRAWPARAM *dr,
+                 const VIEWPARAM *vw, float diameter,
                  float width) {
   short red, green, blue;
   double pos[2];
@@ -1132,7 +1132,7 @@ void psCircleB3D(const TURTLE *tu, __attribute__((unused)) const DRAWPARAM *dr,
 /********************************************************************/
 
 void psCircle3D(const TURTLE *tu, const DRAWPARAM *dr,
-                __attribute__((unused)) VIEWPARAM *vw, float diameter) {
+                VIEWPARAM *vw, float diameter) {
   short red, green, blue;
   double pos[2];
   char type[8];
@@ -1164,7 +1164,7 @@ void psCircle3D(const TURTLE *tu, const DRAWPARAM *dr,
 /********************************************************************/
 
 void psSphere(const TURTLE *tu, const DRAWPARAM *dr,
-              __attribute__((unused)) VIEWPARAM *vw, float diameter) {
+              VIEWPARAM *vw, float diameter) {
   short red, green, blue;
   double pos[2];
   int v, t, i;
@@ -1276,18 +1276,18 @@ void psSphere(const TURTLE *tu, const DRAWPARAM *dr,
 /* Function: psBLackBox                                             */
 /********************************************************************/
 
-void psBlackBox(__attribute__((unused)) const TURTLE *tu,
-                __attribute__((unused)) const DRAWPARAM *dr,
-                __attribute__((unused)) const VIEWPARAM *vw,
-                __attribute__((unused)) const StringModule *module,
-                __attribute__((unused)) const StringModule *submodule) {}
+void psBlackBox(const TURTLE *tu,
+                const DRAWPARAM *dr,
+                const VIEWPARAM *vw,
+                const StringModule *module,
+                const StringModule *submodule) {}
 
 /********************************************************************/
 /* Function: psLabel                          JH1                   */
 /********************************************************************/
 
-void psLabel(const TURTLE *tu, __attribute__((unused)) DRAWPARAM *dr,
-             __attribute__((unused)) const VIEWPARAM *vw, const char *label,
+void psLabel(const TURTLE *tu, DRAWPARAM *dr,
+             const VIEWPARAM *vw, const char *label,
              int parameters, const float values[]) {
   short red, green, blue;
   double pos[2];
@@ -1350,19 +1350,19 @@ void psPredefinedSurface(TURTLE *tu, DRAWPARAM *dr, VIEWPARAM *vw, char id,
 /* No action                                                        */
 /********************************************************************/
 
-void psLdefinedSurface(__attribute__((unused)) StringModule *module,
-                       __attribute__((unused)) TURTLE *tu,
-                       __attribute__((unused)) DRAWPARAM *dr,
-                       __attribute__((unused)) VIEWPARAM *vw) {}
+void psLdefinedSurface(StringModule *module,
+                       TURTLE *tu,
+                       DRAWPARAM *dr,
+                       VIEWPARAM *vw) {}
 
 /********************************************************************/
 /* Function: psFinishUp                                             */
 /* close output file                                                */
 /********************************************************************/
 
-void psFinishUp(__attribute__((unused)) TURTLE *tu,
-                __attribute__((unused)) DRAWPARAM *dr,
-                __attribute__((unused)) VIEWPARAM *vw) {
+void psFinishUp(TURTLE *tu,
+                DRAWPARAM *dr,
+                VIEWPARAM *vw) {
   fprintf(clp.savefp[SAVE_POSTSCRIPT], "showpage\n");
   if (clp.savefp[SAVE_POSTSCRIPT] != stdin)
     fclose(clp.savefp[SAVE_POSTSCRIPT]);
@@ -1375,7 +1375,7 @@ void psFinishUp(__attribute__((unused)) TURTLE *tu,
 /* the drawing parameter shade mode.                                */
 /********************************************************************/
 turtleDrawDispatcher *psSetDispatcher(DRAWPARAM *dr,
-                                      __attribute__((unused)) VIEWPARAM *vw) {
+                                      VIEWPARAM *vw) {
   switch (dr->line_style) {
   case LS_POLYGON:
     postscriptDrawRoutines.StartNode = psStartCylOrFlatNode;

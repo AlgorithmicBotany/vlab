@@ -27,6 +27,9 @@
 #include <stdlib.h>
 #include <string.h>
 
+#include <vector>
+#include <sstream>
+
 #ifdef LINUX
 #include <limits.h>
 #endif

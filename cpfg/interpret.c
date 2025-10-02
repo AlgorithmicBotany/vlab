@@ -55,6 +55,11 @@
 
 #ifdef WIN32
 #include "warningset.h"
+// On Windows, access() and F_OK are not defined by default.
+// Use _access() and _F_OK from <io.h>
+#include <io.h>
+#define access _access
+#define F_OK 0
 #endif
 
 #include <assert.h>
@@ -739,7 +744,7 @@ int TurtleDrawNsteps(int counter) {
 /* function provided to the communication routines, so the results coming form
    the environment can be set properly. */
 int SetCommModulePars(unsigned long dist, Cmodule_type *comm_symbol,
-                      __attribute__((unused)) int index) {
+                      int index) {
   char *dest;
   int i;
 

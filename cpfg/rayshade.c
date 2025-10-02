@@ -246,10 +246,10 @@ int rsSetup(TURTLE *tu, DRAWPARAM *dr, VIEWPARAM *vw) {
 /* Function: rsStartNode                                            */
 /********************************************************************/
 
-void rsStartNode(TURTLE *tu, __attribute__((unused)) DRAWPARAM *dr,
-                 __attribute__((unused)) VIEWPARAM *vw,
-                 __attribute__((unused)) float length,
-                 __attribute__((unused)) char symbol) {
+void rsStartNode(TURTLE *tu, DRAWPARAM *dr,
+                 VIEWPARAM *vw,
+                 float length,
+                 char symbol) {
   if (!output)
     return;
 
@@ -263,9 +263,9 @@ void rsStartNode(TURTLE *tu, __attribute__((unused)) DRAWPARAM *dr,
 /* Function: rsEndNode                                              */
 /********************************************************************/
 
-void rsEndNode(TURTLE *tu, __attribute__((unused)) DRAWPARAM *dr,
-               __attribute__((unused)) VIEWPARAM *vw,
-               __attribute__((unused)) char symbol) {
+void rsEndNode(TURTLE *tu, DRAWPARAM *dr,
+               VIEWPARAM *vw,
+               char symbol) {
   if (!output)
     return;
 
@@ -280,9 +280,9 @@ void rsEndNode(TURTLE *tu, __attribute__((unused)) DRAWPARAM *dr,
 /* No action                                                        */
 /********************************************************************/
 
-void rsStartBranch(__attribute__((unused)) TURTLE *tu,
-                   __attribute__((unused)) DRAWPARAM *dr,
-                   __attribute__((unused)) VIEWPARAM *vw) {}
+void rsStartBranch(TURTLE *tu,
+                   DRAWPARAM *dr,
+                   VIEWPARAM *vw) {}
 
 /********************************************************************/
 /* Function: rsEndBranch                                            */
@@ -302,10 +302,10 @@ void rsEndBranch(TURTLE *tu, DRAWPARAM *dr, VIEWPARAM *vw) {
 /* No action                                                        */
 /********************************************************************/
 
-void rsStartPolygon(__attribute__((unused)) POLYGON *polygon,
-                    __attribute__((unused)) TURTLE *tu,
-                    __attribute__((unused)) DRAWPARAM *dr,
-                    __attribute__((unused)) VIEWPARAM *vw) {}
+void rsStartPolygon(POLYGON *polygon,
+                    TURTLE *tu,
+                    DRAWPARAM *dr,
+                    VIEWPARAM *vw) {}
 
 /********************************************************************/
 /* Function: rsEndPolygon                                           */
@@ -313,7 +313,7 @@ void rsStartPolygon(__attribute__((unused)) POLYGON *polygon,
 /********************************************************************/
 
 void rsEndPolygon(POLYGON *polygon, TURTLE *tu, DRAWPARAM *dr,
-                  __attribute__((unused)) VIEWPARAM *vw) {
+                  VIEWPARAM *vw) {
   int i, j;
 
   if (!output)
@@ -344,8 +344,8 @@ void rsEndPolygon(POLYGON *polygon, TURTLE *tu, DRAWPARAM *dr,
 /* No action                                                        */
 /********************************************************************/
 
-void rsSetColour(const TURTLE *tu, __attribute__((unused)) const DRAWPARAM *dr,
-                 __attribute__((unused)) const VIEWPARAM *vw) {
+void rsSetColour(const TURTLE *tu, const DRAWPARAM *dr,
+                 const VIEWPARAM *vw) {
   extern char backgroundscene;
 
   if (!output)
@@ -368,16 +368,16 @@ void rsSetColour(const TURTLE *tu, __attribute__((unused)) const DRAWPARAM *dr,
 /* No action                                                        */
 /********************************************************************/
 
-void rsSetLineWidth(__attribute__((unused)) const TURTLE *tu,
-                    __attribute__((unused)) const DRAWPARAM *dr,
-                    __attribute__((unused)) const VIEWPARAM *vw) {}
+void rsSetLineWidth(const TURTLE *tu,
+                    const DRAWPARAM *dr,
+                    const VIEWPARAM *vw) {}
 
 /********************************************************************/
 /* Function: rsCircle2D                                             */
 /********************************************************************/
 
-void rsCircle2D(const TURTLE *tu, __attribute__((unused)) const DRAWPARAM *dr,
-                __attribute__((unused)) VIEWPARAM *vw, float diameter) {
+void rsCircle2D(const TURTLE *tu, const DRAWPARAM *dr,
+                VIEWPARAM *vw, float diameter) {
   if (!output)
     return;
 
@@ -389,8 +389,8 @@ void rsCircle2D(const TURTLE *tu, __attribute__((unused)) const DRAWPARAM *dr,
 /* Function: rsCircle3D                                             */
 /********************************************************************/
 
-void rsCircle3D(const TURTLE *tu, __attribute__((unused)) const DRAWPARAM *dr,
-                __attribute__((unused)) VIEWPARAM *vw, float diameter) {
+void rsCircle3D(const TURTLE *tu, const DRAWPARAM *dr,
+                VIEWPARAM *vw, float diameter) {
   if (!output)
     return;
 
@@ -401,24 +401,24 @@ void rsCircle3D(const TURTLE *tu, __attribute__((unused)) const DRAWPARAM *dr,
 /* Function: objCircleB2D                                            */
 /********************************************************************/
 
-void rsCircleB2D(__attribute__((unused)) const TURTLE *tu,
-                 __attribute__((unused)) const DRAWPARAM *dr,
-                 __attribute__((unused)) const VIEWPARAM *vw,
-                 __attribute__((unused)) float diameter,
-                 __attribute__((unused)) float width) {}
+void rsCircleB2D(const TURTLE *tu,
+                 const DRAWPARAM *dr,
+                 const VIEWPARAM *vw,
+                 float diameter,
+                 float width) {}
 
-void rsCircleB3D(__attribute__((unused)) const TURTLE *tu,
-                 __attribute__((unused)) const DRAWPARAM *dr,
-                 __attribute__((unused)) const VIEWPARAM *vw,
-                 __attribute__((unused)) float diameter,
-                 __attribute__((unused)) float width) {}
+void rsCircleB3D(const TURTLE *tu,
+                 const DRAWPARAM *dr,
+                 const VIEWPARAM *vw,
+                 float diameter,
+                 float width) {}
 
 /********************************************************************/
 /* Function: rsSphere                                               */
 /********************************************************************/
 
-void rsSphere(const TURTLE *tu, __attribute__((unused)) const DRAWPARAM *dr,
-              __attribute__((unused)) VIEWPARAM *vw, float diameter) {
+void rsSphere(const TURTLE *tu, const DRAWPARAM *dr,
+              VIEWPARAM *vw, float diameter) {
   if (!output)
     return;
 
@@ -430,22 +430,22 @@ void rsSphere(const TURTLE *tu, __attribute__((unused)) const DRAWPARAM *dr,
 /* Function: rsBLackBox                                             */
 /********************************************************************/
 
-void rsBlackBox(__attribute__((unused)) const TURTLE *tu,
-                __attribute__((unused)) const DRAWPARAM *dr,
-                __attribute__((unused)) const VIEWPARAM *vw,
-                __attribute__((unused)) const StringModule *module,
-                __attribute__((unused)) const StringModule *submodule) {}
+void rsBlackBox(const TURTLE *tu,
+                const DRAWPARAM *dr,
+                const VIEWPARAM *vw,
+                const StringModule *module,
+                const StringModule *submodule) {}
 
 /********************************************************************/
 /* Function: rsLabel                   JH1                          */
 /********************************************************************/
 
-void rsLabel(__attribute__((unused)) const TURTLE *tu,
-             __attribute__((unused)) DRAWPARAM *dr,
-             __attribute__((unused)) const VIEWPARAM *vw,
-             __attribute__((unused)) const char *label,
-             __attribute__((unused)) int parameteri,
-             __attribute__((unused)) const float values[]) {}
+void rsLabel(const TURTLE *tu,
+             DRAWPARAM *dr,
+             const VIEWPARAM *vw,
+             const char *label,
+             int parameteri,
+             const float values[]) {}
 
 /********************************************************************/
 /* Function: rsStartTexture                                         */
@@ -524,8 +524,8 @@ void rsEndTexture(int index) {
 /* Function: rsPredefinedSurface                                    */
 /********************************************************************/
 
-void rsPredefinedSurface(TURTLE *tu, __attribute__((unused)) DRAWPARAM *dr,
-                         __attribute__((unused)) VIEWPARAM *vw, char id,
+void rsPredefinedSurface(TURTLE *tu, DRAWPARAM *dr,
+                         VIEWPARAM *vw, char id,
                          double sX, double sY, double sZ) {
   if (!output)
     return;
@@ -595,7 +595,7 @@ void rsStartNewGrid(TURTLE *tu, DRAWPARAM *dr, VIEWPARAM *vw, int *size) {
 /* No action                                                        */
 /********************************************************************/
 
-void rsFinishUp(__attribute__((unused)) TURTLE *tu, DRAWPARAM *dr,
+void rsFinishUp(TURTLE *tu, DRAWPARAM *dr,
                 VIEWPARAM *vw) {
   int c;
 
@@ -755,7 +755,7 @@ double StartWidth;
 int StartIndex;
 float StartTexT;
 
-static void r_start_cylinder(__attribute__((unused)) FILE *fp, TURTLE *tu) {
+static void r_start_cylinder(FILE *fp, TURTLE *tu) {
   int c;
 
   if (!output)
@@ -1187,8 +1187,8 @@ static void r_finishup_surfaces(FILE *fp) {
 /* settings depending on drawing and viewing parameters, such as    */
 /* the drawing parameter shade mode.                                */
 /********************************************************************/
-turtleDrawDispatcher *rsSetDispatcher(__attribute__((unused)) DRAWPARAM *dr,
-                                      __attribute__((unused)) VIEWPARAM *vw) {
+turtleDrawDispatcher *rsSetDispatcher(DRAWPARAM *dr,
+                                      VIEWPARAM *vw) {
   return (&rayshadeDrawRoutines);
 }
 
@@ -1495,9 +1495,9 @@ void rsOutputObjects(void) {
 }
 
 /********************************************************************/
-int rsInsertObject(char *name, __attribute__((unused)) float scale, TURTLE *tu,
-                   __attribute__((unused)) VIEWPARAM *w,
-                   __attribute__((unused)) DRAWPARAM *dr) {
+int rsInsertObject(char *name, float scale, TURTLE *tu,
+                   VIEWPARAM *w,
+                   DRAWPARAM *dr) {
 
   fprintf(tmpfp, "object %s\n", name);
 

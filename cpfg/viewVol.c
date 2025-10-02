@@ -53,8 +53,8 @@ TURTLE surfaceTurtle;
 /* return non-zero if there are problems                            */
 /********************************************************************/
 
-int vvSetup(__attribute__((unused)) TURTLE *tu,
-            __attribute__((unused)) DRAWPARAM *dr, VIEWPARAM *vw) {
+int vvSetup(TURTLE *tu,
+            DRAWPARAM *dr, VIEWPARAM *vw) {
   vw->min[0] = vw->min[1] = vw->min[2] = 1.0;
   vw->max[0] = vw->max[1] = vw->max[2] = 0.0;
 
@@ -66,11 +66,11 @@ int vvSetup(__attribute__((unused)) TURTLE *tu,
 /* No action                                                        */
 /********************************************************************/
 
-void vvStartNode(__attribute__((unused)) TURTLE *tu,
-                 __attribute__((unused)) DRAWPARAM *dr,
-                 __attribute__((unused)) VIEWPARAM *vw,
-                 __attribute__((unused)) float length,
-                 __attribute__((unused)) char symbol) {}
+void vvStartNode(TURTLE *tu,
+                 DRAWPARAM *dr,
+                 VIEWPARAM *vw,
+                 float length,
+                 char symbol) {}
 
 /********************************************************************/
 /* Function: vvEndNode                                              */
@@ -79,8 +79,8 @@ void vvStartNode(__attribute__((unused)) TURTLE *tu,
 /* Should it handle linewidth?? Should it only register for F or G? */
 /********************************************************************/
 
-void vvEndNode(TURTLE *tu, __attribute__((unused)) DRAWPARAM *dr, VIEWPARAM *vw,
-               __attribute__((unused)) char symbol) {
+void vvEndNode(TURTLE *tu, DRAWPARAM *dr, VIEWPARAM *vw,
+               char symbol) {
   vvUpdate(tu->position, vw);
 }
 
@@ -89,62 +89,62 @@ void vvEndNode(TURTLE *tu, __attribute__((unused)) DRAWPARAM *dr, VIEWPARAM *vw,
 /* No action                                                        */
 /********************************************************************/
 
-void vvStartBranch(__attribute__((unused)) TURTLE *tu,
-                   __attribute__((unused)) DRAWPARAM *dr,
-                   __attribute__((unused)) VIEWPARAM *vw) {}
+void vvStartBranch(TURTLE *tu,
+                   DRAWPARAM *dr,
+                   VIEWPARAM *vw) {}
 
 /********************************************************************/
 /* Function: vvEndBranch                                            */
 /* No action                                                        */
 /********************************************************************/
 
-void vvEndBranch(__attribute__((unused)) TURTLE *tu,
-                 __attribute__((unused)) DRAWPARAM *dr,
-                 __attribute__((unused)) VIEWPARAM *vw) {}
+void vvEndBranch(TURTLE *tu,
+                 DRAWPARAM *dr,
+                 VIEWPARAM *vw) {}
 
 /********************************************************************/
 /* Function: vvStartPolygon                                         */
 /* No action                                                        */
 /********************************************************************/
 
-void vvStartPolygon(__attribute__((unused)) POLYGON *polygon,
-                    __attribute__((unused)) TURTLE *tu,
-                    __attribute__((unused)) DRAWPARAM *dr,
-                    __attribute__((unused)) VIEWPARAM *vw) {}
+void vvStartPolygon(POLYGON *polygon,
+                    TURTLE *tu,
+                    DRAWPARAM *dr,
+                    VIEWPARAM *vw) {}
 
 /********************************************************************/
 /* Function: vvEndPolygon                                           */
 /* No action                                                        */
 /********************************************************************/
 
-void vvEndPolygon(__attribute__((unused)) POLYGON *polygon,
-                  __attribute__((unused)) TURTLE *tu,
-                  __attribute__((unused)) DRAWPARAM *dr,
-                  __attribute__((unused)) VIEWPARAM *vw) {}
+void vvEndPolygon(POLYGON *polygon,
+                  TURTLE *tu,
+                  DRAWPARAM *dr,
+                  VIEWPARAM *vw) {}
 
 /********************************************************************/
 /* Function: vvSetColour                                            */
 /* No action                                                        */
 /********************************************************************/
 
-void vvSetColour(__attribute__((unused)) const TURTLE *tu,
-                 __attribute__((unused)) const DRAWPARAM *dr,
-                 __attribute__((unused)) const VIEWPARAM *vw) {}
+void vvSetColour(const TURTLE *tu,
+                 const DRAWPARAM *dr,
+                 const VIEWPARAM *vw) {}
 
 /********************************************************************/
 /* Function: vvSetLineWidth                                         */
 /* No action                                                        */
 /********************************************************************/
 
-void vvSetLineWidth(__attribute__((unused)) const TURTLE *tu,
-                    __attribute__((unused)) const DRAWPARAM *dr,
-                    __attribute__((unused)) const VIEWPARAM *vw) {}
+void vvSetLineWidth(const TURTLE *tu,
+                    const DRAWPARAM *dr,
+                    const VIEWPARAM *vw) {}
 
 /********************************************************************/
 /* Function: vvCircle2D                                             */
 /********************************************************************/
 
-void vvCircle2D(const TURTLE *tu, __attribute__((unused)) const DRAWPARAM *dr,
+void vvCircle2D(const TURTLE *tu, const DRAWPARAM *dr,
                 VIEWPARAM *vw, float diameter) {
   int x, y;
   double vec[3];
@@ -169,7 +169,7 @@ void vvCircle2D(const TURTLE *tu, __attribute__((unused)) const DRAWPARAM *dr,
  */
 /********************************************************************/
 
-void vvCircle3D(const TURTLE *tu, __attribute__((unused)) const DRAWPARAM *dr,
+void vvCircle3D(const TURTLE *tu, const DRAWPARAM *dr,
                 VIEWPARAM *vw, float diameter) {
   int x, y;
   double vec[3];
@@ -191,7 +191,7 @@ void vvCircle3D(const TURTLE *tu, __attribute__((unused)) const DRAWPARAM *dr,
 /* Function: vvSphere                                               */
 /********************************************************************/
 
-void vvSphere(const TURTLE *tu, __attribute__((unused)) const DRAWPARAM *dr,
+void vvSphere(const TURTLE *tu, const DRAWPARAM *dr,
               VIEWPARAM *vw, float diameter) {
   int x, y, z;
   double vec[3];
@@ -215,9 +215,9 @@ void vvSphere(const TURTLE *tu, __attribute__((unused)) const DRAWPARAM *dr,
 /* No action                                                        */
 /********************************************************************/
 
-void vvLabel(__attribute__((unused)) const TURTLE *tu,
-             __attribute__((unused)) DRAWPARAM *dr,
-             __attribute__((unused)) const VIEWPARAM *vw, const char *label,
+void vvLabel(const TURTLE *tu,
+             DRAWPARAM *dr,
+             const VIEWPARAM *vw, const char *label,
              int parameters, const float values[]) {
   char *str;
   int width, ascent, descent;
@@ -235,15 +235,15 @@ void vvLabel(__attribute__((unused)) const TURTLE *tu,
 /* No action                                                        */
 /********************************************************************/
 
-void vvBlackBox(__attribute__((unused)) const TURTLE *tu,
-                __attribute__((unused)) const DRAWPARAM *dr,
-                __attribute__((unused)) const VIEWPARAM *vw,
-                __attribute__((unused)) const StringModule *module,
-                __attribute__((unused)) const StringModule *submodule) {}
+void vvBlackBox(const TURTLE *tu,
+                const DRAWPARAM *dr,
+                const VIEWPARAM *vw,
+                const StringModule *module,
+                const StringModule *submodule) {}
 
 /********************************************************************/
 void vvTmeshVertex(const float *point,
-                   __attribute__((unused)) const DRAWPARAM *dr) {
+                   const DRAWPARAM *dr) {
   extern VIEWPARAM viewparam;
 
   vvUpdatef(point, &viewparam);
@@ -251,7 +251,7 @@ void vvTmeshVertex(const float *point,
 
 /********************************************************************/
 void vvRenderTriangle(const float *p1, const float *p2, const float *p3,
-                      __attribute__((unused)) const DRAWPARAM *dr) {
+                      const DRAWPARAM *dr) {
   extern VIEWPARAM viewparam;
   double thisPoint[3], x, y, z;
   int i;
@@ -325,19 +325,19 @@ void vvPredefinedSurface(TURTLE *tu, DRAWPARAM *dr, VIEWPARAM *vw, char id,
 /* Nothing                                                          */
 /********************************************************************/
 
-void vvStartPatches(__attribute__((unused)) const TURTLE *tu,
-                    __attribute__((unused)) DRAWPARAM *dr,
-                    __attribute__((unused)) VIEWPARAM *vw,
-                    __attribute__((unused)) int sPrecision,
-                    __attribute__((unused)) int tPrecision,
-                    __attribute__((unused)) int basisID) {}
+void vvStartPatches(const TURTLE *tu,
+                    DRAWPARAM *dr,
+                    VIEWPARAM *vw,
+                    int sPrecision,
+                    int tPrecision,
+                    int basisID) {}
 
 /********************************************************************/
 /* Function: vvRenderPatch                                          */
 /* Renders a wireframe patch                                        */
 /********************************************************************/
 
-void vvRenderPatch(TURTLE *tu, __attribute__((unused)) DRAWPARAM *dr,
+void vvRenderPatch(TURTLE *tu, DRAWPARAM *dr,
                    VIEWPARAM *vw, double xPoints[4][4], double yPoints[4][4],
                    double zPoints[4][4]) {
   int i, j;
@@ -368,9 +368,9 @@ void vvRenderPatch(TURTLE *tu, __attribute__((unused)) DRAWPARAM *dr,
 /* Nothing                                                          */
 /********************************************************************/
 
-void vvEndPatches(__attribute__((unused)) TURTLE *tu,
-                  __attribute__((unused)) DRAWPARAM *dr,
-                  __attribute__((unused)) VIEWPARAM *vw) {}
+void vvEndPatches(TURTLE *tu,
+                  DRAWPARAM *dr,
+                  VIEWPARAM *vw) {}
 
 /********************************************************************/
 /* Function: vvLdefinedSurface                                      */
@@ -379,19 +379,19 @@ void vvEndPatches(__attribute__((unused)) TURTLE *tu,
 /* ie convex hull for the Bezier case                               */
 /********************************************************************/
 
-void vvLdefinedSurface(__attribute__((unused)) StringModule *module,
-                       __attribute__((unused)) TURTLE *tu,
-                       __attribute__((unused)) DRAWPARAM *dr,
-                       __attribute__((unused)) VIEWPARAM *vw) {}
+void vvLdefinedSurface(StringModule *module,
+                       TURTLE *tu,
+                       DRAWPARAM *dr,
+                       VIEWPARAM *vw) {}
 
 /********************************************************************/
 /* Function: vvFinishUp                                             */
 /* No action                                                        */
 /********************************************************************/
 
-void vvFinishUp(__attribute__((unused)) TURTLE *tu,
-                __attribute__((unused)) DRAWPARAM *dr,
-                __attribute__((unused)) VIEWPARAM *vw) {}
+void vvFinishUp(TURTLE *tu,
+                DRAWPARAM *dr,
+                VIEWPARAM *vw) {}
 
 /********************************************************************/
 /* Function: vvUpdate                                               */
@@ -442,9 +442,7 @@ void vvUpdatef(const float *position, VIEWPARAM *vp) {
 /* settings depending on drawing and viewing parameters, such as    */
 /* the drawing parameter shade mode.                                */
 /********************************************************************/
-turtleDrawDispatcher *vvSetDispatcher(__attribute__((unused))
-                                      const DRAWPARAM *dr,
-                                      __attribute__((unused))
+turtleDrawDispatcher *vvSetDispatcher(const DRAWPARAM *dr,
                                       const VIEWPARAM *vw) {
   return (&viewVolumeRoutines);
 }
@@ -453,12 +451,12 @@ turtleDrawDispatcher *vvSetDispatcher(__attribute__((unused))
 /* Function: objCircleB2D                                            */
 /********************************************************************/
 
-void vvCircleB2D(const TURTLE *tu, __attribute__((unused)) const DRAWPARAM *dr,
+void vvCircleB2D(const TURTLE *tu, const DRAWPARAM *dr,
                  const VIEWPARAM *vw, float diameter, float width) {
-    vvCircle2D(tu,dr,vw,diameter + width);
+    vvCircle2D(tu,dr,(VIEWPARAM *)vw,diameter + width);
 }
 
-void vvCircleB3D(const TURTLE *tu, __attribute__((unused)) const DRAWPARAM *dr,
+void vvCircleB3D(const TURTLE *tu, const DRAWPARAM *dr,
                  const VIEWPARAM *vw, float diameter, float width) {
-    vvCircle3D(tu,dr,vw,diameter + width);
+    vvCircle3D(tu,dr,(VIEWPARAM *)vw,diameter + width);
 }

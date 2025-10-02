@@ -1950,7 +1950,7 @@ transformed and the transformed surface written out to the object file. */
 
 void objCreateSurfaceMesh(int maxTriangles, char surfaceIdentifier);
 
-void o_objects(__attribute__((unused)) FILE *fp, TURTLE *tu, DRAWPARAM *dr,
+void o_objects(FILE *fp, TURTLE *tu, DRAWPARAM *dr,
                VIEWPARAM *vw) {
   int surface_index, maxTriangles;
   char gll, ourl, is_texture_per_patch;

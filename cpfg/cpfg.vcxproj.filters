@@ -175,12 +175,6 @@
     <ClCompile Include="writergb.c">
       <Filter>Cpfg code</Filter>
     </ClCompile>
-    <ClCompile Include="lsys_input_lex.c">
-      <Filter>Generated</Filter>
-    </ClCompile>
-    <ClCompile Include="lsys_input_yacc.c">
-      <Filter>Generated</Filter>
-    </ClCompile>
     <ClCompile Include="..\libs\glew-1.5.4\src\glew.c">
       <Filter>WinInterface</Filter>
     </ClCompile>
@@ -188,6 +182,15 @@
       <Filter>Cpfg code</Filter>
     </ClCompile>
     <ClCompile Include="lodepng.c">
+      <Filter>Cpfg code</Filter>
+    </ClCompile>
+    <ClCompile Include="lsys_input_lex.c">
+      <Filter>Generated</Filter>
+    </ClCompile>
+    <ClCompile Include="lsys_input_yacc.c">
+      <Filter>Generated</Filter>
+    </ClCompile>
+    <ClCompile Include="utils.cpp">
       <Filter>Cpfg code</Filter>
     </ClCompile>
   </ItemGroup>
@@ -390,13 +393,16 @@
     <ClInclude Include="resource.h">
       <Filter>Resources</Filter>
     </ClInclude>
-    <ClInclude Include="lsys_input_yacc.h">
-      <Filter>Generated</Filter>
-    </ClInclude>
     <ClInclude Include="shaders.h">
       <Filter>Cpfg code</Filter>
     </ClInclude>
     <ClInclude Include="lodepng.h">
+      <Filter>Cpfg code</Filter>
+    </ClInclude>
+    <ClInclude Include="lsys_input_yacc.h">
+      <Filter>Generated</Filter>
+    </ClInclude>
+    <ClInclude Include="utils.h">
       <Filter>Cpfg code</Filter>
     </ClInclude>
   </ItemGroup>

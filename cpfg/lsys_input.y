@@ -1692,7 +1692,7 @@ Name	    :	tNAME
 	;
 %%
 
-static void yyerror( __attribute__((unused)) char * s)
+static void yyerror( char * s)
 {
 	WarningParsing((char*) "Syntax error", ERROR_LVL);
 	

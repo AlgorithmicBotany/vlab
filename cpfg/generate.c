@@ -550,8 +550,8 @@ static void FreeProductionSpace(PRODDATA *production_set) {
 
 #ifdef JIM
 /***************************************************************************/
-void CheckValues(__attribute__((unused)) LSYSDATA *LsysPtr,
-                 __attribute__((unused)) SymbolTable *curTable) {
+void CheckValues(LSYSDATA *LsysPtr,
+                 SymbolTable *curTable) {
   VERBOSE("Checking \n");
 }
 
@@ -857,9 +857,9 @@ extern StringModule module; /* from interpret.c */
 /*********************************************************************/
 /* the third parameter is ignored, it must be present, though, because the
    function is called from InterpreHomomorphism() */
-void SaveTextModule(__attribute__((unused)) char c,
-                    __attribute__((unused)) char **str,
-                    __attribute__((unused)) char is_homo) {
+void SaveTextModule(char c,
+                    char **str,
+                    char is_homo) {
   int i;
 
   if (charCount >= 70) {
@@ -884,8 +884,8 @@ void SaveTextModule(__attribute__((unused)) char c,
 /*********************************************************************/
 /* the third parameter is ignored, it must be present, though, because the
    function is called from InterpreHomomorphism() */
-void SaveModuleBinary(__attribute__((unused)) char c, char **str,
-                      __attribute__((unused)) char is_homo) {
+void SaveModuleBinary(char c, char **str,
+                      char is_homo) {
   len += fwrite(*str - module.length, 1, module.length, fp);
 }
 
@@ -1001,7 +1001,7 @@ void ReallocateString(char **string, char **stringend, char **currPtr,
 /*********************************************************************/
 
 void Derive(LSYSDATA *LsystemListPtr, char **string1,
-            __attribute__((unused)) char **string1end, char **string2,
+            char **string1end, char **string2,
             char **string2end, DRAWPARAM *drawparamPtr, VIEWPARAM *viewparamPtr
 #ifdef JIM
             ,
@@ -2462,7 +2462,7 @@ static char NextStringModuleForMatch(char **str, StringModule *module) {
 /* length in the production structure for later movement of str */
 /*********************************************************************/
 static void CreateVarTable(Production *prodPtr, char *str,
-                           __attribute__((unused)) LSYSDATA *LsysPtr) {
+                           LSYSDATA *LsysPtr) {
 
   /* Get predecessor variables */
   /* assign actual length value for predecessor length */
@@ -4573,8 +4573,8 @@ void EvaluateArrayInitializers(LSYSDATA *lsysPtr) {
 **************************************************************************/
 
 static Production *SelectProd(Production *applSetPtr[], float totalprob,
-                              __attribute__((unused)) char *curPtr,
-                              __attribute__((unused)) LSYSDATA *LsysPtr) {
+                              char *curPtr,
+                              LSYSDATA *LsysPtr) {
   extern unsigned short xsubi[];
   float scaled_random;
 
