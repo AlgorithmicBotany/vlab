@@ -1,0 +1,30 @@
+plant.l
+plant.v
+plant.a
+plant.map
+description.txt
+ignore:
+lsys.o
+lsys.so
+lsys.i
+lsys.ii
+input.i
+*
+image:
+	generate:
+		lpfg plant.l plant.map plant.v plant.a
+
+colormap:
+	MAP plant.map
+
+L-system:
+	EDIT plant.l
+
+view:
+	EDIT plant.v
+
+animate:
+	EDIT plant.a
+
+description:
+	EDIT description.txt

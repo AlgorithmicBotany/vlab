@@ -265,7 +265,7 @@ View::View(HWND hWnd, const CREATESTRUCT *pCS)
   _projection.SetVolumeAndPos(_pLpfg->GetLEngine().CalculateVolume(_id),
                               drawparams.Clip());
   _pQ = gl.CreateQuadric();
-  gl.DoInit(_pQ);
+  gl.DoInit(_pQ,_id);
   _MakeFont();
   ++_counter;
 }

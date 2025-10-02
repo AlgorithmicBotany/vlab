@@ -34,7 +34,7 @@ typedef enum { CONTINUOUS, TRIGGERED, OFF } SavingMode;
 class ComndLineParam {
 public:
   ComndLineParam();
-  void Parse(int, char **);
+  void Parse(int __argc, char** __argv);
   const char *Lsystemfile() const { return _lsystemfile; }
   const char *Colormapfile() const {
     ASSERT(ColormapMode());

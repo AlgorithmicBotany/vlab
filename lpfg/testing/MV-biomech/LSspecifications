@@ -1,0 +1,10 @@
+ignore:
+lsys.dll
+lsys.i
+lsys.lib
+input.i
+lsys.obj
+lsys.exp
+lsys.o
+*
+lpfg color.map lsystem.l view.v anim.a functions.fset 

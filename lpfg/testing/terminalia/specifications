@@ -1,0 +1,18 @@
+lpfg.mak
+tree.a
+Makefile
+tree.map
+panel.a
+tree.v
+description.txt
+tree.e
+tree.l
+density.spec
+tree.mat
+LSspecifications
+panel.l
+ignore:
+*
+generate:
+	lpfg tree.l tree.v tree.a tree.e tree.mat
+

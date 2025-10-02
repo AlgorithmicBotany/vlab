@@ -1,0 +1,15 @@
+A canalization-based model of auxin trasport.
+
+This model is based on the apical dominance model.
+
+The implementation is based on Shapiro's chain/co-chain concept,
+with both the concentrations of the substance in the cells, and 
+the flux across the walls explicitly represented and visualized
+in this model.
+
+- A cell wall "sees" the concentrations of the diffusing substance
+  in the neighboring cells, and on this basis decides what flux is
+  going to go through it in the next time step.
+- A cell "sees" the fluxes through the neighboring walls, and on this
+  basis updates its morphogen concentration.
+

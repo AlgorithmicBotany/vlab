@@ -1,0 +1,47 @@
+plant.a
+description.txt
+view.v
+plant.l
+plant.v
+plant.map
+functions.fset
+LSspecifications
+ignore:
+lsys.so
+lpfg.log
+lsys.ii
+lsysinp.cpp
+lsys.o
+input.i
+*.swp
+*
+Generate:
+	lpfg -w 500 850 plant.map plant.l plant.v plant.a functions.fset
+
+L-system:
+	Edit:
+		EDIT plant.l
+	Panel:
+		panel l-panel.lnx | awkped lsystem.l
+
+functions:
+	GALLERY functions.fset
+	EDIT functions.fset
+Colormap:
+	PALETTE plant.map
+
+View:
+	EDIT plant.v
+
+Animation:
+	EDIT plant.a
+
+Description:
+	TEXT description.txt
+
+LSspecifications:
+	EDIT LSspecifications
+
+
+
+

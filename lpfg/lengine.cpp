@@ -21,7 +21,9 @@
 #include <iomanip>
 
 #include <sstream>
+#ifndef WIN32
 #include <unistd.h>
+#endif // !WIN32
 
 #include "lengine.h"
 #include "comlineparam.h"

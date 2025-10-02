@@ -25,6 +25,7 @@
 #include "maxpath.h"
 
 #ifdef WIN32
+#include <GL/glew.h>
 #include <windows.h>
 #include <GL/gl.h>
 #else

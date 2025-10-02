@@ -1,0 +1,14 @@
+A model of Terminalia catappa tiers, based on 
+the paper "Computer simulation of branch interaction
+and regulation by unequal flow rates in botanical trees"
+by H. Honda, P.B. Tomlinson and J.B. Fisher, American
+Journal of Botany 68 (1981), pp. 569-585.  Collisions
+between leaf clusters (shown as circles) limit the
+extent of branching.
+
+This is a simple example of an open L-system in action.
+A description of this L-system implementation is
+included in the paper "Visual models of plants
+interacting with their environment", by R. Mech and
+P. Prusinkiewicz, Procedings of Siggraph 96, pp. 397-410.
+

@@ -1,0 +1,3 @@
+Stochastic Simulation of Lotka's hypothetical chemical reactions.
+The visualization shows, on the left-hand side, the change in the number of
+molecules over time, and on the right-hand side, the phase space.

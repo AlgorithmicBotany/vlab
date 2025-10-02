@@ -1,0 +1,21 @@
+Decay and Diffusion of two substances between any number of cells using
+stochastic simulation.  The pink substance (X) diffuses faster than the
+green substance (Y) but both substances decay at the same rate.
+
+The decay and diffusion process can be described in the following way.
+- do-while number of molecules is greater than 0
+  -- compute probability for diffusion of substance X and Y (dX,dY)
+     in each cell and probability for decay (aX,aY)
+  -- compute time of next reaction in each cell (not used in simulation)
+  -- pick next reaction from cumulative probability (dX+dY+aX+aY) of all
+     cells. This is done in two lpfg groups - 1.SEARCH and 2.NORMAL.
+     1) Sum all of the probabilites (dX+dY+aX+aY) from each cell into "rateSum"
+     2) Pick the "nextReaction" from the cumulative probability "rateSum"
+  -- perform "nextReaction" but rescale "nextReaction" to be in the cell's
+     cumulative probability (dX+dY+aX+aY) not in "rateSum".  If the rescaled
+     "nextReaction" is in (dX+dY) perfrom a diffusion event otherwise perfrom
+     a decay event.
+
+The cell farthest to the right has a constant number of X and Y molecules,
+but molecules can still diffuse to its neighbouring cell.  In the lpfg code
+it is identified with a boolean flag "special".

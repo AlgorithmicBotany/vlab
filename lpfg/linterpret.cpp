@@ -142,7 +142,9 @@ void LEngine::DrawRayshade(std::ofstream &target,
   std::string name = fname.substr(0, fname.size() - 4);
   //  Output to Rayshade
   // the following call is necessary otherwise the opengl context is reset
+#ifndef WIN32
   _glview[0]->makeCurrent();
+#endif // !WIN32
   RayshadeTurtle turtle(target, currentProjection, glEnv, fname);
 
   turtle.InstanceSurfaces();

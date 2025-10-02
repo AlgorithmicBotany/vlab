@@ -109,9 +109,7 @@ void View::ResetOpenGL() {
     glLoadIdentity();
 
     // get the original view direction from the camera translation
-    Vector3d viewDir = Vector3d(
-        0, 0,
-        -1); // default view direction set in ResetRotation() in projection.cpp
+    Vector3d viewDir = Vector3d(0, 0, -1); // default view direction set in ResetRotation() in projection.cpp
     if (drawparams.ViewModifiersSet(_id)) {
       const WindowParams::ViewModifiers vm = drawparams.Modifiers(_id);
       viewDir = vm.viewDir;
@@ -122,7 +120,7 @@ void View::ResetOpenGL() {
     glTranslatef(viewShift.X(), viewShift.Y(), viewShift.Z());
 
     // reset OpenGL settings
-    gl.DoInit(_pQ);
+    gl.DoInit(_pQ, _id);
 
     // put the modelview matrix back so the original camera transformation is
     // applied to the model
@@ -131,7 +129,7 @@ void View::ResetOpenGL() {
   } else {
     // if stationary lights are 'off', the lpfg should apply the
     // view transformation to the position of the light sources
-    gl.DoInit(_pQ);
+    gl.DoInit(_pQ, _id);
   }
 }
 
@@ -1181,7 +1179,7 @@ GLuint View::initShaders(const char *vertex_file_path,
       FragmentShaderCode += "\n" + Line;
     FragmentShaderStream.close();
   } else {
-    Utils::Message("Cannot open fragment shader %s\n"fragment_file_path);
+    Utils::Message("Cannot open fragment shader %s\n", fragment_file_path);
     Utils::Message("'render mode: shadows' will not work.\n");
     return (0);
   }

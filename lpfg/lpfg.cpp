@@ -424,8 +424,10 @@ bool LPFG::ViewExists(int id) const {
     return false;
   else if (_aView[id] == 0)
     return false;
+#ifndef WIN32
   else if (!_aView[id]->isCreated())
     return false;
+#endif
   else
     return true;
 }

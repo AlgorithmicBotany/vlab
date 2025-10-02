@@ -1,0 +1,35 @@
+lsystem.l
+anim.a
+view.v
+description.txt
+LSspecifications
+color.map
+ignore:
+lsys.so
+lpfg.log
+lsys.ii
+lsysinp.cpp
+lsys.o
+input.i
+*.swp
+*
+L-system:
+	Generate:
+		lpfg lsystem.l color.map
+	Edit:
+		EDIT lsystem.l
+
+Colormap:
+	PALETTE color.map
+
+Description:
+	EDIT description.txt
+
+Unused:
+	View:
+		EDIT view.v
+	Animation:
+		EDIT anim.a
+	LSspecifications:
+		EDIT LSspecifications
+

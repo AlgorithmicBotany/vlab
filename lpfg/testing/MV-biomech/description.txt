@@ -1,0 +1,90 @@
+Development of a kiwifruit shoot integrated with biomechanics model
+
+Young's Modulus (GPa or gigapascals or kN/mm^2) - Taylor-Hell (2006)
+Yellow Poplar 10.38
+Apple         8.77
+Black Willow  5.03
+Black Oak     11.31
+Yellow Birch  14.53
+Sliver Maple  6.22
+Pine wood     8.963 (Wikipedia)
+Oak wood      11    (Wikipedia)
+
+#define E_JUV 600000.015157 /* average Young's modulus for young wood */
+#define E_ADULT 158700004.0 /* Young's modulus for adult wood */
+
+Shear Modulus (GPa)
+
+THE KIWIFRUIT MODEL:
+(NOTE: this is an emprical model, so we need to now final size and growth rate of organs)
+(NOTE: the node number in the equations for growth does not include
+        bud scales (nodes 1-4) and transitional leaves (nodes 5-7))
+
+The timing of appearance between two leaves is the phyllochron.
+The following equation defines this timing in days,
+t_a(node) = {time_of_bud_break               node <= 7
+            {time_of_bud_break + Ph(node-7)  n > 7
+assuming the number of reproductive nodes is 7
+
+The expansion of the area of an individual leaf is given by Boltzmann function
+a(t,node) = (A(node)-B(node))exp[(t-t_o(node))/tau]/(1+exp[(t-t_o(node))/tau])+B.
+  - A(node) is final leaf area.
+  - B(node) is lower asymptote that depends on initial_size (asymptote can be negative, which represents preformed development).
+  - tau is a constant that represents the duration of 'window' of rapid expansion.
+  - t is time (days from budbreak)
+  - t_o(node) is the timing of expansion ("timing of the maximum rate of expansion"),
+    and is given by
+    t_o(node) = time_of_bud_break + {9.3Ph + 1.36(n-7)      node <=7
+                                    {9.3Ph + 2alphaPh(n-7)  7 < n <= 18
+                                    {28Ph + alphaPh(n-18)   18 < n
+assuming the number of preformed nodes is 18.
+The final leaf area is determinded by a function that was
+fit to data for shoots in a high temperature treatment, and is irrespective of shoot type.
+The initial leaf area is constant at 2.5 cm^2.
+'tau' is constant at 3.3 for leaves.
+'t_o(node)' is defined as above for leaves.
+
+Shoot internode length expansion (primary growth) is determined by the Boltzmann function.
+The final internode length is 10cm for long, medium, and 2 cm for short shoots.
+  - the paper by Clearwater: short shoots with no internodes longer than 15mm
+                             medium shoots with at least one internode longer than 15mm
+                             long shoots ? just not self-terminated.
+ 
+The initial internode length is zero for now.
+'tau' is set to half of 'tau' for leaves (same as Alla's model).
+'t_o(node)' is defined as a constant as in Alla's model (though a linear function may be better?)
+
+Shoot internode width (secondary growth) is based on some kind of allometric relationship and the pipe model.
+The girth of an internode is a function of the number of leaves (or child branches) that it supports.
+
+Single flower growth and expansion occurs over a 60 day period after budbreak.
+I assumed the growth is linear over this peroid.
+The final diameter is between 35-68 mm (I'm not sure if there is a positional effect).
+The probability of flower abortion is based on its position along the shoot.
+I determined this probability from a paper by Walton and Fowke (1993),
+and defined a graphical function called prob_floral_abort.
+
+Fruit growth and development occurs after anthesis, and lasts for approximately 180 days.
+Usually the fruit is harvested after 150 days.
+Fruit volume after anthesis is defined by a graphical function called fruit_volume.
+It has the form of a double-sigmodial function.
+I am not using growth rate here!
+
+
+The initial structure consists of three axillary buds,
+with the first producing a short shoot, the second a
+medium shoot and the third a long shoot. 
+The module "AxBud" is decomposed into the structures
+that are preformed in the FOAB, and the apex at the last node.
+Currently, the number of preformed structures is fixed!
+The Apex module is responsible for creating new structures (neoformation).
+
+
+
+QUESTIONS:
+What do the second order axillary buds do?
+  It turns out, they do not normally grow into shoots unless primary growth point (shoot tip/apex) is removed.
+
+In Alla's leaf and internode growth equations, does the node number start
+at the first leaf?
+  I'm am pretty sure this is the case, and her equations start at node 8.

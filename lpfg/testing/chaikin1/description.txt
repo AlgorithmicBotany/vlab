@@ -1,0 +1,3 @@
+L-system implementation of Chaikin's corner-cutting algorithm
+for closed curves.  A complicatoin to the basic L-system is
+caused by the drawing of lines in the last step of the algorithm.

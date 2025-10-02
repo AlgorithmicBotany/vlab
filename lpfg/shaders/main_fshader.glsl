@@ -156,5 +156,8 @@ void main()
     // apply specular term after texture so the highlight is the colour of the light source not the surface
     // also no specular highlights in shadowed regions
     gl_FragColor += Ispec*shadowSum*vec4(1,1,1,texColor.a);
+	
+	// apply clamping, which seems to be necessary on some graphics cards...
+	gl_FragColor = clamp(gl_FragColor, 0.0, 1.0);
 }
 

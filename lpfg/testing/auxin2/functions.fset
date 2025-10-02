@@ -1,0 +1,11 @@
+funcgalleryver 1 1
+items: 1
+fver 1 1
+name: growth_rate
+samples: 100
+flip: off
+points: 4
+0.000000 -0.001293
+0.453661 0.046494
+0.453661 1.077533
+1.000000 1.113735

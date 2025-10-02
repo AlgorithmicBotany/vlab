@@ -26,18 +26,12 @@
 #ifdef _WINDOWS
 #include <io.h>
 #include <fcntl.h>
-#endif
-
-#ifdef _WINDOWS
 #include <GL/glew.h>
 #include <windows.h>
 #endif
+
 #include <GL/gl.h>
 #include <GL/glu.h>
-
-#ifdef _WINDOWS
-//#include <warningset.h>
-#endif
 
 #include "vector3d.h"
 
@@ -145,7 +139,7 @@ int WINAPI WinMain(HINSTANCE hInst, HINSTANCE, LPSTR, int) {
   pLpfg = &lpfg;
 
   try {
-    comlineparam.Parse(__argc, __argv);
+    comlineparam.Parse([]() { return &__argc; }, []() { return &__argv; });
     OptionalConsole console(!comlineparam.BatchMode() &&
                             comlineparam.HasConsole());
     if (PrjVar::IsEvalVer())
