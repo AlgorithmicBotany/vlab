@@ -961,13 +961,13 @@ void OutputContours(FILE *fp, grid_type *grid, int sel_flag,
 }
 
 /*************************************************************************/
-int DecideObstacle(__attribute__((unused)) CELL_TYPE *current,
+int DecideObstacle(CELL_TYPE *current,
                    CELL_TYPE *neighbor) {
   return neighbor->flag != OBSTACLE;
 }
 
 /*************************************************************************/
-int DecideSource(__attribute__((unused)) CELL_TYPE *current,
+int DecideSource(CELL_TYPE *current,
                  CELL_TYPE *neighbor) {
   return neighbor->flag != SOURCE;
 }

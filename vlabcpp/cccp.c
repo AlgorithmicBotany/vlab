@@ -25,7 +25,9 @@ Boston, MA 02111-1307, USA. */
 #include <sys/stat.h>
 #include <sys/types.h>
 #include <fcntl.h> // for open
+#ifndef WIN32
 #include <unistd.h> // for close
+#endif
 
 #ifdef TIME_WITH_SYS_TIME
 #include <sys/time.h>

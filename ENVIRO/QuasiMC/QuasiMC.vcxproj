@@ -31,6 +31,7 @@
     <ConfigurationType>Application</ConfigurationType>
     <IntermediateDirectory>.obj\</IntermediateDirectory>
     <PrimaryOutput>QuasiMC</PrimaryOutput>
+    <PlatformToolset>v143</PlatformToolset>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
     <OutputDirectory>release\</OutputDirectory>
@@ -39,6 +40,7 @@
     <ConfigurationType>Application</ConfigurationType>
     <IntermediateDirectory>.obj\</IntermediateDirectory>
     <PrimaryOutput>QuasiMC</PrimaryOutput>
+    <PlatformToolset>v143</PlatformToolset>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
     <OutputDirectory>debug\</OutputDirectory>
@@ -47,6 +49,7 @@
     <ConfigurationType>Application</ConfigurationType>
     <IntermediateDirectory>.obj\</IntermediateDirectory>
     <PrimaryOutput>QuasiMC</PrimaryOutput>
+    <PlatformToolset>v143</PlatformToolset>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
     <OutputDirectory>debug\</OutputDirectory>
@@ -55,6 +58,7 @@
     <ConfigurationType>Application</ConfigurationType>
     <IntermediateDirectory>.obj\</IntermediateDirectory>
     <PrimaryOutput>QuasiMC</PrimaryOutput>
+    <PlatformToolset>v143</PlatformToolset>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
   <ImportGroup Label="ExtensionSettings" />

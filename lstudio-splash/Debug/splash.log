@@ -1,3 +1,0 @@
-﻿  main.cpp
-main.obj : warning LNK4075: ignoring '/EDITANDCONTINUE' due to '/INCREMENTAL:NO' specification
-  splash.vcxproj -> C:\Users\jungle\Documents\L-studio\lstudio-splash\Debug\splash.exe

@@ -36,5 +36,8 @@
     <ClCompile Include="triangulate.c">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="lodepng.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>

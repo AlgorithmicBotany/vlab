@@ -1,1 +1,0 @@
-C:\Users\jungle\Documents\L-studio\fw\fwogl\Release\fwogl.lib
