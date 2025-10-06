@@ -48,6 +48,9 @@
 #include <iostream>
 #include <QPushButton>
 #include <fstream>
+#ifdef QT_DEBUG
+#include <QDebug> // temporary debug output
+#endif
 
 MainWindow::MainWindow() : QMainWindow() {
   setWindowFlags(Qt::Widget | Qt::FramelessWindowHint |
@@ -90,6 +93,23 @@ MainWindow::MainWindow() : QMainWindow() {
           &RubberBand::setBackgroundColor);
   createActions();
   createBarMenus();
+
+#ifdef QT_DEBUG
+  qDebug() << "snapicon position:" << this->pos();
+  qDebug() << "snapicon size:" << this->size();
+  QScreen *currentScreen = QGuiApplication::screenAt(this->pos());
+  if (currentScreen) {
+      qDebug() << "snapicon is on screen:" << currentScreen->name();
+      qDebug() << "Screen geometry:" << currentScreen->geometry();
+  } else {
+      qDebug() << "snapicon is not on any screen!";
+  }
+  QList<QScreen *> screens = QGuiApplication::screens();
+  qDebug() << "Available screens:";
+  for (QScreen *screen : screens) {
+      qDebug() << " -" << screen->name() << screen->geometry();
+  }
+#endif
 }
 
 void MainWindow::createBarMenus() {

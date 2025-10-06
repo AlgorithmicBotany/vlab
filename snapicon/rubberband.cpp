@@ -333,11 +333,11 @@ void RubberBand::mousePressEvent(QMouseEvent *ev) {
 void RubberBand::mouseMoveEvent(QMouseEvent *) {
   if (window_is_moving) {
     int x = QCursor::pos().x() - offset.x();
-    if (x<0)
-      x = 0;
+    //if (x<0)
+    //  x = 0;
     int y = QCursor::pos().y() - offset.y();
-    if (y<0)
-      y = 0;
+    //if (y<0)
+    //  y = 0;
     
     parentWidget()->move(x,y);
     return;
