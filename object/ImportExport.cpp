@@ -25,6 +25,7 @@
 #include <QFileInfo>
 #include <QProcess>
 #include <QSettings>
+#include <QStandardPaths>
 #include <algorithm>
 #include <iostream>
 #include <sstream>

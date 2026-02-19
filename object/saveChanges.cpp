@@ -169,7 +169,7 @@ SaveStatus save_to_lost_found(void) {
 
     // and check again if lost/found exists
     if (RA::Access(obj.connection, lost_found_dir, R_OK | W_OK | X_OK)) {
-      static char msg[4096];
+      static char msg[4096*2];
       sprintf(msg,
               "You don't have access to lost_found "
               "directory:\n"
@@ -187,7 +187,7 @@ SaveStatus save_to_lost_found(void) {
   char *ext = dsprintf("%s/ext", lost_found_dir);
   RA::Mkdir(obj.connection, ext, 0755);
   if (RA::Access(obj.connection, ext, R_OK | W_OK | X_OK)) {
-    static char msg[4096];
+    static char msg[4096*2];
     sprintf(msg,
             "object: You don't have access to ext in "
             "lost_found directory:\n"
@@ -220,7 +220,7 @@ SaveStatus save_to_lost_found(void) {
   // have we successfuly created a unique filename?
   if (i == 10) {
     // no, we could not create a unique filename
-    static char msg[4096];
+    static char msg[4096*2];
     sprintf(msg,
             "object: 10 attempts failed to create a unique "
             "filename for saving in\n"
@@ -233,7 +233,7 @@ SaveStatus save_to_lost_found(void) {
   // now create the direcotory
   if (RA::Mkdir(obj.connection, dst_dir, 0755)) {
     // no, we could not create a directory
-    static char msg[4096];
+    static char msg[4096*2];
     sprintf(msg,
             "object: Could not create a directory for this object\n"
             "        in the lost_found directory %s/ext/%s",

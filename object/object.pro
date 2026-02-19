@@ -33,7 +33,7 @@ MY_LIBS  = misc RA message vlabd platform
 include( $${MY_BASE}/common.pri )
 RESOURCES = object.qrc ../libs/misc/about.qrc
 
-QT += opengl 
+QT += core opengl gui openglwidgets
 
 !isEmpty(MAKE_BUNDLE) {
 # QMAKE_INFO_PLIST = Info.plist
