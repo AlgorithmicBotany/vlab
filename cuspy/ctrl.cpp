@@ -44,10 +44,10 @@
 #include <QCloseEvent>
 #include <QMouseEvent>
 #include <QMenu>
-#include <QDesktopWidget>
+//#include <QDesktopWidget>
 #include <QApplication>
 #include <QPainter>
-#include <QGLWidget>
+#include <QOpenGLWidget>
 #include "about.h"
 
 using namespace Qt;
@@ -74,13 +74,13 @@ Ctrl::Ctrl(QWidget *parent, int argc, char **argv)
   _contextmenu = new QMenu();
 
   QAction *save_act =
-      _contextmenu->addAction("&Save", this, SLOT(Save()), CTRL + Key_S);
+      _contextmenu->addAction("&Save", this, SLOT(Save()), Qt::CTRL + Qt::Key_S);
   mw->addAction(save_act);
   QAction *saveas_act = _contextmenu->addAction(
-      "Save as ...", this, SLOT(SaveAs()), CTRL + SHIFT + Key_S);
+      "Save as ...", this, SLOT(SaveAs()), Qt::CTRL + Qt::ShiftModifier + Qt::Key_S);
   mw->addAction(saveas_act);
   QAction *reload_act = _contextmenu->addAction("Revert to saved", this,
-                                                SLOT(Reload()), CTRL + Key_R);
+                                                SLOT(Reload()), Qt::CTRL + Qt::Key_R);
   mw->addAction(reload_act);
   _contextmenu->addSeparator();
 
@@ -182,8 +182,10 @@ Ctrl::Ctrl(QWidget *parent, int argc, char **argv)
   int ypos = 100;
   int xsize = 300;
   int ysize = 240;
-  QDesktopWidget widget;
-  QRect mainScreenSize = widget.availableGeometry(widget.primaryScreen());
+  QScreen *screen = QGuiApplication::primaryScreen();
+  QRect mainScreenSize = screen->geometry();
+  //QDesktopWidget widget;
+  //QRect mainScreenSize = widget.availableGeometry(widget.primaryScreen());
   SetScale(0.55);
 
   int wscr = mainScreenSize.width();
@@ -551,18 +553,18 @@ void Ctrl::mousePressEvent(QMouseEvent *pEv) {
   if (topWidget != nullptr)
     topWidget->raise();
 
-  if (pEv->button() == RightButton) {
+  if (pEv->button() == Qt::RightButton) {
     _contextmenu->exec(QCursor::pos());
-  } else if (pEv->button() == LeftButton) {
+  } else if (pEv->button() == Qt::LeftButton) {
     if (pEv->modifiers() == Qt::ShiftModifier) {
       _pTask = &_TranslateTask;
-    } else if (pEv->modifiers() == AltModifier) {
+    } else if (pEv->modifiers() == Qt::AltModifier) {
       _pTask = &_ZoomTask;
-    } else if (pEv->modifiers() == NoModifier) {
+    } else if (pEv->modifiers() == Qt::NoModifier) {
       _pTask = &_DragPointTask;
     }
   }
-  if (pEv->button() == Qt::MidButton) {
+  if (pEv->button() == Qt::MiddleButton) {
     _pTask = &_ZoomTask;
   }
   bool addRemove = false;
@@ -594,7 +596,7 @@ void Ctrl::mousePressEvent(QMouseEvent *pEv) {
 void Ctrl::mouseDoubleClickEvent(QMouseEvent *pEv) {
   const int retinaScale = devicePixelRatio();
 
-  if (pEv->button() == LeftButton) {
+  if (pEv->button() == Qt::LeftButton) {
     _pTask = &_IncMultiplicityTask;
     _pTask->ButtonDown(pEv,retinaScale);
     update();
@@ -636,13 +638,21 @@ void Ctrl::mouseMoveEvent(QMouseEvent *pEv) {
 
 void Ctrl::wheelEvent(QWheelEvent *pEv) {
   const int retinaScale = devicePixelRatio();
+  QPoint numPixels = pEv->pixelDelta();
+  QPoint numDegrees = pEv->angleDelta() / 8;
+
+  float d = 0.f;
+  if (!numPixels.isNull()) {
+    d = numPixels.y();
+  } else if (!numDegrees.isNull()) {
+    d = numDegrees.y() / 15.;
+  }
 
   makeCurrent();
-  if (pEv->orientation() == Qt::Vertical) {
-    float d = pEv->delta();
-    Zoom(-d*retinaScale);
-    update();
-  }
+  Zoom(-d*retinaScale);
+  update();
+
+  pEv->accept();
 }
 
 void Ctrl::Help() {
@@ -820,16 +830,15 @@ void Ctrl::renderText(double x, double y, double z, const QString &str,
 
   int fontSize = font.pointSize()*retinaScale;
   QFontMetrics metrics(font);
-  int text_width = metrics.width(QString(str)) + 10;
+  int text_width = metrics.horizontalAdvance(QString(str)) + 10;
 
   int text_height = fontSize;
   QPixmap textimg(text_width, text_height + text_height / 3 + 1);
   textimg.fill(Qt::transparent);
 
   QPainter painter(&textimg);
-  painter.setRenderHints(QPainter::HighQualityAntialiasing |
-                         QPainter::TextAntialiasing |
-                         QPainter::NonCosmeticDefaultPen);
+  painter.setRenderHints(QPainter::Antialiasing |
+                         QPainter::TextAntialiasing);
   painter.setBrush(color);
   painter.setPen(color);
   painter.setFont(font);

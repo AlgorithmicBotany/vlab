@@ -25,7 +25,7 @@
 #include <cctype>
 #include <iostream>
 
-#include <qgl.h>
+#include <QtOpenGL>
 
 #include "dynarray.h"
 #include "geometry.h"

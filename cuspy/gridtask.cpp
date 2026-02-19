@@ -21,7 +21,7 @@
 #include <cstdlib>
 #include <cmath>
 
-#include <qgl.h>
+#include <QtOpenGL>
 #include <QMouseEvent>
 
 #include "geometry.h"

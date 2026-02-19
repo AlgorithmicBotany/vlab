@@ -19,7 +19,7 @@ OBJECTIVE_SOURCES +=	../libs/misc/CocoaBridge.mm
  LIBS +=		-framework AppKit
 }
 
-QT +=  opengl 
+QT +=  opengl widgets openglwidgets
 
 !isEmpty(MAKE_BUNDLE) {
  # QMAKE_INFO_PLIST = Info.plist

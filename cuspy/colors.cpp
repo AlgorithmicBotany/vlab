@@ -23,7 +23,8 @@
 #include <cstring>
 #include <cstdlib>
 #include <iostream>
-#include <qgl.h>
+
+#include <QtOpenGL>
 
 #include "colors.h"
 #include "file.h"
