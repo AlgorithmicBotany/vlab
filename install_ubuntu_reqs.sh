@@ -1,5 +1,5 @@
 #!/bin/sh
-# installs packages for building on Ubuntu 20.04/22.04
+# installs packages for building on Ubuntu 22.04.5 LTS
 
 set -eu
 
@@ -7,9 +7,7 @@ set -eu
 base_pkgs='
   g++
   make
-  qtbase5-dev
-  qt5-qmake
-  qtcreator
+  qt6-base-dev
   freeglut3-dev
   bison
   flex

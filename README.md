@@ -3,19 +3,16 @@
 
 ## Developer Getting Started Guide
 
-Note: our current version has been developed using QT 5.15.16.
-
 ### OSX
 
-You will need to have Xcode Command Line Tools and Qt5 installed.
+You will need to have Xcode Command Line Tools and Qt6 installed.
 If you do not have Xcode, get it via Terminal with the command:
 ```
 xcode-select -install 
 ```
 This should install the command line tools only and not the IDE.
-Then install Qt: https://doc.qt.io/qt-5/gettingstarted.html
-Because Qt 5.15 support is ending on 26 May, 2025, it is recommended to install Qt via
-Homebrew (https://formulae.brew.sh/formula/qt@5) or Macports (https://ports.macports.org/port/qt5/).
+Then install Qt: https://doc.qt.io/qt-6/gettingstarted.html
+Alternatively, install Qt via Homebrew (https://formulae.brew.sh/formula/qt6) or Macports (https://ports.macports.org/port/qt6/).
 
 To compile vlab, go to the source directory and run: 
 ```
@@ -61,7 +58,7 @@ You can install both at the same time using the Windows Command Prompt (in admin
 ```
 wsl --install
 ```
-giving you Ubuntu as the default distribution. Then follow the instructions for compiling vlab for Ubuntu given above. 
+which installs Ubuntu by default. Then, follow the instructions for compiling vlab for Ubuntu. 
 
 ## Version Numbering
 
