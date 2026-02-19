@@ -21,7 +21,8 @@
 #ifndef __VIEW_H__
 #define __VIEW_H__
 
-#include <qgl.h>
+#include <QtOpenGL>
+#include <QOpenGLWidget>
 #include <QMenu>
 #include <QShowEvent>
 #include <QHideEvent>
@@ -33,7 +34,7 @@
 class Ctrl;
 class Model;
 
-class View : public QGLWidget {
+class View : public QOpenGLWidget {
   Q_OBJECT
 
  public:
@@ -43,7 +44,7 @@ class View : public QGLWidget {
   virtual void Move(ScreenPoint) = 0;
   virtual void Zoom(int) = 0;
 
-  virtual void update();
+  virtual void updateView();
   void closeEvent(QCloseEvent*);
 
   QAction* GRID;

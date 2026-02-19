@@ -23,13 +23,13 @@
 
 #include <list>
 
-#include <qwidget.h>
-#include <qstring.h>
-#include <qpushbutton.h>
+#include <QWidget>
+#include <QString>
+#include <QPushButton>
 #include <QButtonGroup>
 #include <QGroupBox>
-#include <qradiobutton.h>
-#include <qcursor.h>
+#include <QRadioButton>
+#include <QCursor>
 #include <QListWidget>
 #include <QShowEvent>
 #include <QHideEvent>

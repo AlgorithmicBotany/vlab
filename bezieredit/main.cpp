@@ -19,9 +19,10 @@
 
 #include "ctrl.h"
 #include "mainwindow.h"
-#include <QtCore/QTimer>
-#include <qapplication.h>
+//#include <QtCore/QTimer>
+#include <QApplication>
 
+/*
 void delayedShow(QWidget *wnd) {
   // This timer ensure Qt has the time to create the OpenGL context before
   // showing the window
@@ -31,6 +32,7 @@ void delayedShow(QWidget *wnd) {
   QObject::connect(delay_show, SIGNAL(timeout()), wnd, SLOT(raise()));
   delay_show->start(100);
 }
+*/
 
 int main(int argc, char **argv) {
   QApplication::setApplicationName("BezierEdit");
@@ -44,7 +46,9 @@ int main(int argc, char **argv) {
   wnd->setWindowIcon(QPixmap());
   wnd->setWindowTitle("BezierEdit");
   wnd->activateWindow();
-  delayedShow(wnd);
+  //delayedShow(wnd);
+  wnd->show();
+  wnd->raise();
   qapp.setWindowIcon(QIcon(":/icon.png"));
   wnd->setWindowIcon(QPixmap(":/icon.png"));
   return qapp.exec();

@@ -57,7 +57,7 @@ void PerspView::switchToOrthoView() {
   _orthoView->setChecked(true);
   _perspView->setChecked(false);
 
-  update();
+  updateView();
 }
 
 void PerspView::switchToPerspView() {
@@ -65,7 +65,7 @@ void PerspView::switchToPerspView() {
   _orthoView->setChecked(false);
   _perspView->setChecked(true);
 
-  update();
+  updateView();
 }
 
 WorldPoint PerspView::mapScreenToWorld(ScreenPoint s) const {
@@ -155,12 +155,12 @@ WorldPoint *PerspView::getSelection(QMouseEvent *pEv) {
 void PerspView::Move(ScreenPoint s) {
   _panX += _upp * s.x();
   _panY -= _upp * s.y();
-  update();
+  updateView();
 }
 
 void PerspView::Zoom(int factor) {
   _scalefactor += factor;
-  update();
+  updateView();
 }
 
 void PerspView::Rotate(ScreenPoint s) {
@@ -176,7 +176,7 @@ void PerspView::Rotate(ScreenPoint s) {
   else if (_rotY < 0.0)
     _rotY += 360.0;
 
-  update();
+  updateView();
 }
 
 double PerspView::getZNear() { return -_pModel->getScale() * 1.5; }

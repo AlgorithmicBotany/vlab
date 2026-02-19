@@ -38,7 +38,7 @@ void TranslateViewTask::ButtonDown(QMouseEvent *pEv) {
 void TranslateViewTask::PointerMotion(QMouseEvent *pEv) {
   ScreenPoint newPos(pEv->x(), pEv->y());
   _pView->Move(newPos - _lastPos);
-  _pView->update();
+  _pView->updateView();
   _lastPos = newPos;
 }
 
@@ -52,7 +52,7 @@ void ZoomViewTask::PointerMotion(QMouseEvent *pEv) {
 
   if (rel) {
     _pView->Zoom(rel);
-    _pView->update();
+    _pView->updateView();
     _lastY = newY;
   }
 }
@@ -246,6 +246,6 @@ void RotatePerspViewTask::ButtonDown(QMouseEvent *pEv) {
 void RotatePerspViewTask::PointerMotion(QMouseEvent *pEv) {
   ScreenPoint newPos(pEv->x(), pEv->y());
   dynamic_cast<PerspView *>(_pView)->Rotate(newPos - _lastPos);
-  _pView->update();
+  _pView->updateView();
   _lastPos = newPos;
 }

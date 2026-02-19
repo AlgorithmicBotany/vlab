@@ -22,14 +22,14 @@
 
 #include <cstdlib>
 
-#include <qapplication.h>
-#include <qlabel.h>
-#include <qlayout.h>
+#include <QApplication>
+#include <QLabel>
+#include <QLayout>
 #include <QFileDialog>
-#include <qbitmap.h>
-#include <qimage.h>
-#include <qmessagebox.h>
-#include <qsizepolicy.h>
+#include <QBitmap>
+#include <QImage>
+#include <QMessageBox>
+#include <QSizePolicy>
 #include <QBoxLayout>
 #include <QCloseEvent>
 #include <QHBoxLayout>
@@ -61,7 +61,7 @@ Ctrl::Ctrl(int argc, char **argv)
     setWindowTitle(_caption);
     _defaultName = true;
   }
-
+  
   // load the config options from file
   try {
     Config::readConfig();
@@ -89,7 +89,7 @@ Ctrl::Ctrl(int argc, char **argv)
 
   _pEditMode = new QGroupBox();
   QBoxLayout *modelayout = new QVBoxLayout();
-  modelayout->setMargin(5);
+  modelayout->setContentsMargins(5,5,5,5);
 
   _pMovePointBtn = new QRadioButton("Move Point");
   modelayout->addWidget(_pMovePointBtn);
@@ -111,7 +111,7 @@ Ctrl::Ctrl(int argc, char **argv)
 
    _pCMode = new QGroupBox();
   QBoxLayout *cmodelayout = new QVBoxLayout();
-  cmodelayout->setMargin(5);
+  cmodelayout->setContentsMargins(5,5,5,5);
 
   _pCOffBtn = new QRadioButton("No Continuity");
   cmodelayout->addWidget(_pCOffBtn);
@@ -173,12 +173,13 @@ Ctrl::Ctrl(int argc, char **argv)
 
   // create the view windows
   _pPerspView = new PerspView(this, _pModel);
+
   _pPerspView->resize(QSize(520, 520));
   _pPerspView->setSizePolicy(QSizePolicy(QSizePolicy::MinimumExpanding,
                                          QSizePolicy::MinimumExpanding));
   ctrlLyt->addWidget(_pPerspView, 0, 1, 10, 1);
 
- 
+
   // set the default view options
   _pPerspView->GRID->setChecked(true);
   _pPerspView->AXES->setChecked(true);
@@ -289,17 +290,17 @@ void Ctrl::setC1On() {
 
 void Ctrl::snapXY() {
   _pPerspView->snapToXY();
-  _pPerspView->update();
+  _pPerspView->updateView();
 }
 
 void Ctrl::snapYZ() {
   _pPerspView->snapToYZ();
-  _pPerspView->update();
+  _pPerspView->updateView();
 }
 
 void Ctrl::snapZX() {
   _pPerspView->snapToZX();
-  _pPerspView->update();
+  _pPerspView->updateView();
 }
 
 bool Ctrl::quitCB() {
@@ -333,7 +334,7 @@ bool Ctrl::quitCB() {
 void Ctrl::closeEvent(QCloseEvent*) {
 }
 
-void Ctrl::updateViews() { _pPerspView->update(); }
+void Ctrl::updateViews() { _pPerspView->updateView(); }
 
 void Ctrl::reload() {
   _pModel->load(_savefilename.toStdString().c_str());
@@ -551,7 +552,6 @@ void Ctrl::_updatePatchNames() {
     item->setFlags(item->flags() | Qt::ItemIsEditable);
     _pNamesLbx->addItem(item);
     connect(_pNamesLbx, SIGNAL(itemChanged(QListWidgetItem *)), SLOT(updatePatchName(QListWidgetItem *)));
-
   }
 }
 
@@ -559,4 +559,5 @@ void Ctrl::updatePatchName(QListWidgetItem *item){
   int index = _pNamesLbx->row(item);
   std::string text = item->text().toStdString();
   _pModel->updateName(index,text);
+
 }

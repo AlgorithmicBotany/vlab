@@ -21,7 +21,7 @@
 #include <cmath>
 #include <cstdlib>
 
-#include <qgl.h>
+#include <QtOpenGL>
 
 #include "geometry.h"
 #include "glutils.h"

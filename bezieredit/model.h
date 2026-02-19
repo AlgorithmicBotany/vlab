@@ -24,7 +24,7 @@
 #include <set>
 #include <string>
 #include <list>
-#include <qgl.h>
+#include <QtOpenGL>
 
 #include "geometry.h"
 #include "dynarray.h"

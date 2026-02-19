@@ -32,7 +32,7 @@
 using namespace Qt;
 
 View::View(Ctrl *pCtrl, Model *pModel)
-    : QGLWidget(pCtrl), _pCtrl(pCtrl), _pModel(pModel),
+    : QOpenGLWidget(pCtrl), _pCtrl(pCtrl), _pModel(pModel),
       _idleTask(IdleViewTask(this)), _translateTask(TranslateViewTask(this)),
       _zoomTask(ZoomViewTask(this)), _pCurrentTask(&_idleTask),
       _pContextMenu(new QMenu(this)), _upp(0.0), _gridRange(1.0), _mode() {
@@ -81,10 +81,10 @@ View::View(Ctrl *pCtrl, Model *pModel)
 
 View::~View() {}
 
-void View::update() {
+void View::updateView() {
   makeCurrent();
   _setView();
-  updateGL();
+  update();
 }
 
 void View::closeEvent(QCloseEvent *pEv) {
@@ -124,27 +124,27 @@ void View::setDrawMode(const unsigned int m) {
 }
 
 void View::toggleGrid() {
-  update();
+  updateView();
 }
 
-void View::toggleAxes() { update(); }
+void View::toggleAxes() { updateView(); }
 
-void View::toggleUpVector() { update(); }
+void View::toggleUpVector() { updateView(); }
 
-void View::toggleHeadingVector() { update(); }
+void View::toggleHeadingVector() { updateView(); }
 
-void View::toggleConnectionPoint() { update(); }
+void View::toggleConnectionPoint() { updateView(); }
 
-void View::toggleEndPoint() { update(); }
+void View::toggleEndPoint() { updateView(); }
 
-void View::toggleControlPoints() { update(); }
+void View::toggleControlPoints() { updateView(); }
 
 void View::toggleWireModel() {
 
   if ((!SOLID_MODEL->isChecked()) && (!WIRE_MODEL->isChecked()))
     toggleSolidModel();
 
-  update();
+  updateView();
 }
 
 void View::toggleSolidModel() {
@@ -153,10 +153,10 @@ void View::toggleSolidModel() {
   if ((SOLID_MODEL->isChecked() & _mode) && (WIRE_MODEL->isChecked() & _mode))
     toggleWireModel();
 
-  update();
+  updateView();
 }
 
-void View::toggleControlPoly() { update(); }
+void View::toggleControlPoly() { updateView(); }
 
 void View::paintGL() {
   glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
@@ -194,7 +194,7 @@ void View::mousePressEvent(QMouseEvent *pEv) {
   if (topWidget != nullptr)
     topWidget->raise();
   switch (pEv->button()) {
-  case RightButton:
+  case Qt::RightButton:
     _pContextMenu->exec(QCursor::pos());
     break;
   case Qt::LeftButton:
@@ -205,7 +205,7 @@ void View::mousePressEvent(QMouseEvent *pEv) {
       _pCurrentTask = &_zoomTask;
     }
     break;
-  case MidButton:
+  case Qt::MiddleButton:
     _pCurrentTask = &_zoomTask;
   default:
     break;

@@ -13,7 +13,7 @@ RESOURCES = bezieredit.qrc ../libs/misc/about.qrc
 MY_BASE  = ..
 MY_LIBS  = misc
 include( $${MY_BASE}/common.pri )
-QT +=  opengl widgets 
+QT +=  opengl widgets openglwidgets
 
 !isEmpty(MAKE_BUNDLE) {
  # QMAKE_INFO_PLIST = Info.plist
