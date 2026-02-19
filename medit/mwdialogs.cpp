@@ -34,7 +34,7 @@ SelectRangeDialog::SelectRangeDialog(QWidget *parent, const char *,
     : QWidget(parent, f) {
 
   QGridLayout *lay = new QGridLayout(this);
-  lay->setMargin(3);
+  lay->setContentsMargins(3,3,3,3);
   begin = new QSpinBox(this);
   begin->setMinimum(0);
   begin->setMaximum(255);
@@ -110,7 +110,7 @@ ImageDialog::ImageDialog(QWidget *parent, const char*, Qt::WindowFlags f)
     : QWidget(parent, f) {
 
   QGridLayout *G = new QGridLayout(this);
-  G->setMargin(3);
+  G->setContentsMargins(3,3,3,3);
 
   QLabel *l1 = new QLabel("Render Speed", this);
   l1->setAlignment(AlignRight);

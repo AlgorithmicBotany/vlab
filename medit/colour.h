@@ -24,7 +24,7 @@
 #include <iostream>
 #include <cmath>
 
-#include <qgl.h>
+#include <QtOpenGL>
 
 #define UNDEFINED -1
 #define PI 3.1415927 // mmm...pie...

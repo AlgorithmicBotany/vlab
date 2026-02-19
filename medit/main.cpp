@@ -34,7 +34,7 @@ int main(int argc, char **argv) {
   int w = 400;
   int h = 400;
 
-  QApplication::setColorSpec(QApplication::CustomColor);
+  //QApplication::setColorSpec(QApplication::CustomColor);
   QApplication app(argc, argv);
   mw = new MW(argc, argv);
 

@@ -20,7 +20,7 @@ MY_LIBS  = misc
 include( $${MY_BASE}/common.pri )
 #CONFIG += debug
 
-QT +=  opengl
+QT +=  opengl widgets openglwidgets
 macx:{
 # 
 HEADERS +=		cocoabridge.h 

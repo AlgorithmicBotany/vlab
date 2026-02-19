@@ -31,18 +31,18 @@
 
 #include <iostream>
 
-#include <qwidget.h>
-#include <qdialog.h>
-#include <qspinbox.h>
-#include <qpushbutton.h>
+#include <QWidget>
+#include <QDialog>
+#include <QSpinBox>
+#include <QPushButton>
 #include <QButtonGroup>
-#include <qlayout.h>
-#include <qlabel.h>
-#include <qgl.h>
-#include <qpushbutton.h>
-#include <qslider.h>
-#include <qlayout.h>
-#include <qradiobutton.h>
+#include <QLayout>
+#include <QLabel>
+#include <QtOpenGL>
+#include <QPushButton>
+#include <QSlider>
+#include <QLayout>
+#include <QRadioButton>
 #include <QMainWindow>
 #include <QCloseEvent>
 #include <QGroupBox>

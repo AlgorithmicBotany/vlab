@@ -31,15 +31,15 @@
 #include <iostream>
 #include <fstream>
 
-#include <qapplication.h>
-#include <qgl.h>
-#include <qwidget.h>
-#include <qmessagebox.h>
-#include <qfile.h>
-#include <qstatusbar.h>
+#include <QApplication>
+#include <QtOpenGL>
+#include <QWidget>
+#include <QMessageBox>
+#include <QFile>
+#include <QStatusBar>
 #include <QByteArray>
-#include <qmainwindow.h>
-#include <qmenubar.h>
+#include <QMainWindow>
+#include <QMenuBar>
 #include <QScrollArea>
 #include <QStatusBar>
 #include <QSpinBox>

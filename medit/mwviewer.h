@@ -73,7 +73,7 @@ void matprint(Material);
 class MWViewer:public QOpenGLWidget{
   Q_OBJECT
     public:
-  MWViewer(QWidget* parent, const char* name=0,Qt::WindowFlags f=0);
+  MWViewer(QWidget* parent, const char* name=0,Qt::WindowFlags f=Qt::WindowFlags(0));
 
   void getselect(int*,Material*);
   void selectOff(bool);
