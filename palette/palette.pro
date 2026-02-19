@@ -16,7 +16,7 @@ include( $${MY_BASE}/common.pri )
 
 RESOURCES = palette.qrc  ../libs/misc/about.qrc
 
-QT +=  opengl widgets 
+QT +=  opengl widgets openglwidgets
 
 !isEmpty(MAKE_BUNDLE) {
  # QMAKE_INFO_PLIST = Info.plist

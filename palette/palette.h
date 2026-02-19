@@ -52,7 +52,7 @@
 #include <QStatusBar>
 #include <QWidget>
 #include <QtWidgets/QSlider>
-#include <qgl.h>
+#include <QtOpenGL>
 
 #include "glcolourmap.h"
 

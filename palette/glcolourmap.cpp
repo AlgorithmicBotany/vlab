@@ -38,7 +38,7 @@
 #include <QVBoxLayout>
 #include <chrono>
 #include <ctime>
-#include <qcursor.h>
+#include <QCursor>
 
 using namespace Qt;
 #include "glcolourmap.h"
@@ -451,7 +451,7 @@ void GLColourMap::mousePressEvent(QMouseEvent *me) {
     popmenu->exec(QCursor::pos());
   }
 
-  if (Qt::MidButton == me->button()) {
+  if (Qt::MiddleButton == me->button()) {
     if (selectable) {
       if (!selectall) {
         interindex = selection_test();

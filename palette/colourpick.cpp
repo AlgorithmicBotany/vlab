@@ -46,17 +46,17 @@ ColourPick::ColourPick(QWidget *parent, const char *, QOpenGLWidget *globj,
   slidermode = "no";
 
   QBoxLayout *top = new QVBoxLayout(this);
-  top->setMargin(3);
+  top->setContentsMargins(3,3,3,3);
 
   QBoxLayout *upper = new QHBoxLayout();
   top->addLayout(upper);
   upper->setSpacing(5);
-  upper->setMargin(3);
+  upper->setContentsMargins(3,3,3,3);
 
   // sliders
   QGridLayout *slides = new QGridLayout();
   upper->addLayout(slides);
-  slides->setMargin(3);
+  slides->setContentsMargins(3,3,3,3);
   slides->addItem(new QSpacerItem(150, 0), 0, 1);
   slides->addItem(new QSpacerItem(75, 0), 0, 2);
 
@@ -165,7 +165,7 @@ ColourPick::ColourPick(QWidget *parent, const char *, QOpenGLWidget *globj,
   QBoxLayout *display = new QVBoxLayout();
   display->setSpacing(1);
   upper->addLayout(display);
-  display->setMargin(3);
+  display->setContentsMargins(3,3,3,3);
   colourWheel = new ColourWheel(this, "colourwheel", globj);
 
   status = new QStatusBar(this);
