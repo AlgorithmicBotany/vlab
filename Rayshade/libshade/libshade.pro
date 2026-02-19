@@ -11,13 +11,15 @@ HEADERS = ../config.h  funcdefs.h \
 INCLUDEPATH += ./ ../ ../libray/ ../../cpfg/ ../../misc/libs/
 QMAKE_LINK = $$QMAKE_LINK_C
 
-flex.name = flex ${QMAKE_FILE_IN}
+FLEXSOURCES = lex.l
+#flex.name = flex ${QMAKE_FILE_IN}
+flex.name = flex
 flex.input = FLEXSOURCES
 flex.output = .obj/lex.o
-flex.commands = flex -l  -t lex.l > lex.c
-flex.CONFIG += target_predeps
-flex.variable_out = GENERATED_SOURCES
-silent:flex.commands = @echo Lex ${QMAKE_FILE_IN} && $$flex.commands
+#flex.commands = flex -l  -t lex.l > lex.c
+#flex.CONFIG += target_predeps
+#flex.variable_out = GENERATED_SOURCES
+#silent:flex.commands = @echo Lex ${QMAKE_FILE_IN} && $$flex.commands
 QMAKE_EXTRA_COMPILERS += flex
 
 BISONSOURCES = yacc.y
