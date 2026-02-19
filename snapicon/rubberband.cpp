@@ -47,7 +47,7 @@ void RubberBand::paintEvent(QPaintEvent *) {
                        .arg(parentWidget()->size().height()-2*rubberBandBorderSize);
     QFont font("Arial", 8);
     QFontMetrics fm(font);
-    int pixelsWide = fm.width(text);
+    int pixelsWide = fm.horizontalAdvance(text);
     int pixelsHigh = fm.height();
     QPoint textPos(parentWidget()->size().width() - pixelsWide -
                        rubberBandBorderSize,
