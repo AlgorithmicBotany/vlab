@@ -85,7 +85,7 @@ class Item : public QWidget {
   Item(){}
   Item(const Item& ) {std::cerr<<"NOT YET IMPLEMENTED"<<std::endl;};
   
-  Item(Gallery* pGal, std::string filename, QWidget* parent, const char* name = 0, Qt::WindowFlags f = 0);
+  Item(Gallery* pGal, std::string filename, QWidget* parent, const char* name = 0, Qt::WindowFlags f = Qt::WindowFlags(0));
   virtual ~Item();
 
   virtual bool load() = 0;

@@ -16,7 +16,7 @@
 
 #include <QFileDialog>
 #include <QGridLayout>
-#include <QDesktopWidget>
+//#include <QDesktopWidget>
 #include <QScreen>
 #include <QLabel>
 #include <QTimer>
@@ -475,7 +475,7 @@ void Gallery::loadFile(std::string filename){
 void Gallery::setGalleryFileName() {
   QString filename = QFileDialog::getSaveFileName(NULL, QString("Save Gallery"));
 
-  if (filename != QString::null) {
+  if (filename.isNull()) {
     _galleryFilename = filename;
   }
   QFileInfo fi(_galleryFilename);
@@ -538,7 +538,7 @@ void Gallery::saveAll(){
 
 void Gallery::saveAllAs() {
   setGalleryFileName();
-  if (_galleryFilename != QString::null)
+  if (_galleryFilename.isNull())
     saveAll();
   _has_changed = false;
 }
@@ -677,7 +677,7 @@ void Gallery::createItem(){
   default:
     break;
   }
-  CreateItemDlg *pDlg = new CreateItemDlg(this, 0, 0, 0, selection);
+  CreateItemDlg *pDlg = new CreateItemDlg(this, 0, 0, Qt::WindowFlags(), selection);
   int r = pDlg->exec();
   if (r == QDialog::Accepted) {
     selection_name =
@@ -736,7 +736,7 @@ void Gallery::duplicateItem(){
   default:
     break;
   }
-  CreateItemDlg *pDlg = new CreateItemDlg(this, 0, 0, 0, selection);
+  CreateItemDlg *pDlg = new CreateItemDlg(this, 0, 0, Qt::WindowFlags(), selection);
   int r = pDlg->exec();
   if (r == QDialog::Accepted) {
     selection_name =

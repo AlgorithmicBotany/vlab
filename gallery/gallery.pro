@@ -1,4 +1,4 @@
-QT          += widgets opengl gui
+QT          += core widgets opengl gui openglwidgets
 
 HEADERS     = glwidget.h \
               editor.cpp \              
@@ -17,12 +17,11 @@ SOURCES     = glwidget.cpp \
 
 FORMS +=  Preferences.ui
 
-CONFIG += debug
-# install
+CONFIG += qt opengl
 TARGET = gallery
 
 RESOURCES += resources.qrc ../libs/misc/about.qrc
-MY_BASE = ../../vlab
+MY_BASE = ..
 MY_LIBS = misc directoryWatcher platform
 include( $${MY_BASE}/common.pri )
    

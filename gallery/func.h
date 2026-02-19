@@ -31,7 +31,7 @@
 class FuncItem : public Item {
 
  public:
-  FuncItem(Gallery* pGal, std::string filename, QWidget* parent, const char* name = 0, Qt::WindowFlags f = 0);
+  FuncItem(Gallery* pGal, std::string filename, QWidget* parent, const char* name = 0, Qt::WindowFlags f = Qt::WindowFlags(0));
 
   FuncItem(Gallery* pGal, std::string filename, std::string name);
 
