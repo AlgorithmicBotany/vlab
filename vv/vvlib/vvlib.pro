@@ -4,7 +4,7 @@ CONFIG  += shared
 macx: {
 QMAKE_SONAME_PREFIX = @executable_path/../Resources/libs/
 }
-QT += opengl
+QT += opengl openglwidgets
 TARGET   = vv
 SOURCES  = \
     ./util/contour.cpp \

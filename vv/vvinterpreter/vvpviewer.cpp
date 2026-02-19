@@ -319,7 +319,7 @@ void VVPViewer::mousePressEvent(QMouseEvent* pEv) {
           break;
       }
       break;
-    case Qt::MidButton:
+    case Qt::MiddleButton:
       editMode = ZOOM;
       break;
     case Qt::RightButton:

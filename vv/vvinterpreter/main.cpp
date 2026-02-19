@@ -2,7 +2,6 @@
 #include <iostream>
 #include <string>
 #include <QApplication>
-//#include <qdesktopwidget.h>
 #include <util/clamp.hpp>
 #include "vvpapp.hpp"
 
@@ -13,6 +12,7 @@
 #include <QProcess>
 #include <QStyle>
 #include <QScreen>
+#include <QRegularExpression>
 
 #ifdef __APPLE__
 #include "CoreFoundation/CFBundle.h"
@@ -177,14 +177,15 @@ QString findQtPath()
   proc.waitForFinished();
   QString result = QString::fromLocal8Bit(proc.readAllStandardOutput());
   QStringList lines = result.split("\n");
-  QStringList qtcore = lines.filter(QRegExp(".*QtCore.*"));
+  QRegularExpression qtcorePath(".*QtCore.*");
+  QStringList qtcore = lines.filter(qtcorePath);
   if(!qtcore.empty())
   {
     QString lib = qtcore[0].split(" ")[0].trimmed();
-    QRegExp findPath = QRegExp("=> (.*)/libQtCore.* \\(0x.*\\)");
-    if(findPath.exactMatch(lib))
+    QRegularExpression findPath("=> (.*)/libQtCore.* \\(0x.*\\)");
+    if(findPath.match(lib).hasMatch())
     {
-      QString pth = findPath.capturedTexts()[1];
+      QString pth = findPath.match(lib).captured(1);
       QDir p(pth);
       if(p.exists())
         return pth;

@@ -5,6 +5,7 @@
 #include <QOpenGLWidget>
 #include <QOpenGLFunctions>
 #include <QMenu>
+#include <QElapsedTimer>
 
 #include <string>
 #include <set>
@@ -12,7 +13,6 @@
 #include <util/point.hpp>
 
 #ifdef FAM_THREAD
-#include <qtimer.h>
 #include "fam.hpp"
 class QCloseEvent;
 

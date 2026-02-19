@@ -8,7 +8,7 @@ namespace view {
   /** @brief A Viewer subclass with an orthogonal view. */
   class OrthoViewer : public Viewer {
   public:
-    OrthoViewer(QWidget* parent = 0, const char* name = 0, Qt::WindowFlags = 0);
+    OrthoViewer(QWidget* parent = 0, const char* name = 0, Qt::WindowFlags = Qt::WindowFlags(0));
     virtual ~OrthoViewer();
 
     void setMin(const util::Point<GLfloat> p);

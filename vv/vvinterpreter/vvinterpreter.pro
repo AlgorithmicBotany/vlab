@@ -1,6 +1,6 @@
 TEMPLATE = app
 CONFIG +=
-QT += opengl
+QT += widgets opengl openglwidgets
 TARGET = vvinterpreter
 RESOURCES = gui.qrc ../../libs/misc/about.qrc
 SOURCES = main.cpp dllinterface.cpp vvpapp.cpp vvpviewer.cpp icon.cpp

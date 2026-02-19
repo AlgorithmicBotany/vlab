@@ -8,7 +8,7 @@ namespace view {
   /** @brief A Viewer subclass with a perspective view. */
   class PerspViewer : public Viewer {
   public:
-    PerspViewer(QWidget* parent = 0, const char* name = 0, Qt::WindowFlags = 0);
+    PerspViewer(QWidget* parent = 0, const char* name = 0, Qt::WindowFlags = Qt::WindowFlags(0));
     virtual ~PerspViewer();
 
     void setMin(const util::Point<GLfloat> p);

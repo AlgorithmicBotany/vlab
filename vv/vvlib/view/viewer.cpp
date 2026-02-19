@@ -6,7 +6,7 @@
 
 using namespace view;
 
-QGLWidget* Viewer::pShareWidget = 0;
+QOpenGLWidget* Viewer::pShareWidget = 0;
 
 /** @brief Constructor
     @param parent The parent Qt widget.
@@ -14,7 +14,7 @@ QGLWidget* Viewer::pShareWidget = 0;
     @param f      The Qt widget flags.
 */
 Viewer::Viewer(QWidget* parent, const char* name, Qt::WindowFlags f) :
-  QGLWidget(parent, pShareWidget, f),
+  QOpenGLWidget(parent),
   pContextMenu(0),
   prevMouseX(),
   prevMouseY()
@@ -30,7 +30,7 @@ Viewer::~Viewer() {}
 void Viewer::update() {
   makeCurrent();
   resizeGL(width(), height());
-  updateGL();
+  update();
 }
 
 /** @brief Handle mouse clicks. */
@@ -49,7 +49,7 @@ void Viewer::mousePressEvent(QMouseEvent* pEv) {
           break;
       }
       break;
-    case Qt::MidButton:
+    case Qt::MiddleButton:
       editMode = ZOOM;
       break;
     case Qt::RightButton:

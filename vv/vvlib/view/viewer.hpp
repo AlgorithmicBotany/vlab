@@ -3,16 +3,16 @@
 
 #include <string>
 
-#include <QGLWidget>
+#include <QOpenGLWidget>
 class QMenu;
 class QMouseEvent;
 class QKeyEvent;
 
 namespace view {
   /** @brief An encapsulation for a GL canvas with windowing facilities. */
-  class Viewer : public QGLWidget {
+  class Viewer : public QOpenGLWidget {
   public:
-    Viewer(QWidget* parent = 0, const char* name = 0, Qt::WindowFlags f = 0);
+    Viewer(QWidget* parent = 0, const char* name = 0, Qt::WindowFlags f = Qt::WindowFlags(0));
     virtual ~Viewer();
 
     void update();
@@ -44,7 +44,7 @@ namespace view {
     QMenu* pContextMenu;
 
   private:
-    static QGLWidget* pShareWidget;
+    static QOpenGLWidget* pShareWidget;
 
     int prevMouseX;
     int prevMouseY;

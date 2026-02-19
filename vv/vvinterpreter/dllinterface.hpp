@@ -105,7 +105,7 @@ private:
   bool render_init_available;
   bool proxy_available;
 
-  QTime timer;
+  QElapsedTimer timer;
 };
 
 #endif
