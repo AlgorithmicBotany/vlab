@@ -36,7 +36,7 @@ static void DrawSphere(void);
 
 /* -- implementation of GLDisplay class -----------------------  */
 
-GLDisplay::GLDisplay(QWidget *parent) : QGLWidget(parent) {
+GLDisplay::GLDisplay(QWidget *parent) : QOpenGLWidget(parent) {
   xpos = 0.0;
   ypos = 0.0;
   zpos = 0.0;
@@ -99,7 +99,14 @@ void GLDisplay::paintGL() {
   if (scene_mutex.tryLock() == FALSE) {
     // print wait message - if user tries to interact with debug window
     glColor3f(0.1f, 0.9f, 0.1f);
-    renderText(10, 10, "Please wait...");
+    //renderText(10, 10, "Please wait...");
+    QPainter painter(this);
+    painter.setPen(Qt::white);
+    painter.setFont(QFont("Arial", 14));
+    
+    // Draw text at pixel coordinates (100, 100)
+    painter.drawText(100, 100, "Please wait...");
+    painter.end();
     return;
   }
 
@@ -373,7 +380,7 @@ void GLDisplay::updateGLWindow(void) {
 
   scene_mutex.unlock();
 
-  updateGL();
+  update();
 }
 /* ------------------------------------------------------------ */
 void GLDisplay::updateGLVisualization(void) {
@@ -391,7 +398,7 @@ void GLDisplay::mousePressEvent(QMouseEvent *event) {
       (event->buttons() & Qt::MiddleButton)) {
     mouse_x = event->x();
     mouse_y = event->y();
-    updateGL();
+    update();
   } else if (event->buttons() & Qt::RightButton) {
     popup_menu->exec(QCursor::pos());
   }
@@ -402,12 +409,12 @@ void GLDisplay::mouseMoveEvent(QMouseEvent *event) {
     // Panning
     xpos += -(mouse_x - event->x()) * (sky_radius * 0.01f);
     ypos += (mouse_y - event->y()) * (sky_radius * 0.01f);
-    updateGL();
+    update();
   } else if ((event->buttons() & Qt::LeftButton) &&
              (event->modifiers() & Qt::CTRL)) {
     // Zooming
     zpos += (mouse_y - event->y()) * (sky_radius * 0.01f);
-    updateGL();
+    update();
   } else if (event->buttons() & Qt::LeftButton) {
     // Rotation of XY plane
     xrot -= (mouse_y - (float)event->y()) * 0.5f;
@@ -421,7 +428,7 @@ void GLDisplay::mouseMoveEvent(QMouseEvent *event) {
       yrot -= 360.f;
     else if (yrot < 0.f)
       yrot += 360.f;
-    updateGL();
+    update();
   } else if ((event->buttons() & Qt::MiddleButton) &&
              (event->modifiers() & Qt::SHIFT)) {
     // Roll around z-axis
@@ -430,11 +437,11 @@ void GLDisplay::mouseMoveEvent(QMouseEvent *event) {
       zrot -= 360.f;
     else if (zrot < 0.f)
       zrot += 360.f;
-    updateGL();
+    update();
   } else if (event->buttons() & Qt::MiddleButton) {
     // Zooming
     zpos += (mouse_y - (float)event->y()) * (sky_radius * 0.01f);
-    updateGL();
+    update();
   }
   mouse_x = event->x();
   mouse_y = event->y();
@@ -448,7 +455,7 @@ void GLDisplay::showBoundingSphere(void) {
     showsphereAct->setChecked(TRUE);
     showsphere = 1;
   }
-  updateGL();
+  update();
 }
 /* ------------------------------------------------------------ */
 void GLDisplay::showBoundingBox(void) {
@@ -459,7 +466,7 @@ void GLDisplay::showBoundingBox(void) {
     showboxAct->setChecked(TRUE);
     showbox = 1;
   }
-  updateGL();
+  update();
 }
 /* ------------------------------------------------------------ */
 void GLDisplay::showWireFrame(void) {
@@ -470,14 +477,14 @@ void GLDisplay::showWireFrame(void) {
     showwireframeAct->setChecked(TRUE);
     showwireframe = 1;
   }
-  updateGL();
+  update();
 }
 
 /* ------------------------------------------------------------ */
 void GLDisplay::setBackgroundColour(void) {
   glClearColor(visualization.background[0], visualization.background[1],
                visualization.background[2], 0.0);
-  updateGL();
+  update();
 }
 /* ------------------------------------------------------------ */
 void GLDisplay::outputVertices(void) {
@@ -509,7 +516,7 @@ void GLDisplay::outputVertices(void) {
 }
 /* ------------------------------------------------------------ */
 void GLDisplay::outputImage(void) {
-  QImage img = this->grabFrameBuffer();
+  QImage img = this->grabFramebuffer();
 
   if (img.save("quasimc.png", "PNG") == FALSE)
     fprintf(stderr, "QuasiMC - cannot output image\n");

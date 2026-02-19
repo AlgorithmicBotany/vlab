@@ -1,6 +1,6 @@
 TEMPLATE = app
 CONFIG += console release
-QT += opengl
+QT += opengl widgets openglwidgets
 HEADERS += combinedpk.h \
            comm_lib.h \
            gldisplay.h \

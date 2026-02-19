@@ -3,7 +3,7 @@
 
 #define GL_SILENCE_DEPRECATION
 
-#include <QGLWidget>
+#include <QOpenGLWidget>
 #include <QMenu>
 
 #ifdef __APPLE__
@@ -12,7 +12,7 @@
 #include <GL/glu.h>
 #endif
 
-class GLDisplay : public QGLWidget {
+class GLDisplay : public QOpenGLWidget {
   Q_OBJECT
 
 public:
