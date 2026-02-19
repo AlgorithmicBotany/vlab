@@ -64,7 +64,7 @@ void SampleDlg::setModel(Model *pModel) {
     return;
 
   int s = pModel->getSamples();
-  pSample->setText(QString(s));
+  pSample->setText(QString::number(s));
 }
 
 void SampleDlg::sampleChanged() {

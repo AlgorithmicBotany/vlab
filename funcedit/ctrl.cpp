@@ -51,7 +51,8 @@
 #include <QString>
 #include <QApplication>
 #include <QCloseEvent>
-#include <QDesktopWidget>
+//#include <QDesktopWidget>
+#include <QScreen>
 #include <QMenu>
 #include <QMouseEvent>
 #include <QOpenGLShaderProgram>
@@ -88,8 +89,10 @@ Ctrl::Ctrl(QWidget *parent, int argc, char **argv)
   int ypos = 100;
   int xsize = 300;
   int ysize = 240;
-  QDesktopWidget widget;
-  QRect mainScreenSize = widget.availableGeometry(widget.primaryScreen());
+  //QDesktopWidget widget;
+  //QRect mainScreenSize = widget.availableGeometry(widget.primaryScreen());
+  QScreen *screen = QGuiApplication::primaryScreen();
+  QRect mainScreenSize = screen->availableGeometry();  
 
   int wscr = mainScreenSize.width();
   int hscr = mainScreenSize.height();
@@ -284,6 +287,11 @@ Ctrl::Ctrl(QWidget *parent, int argc, char **argv)
     QObject::connect(sampleDlg, SIGNAL(modified()), this, SLOT(SaveInContinuousMode()));
     QObject::connect(pNDlg, SIGNAL(modified()), this, SLOT(SaveInContinuousMode()));
   }
+#else
+    pNDlg = new NameDlg(this);
+    pNDlg->setModel(&_FuncModel);
+    sampleDlg = new SampleDlg(this);
+    sampleDlg->setModel(&_FuncModel);
 #endif
 
   _WindowSize.x = width();
@@ -577,13 +585,21 @@ void Ctrl::paintGL() {
 
 void Ctrl::wheelEvent(QWheelEvent *pEv) {
   const int retinaScale = devicePixelRatio();
+  QPoint numPixels = pEv->pixelDelta();
+  QPoint numDegrees = pEv->angleDelta() / 8;
+
+  float d = 0.f;
+  if (!numPixels.isNull()) {
+    d = numPixels.y();
+  } else if (!numDegrees.isNull()) {
+    d = numDegrees.y() / 15.;
+  }
 
   makeCurrent();
-  if (pEv->orientation() == Qt::Vertical) {
-    float d = pEv->delta();
-    Zoom(-d*retinaScale);
-    update();
-  }
+  Zoom(-d*retinaScale);
+  update();
+
+  pEv->accept();
 }
 
 void Ctrl::mousePressEvent(QMouseEvent *pEv) {
@@ -603,7 +619,7 @@ void Ctrl::mousePressEvent(QMouseEvent *pEv) {
       _pTask = &_DragPointTask;
     }
   }
-  if (pEv->button() == Qt::MidButton) {
+  if (pEv->button() == Qt::MiddleButton) {
     _pTask = &_ZoomTask;
   }
 
@@ -885,7 +901,7 @@ void Ctrl::renderText(double x, double y, double z, const QString &str,
 
   int fontSize = font.pointSize()*retinaScale;
   QFontMetrics metrics(font);
-  int text_width = metrics.width(QString(str)) + 10;
+  int text_width = metrics.horizontalAdvance(QString(str)) + 10;
 
   int text_height = fontSize;
   QPixmap textimg(text_width, text_height + text_height / 3 + 1);

@@ -21,9 +21,9 @@
 #ifndef __NAMEDLG_H__
 #define __NAMEDLG_H__
 
-#include <qdialog.h>
-#include <qlineedit.h>
-#include <qstring.h>
+#include <QDialog>
+#include <QLineEdit>
+#include <QString>
 
 class Model;
 
@@ -31,7 +31,7 @@ class NameDlg : public QDialog {
   Q_OBJECT
 
  public:
-  NameDlg(QWidget* parent = 0, const char* name = 0, Qt::WindowFlags f = 0);
+  NameDlg(QWidget* parent = 0, const char* name = 0, Qt::WindowFlags f = Qt::WindowFlags(0));
 
   void setModel(const Model* pModel);
 

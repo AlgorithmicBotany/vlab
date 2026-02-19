@@ -25,7 +25,7 @@ include( $${MY_BASE}/common.pri )
 RESOURCES     = funcedit.qrc ../libs/misc/about.qrc
 
 
-QT +=  opengl
+QT +=  opengl openglwidgets
 
 !isEmpty(MAKE_BUNDLE) {
  # QMAKE_INFO_PLIST = Info.plist

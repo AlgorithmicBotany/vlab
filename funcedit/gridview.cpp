@@ -24,7 +24,7 @@
 #include <cstdlib>
 #include <iostream>
 
-#include <qgl.h>
+#include <QtOpenGL>
 
 #include "colors.h"
 #include "geometry.h"
@@ -49,7 +49,7 @@ void GridView::GInit() {
     QFontMetrics fm(f);
 
     _charHeight = fm.ascent();
-    _minusWidth = fm.width('-');
+    _minusWidth = fm.horizontalAdvance('-');
   }
   {
     // Initialize a clear colour
