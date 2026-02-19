@@ -21,7 +21,7 @@
 #include <windows.h>
 #include <GL/gl.h>
 #else
-#include <qgl.h>
+#include <QtOpenGL>
 #endif
 
 #include "material.h"

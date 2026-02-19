@@ -342,9 +342,10 @@ private:
   WinTablet *_tablet;
   Connection3D *_c3d;
 #endif
-#ifdef LINUX
-  QTabletEvent *_lastTabletEvent;
-#endif
+// _lastTabletEvent is not used
+//#ifdef LINUX
+//  QTabletEvent *_lastTabletEvent;
+//#endif
   bool _show;
   bool _recording;
   bool _recordingForPovray;

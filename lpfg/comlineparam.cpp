@@ -37,7 +37,7 @@ const int eDefaultSize =
     ;
 
 #ifdef LINUX
-#include <QDesktopWidget>
+#include <QScreen>
 #endif
 
 ComndLineParam comlineparam;
@@ -293,9 +293,14 @@ void ComndLineParam::_SetWindowRelPosition(int &i, char **argv) {
       static_cast<int>(atof(argv[i]) * GetSystemMetrics(SM_CXSCREEN));
 #endif
 #ifdef LINUX
-  QDesktopWidget widget;
-  QRect mainScreenSize = widget.availableGeometry(widget.primaryScreen());
-  _initRect.left = static_cast<int>(atof(argv[i]) * mainScreenSize.width());
+  QScreen *screen = QGuiApplication::primaryScreen();
+  QRect mainScreenSize;
+  if (screen) {
+    mainScreenSize = screen->availableGeometry();
+    _initRect.right = static_cast<int>(atof(argv[i]) * mainScreenSize.width());
+  } else {
+    Utils::Message("Could not determine screen size\n");
+  }
 #endif
 
   ++i;
@@ -325,9 +330,14 @@ void ComndLineParam::_SetWindowRelSize(int &i, char **argv) {
       static_cast<int>(atof(argv[i]) * GetSystemMetrics(SM_CXSCREEN));
 #endif
 #ifdef LINUX
-  QDesktopWidget widget;
-  QRect mainScreenSize = widget.availableGeometry(widget.primaryScreen());
-  _initRect.right = static_cast<int>(atof(argv[i]) * mainScreenSize.width());
+  QScreen *screen = QGuiApplication::primaryScreen();
+  QRect mainScreenSize;
+  if (screen) {
+    mainScreenSize = screen->availableGeometry();
+    _initRect.right = static_cast<int>(atof(argv[i]) * mainScreenSize.width());
+  } else {
+    Utils::Message("Could not determine screen size\n");
+  }
 #endif
   ++i;
 

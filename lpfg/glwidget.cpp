@@ -24,7 +24,7 @@
 #include <QOpenGLShaderProgram>
 #include <QRandomGenerator>
 #include <QCoreApplication>
-#include <QDesktopWidget>
+#include <QScreen>
 #include <qmath.h>
 #include <iostream>
 #include "lpfg.h"
@@ -256,7 +256,7 @@ void GLWidget::mousePressEvent(QMouseEvent *pEv) {
     else
       LBDown(pEv);
     break;
-  case Qt::MidButton:
+  case Qt::MiddleButton:
     MBDown(pEv);
     break;
   case Qt::RightButton:
@@ -861,7 +861,7 @@ void GLWidget::renderText(double x, double y, double z, const QString &str,
   // create a QPixmap to draw the text to 
   int fontSize = font.pointSize();
   QFontMetrics metrics(font);
-  int text_width = (metrics.width(QString(str)) + 10);
+  int text_width = (metrics.horizontalAdvance(QString(str)) + 10);
   //int text_width = (metrics.width(QString(str)) + 10) * int(retinaScale);
 
   int text_height = fontSize;
@@ -873,9 +873,7 @@ void GLWidget::renderText(double x, double y, double z, const QString &str,
 
   // paint the text to the QPixmap 
   QPainter painter(&textimg);
-  painter.setRenderHints(QPainter::HighQualityAntialiasing |
-                         QPainter::TextAntialiasing |
-                         QPainter::NonCosmeticDefaultPen);
+  painter.setRenderHints(QPainter::Antialiasing | QPainter::TextAntialiasing);
   painter.setBrush(color);
   painter.setPen(color);
   painter.setFont(font);

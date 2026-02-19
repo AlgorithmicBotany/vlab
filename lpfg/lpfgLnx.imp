@@ -35,7 +35,7 @@ LPFG::LPFG() {
   _mainWindow = 0;
   Interface::pLpfg = this;
   _BatchMode = false;
-  _lastTabletEvent = NULL;
+  //_lastTabletEvent = NULL; // not used
   _userMenuChoice = -1;
   _displayFrame = false;
   _outputFrame = false;
@@ -248,10 +248,12 @@ void LPFG::StartTimer() { _mainWindow->StartTimer(); }
 void LPFG::StopTimer() { _mainWindow->StopTimer(); }
 
 void LPFG::HandleTabletEvent(QTabletEvent *event) {
-  if (_lastTabletEvent == NULL)
-    _lastTabletEvent = new QTabletEvent(*event);
+  //if (_lastTabletEvent == NULL)
+  //  _lastTabletEvent = new QTabletEvent(*event);
 
-  *_lastTabletEvent = *event;
+  // Qt event classes explicity disable the copy assignment operator
+  // howevet, _lastTabletEvent is not used anywhere?!  
+  //*_lastTabletEvent = *event;
   if (comlineparam.TabletMode())
     event->accept();
   else

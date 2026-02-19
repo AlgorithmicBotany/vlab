@@ -24,7 +24,7 @@
 #include <windows.h>
 #include <GL/gl.h>
 #else
-#include <qgl.h>
+#include <QtOpenGL>
 #include "lodepng.h"
 #include "lodepng_util.h"
 #endif

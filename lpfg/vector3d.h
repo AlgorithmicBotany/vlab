@@ -50,7 +50,7 @@ public:
     _arr[1] = y;
     _arr[2] = z;
   }
-  Vector3d(const Vector3d src, const float rot[16]) {
+  Vector3d(const Vector3d &src, const float rot[16]) {
     _arr[0] =
         rot[0] * src._arr[0] + rot[4] * src._arr[1] + rot[8] * src._arr[2];
     _arr[1] =
@@ -71,16 +71,16 @@ public:
     return Vector3d(_arr[0] * v, _arr[1] * v, _arr[2] * v);
   }
   // cross product
-  Vector3d operator%(Vector3d v) const {
+  Vector3d operator%(const Vector3d &v) const {
     return Vector3d(_arr[1] * v._arr[2] - _arr[2] * v._arr[1],
                     _arr[2] * v._arr[0] - _arr[0] * v._arr[2],
                     _arr[0] * v._arr[1] - _arr[1] * v._arr[0]);
   }
   // dot product
-  float operator*(Vector3d v) const {
+  float operator*(const Vector3d &v) const {
     return _arr[0] * v._arr[0] + _arr[1] * v._arr[1] + _arr[2] * v._arr[2];
   }
-  friend Vector3d operator*(float x, Vector3d v) {
+  friend Vector3d operator*(float x, const Vector3d &v) {
     return Vector3d(x * v._arr[0], x * v._arr[1], x * v._arr[2]);
   }
   void operator+=(const Vector3d &v) {
@@ -128,24 +128,30 @@ public:
   inline float &operator[](int idx) { return _arr[idx]; } // MC - Dec. 2020 - convenient to access vector elements
   inline float operator[](int idx) const { return _arr[idx]; } // e.g., Vector3d v; v[0] = x; v[1] = y; v[2] = z;
   inline Vector3d &operator=(Vector3d const &r) { // assignment operator
-    _arr[0] = r._arr[0];
-    _arr[1] = r._arr[1];
-    _arr[2] = r._arr[2];
+    if (this != &r) {
+      _arr[0] = r._arr[0];
+      _arr[1] = r._arr[1];
+      _arr[2] = r._arr[2];
+    }
     return *this;
   }
+  Vector3d(const Vector3d&) = default;
+  Vector3d& operator=(Vector3d&&) = default;
+  Vector3d(Vector3d&&) = default;
+
   void FromQuaternion(const Quaternion &);
   void AddX(float v) { _arr[0] += v; }
   void AddY(float v) { _arr[1] += v; }
   void AddZ(float v) { _arr[2] += v; }
-  Vector3d operator-(Vector3d r) const {
+  Vector3d operator-(const Vector3d &r) const {
     return Vector3d(_arr[0] - r._arr[0], _arr[1] - r._arr[1],
                     _arr[2] - r._arr[2]);
   }
-  Vector3d operator+(Vector3d r) const {
+  Vector3d operator+(const Vector3d &r) const {
     return Vector3d(_arr[0] + r._arr[0], _arr[1] + r._arr[1],
                     _arr[2] + r._arr[2]);
   }
-  bool operator==(Vector3d r) const {
+  bool operator==(const Vector3d &r) const {
     return (_arr[0] == r._arr[0]) && (_arr[1] == r._arr[1]) &&
            (_arr[2] == r._arr[2]);
   }

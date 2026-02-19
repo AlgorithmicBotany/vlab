@@ -25,7 +25,7 @@ HEADERS  = viewLnx.h SaveAs.h  glwidget.h
 
 FORMS +=  SaveAs.ui 
 
-QT += opengl printsupport widgets core
+QT += opengl printsupport widgets core openglwidgets
 
 DEFINES  = LINUX DEBUG=0 GL_GLEXT_PROTOTYPES
 TARGET   = lpfg
