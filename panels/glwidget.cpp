@@ -174,7 +174,7 @@ void GLWidget::renderText(double x, double y, double z, const QString &str,
 
   //int fontSize = font.pointSize();
   QFontMetrics metrics(font);
-  int text_width = metrics.width(QString(str));
+  int text_width = metrics.horizontalAdvance(QString(str));
 
   //  int text_height = fontSize;
   int text_height = metrics.height();
@@ -182,9 +182,7 @@ void GLWidget::renderText(double x, double y, double z, const QString &str,
   textimg.fill(Qt::transparent);
 
   QPainter painter(&textimg);
-  painter.setRenderHints(QPainter::HighQualityAntialiasing |
-                         QPainter::TextAntialiasing |
-                         QPainter::NonCosmeticDefaultPen);
+  painter.setRenderHints(QPainter::Antialiasing | QPainter::TextAntialiasing);
   painter.setBrush(color);
   painter.setPen(color);
   painter.setFont(font);

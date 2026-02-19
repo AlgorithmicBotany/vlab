@@ -1,6 +1,5 @@
 TEMPLATE = app
-CONFIG += qt \
-opengl
+CONFIG += qt opengl 
 CONFIG += debug
 SOURCES = main.cpp \
           panel.cpp \
@@ -18,9 +17,9 @@ TARGET = panel
 MY_BASE = ..
 MY_LIBS = misc
 include( $${MY_BASE}/common.pri )
-# The following line was inserted by qt3to4
-QT += opengl 
-#    qt3support
+
+QT += opengl widgets openglwidgets
+
 macx:{
 # 
 #HEADERS +=		cocoabridge.h 

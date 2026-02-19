@@ -775,9 +775,9 @@ void Slider::initSlider(Page *p, Panel *pan, QString nm, GLfloat *c1,
   QPoint titleCenterPos =
       QPoint(x + SLIDERLENGTH / 2 + SLIDERHEIGHT / 2, y + SLIDERHEIGHT * 2.75);
 
-  QPoint valuePos = valueCenterPos - QPoint(fm.width(val) / 2, fm.height() / 2);
+  QPoint valuePos = valueCenterPos - QPoint(fm.horizontalAdvance(QString::number(val)) / 2, fm.height() / 2);
   QPoint titlePos =
-      titleCenterPos - QPoint(fm.width(name) / 2, fm.height() / 2);
+      titleCenterPos - QPoint(fm.horizontalAdvance(name) / 2, fm.height() / 2);
   valuelabel = new Label(pg, panel, QString::number(value), c1, valuePos.x(),
                          valuePos.y(), SLIDERLENGTH);
   titlelabel =
@@ -1135,7 +1135,7 @@ void Button::initButton(Page *p, Panel *pan, QString nm, GLfloat *c1,
   tmpName.remove(getExtension());
   QPoint titlePos =
       titleCenterPos -
-      QPoint(fm.width(tmpName) / 2, fm.height() / 2);
+      QPoint(fm.horizontalAdvance(tmpName) / 2, fm.height() / 2);
 
   //  label = new Label(pg, panel, nm.remove(getExtension()), c1, titlePos.x(),
   //                 titlePos.y(), width, height);
@@ -1579,7 +1579,7 @@ void Label::initLabel(Page *p, Panel *pan, QString nm, GLfloat *c1, int x,
 
   if (x >= 0 && y >= 0) {
     QFontMetrics fm(pg->panelfont());
-    int textwidth = fm.width(name);
+    int textwidth = fm.horizontalAdvance(name);
     int textheight = fm.height();
     contour = QRect(x, y, textwidth, textheight);
   }
@@ -1595,7 +1595,7 @@ void Label::setName(QString nm) {
 
 void Label::aligntext() {
   QFontMetrics fm(pg->panelfont());
-  int textwidth = fm.width(name);
+  int textwidth = fm.horizontalAdvance(name);
   int textheight = fm.height();
 
   QPoint currContourCenter = contour.center();
@@ -1613,7 +1613,7 @@ void Label::setSize(int w, int h) {
 
 void Label::draw(GLWidget *w) {
   QFontMetrics fm(pg->panelfont());
-  int textwidth = fm.width(name);
+  int textwidth = fm.horizontalAdvance(name);
   int textheight = fm.height();
 
   /* quickly reject all the text that would not be displayed at all */

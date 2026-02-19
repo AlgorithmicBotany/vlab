@@ -8,7 +8,7 @@
 
 // -------------------- Main Routine
 int main(int argc, char **argv) {
-  QApplication::setColorSpec(QApplication::CustomColor);
+  //QApplication::setColorSpec(QApplication::CustomColor);
   QApplication app(argc, argv);
   app.setWindowIcon(QIcon(":/images/icon.png"));
   Panel *wnd = new Panel(argc, argv);

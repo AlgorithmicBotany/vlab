@@ -30,7 +30,7 @@
 #endif
 #include <QFileDialog>
 
-#include <qwidget.h>
+#include <QWidget>
 #include <QScrollArea>
 #include <QPoint>
 #include <QSize>
@@ -46,11 +46,12 @@
 #include <QFont>
 #include <QCloseEvent>
 #include <QMouseEvent>
-#include <QDesktopWidget>
+//#include <QDesktopWidget>
+#include <QScreen>
 #include <QOpenGLWidget>
 #include <QOpenGLFunctions>
-#include <QOpenGLFunctions_4_3_Core>
-#include <QOpenGLBuffer>
+//#include <QOpenGLFunctions_4_3_Core>
+//#include <QOpenGLBuffer>
 #include "glwidget.h"
 #include "items.h"
 
@@ -75,8 +76,16 @@ public:
   Panel(int, char **, SavingMode savingMode = NONE);
   bool cantreadfile(){ return _cantread;}
 
-  inline int getDesktopWidth() { return desktop->width(); };
-  inline int getDesktopHeight() { return desktop->height(); };
+  //inline int getDesktopWidth() { return desktop->width(); };
+  //inline int getDesktopHeight() { return desktop->height(); };
+  inline int getDesktopWidth() { 
+    QRect screenGeometry = screen->geometry();
+    return(screenGeometry.width());
+  };
+  inline int getDesktopHeight() { 
+    QRect screenGeometry = screen->geometry();
+    return(screenGeometry.height());
+  };
   inline QString getPanelName() { return name; };
   inline int getPanelWidth() { return size.width(); };
   inline int getPanelHeight() { return size.height(); };
@@ -209,7 +218,7 @@ protected:
   Menu *selectmenu;
   QSize size;
   QPoint position;
-  QDesktopWidget *desktop;
+  //QDesktopWidget *desktop;
   QFont font,
       previousFont; // for when user cancels a font from dialog, we revert;
   QFile *file, *configfile;

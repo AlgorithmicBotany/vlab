@@ -19,7 +19,6 @@
 
 #include "paneledit.h"
 #include "panel.h"
-// Added by qt3to4:
 #include <QGridLayout>
 #include <QBoxLayout>
 #include <QVBoxLayout>
@@ -28,7 +27,7 @@
 #include <QCloseEvent>
 using namespace Qt;
 
-PanelEdit::PanelEdit(Panel *editMe) : QWidget(0, 0) {
+PanelEdit::PanelEdit(Panel *editMe) : QWidget(0, Qt::WindowType(0)) {
   // This attribute will make this window close when the main window is closed
   setAttribute(Qt::WA_QuitOnClose, false);
 
