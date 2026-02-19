@@ -75,7 +75,7 @@ MainWindow::MainWindow(QString fileName)
   textEdit->setFont(font);
   const int tabStop = 10; // 4 characters
   QFontMetrics metrics(font);
-  textEdit->setTabStopWidth(tabStop * metrics.width(' '));
+  textEdit->setTabStopDistance(tabStop * metrics.horizontalAdvance(' '));
 
   textEdit->setLineWrapMode(QPlainTextEdit::WidgetWidth);
 
@@ -151,7 +151,7 @@ void MainWindow::increaseFontSize() {
   font.setFixedPitch(true);
   const int tabStop = 10; // 4 characters
   QFontMetrics metrics(font);
-  textEdit->setTabStopWidth(tabStop * metrics.width(' '));
+  textEdit->setTabStopDistance(tabStop * metrics.horizontalAdvance(' '));
   textEdit->setFont(font);
 }
 
@@ -173,7 +173,7 @@ void MainWindow::decreaseFontSize() {
   font.setFixedPitch(true);
   const int tabStop = 10; // 4 characters
   QFontMetrics metrics(font);
-  textEdit->setTabStopWidth(tabStop * metrics.width(' '));
+  textEdit->setTabStopDistance(tabStop * metrics.horizontalAdvance(' '));
   textEdit->setFont(font);
 }
 

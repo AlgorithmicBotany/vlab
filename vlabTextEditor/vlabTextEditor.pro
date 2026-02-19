@@ -16,7 +16,7 @@ MY_BASE  = ..
 MY_LIBS  = directoryWatcher misc
 include( $${MY_BASE}/common.pri )
 
-   QT +=  opengl 
+QT +=  opengl widgets openglwidgets
 
 macx: { 
  LIBS += -framework \
