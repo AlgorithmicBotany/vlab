@@ -20,7 +20,7 @@
 #ifndef _GLWINDOW_H
 #define _GLWINDOW_H
 
-#include <qgl.h>
+#include <QtOpenGL>
 #include <QWidget>
 #include <QMainWindow>
 
@@ -36,7 +36,7 @@ private:
 public:
   // the qglwidget
   glcanvas *canvas;
-  GLWindow(QWidget *parent = 0, int xsize = 320, int ysize = 240, Qt::WindowFlags flags = 0);
+  GLWindow(QWidget *parent = 0, int xsize = 320, int ysize = 240, Qt::WindowFlags flags = Qt::WindowFlags(0));
   ~GLWindow();
   void setTitle(QString title) { _title = title; }
 

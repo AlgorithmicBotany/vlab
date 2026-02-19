@@ -1,6 +1,6 @@
 TARGET   = cpfg
 TEMPLATE = app
-QT +=  opengl printsupport widgets core
+QT +=  core gui opengl printsupport widgets openglwidgets
 CONFIG += qt opengl core
 
 SOURCES  = background.c \

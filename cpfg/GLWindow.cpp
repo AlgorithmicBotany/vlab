@@ -35,7 +35,7 @@
 #include <QMenuBar>
 #include <QPalette>
 #include <QMessageBox>
-
+#include <QPushButton>
 #include <QTextBrowser>
 #include <QTextStream>
 #include <QVBoxLayout>
@@ -149,7 +149,8 @@ void GLWindow::quickHelp(){
   msgBox->setModal(false);
   QDialogButtonBox* bb = new QDialogButtonBox(QDialogButtonBox::Ok);
   QPushButton* okBtn = bb->button(QDialogButtonBox::Ok);
-  connect(okBtn, SIGNAL(clicked()),msgBox,SLOT(close()));
+  //connect(okBtn, SIGNAL(clicked()),msgBox,SLOT(close()));
+  QObject::connect(okBtn, &QPushButton::clicked, msgBox, &QDialog::accept);
   QVBoxLayout *layout = new QVBoxLayout;
   layout->addWidget(tb);
   layout->addWidget(bb);

@@ -19,9 +19,10 @@
 
 #ifndef GLCANVAS_H
 #define GLCANVAS_H
+
+#include <QMainWindow>
+#include <QtOpenGL>
 #include <QOpenGLWidget>
-#include <QOpenGLFunctions>
-#include <QOpenGLFunctions_4_3_Core>
 
 #include "control.h"
 #include "platform.h"
@@ -35,8 +36,7 @@
 #include <QMouseEvent>
 // MC - Oct. 2015 - added Qt support for OpenGL shaders
 #include "shaders.h"
-#include <QMainWindow>
-#include <QtOpenGL>
+
 #include <chrono>
 typedef std::chrono::high_resolution_clock::time_point Clock;
 

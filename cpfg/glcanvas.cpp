@@ -36,12 +36,15 @@
 #include "generate.h"
 #include "SaveAs.h"
 #include "utils.h"
-#include <QGLFormat>
-#include <QPrinter>
-#include <QPainter>
 #include <directorywatcher.h>
 
-#include <qgl.h>
+#include <QtOpenGL>
+//#include <QGLFormat>
+#include <QOpenGLShaderProgram>
+#include <QPrinter>
+#include <QPageLayout>
+#include <QPageSize>
+#include <QPainter>
 #include <QApplication>
 #include <QFileDialog>
 #include <QInputDialog>
@@ -589,7 +592,7 @@ void glcanvas::Repaint() {
 
     // MC - Oct. 2015 - support for shadow mapping using shaders from GLSL 1.2
     // check if shaders and framebuffers are supported
-    if (!QGLShaderProgram::hasOpenGLShaderPrograms() ||
+    if (!QOpenGLShaderProgram::hasOpenGLShaderPrograms() ||
         !hasOpenGLFeature(QOpenGLFunctions::Framebuffers)) {
       Utils::Warning("Warning! the 'render mode: shadows' view option will not work.\n");
       Utils::Warning("OpenGL Shading Language or Framebuffers are not supported ");
@@ -712,7 +715,7 @@ void glcanvas::mousePressEvent(QMouseEvent *mouse) {
   int pos_x = mouse->pos().x();
   int pos_y = mouse->pos().y();
   // bring up popup menus
-  if (RightButton == mouse->button()) {
+  if (Qt::RightButton == mouse->button()) {
     mevent = true;
 
     // display the main popup menu wherever the mouse
@@ -730,7 +733,7 @@ void glcanvas::mousePressEvent(QMouseEvent *mouse) {
   }
 
   // scale the image
-  else if ((MidButton == mouse->button()) || ((LeftButton == mouse->button() && (_keyPressed == Qt::Key_Z))))
+  else if ((Qt::MiddleButton == mouse->button()) || ((Qt::LeftButton == mouse->button() && (_keyPressed == Qt::Key_Z))))
       
  {
    //roll 
@@ -748,7 +751,7 @@ void glcanvas::mousePressEvent(QMouseEvent *mouse) {
   }
 
   // rotate the image
-  else if (LeftButton == mouse->button()) {
+  else if (Qt::LeftButton == mouse->button()) {
     if ((Qt::ShiftModifier & mouse->modifiers()) &&
         (Qt::ControlModifier & mouse->modifiers())) {
       // InsertX //
@@ -2248,10 +2251,12 @@ void glcanvas::SavePDF() {
     printer.setOutputFormat(QPrinter::NativeFormat);
     printer.setColorMode(QPrinter::Color);
     printer.setOutputFileName(QString::fromStdString(_filename + ".pdf"));
-    printer.setPaperSize(QSizeF(image.size()), QPrinter::DevicePixel);
-    printer.setPageMargins(0, 0, 0, 0, QPrinter::Millimeter);
+    QSizeF pageSize(image.size());
+    pageSize = pageSize * 72.0 / printer.resolution();
+    printer.setPageSize(QPageSize(pageSize, QPageSize::Point));
+    printer.setPageMargins(QMarginsF(0, 0, 0, 0));
     printer.setFullPage(true);
-    printer.setOrientation(QPrinter::Portrait);
+    printer.setPageOrientation(QPageLayout::Portrait);
 
     QPainter painter(&printer);
     painter.setRenderHints(QPainter::Antialiasing | QPainter::TextAntialiasing |
@@ -3055,7 +3060,7 @@ void glcanvas::renderText(double x, double y, double z, const QString &str,
   int fontSize = font.pointSize();
 
   QFontMetrics metrics(font);
-  int text_width = metrics.width(QString(str)) + 10;
+  int text_width = metrics.horizontalAdvance(QString(str)) + 10;
   int text_height = fontSize;// + 5;
   QPixmap textimg(text_width, fontSize + fontSize / 3 + 1);//text_height);
   textimg.fill(Qt::transparent);
@@ -3075,9 +3080,7 @@ void glcanvas::renderText(double x, double y, double z, const QString &str,
         QColor((int)(255 * mat->emissive[0]), (int)(255 * mat->emissive[1]),
                (int)(255 * mat->emissive[2]));
   }
-  painter.setRenderHints(QPainter::HighQualityAntialiasing |
-                         QPainter::TextAntialiasing |
-                         QPainter::NonCosmeticDefaultPen);
+  painter.setRenderHints(QPainter::Antialiasing | QPainter::TextAntialiasing);
 
   painter.setBrush(color);
   painter.setPen(color);

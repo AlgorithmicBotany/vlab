@@ -45,13 +45,13 @@
 #include "animparam.h"
 #include "sgiFormat.h"
 
-#include <QDesktopWidget>
+#include <QScreen>
 
 #ifdef TEST_MALLOC
 #include "test_malloc.h"
 #endif
 
-#include <qgl.h>
+#include <QtOpenGL>
 
 using namespace std;
 QApplication *app = 0;
@@ -435,11 +435,15 @@ int first_run = FALSE;
 /*************************************************************************/
 #ifdef LINUX
 void GetWindowSize(int *width, int *height) {
-  QDesktopWidget widget;
-  QRect mainScreenSize = widget.availableGeometry(widget.primaryScreen());
-
-  *width = mainScreenSize.width();
-  *height = mainScreenSize.height();
+  QScreen *screen = QGuiApplication::primaryScreen();
+  QRect mainScreenSize;
+  if (screen) {
+    mainScreenSize = screen->availableGeometry();
+    *width = mainScreenSize.width();
+    *height = mainScreenSize.height();
+  } else {
+    fprintf(stderr,"Could not determine screen size\n");
+  }  
 }
 #endif
 
