@@ -21,9 +21,9 @@
 #ifndef __VLAB_SETTINGS_STORAGE__
 #define __VLAB_SETTINGS_STORAGE__
 
-#include <qstring.h>
-#include <qcolor.h>
-#include <qapplication.h>
+#include <QString>
+#include <QColor>
+#include <QApplication>
 #include <QSettings>
 #include <QFont>
 
@@ -35,7 +35,7 @@ public:
     // removes recursively too...
     void removeKey( const QString & key );
     // reader methods:
-    QString readEntry( const QString & key, const QString & def = QString::null );
+    QString readEntry( const QString & key, const QString & def = QString() );
     int     readNumEntry( const QString & key, int def = 0 );
     bool    readBoolEntry( const QString & key, bool def = false );
     double  readDoubleEntry( const QString & key, double def = 0.0 );

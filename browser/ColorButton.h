@@ -28,7 +28,7 @@ class ColorButton :  public QWidget, public Ui::UI_ColorButton
     Q_OBJECT
 
 public:
-    ColorButton( QWidget * parent = NULL, const char * name = NULL, Qt::WindowFlags fl = 0 );
+    ColorButton( QWidget * parent = NULL, const char * name = NULL, Qt::WindowFlags fl = Qt::WindowFlags(0) );
 
     QColor getColor();
 

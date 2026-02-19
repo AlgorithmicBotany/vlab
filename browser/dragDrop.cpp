@@ -74,7 +74,7 @@ void startDrag(NODE *node)
     .get(BrowserSettings::TextFont)
     .value<QFont>();
   QFontMetrics fm(font);
-  int w = fm.width(txt);
+  int w = fm.horizontalAdvance(txt);
   int h = fm.height();
   if (node->iconShow) {
     h += text_to_icon_distance + node->iconHeight;
@@ -117,8 +117,8 @@ QString ConvertProc(NODE *node)
  * by the drop site.
  */
 {
-  char str1[8096];
-  char str2[8096];
+  char str1[8096*2];
+  char str2[8096*2];
   char node_path[4096];
 
   // Sanity check
@@ -332,7 +332,7 @@ void copyNameIntoNode(char *i_name, NODE *node)
     | archive the source data |
     `------------------------*/
 
-  char archive_name[4096];
+  char archive_name[4096*2];
   sprintf(archive_name, "%s/dragdata.ar", sysInfo.paste_dir);
   unlink(archive_name);
   int res = RA::Archive_object(connection, prefix, src_path, archive_name, 0);
@@ -386,7 +386,7 @@ void copyNameIntoNode(char *i_name, NODE *node)
       sprintf(reason, "Unknown error.");
     }
 
-    char err_msg[4096];
+    char err_msg[4096*2];
     sprintf(err_msg,
             "Could not finish drop because:"
             "\n"
@@ -569,9 +569,9 @@ void copy_object_into_node(char *name, NODE *node) {
  */
 
 void copy_mobject_into_node(char *name, NODE *node) {
-  char tmpStr[4096];
+  char tmpStr[4096*2];
   char *baseName;
-  char newDest[4096];
+  char newDest[4096*2];
 
   // extract the password from 'name'
   char *password = get_token(name, ' ');
@@ -715,7 +715,7 @@ void copy_mobject_into_node(char *name, NODE *node) {
 
   // create the 'node' file for the dropped object
   {
-    char fname[4096];
+    char fname[4096*3];
     sprintf(fname, "%s/node", newDest);
     NodeInfo nodei(sysInfo.connection, fname);
     if (!nodei.write()) {

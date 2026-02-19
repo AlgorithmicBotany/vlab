@@ -20,10 +20,13 @@
 #include "Import.h"
 #include "dirList.h"
 #include "ui_Import.h"
+
 #include <QDesktopServices>
 #include <QFileInfo>
 #include <QProcess>
 #include <QSettings>
+#include <QStandardPaths>
+
 #include <algorithm>
 #include <iostream>
 #include <sstream>

@@ -34,8 +34,8 @@ class NewBrowserDlg : public QDialog
 {
   Q_OBJECT
 public:
-  NewBrowserDlg(QWidget *parent = 0, Qt::WindowFlags f = 0);
-  NewBrowserDlg(const QString& default_oofs, const QString& default_password, QWidget *parent = 0, Qt::WindowFlags f = 0);
+  NewBrowserDlg(QWidget *parent = 0, Qt::WindowFlags f = Qt::WindowFlags(0));
+  NewBrowserDlg(const QString& default_oofs, const QString& default_password, QWidget *parent = 0, Qt::WindowFlags f = Qt::WindowFlags(0));
 
   QString oofs();
 

@@ -19,9 +19,9 @@
 
 #include "ColorButton.h"
 #include <iostream>
-#include <qcolordialog.h>
-#include <qlabel.h>
-#include <qpushbutton.h>
+#include <QColorDialog>
+#include <QLabel>
+#include <QPushButton>
 
 ColorButton::ColorButton(QWidget *parent, const char *, Qt::WindowFlags )
     : QWidget(parent) {
@@ -36,7 +36,7 @@ void ColorButton::setColor(const QColor &col) {
 
   _color = col;
   QPalette pal;
-  pal.setColor(QPalette::Background, _color);
+  pal.setColor(QPalette::Window, _color);
 
   QString style = "QPushButton{background-color: rgb(%1, %2, %3);}";
   button->setStyleSheet(

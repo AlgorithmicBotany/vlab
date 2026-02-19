@@ -604,7 +604,7 @@ void newBrowser(QByteArray oofs_spec, bool do_fork)
 void interpretFile(QString filename) {
   QTextStream out(stdout);
   QByteArray oofs;
-  out << "Interpreting file: " << filename << endl;
+  out << "Interpreting file: " << filename << "\n";
   QFileInfo fi(filename);
   if (fi.isDir()) {
     oofs = filename.toLatin1();

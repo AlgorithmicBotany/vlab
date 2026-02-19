@@ -35,7 +35,7 @@ class CustomizeDialog : public QDialog
     Q_OBJECT
 
 public:
-    CustomizeDialog( QWidget* parent = 0, const char* name = 0, bool modal = false, Qt::WindowFlags fl = 0 );
+    CustomizeDialog( QWidget* parent = 0, const char* name = 0, bool modal = false, Qt::WindowFlags fl = Qt::WindowFlags(0) );
     // set the settings
     void set( const BrowserSettings & bset );
     // read back the settings

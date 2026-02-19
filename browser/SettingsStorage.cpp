@@ -19,7 +19,7 @@
 
 #include "SettingsStorage.h"
 #include <iostream>
-#include <qsettings.h>
+#include <QSettings>
 #include <stack>
 
 SettingsStorage::SettingsStorage(const QString &filename)
@@ -58,7 +58,7 @@ bool SettingsStorage::readBoolEntry(const QString &key, bool def) {
 // convenience function to read qcolor entry
 QColor SettingsStorage::readColorEntry(const QString &key, const QColor &def) {
   QString name = readEntry(key);
-  if (name != QString::null)
+  if (!name.isNull())
     return QColor(name);
   else
     return def;
@@ -67,7 +67,7 @@ QColor SettingsStorage::readColorEntry(const QString &key, const QColor &def) {
 // convenience function to read qfont entry
 QFont SettingsStorage::readFontEntry(const QString &key, const QFont &def) {
   QString name = readEntry(key);
-  if (name != QString::null) {
+  if (!name.isNull()) {
     QFont f = QApplication::font();
     f.fromString(name);
     return f;

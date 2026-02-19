@@ -21,7 +21,7 @@
 #include "platform.h"
 #include <QDir>
 #include <iostream>
-#include <qapplication.h>
+#include <QApplication>
 
 // load the current settings from the setting storage
 // - if there are no settings, default ones are used
@@ -34,7 +34,7 @@ void BrowserSettings::loadCurrent() {
   // try to see if in the same storage we store a value for /current
   QString cur_name = ss.readEntry("/browser/current");
   // if the current settings name is stored, we'll try to load  it
-  if (cur_name != QString::null) {
+  if (!cur_name.isNull()) {
     // try to load the current settings
     setName(cur_name);
     load();

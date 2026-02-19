@@ -183,7 +183,7 @@ void selectNodeBoxCB(BUTTON_DATA_PTR cbs, BUTTON_ACTION action) {
 
       sysInfo.vlabd->va_send_message(
           GETOBJECT, "-rootdir %s -p '%s' -posx %d -posy %d %s@%s:%s",
-          sysInfo.oofs_dir, sysInfo.password == QString::null ? "" : pwd,
+          sysInfo.oofs_dir, sysInfo.password.isNull() ? "" : pwd,
           sysInfo.obj_posx, sysInfo.obj_posy, login, sysInfo.host_name,
           sysInfo.selNode->name);
       sysInfo.connection->Disconnect();
@@ -207,7 +207,7 @@ void selectNodeBoxCB(BUTTON_DATA_PTR cbs, BUTTON_ACTION action) {
 
       sysInfo.vlabd->va_send_message(
           GETOBJECT, "-rootdir %s -p '%s' -posx %d -posy %d %s@%s:%s",
-          sysInfo.oofs_dir, sysInfo.password == QString::null ? "" : pwd,
+          sysInfo.oofs_dir, sysInfo.password.isNull() ? "" : pwd,
           sysInfo.obj_posx, sysInfo.obj_posy, login, sysInfo.host_name,
           sysInfo.selNode->object_name);
       sysInfo.connection->Disconnect();

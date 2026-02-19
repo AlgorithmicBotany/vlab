@@ -29,7 +29,7 @@
 #include <QMenu>
 #include <QMainWindow>
 #include <QSocketNotifier>
-
+#include <QElapsedTimer>
 #include <QPixmap>
 #include <QResizeEvent>
 #include <QKeyEvent>
@@ -164,7 +164,7 @@ private:
     QTGLbrowser* globj;
     QSocketNotifier* notifier;  //Network socket handler
 
-    QTime lastIconLoaded;
+    QElapsedTimer lastIconLoaded;
 
     QString exportPath;
     int exportArchiveType;
