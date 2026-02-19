@@ -336,12 +336,16 @@ void Timeline::createEvent(float startTime, float endTime,
   Event *e = new Event;
   emit change();
   if (color.compare("") != 0){
-    QRegExp rx("[, ]");// match a comma or a space
-    QStringList list = color.split(rx, QString::SkipEmptyParts);
-    int r = list.at(0).toInt();
-    int g = list.at(1).toInt();
-    int b = list.at(2).toInt();
-    e->setColor(r,g,b);
+    QRegularExpression rx("[, ]");// match a comma or a space
+    QStringList list = color.split(rx, Qt::SkipEmptyParts);
+    if (list.size() >= 3) {
+      int r = list.at(0).toInt();
+      int g = list.at(1).toInt();
+      int b = list.at(2).toInt();
+      e->setColor(r,g,b);
+    } else {
+      e->setColor(255,255,255);
+    }
   }
     
   // Style sheet for the event button and labels
@@ -819,13 +823,16 @@ void Timeline::editEvent(int index, float startTime, float endTime,
   if (selected) {
     
   if (color.compare("") != 0){
-    
-    QRegExp rx("[, ]");// match a comma or a space
-    QStringList list = color.split(rx, QString::SkipEmptyParts);
-    int r = list.at(0).toInt();
-    int g = list.at(1).toInt();
-    int b = list.at(2).toInt();
-    events[index]->setColor(r,g,b);
+    QRegularExpression rx("[, ]");// match a comma or a space
+    QStringList list = color.split(rx, Qt::SkipEmptyParts);
+    if (list.size() >= 3) {
+      int r = list.at(0).toInt();
+      int g = list.at(1).toInt();
+      int b = list.at(2).toInt();
+      events[index]->setColor(r,g,b);
+    } else {
+      events[index]->setColor(255,255,255);
+    }    
   }
 
     events[index]->startTime = startTime;

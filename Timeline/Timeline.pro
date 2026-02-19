@@ -1,9 +1,6 @@
 TEMPLATE = app
 TARGET = timeline
-CONFIG += qt \
-    opengl \
-    warn_on \
-    release
+CONFIG += qt opengl release
 
 
 SOURCES += \
@@ -73,5 +70,5 @@ include( $${MY_BASE}/common.pri )
 }
 
 
-QT       += core gui opengl widgets
+QT       += core gui opengl widgets openglwidgets
 

@@ -1,6 +1,6 @@
 #ifndef __COLORS_H__
 #define __COLORS_H__
-#include <qgl.h>
+#include <QtOpenGL>
 #include <QColor>
 #include <string>
 enum ColorEntry {

@@ -22,7 +22,7 @@
 #include <QScreen>
 #include <QMenu>
 #include <QMenuBar>
-#include <QDesktopWidget>
+#include <QScreen>
 #include <QTimer>
 #include <QMessageBox>
 #include <fstream>
@@ -456,12 +456,17 @@ void MainWindow::mouseMoveEvent(QMouseEvent *event) {
 }
 
 void MainWindow::wheelEvent(QWheelEvent *event) {
-    if (Qt::ShiftModifier != QApplication::keyboardModifiers()) {
-      timeline->yMin += event->delta() / 10;
+  QPoint numDegrees = event->angleDelta();
+  int delta = 0;
+  if (!numDegrees.isNull()) {
+    delta = numDegrees.y();
+  }  
+  if (Qt::ShiftModifier != QApplication::keyboardModifiers()) {
+      timeline->yMin += delta / 10;
       if (timeline->yMin < -timeline->yMax + 100)
-	timeline->yMin = -timeline->yMax + 100;
+	      timeline->yMin = -timeline->yMax + 100;
       if (timeline->yMin > 0)
-	timeline->yMin = 0;
+	      timeline->yMin = 0;
       timeline->createAxis();
   } else {
     // Handle mouse wheel events
@@ -471,7 +476,7 @@ void MainWindow::wheelEvent(QWheelEvent *event) {
       range /= 10.0;
       counter++;
     }
-    timeline->xMax += (event->delta() / 120) * (int)std::pow(10., int(counter));
+    timeline->xMax += (delta / 120) * (int)std::pow(10., int(counter));
     timeline->createAxis();
   }
 }
