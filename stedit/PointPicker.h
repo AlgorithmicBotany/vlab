@@ -8,7 +8,7 @@
 
 #pragma once
 
-#include <QGLWidget>
+#include <QOpenGLWidget>
 #include <QMouseEvent>
 #include <QImage>
 #include "Colour.h"
@@ -20,7 +20,7 @@
 #include <iostream>
 using namespace std;
 
-class PointPicker : public QGLWidget {
+class PointPicker : public QOpenGLWidget {
   Q_OBJECT
 public:
   PointPicker(QWidget *parent = 0);

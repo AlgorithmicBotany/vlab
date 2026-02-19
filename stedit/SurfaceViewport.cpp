@@ -22,7 +22,7 @@
 
 SurfaceViewport::SurfaceViewport(Surface *surface, Trackball *trackball,
                                  QWidget *parent, Colour borderColour)
-    : QGLWidget(parent) {
+    : QOpenGLWidget(parent) {
 
   // Set the default camera positioning
   camPos = Point(0, 0, 5);
@@ -50,7 +50,7 @@ QSize SurfaceViewport::minimumSizeHint() const { return QSize(125, 125); }
 QSize SurfaceViewport::sizeHint() const { return QSize(125, 125); }
 
 void SurfaceViewport::paintGL() {
-  QGLWidget::makeCurrent();
+  makeCurrent();
   glMatrixMode(GL_MODELVIEW);
   glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
@@ -100,7 +100,7 @@ void SurfaceViewport::paintGL() {
 
 // Draws a coloured border around the edge of the viewport
 void SurfaceViewport::drawBorder() {
-  QGLWidget::makeCurrent();
+  makeCurrent();
 
   glDisable(GL_DEPTH_TEST); // Draw this in front of everything
   glMatrixMode(GL_PROJECTION);
@@ -124,7 +124,7 @@ void SurfaceViewport::drawBorder() {
 }
 
 void SurfaceViewport::initializeGL() {
-  QGLWidget::makeCurrent();
+  makeCurrent();
 
   glClearColor(bgColour.r, bgColour.g, bgColour.b,
                0); // Clear to the background colour
@@ -146,7 +146,7 @@ void SurfaceViewport::initializeGL() {
 }
 
 void SurfaceViewport::resizeGL(int w, int h) {
-  QGLWidget::makeCurrent();
+  makeCurrent();
   editorWidth = w;
   editorHeight = h;
   ratio = (double)editorWidth / (double)editorHeight;
@@ -159,28 +159,28 @@ void SurfaceViewport::resizeGL(int w, int h) {
 }
 
 void SurfaceViewport::mousePressEvent(QMouseEvent *event) {
-  QGLWidget::makeCurrent();
+  makeCurrent();
   updateMousePosition(event->x(), event->y());
   if (event->button() == Qt::LeftButton) {
     trackball->press(
         getScreenPosition(mouseX, mouseY)); // Press the trackball at this point
   }
-  updateGL();
+  update();
 }
 
 void SurfaceViewport::mouseReleaseEvent(QMouseEvent *event) {
-  QGLWidget::makeCurrent();
+  makeCurrent();
   if (event->button() == Qt::LeftButton) {
     trackball->release(); // Release the trackball on left mouse button release
-    updateGL();
+    update();
   }
 }
 
 void SurfaceViewport::mouseMoveEvent(QMouseEvent *event) {
-  QGLWidget::makeCurrent();
+  makeCurrent();
 
   if (event->buttons() &
-      Qt::MidButton) {      // Pan the camera on right mouse button drag
+      Qt::MiddleButton) {      // Pan the camera on right mouse button drag
     int oldMouseX = mouseX; // Remember where the mouse was
     int oldMouseY = mouseY;
     updateMousePosition(event->x(), event->y());
@@ -192,7 +192,7 @@ void SurfaceViewport::mouseMoveEvent(QMouseEvent *event) {
                                                      // and look point to pan it
     camLook = camLook + (Point(diffX, diffY) * camPos.Z()) /
                             (double)min(editorWidth, editorHeight);
-    updateGL();
+    update();
   } else if (event->buttons() & Qt::LeftButton) {
     updateMousePosition(event->x(), event->y());
     trackball->move(getScreenPosition(
@@ -202,15 +202,24 @@ void SurfaceViewport::mouseMoveEvent(QMouseEvent *event) {
 }
 
 void SurfaceViewport::wheelEvent(QWheelEvent *event) {
-  QGLWidget::makeCurrent();
+  makeCurrent();
+  /*
   if (event->orientation() ==
       Qt::Vertical) { // Zoom in and out with the mouse wheel
     int numDegrees = event->delta() / 8;
     int numSteps = numDegrees / 15;
 
     camPos.setZ(camPos.Z() - ((camPos.Z()) / 10.0) * numSteps);
-    updateGL();
+    update();
   }
+  */
+  QPoint numDegrees = event->angleDelta();
+  if (!numDegrees.isNull()) {
+    int numSteps = numDegrees.y() / 15;
+
+    camPos.setZ(camPos.Z() - ((camPos.Z()) / 10.0) * numSteps);
+    update();
+  }    
 }
 
 // Updates the mouse position in screen coordinates as well as recalculating the
@@ -270,7 +279,7 @@ void SurfaceViewport::centerCamera() {
   camPos.setX(0); // Set the camera position back to the z axis
   camPos.setY(0);
   camLook = Point(); // Look at the origin
-  updateGL();
+  update();
 }
 
 // Resets the viewer to its initial state
@@ -278,18 +287,18 @@ void SurfaceViewport::resetView() {
   surface->subdivide(subdivisionSamples);
   trackball->reset(); // Reset the trackball's rotation matrix to identity
   centerCamera();
-  updateGL();
+  update();
 }
 
 void SurfaceViewport::setCurrentPatch(int index) {
   currentPatch = index - 1;
   centerCamera();
-  updateGL();
+  update();
 }
 
 // Re-subdivides and displays the patch
 void SurfaceViewport::update() {
-  QGLWidget::makeCurrent();
+  makeCurrent();
   surface->subdivide(subdivisionSamples);
-  updateGL();
+  update();
 }

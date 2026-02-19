@@ -13,7 +13,7 @@
 #include <QFileInfo>
 
 TextureEditor::TextureEditor(QWidget *parent)
-    : QGLWidget(QGLFormat(QGL::AlphaChannel), parent) {
+    : QOpenGLWidget(parent) {
 
   showLines = true;
   showPoints = true;
@@ -36,6 +36,14 @@ TextureEditor::TextureEditor(QWidget *parent)
   captured = false;
 
   fbo = 0;
+
+  QSurfaceFormat format;
+  format.setRenderableType(QSurfaceFormat::OpenGL);
+  format.setProfile(QSurfaceFormat::CompatibilityProfile); // Crucial for legacy GL
+  format.setVersion(2, 1); // Or whatever version you are targeting
+  setFormat(format);
+
+  filename = "";
 }
 
 TextureEditor::~TextureEditor() {
@@ -49,7 +57,7 @@ QSize TextureEditor::minimumSizeHint() const { return QSize(100, 100); }
 QSize TextureEditor::sizeHint() const { return QSize(600, 600); }
 
 void TextureEditor::paintGL() {  
-  QGLWidget::makeCurrent();
+  makeCurrent();
   glMatrixMode(GL_MODELVIEW);
   glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
@@ -108,8 +116,11 @@ void TextureEditor::paintGL() {
     glVertex2f(WIN_SIZE + 0.005, (-WIN_SIZE - 0.005) / imageRatio);
   }
   glEnd();
+
   glEnable(GL_TEXTURE_2D);
   glEnable(GL_BLEND);
+
+  glBindTexture(GL_TEXTURE_2D, tex);
 
   for (unsigned int i = 0; i < triangles.size(); i++) { // Draw all the triangles
     glColor3f(1, 1, 1);
@@ -121,6 +132,7 @@ void TextureEditor::paintGL() {
       triangles.at(i)->drawLines(lineWidth);
     }
   }
+  
   if (showPoints && ((fbo != 0 && !fbo->isBound()) ||
                      fbo == 0)) { // Draw all the points if they are to be shown
     glDisable(
@@ -142,7 +154,7 @@ void TextureEditor::paintGL() {
 }
 
 void TextureEditor::initializeGL() {
-  QGLWidget::makeCurrent();
+  makeCurrent();
 
   glClearColor(bgColour.r, bgColour.g, bgColour.b,
                0); // Clear to the background colour
@@ -158,10 +170,13 @@ void TextureEditor::initializeGL() {
   glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 
   init();
+
+  if (!filename.empty())
+    preload(filename);
 }
 
 void TextureEditor::resizeGL(int w, int h) {
-  QGLWidget::makeCurrent();
+  makeCurrent();
 
   editorWidth = w;
   editorHeight = h;
@@ -245,7 +260,7 @@ void TextureEditor::mousePressEvent(QMouseEvent *event) {
                     // point is actually moved. This will be thrown away if the
                     // point is not moved
   }
-  updateGL();
+  update();
 }
 
 void TextureEditor::mouseReleaseEvent(QMouseEvent *event) {
@@ -262,7 +277,7 @@ void TextureEditor::mouseReleaseEvent(QMouseEvent *event) {
       emit continuousSave();
     }
 
-    updateGL();
+    update();
   }
 }
 
@@ -304,13 +319,13 @@ void TextureEditor::mouseMoveEvent(QMouseEvent *event) {
       emit continuousSave();
     }
 
-    updateGL();
+    update();
   }
 }
 
 // Loads a texture with the given filename into the given GL texture
 void TextureEditor::loadImage(const char *filename) {
-  QGLWidget::makeCurrent();
+  makeCurrent();
   QImage image;
 
   bool success = image.load(filename);
@@ -320,30 +335,20 @@ void TextureEditor::loadImage(const char *filename) {
     return;
   }
 
-
-  fbo = new QGLFramebufferObject(image.width(), image.height(),
-                                 QGLFramebufferObject::Depth);
   resized = false;
   captured = false;
 
   imageRatio = (double)image.width() / (double)image.height();
-      //PASCAL: For some reason the image is flipped and rotated, so we flip adn rotate it back
-  /*
-  image = image.transformed(QMatrix().scale(1, -1));
-  image = image.transformed(QMatrix().scale(-1, 1));
-  image = image.transformed(QMatrix().rotate(-90));
-  */
-  image = QGLWidget::convertToGLFormat(image);
-  glBindTexture(GL_TEXTURE_2D, tex);
-  glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, image.width(), image.height(), 0,
-               GL_RGBA, GL_UNSIGNED_BYTE, image.bits());
-  if (linearInterpolation) {
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-  } else {
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
-  }
+
+  QImage glFriendlyImage = image.convertToFormat(QImage::Format_RGBA8888).mirrored();
+   glBindTexture(GL_TEXTURE_2D, tex);
+  glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, 
+              glFriendlyImage.width(), glFriendlyImage.height(), 
+              0, GL_RGBA, GL_UNSIGNED_BYTE, glFriendlyImage.bits());
+  GLint filter = linearInterpolation ? GL_LINEAR : GL_NEAREST;
+  glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, filter);
+  glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, filter);  
+
   resetProjection();
 }
 
@@ -375,7 +380,7 @@ void TextureEditor::init() {
 
 // Resets the list of points and triangles to their initial state
 void TextureEditor::reset() {
-  QGLWidget::makeCurrent();
+  makeCurrent();
   init();
 
   undoStackPoints
@@ -390,7 +395,7 @@ void TextureEditor::reset() {
     emit continuousSave();
   }
 
-  updateGL();
+  update();
 }
 
 // Loads a texture on startup
@@ -414,7 +419,7 @@ void TextureEditor::preload(string filename) {
 
 // Loads a new texture
 void TextureEditor::load(string filename) {
-  QGLWidget::makeCurrent();
+  makeCurrent();
 
   /*
   bool supported =
@@ -443,34 +448,35 @@ void TextureEditor::load(string filename) {
 
 // Loads a new texture
 void TextureEditor::load(QImage image) {
-  QGLWidget::makeCurrent();
+  makeCurrent();
 
   clearFilename(); // Clear the filenames so that nothing will be overwritten on
                    // saving
   clearProjectFilename();
   changed();
-  /*
-  image = image.transformed(QMatrix().scale(1, -1));
-  image = image.transformed(QMatrix().scale(-1, 1));
-  image = image.transformed(QMatrix().rotate(-90));
-  */
-  image = QGLWidget::convertToGLFormat(image);
 
-  fbo = new QGLFramebufferObject(image.width(), image.height(),
-                                 QGLFramebufferObject::Depth);
+  // 1. Convert and Flip (Standard for OpenGL in Qt)
+  QImage glFriendlyImage = image.convertToFormat(QImage::Format_RGBA8888).mirrored();
+
+  // 2. Update Framebuffer Object
+  // QGLFramebufferObject -> QOpenGLFramebufferObject
+  if (fbo != 0)
+    delete fbo;
+  fbo = new QOpenGLFramebufferObject(glFriendlyImage.size(), QOpenGLFramebufferObject::Depth);
+
   resized = false;
   captured = false;
 
+  // 3. Texture Upload
   glBindTexture(GL_TEXTURE_2D, tex);
-  glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, image.width(), image.height(), 0,
-               GL_RGBA, GL_UNSIGNED_BYTE, image.bits());
-  if (linearInterpolation) {
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-  } else {
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
-  }
+  glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, glFriendlyImage.width(), glFriendlyImage.height(), 
+              0, GL_RGBA, GL_UNSIGNED_BYTE, glFriendlyImage.bits());
+
+  // 4. Filtering
+  GLint filter = linearInterpolation ? GL_LINEAR : GL_NEAREST;
+  glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, filter);
+  glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, filter);  
+
   reset();
 }
 
@@ -644,26 +650,27 @@ QImage TextureEditor::getFrameBuffer() {
 // changes can be made
 void TextureEditor::capture() {
   if (fbo != 0) {
-    QGLWidget::makeCurrent();
+    //QGLWidget::makeCurrent();
+    makeCurrent();
 
     QImage image = getFrameBuffer();
-    /*
-    image = image.transformed(QMatrix().scale(1, -1));
-    image = image.transformed(QMatrix().scale(-1, 1));
-    image = image.transformed(QMatrix().rotate(-90));
-    */
-    image = QGLWidget::convertToGLFormat(image);
-    // Make this the new texture
+
+    // 1. Convert image to a format OpenGL likes (RGBA8888) 
+    // and flip it vertically because OpenGL expects (0,0) at the bottom-left.
+    QImage glFriendlyImage = image.convertToFormat(QImage::Format_RGBA8888).mirrored();
+
     glBindTexture(GL_TEXTURE_2D, tex);
-    glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, image.width(), image.height(), 0,
-                 GL_RGBA, GL_UNSIGNED_BYTE, image.bits());
-    if (linearInterpolation) {
-      glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
-      glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-    } else {
-      glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
-      glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
-    }
+
+    // 2. Use the bits() from the converted image
+    glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, 
+                glFriendlyImage.width(), glFriendlyImage.height(), 
+                0, GL_RGBA, GL_UNSIGNED_BYTE, glFriendlyImage.bits());
+
+    // 3. Filtering remains the same as it's standard OpenGL
+    GLint filter = linearInterpolation ? GL_LINEAR : GL_NEAREST;
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, filter);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, filter);
+
     captured = true;
 
     reset();
@@ -678,7 +685,8 @@ void TextureEditor::saveTexture() {
 
 void TextureEditor::saveTexture(string filename) {
   if (fbo != 0) {
-    QGLWidget::makeCurrent();
+    //QGLWidget::makeCurrent();
+    makeCurrent();
 
     unsavedChanges = false; // No unsaved changes if you just saved
 
@@ -692,7 +700,7 @@ void TextureEditor::saveTexture(string filename) {
       image = image.scaled(resizeResult);
     image.save(filename.c_str()); // Save the image with the given filename
 
-    updateGL();
+    update();
   }
 }
 
@@ -741,7 +749,7 @@ void TextureEditor::resizeTexture() {
 // Returns a capture as a QImage so that it can be passed to the bezier editor
 QImage TextureEditor::getImage() {
   if (fbo != 0) {
-    QGLWidget::makeCurrent();
+    makeCurrent();
 
     QImage image = getFrameBuffer();
 
@@ -833,7 +841,7 @@ void TextureEditor::saveProject(string filename) {
 }
 
 void TextureEditor::loadProject(string filename) {
-  QGLWidget::makeCurrent();
+  makeCurrent();
   QFileInfo fi(QString(filename.c_str()));
   QString suf = fi.suffix();
   int supported = suf.compare(QString("dtx"));
@@ -915,7 +923,7 @@ void TextureEditor::loadProject(string filename) {
   inFile.close();
 
   emit(sendTexture(getImage()));
-  updateGL();
+  update();
 }
 
 // Load the most recently loaded project again to revert it to its most recently
@@ -971,7 +979,7 @@ void TextureEditor::undo() {
       saveTexture();
       emit continuousSave();
     }
-    updateGL();
+    update();
   }
 }
 
@@ -1028,7 +1036,7 @@ void TextureEditor::redo() {
       saveTexture();
       emit continuousSave();
     }
-    updateGL();
+    update();
   }
 }
 
@@ -1129,31 +1137,31 @@ Colour TextureEditor::getLineColour() { return lineColour; }
 void TextureEditor::resetBgColour() { changeBgColour(defBgColour); }
 
 void TextureEditor::changeBgColour(Colour colour) {
-  QGLWidget::makeCurrent();
+  makeCurrent();
 
   bgColour = colour;
   glClearColor(bgColour.r, bgColour.g, bgColour.b, 0);
-  updateGL();
+  update();
 }
 
 void TextureEditor::changePointColour(Colour colour) {
   pointColour = colour;
-  updateGL();
+  update();
 }
 
 void TextureEditor::changeLineColour(Colour colour) {
   lineColour = colour;
-  updateGL();
+  update();
 }
 
 void TextureEditor::showHidePoints(bool value) {
   showPoints = value;
-  updateGL();
+  update();
 }
 
 void TextureEditor::showHideLines(bool value) {
   showLines = value;
-  updateGL();
+  update();
 }
 
 // Clears the filename so that the program won't save over anything
@@ -1182,7 +1190,7 @@ string TextureEditor::getDir(string fileStr) {
 void TextureEditor::changed() {
   unsavedChanges = true;
   emit(sendTexture(getImage()));
-  QGLWidget::makeCurrent();
+  makeCurrent();
 
   if (!noProjectFilename())
     emit(canRevert(true));
@@ -1196,18 +1204,18 @@ double TextureEditor::getLineWidth() { return lineWidth; }
 
 void TextureEditor::setPointSize(int size) {
   pointSize = size;
-  updateGL();
+  update();
 }
 
 void TextureEditor::setLineWidth(int width) {
   lineWidth = width;
-  updateGL();
+  update();
 }
 
 void TextureEditor::resetView() {
   showPoints = true;
   showLines = true;
-  updateGL();
+  update();
 }
 
 void TextureEditor::setLinearInterpolation(bool value) {
@@ -1228,10 +1236,12 @@ void TextureEditor::setLinearInterpolation(bool value) {
     emit continuousSave();
   }
 
-  updateGL();
+  update();
 }
 
 QString TextureEditor::getFilename() { return QString(filename.c_str()); }
+
+void TextureEditor::preloadFilename(string fname) { filename = fname;}
 
 void TextureEditor::rotateCW() {
   if (fbo != 0) {
@@ -1256,7 +1266,7 @@ void TextureEditor::rotateCW() {
     emit continuousSave();
   }
 
-  updateGL();
+  update();
 }
 
 void TextureEditor::rotateCCW() {
@@ -1282,7 +1292,7 @@ void TextureEditor::rotateCCW() {
     emit continuousSave();
   }
 
-  updateGL();
+  update();
 }
 
 void TextureEditor::flipH() {
@@ -1298,7 +1308,7 @@ void TextureEditor::flipH() {
     emit continuousSave();
   }
 
-  updateGL();
+  update();
 }
 
 void TextureEditor::flipV() {
@@ -1314,6 +1324,6 @@ void TextureEditor::flipV() {
     emit continuousSave();
   }
 
-  updateGL();
+  update();
 }
 

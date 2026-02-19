@@ -8,7 +8,7 @@
 
 #pragma once
 
-#include <QGLWidget>
+#include <QOpenGLWidget>
 #include <QMouseEvent>
 #include <QImage>
 #include "Globals.h"
@@ -27,7 +27,7 @@ using namespace std;
 
 class BezierWindow;
 
-class BezierEditor : public QGLWidget {
+class BezierEditor : public QOpenGLWidget {
   Q_OBJECT
 public:
   BezierEditor(QWidget *parent = 0);
@@ -181,6 +181,8 @@ private:
   void saveRedoData();
   void numberPoints();
   void drawAxes();
+  void renderText (int x, int y, const QString &s);
+  void renderText (float x, float y, float z, const QString &s);
 
   Point camPos;      // Position of the camera
   Point camLook;     // Point that the camera is looking at

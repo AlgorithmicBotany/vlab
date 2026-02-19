@@ -9,7 +9,7 @@
 #include "PointPicker.h"
 
 PointPicker::PointPicker(QWidget *parent)
-    : QGLWidget(QGLFormat(QGL::AlphaChannel), parent) {
+    : QOpenGLWidget(parent) {
 
   ratio = 1.0;
   editorWidth = 150;
@@ -17,6 +17,10 @@ PointPicker::PointPicker(QWidget *parent)
   bgColour = Colour(parent->palette().color(
       QPalette::Window)); // Match the window's background colour
   pointColour = Colour(1, 0, 0);
+
+  QSurfaceFormat format;
+  format.setAlphaBufferSize(8);
+  setFormat(format); 
 
   init();
 }
@@ -30,7 +34,7 @@ QSize PointPicker::sizeHint() const { return QSize(150, 150); }
 // Selects the point with the given indices in the control point array
 void PointPicker::selectPoint(int index, int jndex) {
   selectedPoint = controlPoints.at(index).at(jndex);
-  updateGL();
+  update();
 }
 
 void PointPicker::paintGL() {
@@ -53,7 +57,7 @@ void PointPicker::paintGL() {
 }
 
 void PointPicker::initializeGL() {
-  QGLWidget::makeCurrent();
+  makeCurrent();
 
   glClearColor(bgColour.r, bgColour.g, bgColour.b,
                0); // Clear to the background colour
@@ -112,7 +116,7 @@ void PointPicker::mousePressEvent(QMouseEvent *event) {
       }
     }
   }
-  updateGL();
+  update();
 }
 
 void PointPicker::mouseReleaseEvent(QMouseEvent *) {}

@@ -8,7 +8,7 @@
 
 #pragma once
 
-#include <QGLWidget>
+#include <QOpenGLWidget>
 #include <QMouseEvent>
 #include "Surface.h"
 #include "Colour.h"
@@ -17,7 +17,7 @@
 
 class SurfaceViewport;
 
-class SurfaceViewport : public QGLWidget {
+class SurfaceViewport : public QOpenGLWidget {
   Q_OBJECT
 public:
   SurfaceViewport(Surface *surface, Trackball *trackball, QWidget *parent = 0,

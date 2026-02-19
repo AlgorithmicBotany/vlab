@@ -7,7 +7,7 @@
  * ********************************************************************/
 
 #include <QApplication>
-#include <QDesktopWidget>
+#include <QScreen>
 #include <QDebug>
 #include "BezierWindow.h"
 #include "Globals.h"
@@ -124,6 +124,15 @@ int parseCommandLine(int argc, char **argv, SavingMode &savingMode, int & bezier
 int main(int argc, char *argv[]) {
   QApplication a(argc, argv);
   a.setWindowIcon(QIcon(":/images/icon.ico"));
+
+  QSurfaceFormat format;
+  format.setRenderableType(QSurfaceFormat::OpenGL);
+  format.setProfile(QSurfaceFormat::CompatibilityProfile); // Crucial for legacy GL
+  format.setVersion(2, 1);
+  //format.setAlphaBufferSize(8); // This replaces QGLFormat::AlphaChannel
+  //format.setDepthBufferSize(24);
+  QSurfaceFormat::setDefaultFormat(format);
+
   QWidget *w;
   SavingMode savingMode; int bezierMode; std::string bezierName;
   std::string textureName; bool extendedFormatFlag;

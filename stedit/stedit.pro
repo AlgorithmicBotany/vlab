@@ -1,7 +1,7 @@
 # -------------------------------------------------
 # Project created by QtCreator 2010-06-22T14:31:56
 # -------------------------------------------------
-QT += opengl
+QT += widgets openglwidgets
 TARGET = stedit
 TEMPLATE = app
 SOURCES += Vector3.cpp \

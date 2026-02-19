@@ -49,8 +49,10 @@ TextureWindow::TextureWindow(string textureName, SavingMode savingMode) {
           this, SLOT(menuize(const QPoint &)));
 
   textureDir = QString(textureName.c_str());
+  // Moved the preload() call to initializeGL() because there is no guarantee 
+  // the OpenGL context is initialized here.
   if (!textureName.empty())
-    textureEditor->preload(textureName);
+    textureEditor->preloadFilename(textureName);
 
   readConfig();
 

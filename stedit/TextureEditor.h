@@ -8,9 +8,9 @@
 
 #pragma once
 
-#include <QGLWidget>
+#include <QOpenGLWidget>
+#include <QOpenGLFramebufferObject>
 #include <QMouseEvent>
-#include <QGLFramebufferObject>
 #include <QImage>
 #include "Globals.h"
 #include "Triangle.h"
@@ -46,7 +46,7 @@ using namespace std;
 
 class TextureWindow;
 
-class TextureEditor : public QGLWidget {
+class TextureEditor : public QOpenGLWidget {
   Q_OBJECT
 public:
   TextureEditor(QWidget *parent = 0);
@@ -92,6 +92,7 @@ public:
   void resetView();
   void setLinearInterpolation(bool value);
   QString getFilename();
+  void preloadFilename(string fname);
   void setSavingMode(SavingMode mode) { _savingMode = mode; }
 
 signals:
@@ -156,7 +157,7 @@ private:
   bool linearInterpolation; // Specifies whether or not to use linear
                             // interpolation when displaying textures
 
-  QGLFramebufferObject *fbo;
+  QOpenGLFramebufferObject *fbo;
 
   QSize resizeResult;
   bool resized;
