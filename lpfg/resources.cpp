@@ -65,7 +65,7 @@ void OpenHelpBook() {
   myApplicationBundle = CFBundleGetMainBundle();
   if (myApplicationBundle == NULL) {
     err = fnfErr;
-    cerr << "Cannot find application bundle" << endl;
+    cerr << "Cannot find application bundle\n";
     return;
   }
 
@@ -73,17 +73,17 @@ void OpenHelpBook() {
       myApplicationBundle, CFSTR("CFBundleHelpBookName"));
   if (myBookName == NULL) {
     err = fnfErr;
-    cerr << "Cannot find help book name" << endl;
+    cerr << "Cannot find help book name\n";
     return;
   }
 
   if (CFGetTypeID(myBookName) != CFStringGetTypeID()) {
     err = paramErr;
-    cerr << "Bookname doesn't contain a string" << endl;
+    cerr << "Bookname doesn't contain a string\n";
     return;
   }
-  cerr << "go to page" << endl;
-  cerr << myBookName << endl;
+  cerr << "go to page\n";
+  cerr << myBookName << Qt::endl;
   AHGotoPage((CFStringRef)myBookName, NULL, NULL);
 }
 

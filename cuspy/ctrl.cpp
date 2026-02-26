@@ -77,7 +77,7 @@ Ctrl::Ctrl(QWidget *parent, int argc, char **argv)
       _contextmenu->addAction("&Save", this, SLOT(Save()), Qt::CTRL + Qt::Key_S);
   mw->addAction(save_act);
   QAction *saveas_act = _contextmenu->addAction(
-      "Save as ...", this, SLOT(SaveAs()), Qt::CTRL + Qt::ShiftModifier + Qt::Key_S);
+      "Save as ...", this, SLOT(SaveAs()), Qt::ControlModifier | Qt::ShiftModifier | Qt::Key_S);
   mw->addAction(saveas_act);
   QAction *reload_act = _contextmenu->addAction("Revert to saved", this,
                                                 SLOT(Reload()), Qt::CTRL + Qt::Key_R);

@@ -23,7 +23,6 @@
 #endif
 
 #ifdef __APPLE__
-#include <qgl.h>
 #include <OpenGL/gl.h>
 #include <OpenGL/glu.h>
 #else

@@ -37,7 +37,7 @@ QTextStream err(stderr);
 void changeDir(QDir &d, QString dirname) {
   if (!d.cd(dirname)) {
     err << "Error, cannot find subdirectory '" << dirname << "' in "
-        << d.canonicalPath() << endl;
+        << d.canonicalPath() << Qt::endl;
     abort();
   }
 }

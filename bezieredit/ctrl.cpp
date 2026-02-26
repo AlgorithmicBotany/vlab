@@ -52,7 +52,6 @@ Ctrl::Ctrl(int argc, char **argv)
     : _caption("Bezier Editor"), _savefilename("noname.s"),
       _pModel(new Model()), _defaultName(false) {
   // if we have a filename, load it the file
-
   if (argc > 1) {
     _pModel->load(argv[1]);
     _savefilename = argv[1];
@@ -197,7 +196,7 @@ Ctrl::Ctrl(int argc, char **argv)
   _updatePatchNames();
   _pPerspView->firstResize = true;
   _pPerspView->show();
-  updateViews();
+  //updateViews(); // causes a crash on macOS because context is not ready
 }
 
 Ctrl::~Ctrl() { delete _pModel; }

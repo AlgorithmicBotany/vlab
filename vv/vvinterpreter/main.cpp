@@ -59,14 +59,15 @@ QString findQtPath()
       proc.waitForFinished();
       QString result = QString::fromLocal8Bit(proc.readAllStandardOutput());
       QStringList lines = result.split("\n");
-      QStringList qtcore = lines.filter(QRegExp(".*QtCore.*"));
+      QRegularExpression qtcorePath(".*QtCore.*");
+      QStringList qtcore = lines.filter(qtcorePath);
       if(!qtcore.empty())
       {
         QString lib = qtcore[0].split(" ")[0].trimmed();
-        QRegExp findPath = QRegExp("(.*)/QtCore\\.framework.*");
-        if(findPath.exactMatch(lib))
+        QRegularExpression findPath("(.*)/QtCore\\.framework.*");
+        if(findPath.match(lib).hasMatch())
         {
-          QString pth = findPath.capturedTexts()[1];
+          QString pth = findPath.match(lib).captured(1);
           if(pth.startsWith("@executable_path/.."))
           {
             QDir fm_path(bp);
