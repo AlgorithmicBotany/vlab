@@ -456,9 +456,9 @@ void BezierEditor::resizeGL(int w, int h) {
   editorWidth = w;
   editorHeight = h;
   ratio = (double)editorWidth / (double)editorHeight;
-#ifndef __APPLE__
+//#ifndef __APPLE__
   glViewport(0, 0, editorWidth, editorHeight);
-#endif
+//#endif
   glMatrixMode(GL_PROJECTION);
   glLoadIdentity();
   if (parallelProjection) {
@@ -474,9 +474,7 @@ void BezierEditor::resizeGL(int w, int h) {
 }
 
 void BezierEditor::mousePressEvent(QMouseEvent *event) {
-#ifndef __APPLE__
   makeCurrent();
-#endif
   updateMousePosition(event->x(), event->y());
   // Allow point selection if ctrl is held, or if rotation is locked
   if (event->buttons() & Qt::LeftButton &&
@@ -486,9 +484,9 @@ void BezierEditor::mousePressEvent(QMouseEvent *event) {
                        // moved back
       // [PASCAL] don't update the view port it will call a wrong paintgl in
       // TextureEditor
-#ifndef __APPLE__
+//#ifndef __APPLE__
       glViewport(0, 0, editorWidth, editorHeight);
-#endif
+//#endif
       if (parallelProjection) {
         glMatrixMode(GL_PROJECTION);
         glLoadIdentity();
@@ -566,9 +564,9 @@ void BezierEditor::mousePressEvent(QMouseEvent *event) {
 }
 
 void BezierEditor::mouseReleaseEvent(QMouseEvent *event) {
-#ifndef __APPLE__
+//#ifndef __APPLE__
   makeCurrent();
-#endif
+//#endif
   if (event->button() == Qt::LeftButton) {
     // Release the trackball on left mouse button
     // release
@@ -585,16 +583,13 @@ void BezierEditor::mouseReleaseEvent(QMouseEvent *event) {
 }
 
 void BezierEditor::mouseMoveEvent(QMouseEvent *event) {
-#ifndef __APPLE__
+//#ifndef __APPLE__
   makeCurrent();
-#endif
+//#endif
   if (event->buttons() & Qt::LeftButton &&
       event->modifiers() &
           Qt::AltModifier) {
     //zoom
-#ifndef __APPLE__
-    makeCurrent();
-#endif
     int oldMouseX = mouseX;    // Remember where the mouse was
     int oldMouseY = mouseY;
     updateMousePosition(event->x(), event->y());
@@ -720,9 +715,9 @@ void BezierEditor::mouseMoveEvent(QMouseEvent *event) {
 }
 
 void BezierEditor::wheelEvent(QWheelEvent *event) {
-#ifndef __APPLE__
+//#ifndef __APPLE__
   makeCurrent();
-#endif
+//#endif
   QPoint numDegrees = event->angleDelta();
   if (!numDegrees.isNull()) {
     // Check if the scroll is vertical
@@ -840,24 +835,15 @@ void BezierEditor::redo() {
 
 // Loads a texture with the given filename into the given GL texture
 bool BezierEditor::loadImage(const char *filename) {
-#ifndef __APPLE__
+//#ifndef __APPLE__
   makeCurrent();
-#endif
+//#endif
+
   QImage image;
   if (string(filename).empty())
     return false; // An empty string is passed in the case that no image should
                   // be loaded
-  /*
-  bool supported = QImageFormatStrings::isSupportedFormat(QString(filename));
-  if (!supported) { // If the texture was not found send an error message...
-    qDebug() << QString("File type of ")
-                    .append(filename)
-                    .append(" load image is not supported")
-                    .toStdString()
-                    .c_str();
-    return false;
-  }
-  */
+
   bool success = image.load(filename);
   if (!success) { // If the texture was not found send an error message...
     qDebug() << QString("Cannot load texture file ")
@@ -866,19 +852,7 @@ bool BezierEditor::loadImage(const char *filename) {
                     .c_str();
     return false;
   }
-/*
-  if (textureFlippedH) {
-    QTransform transform;
-    transform.scale(-1, 1);    
-    image = image.transformed(transform);
-  }
-  if (textureFlippedV) {
-    QTransform transform;
-    transform.scale(1,-1);    
-    image = image.transformed(transform);
-  }    
-*/
-  //	update();
+
   // 1. Convert image to a format OpenGL likes (RGBA8888) 
   // and flip it vertically because OpenGL expects (0,0) at the bottom-left.
   QImage glFriendlyImage = image.convertToFormat(QImage::Format_RGBA8888).mirrored();
@@ -901,18 +875,7 @@ bool BezierEditor::loadImage(const char *filename) {
 void BezierEditor::reloadCurrentTexture() {
   makeCurrent();
   QImage image = currentTexture;
-/*
-  if (textureFlippedH) {
-    QTransform transform;
-    transform.scale(-1, 1);    
-    image = image.transformed(transform);
-  }
-  if (textureFlippedV) {
-    QTransform transform;
-    transform.scale(1,-1);    
-    image = image.transformed(transform);
-  }  
-  */
+
   QImage glFriendlyImage = image.convertToFormat(QImage::Format_RGBA8888).mirrored();
   glBindTexture(GL_TEXTURE_2D, tex);
   glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, 
@@ -1401,29 +1364,7 @@ void BezierEditor::updateTexture(QImage image) {
     image = image.transformed(transform);
   }
 
-  //currentTexture =
-  //    currentTexture.transformed(QMatrix4x4().rotate(textureRotation));
-
   hasCurrentTexture = true;
-    //PASCAL: For some reason the image is flipped and rotated, so we flip adn rotate it back
-  /*
-  currentTexture = currentTexture.transformed(QMatrix4x4().scale(1, -1));
-  currentTexture = currentTexture.transformed(QMatrix4x4().scale(-1, 1));
-  currentTexture = currentTexture.transformed(QMatrix4x4().rotate(textureRotation));
-  */
-  /*
-  QImage texture = QGLWidget::convertToGLFormat(currentTexture);
-  glBindTexture(GL_TEXTURE_2D, tex);
-  glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, texture.width(), texture.height(), 0,
-               GL_RGBA, GL_UNSIGNED_BYTE, texture.bits());
-  if (linearInterpolation) {
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-  } else {
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
-  }
-  */
   QImage glFriendlyImage = currentTexture.convertToFormat(QImage::Format_RGBA8888).mirrored();
   glBindTexture(GL_TEXTURE_2D, tex);
   glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, 
@@ -1441,7 +1382,6 @@ void BezierEditor::updateTexture(QImage image) {
 
 // Updates the saved texture name to match the texture editor
 void BezierEditor::updateTextureName(string filename) {
-
   textureName = filename;
 }
 
@@ -1959,9 +1899,9 @@ void BezierEditor::setProjection(bool value) {
   if (parallelProjection == value)
     return;
   parallelProjection = value;
-#ifndef __APPLE__
+//#ifndef __APPLE__
   glViewport(0, 0, editorWidth, editorHeight);
-#endif
+//#endif
   glMatrixMode(GL_PROJECTION);
   glLoadIdentity();
   if (parallelProjection) {

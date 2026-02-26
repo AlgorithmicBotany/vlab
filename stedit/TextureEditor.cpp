@@ -39,8 +39,10 @@ TextureEditor::TextureEditor(QWidget *parent)
 
   QSurfaceFormat format;
   format.setRenderableType(QSurfaceFormat::OpenGL);
-  format.setProfile(QSurfaceFormat::CompatibilityProfile); // Crucial for legacy GL
-  format.setVersion(2, 1); // Or whatever version you are targeting
+  format.setProfile(QSurfaceFormat::CompatibilityProfile);
+  format.setVersion(2, 1);
+  //format.setAlphaBufferSize(8); // This replaces QGLFormat::AlphaChannel
+  //format.setDepthBufferSize(24);
   setFormat(format);
 
   filename = "";
@@ -57,7 +59,9 @@ QSize TextureEditor::minimumSizeHint() const { return QSize(100, 100); }
 QSize TextureEditor::sizeHint() const { return QSize(600, 600); }
 
 void TextureEditor::paintGL() {  
-  makeCurrent();
+  if (fbo != 0 && !fbo->isBound()) {
+    makeCurrent();
+  }
   glMatrixMode(GL_MODELVIEW);
   glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
@@ -119,7 +123,6 @@ void TextureEditor::paintGL() {
 
   glEnable(GL_TEXTURE_2D);
   glEnable(GL_BLEND);
-
   glBindTexture(GL_TEXTURE_2D, tex);
 
   for (unsigned int i = 0; i < triangles.size(); i++) { // Draw all the triangles
@@ -132,7 +135,7 @@ void TextureEditor::paintGL() {
       triangles.at(i)->drawLines(lineWidth);
     }
   }
-  
+
   if (showPoints && ((fbo != 0 && !fbo->isBound()) ||
                      fbo == 0)) { // Draw all the points if they are to be shown
     glDisable(
@@ -341,7 +344,16 @@ void TextureEditor::loadImage(const char *filename) {
   imageRatio = (double)image.width() / (double)image.height();
 
   QImage glFriendlyImage = image.convertToFormat(QImage::Format_RGBA8888).mirrored();
-   glBindTexture(GL_TEXTURE_2D, tex);
+
+  // create the frame buffer object for later use
+  if (fbo != 0)
+    delete fbo;
+  QOpenGLFramebufferObjectFormat format;
+  format.setAttachment(QOpenGLFramebufferObject::Depth);
+  fbo = new QOpenGLFramebufferObject(glFriendlyImage.size(), format);
+
+  // load the texture
+  glBindTexture(GL_TEXTURE_2D, tex);
   glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, 
               glFriendlyImage.width(), glFriendlyImage.height(), 
               0, GL_RGBA, GL_UNSIGNED_BYTE, glFriendlyImage.bits());
@@ -462,7 +474,9 @@ void TextureEditor::load(QImage image) {
   // QGLFramebufferObject -> QOpenGLFramebufferObject
   if (fbo != 0)
     delete fbo;
-  fbo = new QOpenGLFramebufferObject(glFriendlyImage.size(), QOpenGLFramebufferObject::Depth);
+  QOpenGLFramebufferObjectFormat format;
+  format.setAttachment(QOpenGLFramebufferObject::Depth);
+  fbo = new QOpenGLFramebufferObject(glFriendlyImage.size(), format);
 
   resized = false;
   captured = false;
@@ -619,26 +633,44 @@ void TextureEditor::addPoint(Point *newPoint) {
 }
 
 QImage TextureEditor::getFrameBuffer() {
+  
+  makeCurrent();
+  
+  if (!fbo->isValid()) {
+    std::cerr << "TextureEditor::getFrameBuffer, FBO is not valid.\n";
+    std::cerr << "Texture transfer to BezierEditor will not work.\n";
+  }
+
   fbo->bind();
 
   glMatrixMode(GL_PROJECTION);
   glLoadIdentity();
   glViewport(0, 0, fbo->size().width(), fbo->size().height());
   if (imageRatio < 1) {
-    glOrtho(-WIN_SIZE * imageRatio, WIN_SIZE * imageRatio, -WIN_SIZE, WIN_SIZE,
-            -1, 1);
+   glOrtho(-WIN_SIZE * imageRatio, WIN_SIZE * imageRatio, -WIN_SIZE, WIN_SIZE,
+           -1, 1);
   } else {
-    glOrtho(-WIN_SIZE, WIN_SIZE, -WIN_SIZE / imageRatio, WIN_SIZE / imageRatio,
-            -1, 1);
+   glOrtho(-WIN_SIZE, WIN_SIZE, -WIN_SIZE / imageRatio, WIN_SIZE / imageRatio,
+           -1, 1);
   }
+
   glMatrixMode(GL_MODELVIEW);
+
+  // change the blend func because the framebuffer was not done with premultiplied alpha
+  glBlendFunc(GL_ONE_MINUS_DST_ALPHA, GL_ONE);
+
   paintGL(); // Do this instead of updateGL in order to properly hide the lines
              // and points
 
-  fbo->release();
+  // put back the blend func
+  glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 
-  QImage image =
-      fbo->toImage(); // Copy the contents of the frame buffer into a new image
+  glFlush(); // make sure all operations are completed, then release the fbo
+  fbo->release();
+  
+  // Qt docs suggest creating a wrapper QImage with non-premultiplied format before saving
+  QImage fboImage(fbo->toImage());
+  QImage image(fboImage.constBits(), fboImage.width(), fboImage.height(), QImage::Format_ARGB32);
 
   resetProjection();
 
@@ -653,7 +685,7 @@ void TextureEditor::capture() {
     //QGLWidget::makeCurrent();
     makeCurrent();
 
-    QImage image = getFrameBuffer();
+    QImage image = getFrameBuffer().copy();
 
     // 1. Convert image to a format OpenGL likes (RGBA8888) 
     // and flip it vertically because OpenGL expects (0,0) at the bottom-left.
@@ -694,13 +726,15 @@ void TextureEditor::saveTexture(string filename) {
     emit(currentOpenFile(filename));
     loadedTextureName = filename; // Remember which texture is open
 
-    QImage image = getFrameBuffer();
+    QImage image = getFrameBuffer().copy();
 
     if (resized)
       image = image.scaled(resizeResult);
     image.save(filename.c_str()); // Save the image with the given filename
 
     update();
+  } else {
+    std::cerr << "stedit: frame buffer object in texture editor is not set\n";
   }
 }
 
@@ -751,7 +785,7 @@ QImage TextureEditor::getImage() {
   if (fbo != 0) {
     makeCurrent();
 
-    QImage image = getFrameBuffer();
+    QImage image = getFrameBuffer().copy();
 
     return image;
   }

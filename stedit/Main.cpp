@@ -127,7 +127,7 @@ int main(int argc, char *argv[]) {
 
   QSurfaceFormat format;
   format.setRenderableType(QSurfaceFormat::OpenGL);
-  format.setProfile(QSurfaceFormat::CompatibilityProfile); // Crucial for legacy GL
+  format.setProfile(QSurfaceFormat::CompatibilityProfile);
   format.setVersion(2, 1);
   //format.setAlphaBufferSize(8); // This replaces QGLFormat::AlphaChannel
   //format.setDepthBufferSize(24);

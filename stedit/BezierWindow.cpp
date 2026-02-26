@@ -29,6 +29,7 @@
 #include <QTextBrowser>
 #include <QPushButton>
 #include <QDialogButtonBox>
+#include <QTimer>
 #ifdef __APPLE__
 #include "cocoabridge.h"
 #endif
@@ -51,7 +52,11 @@ BezierWindow::BezierWindow(bool extendedFormatFlag, SavingMode savingMode, strin
           this, SLOT(menuize(const QPoint &)));
 
   setWireframeAct = new QAction("&Wireframe", this);
-  readConfig();
+  // readConfig() assumes the OpenGL context has been created in BezierEditor
+  // but this is not always true!
+  // simplest solution is to add a single shot timer, which is scheduled
+  // as soon as the app hits the event loop
+  QTimer::singleShot(0, this, &BezierWindow::readConfig);
 
   textureWindow = new TextureWindow(textureName,savingMode);
 

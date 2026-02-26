@@ -25,6 +25,7 @@
 #include <QPushButton>
 #include <QDialogButtonBox>
 #include <QTextStream>
+#include <QTimer>
 
 #ifdef __APPLE__
 #include "cocoabridge.h"
@@ -54,7 +55,8 @@ TextureWindow::TextureWindow(string textureName, SavingMode savingMode) {
   if (!textureName.empty())
     textureEditor->preloadFilename(textureName);
 
-  readConfig();
+  //readConfig();
+  QTimer::singleShot(0, this, &TextureWindow::readConfig);
 
   // Set up the menus
   menuBar = new QMenuBar();
