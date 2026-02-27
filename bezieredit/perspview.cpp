@@ -76,7 +76,7 @@ WorldPoint *PerspView::getSelection(QMouseEvent *pEv) {
   Model::BezierPoint *pSelected = NULL;
   makeCurrent();
 
-   GLuint *gl_selection = new GLuint[_pModel->getPointCount()];
+  GLuint *gl_selection = new GLuint[_pModel->getPointCount()];
 
   GLint viewport[4];
   glGetIntegerv(GL_VIEWPORT, viewport);

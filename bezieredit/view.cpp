@@ -186,10 +186,12 @@ void View::paintGL() {
 }
 
 void View::mouseMoveEvent(QMouseEvent *pEv) {
+  makeCurrent();
   _pCurrentTask->PointerMotion(pEv);
 }
 
 void View::mousePressEvent(QMouseEvent *pEv) {
+  makeCurrent();
   QWidget *topWidget = QApplication::topLevelAt(this->mapToGlobal(QPoint()));
   if (topWidget != nullptr)
     topWidget->raise();
@@ -215,6 +217,7 @@ void View::mousePressEvent(QMouseEvent *pEv) {
 }
 
 void View::mouseReleaseEvent(QMouseEvent *pEv) {
+  makeCurrent();
   _pCurrentTask->ButtonUp(pEv);
   _pCurrentTask = &_idleTask;
 }

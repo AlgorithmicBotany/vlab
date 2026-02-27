@@ -186,8 +186,13 @@ void EditPerspViewTask::deleteMode() {
 
 void EditPerspViewTask::PointerMotion(QMouseEvent *pEv) {
   if (_pSelected) {
+
+    QPoint point = pEv->position().toPoint();
+    int x = point.x();
+    int y = point.y();
+
     WorldPoint pt = dynamic_cast<PerspView *>(_pView)->mapScreenToWorld(
-        ScreenPoint(pEv->x(), pEv->y()));
+        ScreenPoint(x,y));
 
     GLint viewport[4];
     GLdouble mvmatrix[16];
@@ -198,7 +203,7 @@ void EditPerspViewTask::PointerMotion(QMouseEvent *pEv) {
     glGetDoublev(GL_MODELVIEW_MATRIX, mvmatrix);
     glGetDoublev(GL_PROJECTION_MATRIX, projmatrix);
 
-    GLint realy = viewport[3] - pEv->y() - 1;
+    GLint realy = viewport[3] - y - 1;
 
     // get _pSelected projected to build the distance ratio
     GLdouble spx = 0.0, spy = 0.0, spz = 0.0;
@@ -206,19 +211,17 @@ void EditPerspViewTask::PointerMotion(QMouseEvent *pEv) {
                projmatrix, viewport, &spx, &spy, &spz);
 
     // get near coords
-    gluUnProject(pEv->x(), realy, spz, mvmatrix, projmatrix, viewport, &nwx,
+    gluUnProject(x, realy, spz, mvmatrix, projmatrix, viewport, &nwx,
                  &nwy, &nwz);
 
-    WorldPoint wp(nwx - _pSelected->X(), nwy - _pSelected->Y(),
-                  nwz - _pSelected->Z());
+    WorldPoint wp(nwx - _pSelected->X(), nwy - _pSelected->Y(), nwz - _pSelected->Z());
 
     switch (_editMode) {
     case MOVE_POINT:
       _pModel->movePoint(static_cast<Model::BezierPoint *>(_pSelected), wp);
       break;
     case MOVE_PATCH:
-      _pModel->movePatchesOfPoint(static_cast<Model::BezierPoint *>(_pSelected),
-                                  wp);
+      _pModel->movePatchesOfPoint(static_cast<Model::BezierPoint *>(_pSelected), wp);
       break;
     default:
       break;
