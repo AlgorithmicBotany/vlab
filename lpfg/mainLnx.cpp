@@ -27,23 +27,17 @@
 #include <QPainter>
 #include "platform.h"
 
-QApplication *pApp = 0;
-
 int main(int argc, char **argv) {
-
   QGuiApplication::setAttribute(Qt::AA_EnableHighDpiScaling);
   QApplication::setAttribute(Qt::AA_ShareOpenGLContexts);
 
-  //QApplication a(argc, argv);
-  //  a.setAttribute(Qt::AA_ShareOpenGLContexts);
-  //pApp = &a;
+  QApplication *pApp = nullptr;
   pApp = new QApplication(argc, argv);
   pApp->setQuitOnLastWindowClosed(true);
 
   comlineparam.Parse(argc, argv);
   if (!comlineparam.BatchMode()) {
     std::string iconFname = "./icon";
-
     // try to load in the icon from the object directory
     QImage iconPicture = QImage(iconFname.c_str());
     // if unsuccessful, silenty ignore it and use the default icon
@@ -65,9 +59,11 @@ int main(int argc, char **argv) {
     painter.fillRect(0, icon.height() - 53, 53, 53,
                      QColor::fromRgbF(0, 0, 0, 1));
     painter.setPen(Qt::red);
-    painter.setFont(QFont("Times", 50));
+    QFont defaultFont;
+    defaultFont.setStyleHint(QFont::SansSerif);
+    defaultFont.setPointSize(50);
+    painter.setFont(defaultFont);
     painter.drawText(3, icon.height() - 3, QString("L"));
-    //a.setWindowIcon(QIcon(icon));
     pApp->setWindowIcon(QIcon(icon));
   }
 #ifdef MAKE_BUNDLE
@@ -83,11 +79,17 @@ int main(int argc, char **argv) {
   comlineparam.Apply();
   LPFG lpfg;
 
+  int result = 0;
   if (comlineparam.BatchMode())
-    return lpfg.RunBatchMode();
+    result = lpfg.RunBatchMode();
   else if (comlineparam.CompileOnly())
-      return lpfg.CompileOnly();
-  else
-    //return lpfg.Run(a);
-    return lpfg.Run(*pApp);
+    result = lpfg.CompileOnly();
+  else 
+    result = lpfg.Run(*pApp);
+
+  // cleanup the QApplication object before main() returns to
+  // avoid the warnings about: QThreadStorage "Object destroyed while thread is still running".
+  delete pApp;
+  pApp = nullptr;
+  return result;
 }

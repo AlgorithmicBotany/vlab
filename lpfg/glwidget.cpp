@@ -15,9 +15,6 @@
    along with this program.  If not, see <https://www.gnu.org/licenses/>.
  * ******************************************************************** */
 
-
-#define GL_SILENCE_DEPRECATION
-
 #include "glwidget.h"
 #include <QPainter>
 #include <QPaintEngine>
@@ -79,9 +76,7 @@ GLWidget::~GLWidget() {
 
 void GLWidget::initializeGL() {
 
-  initializeOpenGLFunctions(); // MC - Oct. 2015 - Qt setup for OpenGL
-                               // extensions
-
+  initializeOpenGLFunctions(); // MC - Oct. 2015 - Qt setup for OpenGL extensions
   makeCurrent();
   int samples = drawparams.antialiasing();
   if (samples > 0){
@@ -203,7 +198,6 @@ void GLWidget::paintGL() {
   unsigned int clear =
       (animparam.ClearBetweenFrames() || clear_glwidget || !_initiated);
   if (clear) {
-
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
     clear_glwidget = false;
     _initiated = true;

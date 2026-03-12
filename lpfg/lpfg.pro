@@ -48,6 +48,9 @@ macx: {
     lpfg_quick_install.path = ../Distribution/vlab-5.1/browser.app/Contents/Plug-ins/
     lpfg_quick_install.files = ../.binaries/lpfg.app
     INSTALLS += lpfg_quick_install
+
+    # supress OpenGL deprecation warning on macOS
+    DEFINES += GL_SILENCE_DEPRECATION
 }
 else {
     linux-g++|linux-g++-64|linux {

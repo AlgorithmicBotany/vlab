@@ -169,9 +169,9 @@ void GLEnv::OutputMatToPOVRay(int v, std::ostream &trg) const {
   }
 }
 
+// ClearColor() sets alpha = 0, so will the screen will be cleared with transparency
+// This is done on purpose to output PNGs with alpha (transparent background)
 void GLEnv::ClearColor() const {
-  // we force to have all the background transparent so we can save we a
-  // transparent background
   if (_materials.Set()) {
     const float *cclr = _materials.Emission(0);
     glClearColor(cclr[0], cclr[1], cclr[2], 0.0f);
@@ -181,7 +181,8 @@ void GLEnv::ClearColor() const {
     glClearColor(c[0], c[1], c[2], 0.0f);
   }
 }
-
+// ClearTransparentColor is not used anywhere...
+// And does the samething as ClearColor()!!!
 void GLEnv::ClearTransparentColor() const {
   if (_materials.Set()) {
     const float *cclr = _materials.Emission(0);

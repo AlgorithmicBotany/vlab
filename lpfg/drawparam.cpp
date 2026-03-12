@@ -661,7 +661,7 @@ void DrawParams::Font::Default() {
   _bold = "normal";
   _italic = false;
 #ifndef WIN32
-  int w = QFont::Normal;
+  QFont::Weight w = QFont::Normal;
   if (!_bold.compare("light"))
     w = QFont::Light;
   else if (!_bold.compare("normal"))
@@ -673,7 +673,13 @@ void DrawParams::Font::Default() {
   else if (!_bold.compare("black"))
     w = QFont::Black;
 
-  _qfont = QFont(_name.c_str(), _size, w, _italic);
+  QFont defaultFont;
+  defaultFont.setStyleHint(QFont::SansSerif);
+  defaultFont.setPointSize(_size);
+  defaultFont.setWeight(w);
+  defaultFont.setItalic(_italic);
+  _qfont = defaultFont;
+  _name = defaultFont.family().toStdString();
 #endif
 }
 

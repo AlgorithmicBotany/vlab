@@ -190,7 +190,7 @@ private:
 
   qreal m_previousDevicePixelRatio;
 
-  QList<QDockWidget *> docks;
+  //QList<QDockWidget *> docks; // this is not used!!!
   std::string getExtension();
   bool OverwriteDialogBox(const char *sfilename);
   void updateFilename();
@@ -286,7 +286,6 @@ public slots:
   void removeDockWindows(int id);
   void placeDockWindows(int id, const Rect &r);
   void resetDockWindowPosition();
-								     
 
 private slots:
   void addNewWidget() { addNew(); }

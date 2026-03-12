@@ -46,11 +46,7 @@ LPFG::LPFG() {
 
 int LPFG::Run(QApplication &a) {
 
- // QApplication::setAttribute(Qt::AA_ShareOpenGLContexts);
- // share opengl contexts must be set before creating the application
-
   if (CreateWindow()) {
-    //a.setAttribute(Qt::AA_ShareOpenGLContexts);
 
     // The call to show() is made in _mainWindow's constructor,
     // so there is no need to call it here.
@@ -113,74 +109,72 @@ int LPFG::Run(QApplication &a) {
 }
 
 void LPFG::_CreateView(int id) {
-     Rect ir;
-     //     std::cerr<<"Create View: "<<id<<std::endl;
-    if (drawparams.IsValidViewId(id)) {
-      const WindowParams &wp = drawparams.GetView(id);
+  Rect ir;
+  if (drawparams.IsValidViewId(id)) {
+    const WindowParams &wp = drawparams.GetView(id);
       
-      if (wp.Left() < 0) {
-	ir.left = 0;
-	Utils::Message("Warning Windows parameters are non positive, set to 0\n");
-      } else if (wp.Left() > 1) {
-	ir.left = 1;
-	Utils::Message("Warning Windows parameters are greater than 1, set to 1\n");
-      } else
-	ir.left = static_cast<int>(100 * wp.Left());
-      
-      if (wp.Top() < 0) {
-	ir.left = 0;
-	Utils::Message("Warning Windows parameters are non positive, set to 0\n");
-      } else if (wp.Top() > 1) {
-	ir.left = 1;
-	Utils::Message("Warning Windows parameters are greater than 1, set to 1\n");
-      } else
-	ir.top = static_cast<int>(100 * wp.Top());
-      
-      if (wp.Width() < 0) {
-	ir.left = 0;
-	Utils::Message("Warning Windows parameters are non positive, set to 0\n");
-      } else if (wp.Width() > 1) {
-	ir.left = 1;
-	Utils::Message("Warning Windows parameters are greater than 1, set to 1\n");
-      } else
-	ir.right = static_cast<int>(100 * wp.Width());
-      
-      if (wp.Height() < 0) {
-	ir.left = 0;
-	Utils::Message("Warning Windows parameters are non positive, set to 0\n");
-      } else if (wp.Height() > 1) {
-	ir.left = 1;
-	Utils::Message("Warning Windows parameters are greater than 1, set to 1\n");
-      } else
-	ir.bottom = static_cast<int>(100 * wp.Height());
-    } else {
+    if (wp.Left() < 0) {
       ir.left = 0;
-      ir.top = 0;
-      ir.right = 1;
-      ir.bottom = 1;
-    }
+	    Utils::Message("Warning Windows parameters are non positive, set to 0\n");
+    } else if (wp.Left() > 1) {
+      ir.left = 1;
+      Utils::Message("Warning Windows parameters are greater than 1, set to 1\n");
+    } else
+	    ir.left = static_cast<int>(100 * wp.Left());
+      
+    if (wp.Top() < 0) {
+	    ir.left = 0;
+	    Utils::Message("Warning Windows parameters are non positive, set to 0\n");
+    } else if (wp.Top() > 1) {
+	    ir.left = 1;
+	    Utils::Message("Warning Windows parameters are greater than 1, set to 1\n");
+    } else
+	    ir.top = static_cast<int>(100 * wp.Top());
+      
+    if (wp.Width() < 0) {
+	    ir.left = 0;
+	    Utils::Message("Warning Windows parameters are non positive, set to 0\n");
+    } else if (wp.Width() > 1) {
+	    ir.left = 1;
+	    Utils::Message("Warning Windows parameters are greater than 1, set to 1\n");
+    } else
+	    ir.right = static_cast<int>(100 * wp.Width());
+      
+    if (wp.Height() < 0) {
+	    ir.left = 0;
+	    Utils::Message("Warning Windows parameters are non positive, set to 0\n");
+    } else if (wp.Height() > 1) {
+	    ir.left = 1;
+	    Utils::Message("Warning Windows parameters are greater than 1, set to 1\n");
+    } else
+	    ir.bottom = static_cast<int>(100 * wp.Height());
+  } else {
+    ir.left = 0;
+    ir.top = 0;
+    ir.right = 1;
+    ir.bottom = 1;
+  }
 
-  
-    std::string title;
-    if (drawparams.IsValidViewId(id))
-      title = drawparams.ViewName(id);
-    else {
-      std::ostringstream ttl;
-      ttl << "view " << id;
-      title = ttl.str();
-    }
-    if (_mainWindow == 0) {
-      // This branch never gets called...
-      // And if it did, as far as I can tell,
-      // a GLWidget will not be created.
-      _mainWindow = new View(title, ir, this, id);
-    } else {
-      _mainWindow->addDockWindows(title, ir, id);
-    }
-    if (_aView.size() < static_cast<size_t>(id + 1))
-      _aView.resize(id + 1,NULL);
-    _aView[id] = _mainWindow->getGLWidget(id);
-    //  _aView[id]->setVisible(false);
+  std::string title;
+  if (drawparams.IsValidViewId(id))
+    title = drawparams.ViewName(id);
+  else {
+    std::ostringstream ttl;
+    ttl << "view " << id;
+    title = ttl.str();
+  }
+  if (_mainWindow == 0) {
+    // This branch never gets called...
+    // And if it did, as far as I can tell,
+    // a GLWidget will not be created.
+    _mainWindow = new View(title, ir, this, id);
+  } else {
+    _mainWindow->addDockWindows(title, ir, id);
+  }
+  if (_aView.size() < static_cast<size_t>(id + 1))
+    _aView.resize(id + 1,NULL);
+  _aView[id] = _mainWindow->getGLWidget(id);
+  //  _aView[id]->setVisible(false);
 }
 
 bool LPFG::CreateWindow() {
@@ -214,7 +208,6 @@ void LPFG::initializeMultiView(){
 }
 
 bool LPFG::Initialize() {
-  //  std::cerr<<"Initialize"<<std::endl;
   _lengine.StartEnvironment();
   if (_lengine.NewLsystem(comlineparam.Lsystemfile())) {
     if (!drawparams.IsMultiView()) {

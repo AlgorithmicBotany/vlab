@@ -112,7 +112,7 @@ public:
   float vvYmax() const;
   float vvZmax() const;
   float vvScale() const;
-
+  /* // not used!
   void setAlphaFormat(bool alpha) {
     if (alpha)
       setFormat(_format);
@@ -120,7 +120,7 @@ public:
       QSurfaceFormat format = QSurfaceFormat::defaultFormat();
       setFormat(format);
     }
-  }
+  }*/
 
   QImage grabFrameBuffer(bool);
 
