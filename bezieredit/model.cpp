@@ -605,8 +605,13 @@ void Model::drawControlPoints() {
 
 void Model::drawWireModel() {
   glLineWidth(1.0);
-  glPolygonMode(GL_FRONT, GL_LINE);
-
+  // The draw calls in this function used glEvalMesh2(GL_FILL) to draw the triangle mesh
+  // but set polygon mode to GL_LINE, which rendered the wireframe mesh with shading.
+  // However, modern hardware is not compatible with this mixing of draw modes, and
+  // reverets to software rendering. So, the polygon mode and lighting has been disabled,
+  // and now the wireframe is drawn in LINE model (glEvalMesh2(GL_LINE)).
+  //glPolygonMode(GL_FRONT, GL_LINE);
+  glDisable(GL_LIGHTING);
   for (int i = 0; i < _patches.Count(); i++) {
     if (_patches[i]->highlight) {
       glColor4fv(_wireHLColour);
@@ -617,7 +622,7 @@ void Model::drawWireModel() {
     }
 
     _prepareEvaluator(*_patches[i]);
-    glEvalMesh2(GL_FILL, 0, Config::getUDivs(), 0, Config::getVDivs());
+    glEvalMesh2(GL_LINE, 0, Config::getUDivs(), 0, Config::getVDivs());
 
     BezierPatch bp;
     bp.points[0] = _patches[i]->points[3];
@@ -641,9 +646,10 @@ void Model::drawWireModel() {
     bp.points[15] = _patches[i]->points[12];
 
     _prepareEvaluator(bp);
-    glEvalMesh2(GL_FILL, 0, Config::getUDivs(), 0, Config::getVDivs());
+    glEvalMesh2(GL_LINE, 0, Config::getUDivs(), 0, Config::getVDivs());
   }
-  glPolygonMode(GL_FRONT, GL_FILL);
+  //glPolygonMode(GL_FRONT, GL_FILL);
+  glEnable(GL_LIGHTING);
 }
 
 void Model::drawSolidModel() {

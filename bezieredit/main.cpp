@@ -38,6 +38,12 @@ int main(int argc, char **argv) {
   QApplication::setApplicationName("BezierEdit");
   QApplication::setOrganizationDomain("algorithmicbotany.org");
   QApplication::setOrganizationName("Algorithmic Botany");
+
+  QSurfaceFormat format;
+  format.setProfile(QSurfaceFormat::CompatibilityProfile);
+  format.setVersion(2, 1);
+  QSurfaceFormat::setDefaultFormat(format);
+
   QApplication qapp(argc, argv);
 
   MainWindow *wnd = new MainWindow();
