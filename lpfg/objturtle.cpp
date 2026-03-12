@@ -380,7 +380,7 @@ void ObjTurtle::_GCF(float v) {
       // old code was outputing quads, but, in lpfg, generalized cylinders
       // sometimes end at a single vertex, so there should be an option
       // to switch between quads and triangles.
-#if 0
+#if 1
       _trg.Quad(vx1.first, nx1, vx1.second,
                 vx2.first, nx2, vx2.second,
                 vx4.first, nx4, vx4.second,

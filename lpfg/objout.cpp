@@ -304,14 +304,14 @@ void ObjOutputStore::NewGroup() {
 }
 
 void ObjOutputStore::PushGroup() {
-  _groupIds.push_back(_groupId);
+  //_groupIds.push_back(_groupId);
 }
 
 void ObjOutputStore::PopGroup() {
-  _groupIds.pop_back();
-  if (_groupIds.size() > 0) {
-    _trg << "g group" << _groupIds.back() << std::endl;
-  }
+  //_groupIds.pop_back();
+  //if (_groupIds.size() > 0) {
+  //  _trg << "g group" << _groupIds.back() << std::endl;
+  //}
 }
 
 ObjOutputStore::QuadStripObj::QuadStripObj(ObjOutputStore &trg)
