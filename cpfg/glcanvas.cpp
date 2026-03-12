@@ -127,20 +127,21 @@ glcanvas::glcanvas(QWidget *parent)
   format.setAlphaBufferSize(8);
   setFormat(format);
   _backGroundIsTransparent = false;
+/*
 #ifdef __APPLE__
   char str[256];
   size_t size = sizeof(str);
   sysctlbyname("kern.osrelease", str, &size, NULL, 0);
   int version, x1, x2;
   sscanf(str, "%d.%d.%d", &version, &x1, &x2);
-  /*if (version > 12) {
+  if (version > 12) {
     // fix Mac OS X 10.9 (mavericks) font issue
     // https://bugreports.qt-project.org/browse/QTBUG-32789
     QFont::insertSubstitution(".Helvetica Neue DeskInterface", "Lucida Grande");
     QFont::insertSubstitution(".Lucida Grande UI", "Lucida Grande");
-  }*/
+  }
 #endif
-
+*/
   rot = scl = pan = roll = false;
   hadFocus = 2;
   initialized = first_run = false;
@@ -1894,10 +1895,7 @@ QImage glcanvas::grabFrameBuffer(bool withAlpha) {
   int w = width() * retinaScale;
   int h = height() * retinaScale;
  
-  //if (true) {
-    res = qt_gl_read_framebuffer(QSize(w, h), format().hasAlpha(), withAlpha);
-  //} else {
-  //}
+  res = qt_gl_read_framebuffer(QSize(w, h), format().hasAlpha(), withAlpha);
 
   // not sure if this is "the" way to handle Retina displays
   // but here we scale the image's DPI so the image appears

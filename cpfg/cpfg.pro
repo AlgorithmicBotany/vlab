@@ -84,6 +84,9 @@ macx: {
     cpfg_quick_install.path = ../Distribution/vlab-5.1/browser.app/Contents/Plug-ins/
     cpfg_quick_install.files = ../.binaries/cpfg.app
     INSTALLS += cpfg_quick_install
+
+    # supress OpenGL deprecation warning on macOS
+    DEFINES += GL_SILENCE_DEPRECATION
 }
 
 unix:!macx{

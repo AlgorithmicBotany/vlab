@@ -54,7 +54,6 @@
 #include <QtOpenGL>
 
 using namespace std;
-QApplication *app = 0;
 
 extern VIEWPARAM viewparam;
 extern DRAWPARAM drawparam;
@@ -83,7 +82,14 @@ void makeRasterFont() {
   Warning(cstr,0);
   strcpy(font_spec, "-*-*-*-r-*-*-12-*-*-*-*-*-*-*");
 
-  _font = QFont("Times", 48);
+  // "Times" causes a warning:
+  // qt.qpa.fonts: Populating font family aliases took 102 ms.
+  // Replace uses of missing font family "Times" with one that exists to avoid this cost. 
+  //_font = QFont("Times", 48);
+  QFont defaultFont;
+  defaultFont.setStyleHint(QFont::SansSerif);
+  defaultFont.setPointSize(12);
+  _font = defaultFont;
 }
 
 /************************************************************************/
@@ -191,11 +197,11 @@ void FreeGraphics(void) { FreeGL(); }
 void swap_buffers();
 void my_swapbuffers(void) { swap_buffers(); }
 
-GLWindow *win_gl = NULL;
+GLWindow *win_gl_ptr = nullptr; // keep a pointer to GLWindow for DrawText()
 int InitializeGraphics(int argc, char **argv) {
-  QGuiApplication::setAttribute(Qt::AA_EnableHighDpiScaling);
-  app = new QApplication(argc, argv);
 
+  // declare QApplication on the stack
+  QApplication app(argc, argv);
 
   // setting up relative position and relative size of the window
   int cxscr, cyscr;
@@ -228,79 +234,73 @@ int InitializeGraphics(int argc, char **argv) {
   if (clp.ismaterialfile)
     load_in_materials();
 
-  // what was the point of this condition?
-  // if ((clp.graphics_output)||(!clp.graphics_output))
-  if (1)
-    {
-    if (!DoubleBuffer(&animparam))
-      double_buffering = 0;
 
-    win_gl = new GLWindow(NULL,clp.xsize,clp.ysize);
-    //    win_gl->resize(clp.xsize, clp.ysize);
-    win_gl->move(clp.xpos, clp.ypos);
-    char *vlab_obj_name = getenv("VLAB_OBJECT_NAME");
-    if (vlab_obj_name != NULL) {
-      win_gl->setWindowTitle(QString("cpfg: %1").arg(vlab_obj_name));
-      win_gl->setTitle(win_gl->windowTitle());
-    }
+  if (!DoubleBuffer(&animparam))
+    double_buffering = 0;
 
-    /*
-      The following code was used in an old version of QT.
-      It seems to mess up the sizing of the windows in High DPI.
-    QTimer delay_show; // This timer ensure Qt has the time to create the OpenGL
-                       // context before showing the window
-    delay_show.setSingleShot(true);
-    QObject::connect(&delay_show, SIGNAL(timeout()), win_gl, SLOT(show()));
-    QObject::connect(&delay_show, SIGNAL(timeout()), win_gl, SLOT(raise()));
-    delay_show.start(100);
-    */
-    win_gl->show();
-    std::string iconFname = "./icon";
+  // declare GLWindow on the stack (not on the heap)
+  GLWindow win_gl(NULL,clp.xsize,clp.ysize);
+  //win_gl = new GLWindow(NULL,clp.xsize,clp.ysize);
+  win_gl.move(clp.xpos, clp.ypos);
+  char *vlab_obj_name = getenv("VLAB_OBJECT_NAME");
+  if (vlab_obj_name != NULL) {
+    win_gl.setWindowTitle(QString("cpfg: %1").arg(vlab_obj_name));
+    win_gl.setTitle(win_gl.windowTitle());
+  }
+  // unfortunately, DrawString needs to call from win_gl, so grab a pointer to it
+  win_gl_ptr = &win_gl;
 
-    // try to load in the icon from the object directory
-    QImage iconPicture = QImage(iconFname.c_str());
-    // if unsuccessful, silenty ignore it and use the default icon
+  win_gl.show();
+  std::string iconFname = "./icon";
+
+  // try to load in the icon from the object directory
+  QImage iconPicture = QImage(iconFname.c_str());
+  // if unsuccessful, silenty ignore it and use the default icon
+  if (iconPicture.isNull()) {
+    iconPicture = readSGI(iconFname.c_str());
     if (iconPicture.isNull()) {
-      iconPicture = readSGI(iconFname.c_str());
-      if (iconPicture.isNull()) {
-        iconFname = ":/default-icon.png";
-        iconPicture = QImage(iconFname.c_str());
-      }
+      iconFname = ":/default-icon.png";
+      iconPicture = QImage(iconFname.c_str());
     }
-
-    // read icon from SGI file
-    QPixmap icon = QPixmap::fromImage(iconPicture);
-
-    QPainter painter(&icon);
-    painter.fillRect(0, icon.height() - 53, 53, 53,
-                     QColor::fromRgbF(0, 0, 0, 1));
-    painter.setPen(Qt::red);
-    painter.setFont(QFont("Times", 50));
-
-    painter.drawText(3, icon.height() - 3, QString("C"));
-
-    QTimer::singleShot(0, win_gl, SLOT(raise()));
-
-    app->setWindowIcon(icon);
-#ifdef __APPLE__
-    // TODO: check why the icon was set to empty QPixmap()?
-    win_gl->setWindowIcon(QPixmap());
-#else
-    win_gl->setWindowIcon(icon);
-#endif
-    app->setQuitOnLastWindowClosed(true);
-  
-    return app->exec();
   }
 
-  else
-    return 0;
+  // read icon from SGI file
+  QPixmap icon = QPixmap::fromImage(iconPicture);
+
+  QPainter painter(&icon);
+  painter.fillRect(0, icon.height() - 53, 53, 53,
+                    QColor::fromRgbF(0, 0, 0, 1));
+  painter.setPen(Qt::red);
+
+  QFont defaultFont;
+  defaultFont.setStyleHint(QFont::SansSerif);
+  defaultFont.setPointSize(50);
+  painter.setFont(defaultFont);
+
+  painter.drawText(3, icon.height() - 3, QString("C"));
+
+  QTimer::singleShot(0, &win_gl, SLOT(raise()));
+
+  app.setWindowIcon(icon);
+#ifdef __APPLE__
+  // TODO: check why the icon was set to empty QPixmap()?
+  win_gl.setWindowIcon(QPixmap());
+#else
+  win_gl.setWindowIcon(icon);
+#endif
+  app.setQuitOnLastWindowClosed(true);
+
+  int result = app.exec();
+  // cleanup the QApplication object before main() returns
+  return result;
 }
 
 void GLWindow::closeEvent(QCloseEvent *pEv) {
-  canvas->exit();
+  // calling exit here causes warnings:
+  // QThreadStorage "Object destroyed while thread is still running".
+  //canvas->exit();
   pEv->accept();
-  app->quit();
+  //app->quit();
   QWidget::closeEvent(pEv);
 }
 
@@ -318,6 +318,8 @@ void GetTextExtent(char *, int *width, int *ascent, int *descent) {
 }
 
 void DrawString(char *str, const TURTLE *tu) {
+  // This function creates the font every time it is called?!
+  // So every @L() calls creates a local QFont! Why?
   short red, green, blue;
 
   my_getmcolor((short)tu->color_index, &red, &green, &blue);
@@ -328,9 +330,10 @@ void DrawString(char *str, const TURTLE *tu) {
 
   strcpy(font_spec, drawparam.fontname);
 
-  QFont font = QFont();
-
   std::vector<std::string> vector_font;
+
+  QFont font;
+  font.setStyleHint(QFont::SansSerif);
 
   char delim = '-';
   string work = string(font_spec);
@@ -369,7 +372,7 @@ void DrawString(char *str, const TURTLE *tu) {
     std::string weight = vector_font[3];
     std::string slant = vector_font[4];
 
-    int w = QFont::Normal;
+    QFont::Weight w = QFont::Normal;
     if (!weight.compare("light"))
       w = QFont::Light;
     else if (!weight.compare("normal"))
@@ -403,14 +406,22 @@ void DrawString(char *str, const TURTLE *tu) {
     if (!buf.empty())
       vector_name_font.push_back(buf);
 
+    // get name of the font
     string name_font = "";
     for (unsigned int i = 0; i < vector_name_font.size() - 1; i++)
       name_font += vector_name_font[i] + " ";
-
     name_font += vector_name_font[vector_name_font.size() - 1];
 
-    font = QFont(QString::fromStdString(name_font), font_size, w,
-                 italic); // used for printing postscript text
+    // set the font
+    font.setPointSize(font_size);
+    font.setWeight(w);
+    font.setItalic(italic);
+    if (name_font == "*") {
+      name_font = font.family().toStdString();
+    } else {
+      font.setFamily(QString::fromStdString(name_font));
+    } 
+
     drawparam.font_name = new char[name_font.size() + 1];
     drawparam.font_name[name_font.size()] = 0;
     memcpy(drawparam.font_name, name_font.c_str(), name_font.size());
@@ -423,7 +434,7 @@ void DrawString(char *str, const TURTLE *tu) {
     if (!weight.compare("bold"))
       drawparam.bold = 1;
   }
-  win_gl->canvas->renderText(tu->position[0], tu->position[1], tu->position[2],
+  win_gl_ptr->canvas->renderText(tu->position[0], tu->position[1], tu->position[2],
                              str, qcolor, font);
 }
 
