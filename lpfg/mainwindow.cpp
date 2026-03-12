@@ -51,27 +51,20 @@ QTimer *idleTimer;
 
 View::View(const std::string &, const Rect &r, LPFG *pLpfg, int id)
     : _idTimer(0), new_model_pending(false), directoryWatcher(NULL), m_previousDevicePixelRatio(0.0)
-
 {
   const WindowBorderParams &wbp = drawparams.GetWindowBorderParams();
   _numberingImageName = 0;
 
   if (comlineparam.NoBorder())
     setWindowFlags(Qt::Window | Qt::FramelessWindowHint);
-  QPalette pal = this->palette();
-#ifndef __APPLE__
-  // On Linux-based systems with the menu bar shown inside the lpfg window,
-  // we need to be careful with setting the window's background color:
-  // In single-view mode, we don't want to change the color because the
-  // menu background color will change (e.g., black (default) hides the menu)
-  // In multi-view mode, we want to set the border color but, by setting
-  // the background, the menu color is affected. There must be a better way!
-  if (drawparams.IsMultiView())
-#endif
-  // to define the color of borders
-  pal.setColor(QPalette::Window, QColor(wbp.red(), wbp.green(), wbp.blue()));
-  this->setAutoFillBackground(true);
-  this->setPalette(pal);
+
+  // Set background color, but, on macOS, the setPalette call does not always work.
+  // The recommended way is with a stylesheet
+  QColor color(wbp.red(), wbp.green(), wbp.blue(), 1.0);
+  QString rgbString = color.name();
+  // Applies ONLY to QWidget, NOT to subclasses, otherwise the menu background also changes
+  this->setStyleSheet(".QWidget { background-color: " + rgbString + ";}");
+
   _alphaChannel = false;
   this->raise();
 
@@ -79,8 +72,8 @@ View::View(const std::string &, const Rect &r, LPFG *pLpfg, int id)
   _proportion = 2;
   _resizeTimer.setSingleShot(true);
   connect(&_resizeTimer, SIGNAL(timeout()), SLOT(resizeDone()));
-  setMouseTracking(true);
 
+  setMouseTracking(true);
   setDontPaint(false);
 
   _pLpfg = pLpfg;
@@ -115,7 +108,12 @@ View::View(const std::string &, const Rect &r, LPFG *pLpfg, int id)
     this->show();
 
   // create Menu
-  setUnifiedTitleAndToolBarOnMac(true);
+  // According to the Qt documentation on "unifiedTitleAndToolBarOnMac":
+  // "Use in windows with OpenGL content is not supported. This includes QOpenGLWidget."
+  // "Using dockable or movable toolbars may result in painting errors and is not recommended."
+  // Because lpfg uses glClear(r,g,b,0) with alpha==0, setting unifiedTitleandToolBarOnMac to true,
+  // causes the window background to appear over top of the QOpenGLWidget background (at least in macOS Tacoma).
+  //setUnifiedTitleAndToolBarOnMac(true);
   createMenu();
   
 }
@@ -132,64 +130,62 @@ void View::InitializeDocks(){
    int borderWidth = wbp.width();
 
   if (drawparams.IsMultiView()) {
-    for (int i = 0; i < drawparams.multiViewSize(); ++i){
-    const WindowParams &wp = drawparams.GetView(i);
+    for (int i = 0; i < drawparams.multiViewSize(); ++i) {
+      const WindowParams &wp = drawparams.GetView(i);
       Rect ir;
       if (wp.Left() < 0) {
-	ir.left = 0;
-	Utils::Message("Warning Windows parameters are non positive, set to 0\n");
+        ir.left = 0;
+        Utils::Message("Warning Windows parameters are non positive, set to 0\n");
       }
       if (wp.Left() > 1) {
-	ir.left = 1;
-	Utils::Message("Warning Windows parameters are greater than 1, set to 1\n");
+	      ir.left = 1;
+	      Utils::Message("Warning Windows parameters are greater than 1, set to 1\n");
       }
       ir.left = static_cast<int>(100 * wp.Left());
      
       if (wp.Top() < 0) {
-	ir.left = 0;
-	Utils::Message("Warning Windows parameters are non positive, set to 0\n");
+	      ir.left = 0;
+	      Utils::Message("Warning Windows parameters are non positive, set to 0\n");
       }
       if (wp.Top() > 1) {
-	ir.left = 1;
-	Utils::Message("Warning Windows parameters are greater than 1, set to 1\n");
+	      ir.left = 1;
+	      Utils::Message("Warning Windows parameters are greater than 1, set to 1\n");
       } 
       ir.top = static_cast<int>(100 * wp.Top());
       
       if (wp.Width() < 0) {
-	ir.left = 0;
-	Utils::Message("Warning Windows parameters are non positive, set to 0\n");
+	      ir.left = 0;
+	      Utils::Message("Warning Windows parameters are non positive, set to 0\n");
       }
       if (wp.Width() > 1) {
-	ir.left = 1;
-	Utils::Message("Warning Windows parameters are greater than 1, set to 1\n");
+	      ir.left = 1;
+	      Utils::Message("Warning Windows parameters are greater than 1, set to 1\n");
       } 
       ir.right = static_cast<int>(100 * wp.Width());
       if (wp.Height() < 0) {
-	ir.left = 0;
-	Utils::Message("Warning Windows parameters are non positive, set to 0\n");
+	      ir.left = 0;
+	      Utils::Message("Warning Windows parameters are non positive, set to 0\n");
       }
       if (wp.Height() > 1) {
-	ir.left = 1;
-	Utils::Message("Warning Windows parameters are greater than 1, set to 1\n");
+	      ir.left = 1;
+	      Utils::Message("Warning Windows parameters are greater than 1, set to 1\n");
       } 
       ir.bottom = static_cast<int>(100 * wp.Height());
       QPalette palette;
       Vector3d bgColor = gl.GetBgColor();
       palette.setColor(QPalette::Window, QColor(bgColor[0]*255, bgColor[1]*255, bgColor[2]*255));
       QLabel *label = new QLabel("");
-      label->setAutoFillBackground(true);
       label->setPalette(palette);
+      label->setAutoFillBackground(true);
       m_layout->addWidget(label,ir.top, ir.left, ir.bottom, ir.right);
       layoutWidgets.push_back(label);
     }
   }
-     // in multiview is a gridlayout 100 x 100 square, we made them identical (taking account borderWidth)
+  // in multiview is a gridlayout 100 x 100 square, we made them identical (taking account borderWidth)
   _centralWidget->setLayout(m_layout);
 
-  _centralWidget->show();
   setCentralWidget(_centralWidget);
-
-
+  _centralWidget->show();
 }
 
 void View::Resize(int w, int h) {
@@ -388,9 +384,7 @@ void View::addDockWindows(const std::string &, const Rect &r, int id) {
     size = id + 1;
   }
 
-  
-  GLWidget *w = new GLWidget(this, true, qRgb(250, 0, 0),id,
-                             _openGlBehavior);
+  GLWidget *w = new GLWidget(this, true, qRgb(250, 0, 0),id,_openGlBehavior);
 
   //widget size:
   int wid = width()*r.right/100.;
@@ -411,14 +405,14 @@ void View::addDockWindows(const std::string &, const Rect &r, int id) {
   w->installEventFilter(this);
   //m_layout->removeWidget(label);
   m_layout->addWidget(w, r.top, r.left, r.bottom, r.right);
- 
+
   if (_pLpfg->GetLEngine()._glview.size() < static_cast<size_t>(id + 1))
     _pLpfg->GetLEngine()._glview.resize(id + 1);
 
   _pLpfg->GetLEngine()._glview[id] = m_glWidgets[id] ;
   m_glWidgets[id]->resize(wid,hei);
 
- }
+}
 
 void View::removeDockWindows(int id) {
   // add a et
@@ -574,7 +568,7 @@ void View::Clear() {
   if (_glWidgetClicked == -1) {
     for (QVector<GLWidget *>::Iterator it = m_glWidgets.begin(); it != m_glWidgets.end(); ++it){
       if ((*it) != nullptr){
-	(*it)->Clear();
+	      (*it)->Clear();
       }
     }
   } else
