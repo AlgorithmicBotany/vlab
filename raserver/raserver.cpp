@@ -36,6 +36,7 @@
 #include <assert.h>
 #include <errno.h>
 #include <time.h>
+#include <sys/time.h>
 #include <stdarg.h>
 #include <iostream>
 #include <pthread.h>
@@ -243,6 +244,12 @@ int main(int argc, char **argv) {
   while (1) {
     // accept new client
     int sock = accept(main_sock, NULL, NULL);
+
+    // set a receive timeout to prevent idle processes from hanging indefinitely
+    struct timeval tv;
+    tv.tv_sec = 300; // 5 minutes timeout
+    tv.tv_usec = 0;
+    setsockopt(sock, SOL_SOCKET, SO_RCVTIMEO, (const char*)&tv, sizeof tv);
 
     // fork off a separate process that will server this client
 
@@ -1138,7 +1145,7 @@ void do_archive_object(const char *str, MessagePipe &pipe) {
   char tmp_file_name[4096];
   sprintf(tmp_file_name, "%s/ratmp%ld-XXXXXX", vlab_tmp_dir, (long)my_pid);
   int res = mkstemp(tmp_file_name);
-  if (DEBUG)
+  if (raserver_debug)
     fprintf(stderr, "tmp_file_name = '%s'\n", tmp_file_name);
 
   // archive the requested object
@@ -1162,10 +1169,10 @@ void do_archive_object(const char *str, MessagePipe &pipe) {
 
   // get the size of the archive
   long archive_size = ar.get_archive_size();
-  if (DEBUG)
+  if (raserver_debug)
     fprintf(stderr, "archive_size = %ld\n", archive_size);
   assert(archive_size >= 0);
-  ulong n_archive_size = htonl(archive_size);
+  uint32_t n_archive_size = htonl((uint32_t)archive_size);
 
   // report success - message format: 'y' + archive_size (in network format)
   char message[4096];
@@ -1247,7 +1254,7 @@ void do_dearchive_object(const char *str, MessagePipe &pipe)
   ptr += xstrlen(ptr) + 1;
   char *destination = ptr;
   ptr += xstrlen(ptr) + 1;
-  ulong n_archive_size;
+  uint32_t n_archive_size;
   if (!user_permissions.TestPermissions(curr_user_name, destination, "w")) {
     if (raserver_debug)
       fprintf(stderr,
@@ -1260,7 +1267,7 @@ void do_dearchive_object(const char *str, MessagePipe &pipe)
   }
 
   memcpy(&n_archive_size, ptr, sizeof(n_archive_size));
-  ulong archive_size = ntohl(n_archive_size);
+  long archive_size = ntohl(n_archive_size);
 
   if (raserver_debug)
     fprintf(stderr, "raserver:do_dearchive_object( %s, %s, %lu)\n", oofs_dir,
@@ -1270,7 +1277,7 @@ void do_dearchive_object(const char *str, MessagePipe &pipe)
   char tmp_file_name[4096];
   sprintf(tmp_file_name, "%s/ratmp%ld-XXXXXX", vlab_tmp_dir, (long)my_pid);
   int res = mkstemp(tmp_file_name);
-  if (DEBUG)
+  if (raserver_debug)
     fprintf(stderr, "tmp_file_name = '%s' mkstemp()=%d\n", tmp_file_name, res);
 
   // open the temporary file
@@ -1708,17 +1715,17 @@ void do_paste_object(const char *str, MessagePipe &pipe)
     mem.append("n", 1);
     // -1 = write access denied
     int res = -1;
-    u_long n_res = htonl(u_long(res + 128));
+    uint32_t n_res = htonl((uint32_t)(res + 128));
     mem.append(&n_res, sizeof(n_res));
     Message m(RA_PASTE_OBJECT_RESPONSE, (char *)mem.data, mem.size);
     pipe.send_message(m);
     return;
   }
 
-  ulong n_archive_size;
+  uint32_t n_archive_size;
   memcpy(&n_archive_size, ptr, sizeof(n_archive_size));
 
-  ulong archive_size = ntohl(n_archive_size);
+  long archive_size = ntohl(n_archive_size);
 
   if (raserver_debug)
     fprintf(stderr, "raserver:do_paste_object(%s,%s,%s,%s,%lu)\n", oofs_dir,
@@ -1729,7 +1736,7 @@ void do_paste_object(const char *str, MessagePipe &pipe)
   char archive_name[4096];
   sprintf(archive_name, "%s/ratmp%ld-XXXXXX", vlab_tmp_dir, (long)my_pid);
   int res = mkstemp(archive_name);
-  if (DEBUG)
+  if (raserver_debug)
     fprintf(stderr, "archive_name = '%s'\n", archive_name);
 
   // open the temporary file
@@ -1748,7 +1755,7 @@ void do_paste_object(const char *str, MessagePipe &pipe)
     Mem mem;
     mem.append("n", 1);
     int res = -5;
-    u_long n_res = htonl(u_long(res + 128));
+    uint32_t n_res = htonl((uint32_t)(res + 128));
     mem.append(&n_res, sizeof(n_res));
     Message m(RA_PASTE_OBJECT_RESPONSE, (char *)mem.data, mem.size);
     pipe.send_message(m);
@@ -1769,7 +1776,7 @@ void do_paste_object(const char *str, MessagePipe &pipe)
       Mem mem;
       mem.append("n", 1);
       int res = -5;
-      u_long n_res = htonl(u_long(res + 128));
+      uint32_t n_res = htonl((uint32_t)(res + 128));
       mem.append(&n_res, sizeof(n_res));
       Message m(RA_PASTE_OBJECT_RESPONSE, (char *)mem.data, mem.size);
       pipe.send_message(m);
@@ -1792,7 +1799,7 @@ void do_paste_object(const char *str, MessagePipe &pipe)
         Mem mem;
         mem.append("n", 1);
         int res = -5;
-        u_long n_res = htonl(u_long(res + 128));
+        uint32_t n_res = htonl((uint32_t)(res + 128));
         mem.append(&n_res, sizeof(n_res));
         Message m(RA_PASTE_OBJECT_RESPONSE, (char *)mem.data, mem.size);
         pipe.send_message(m);
@@ -1808,7 +1815,7 @@ void do_paste_object(const char *str, MessagePipe &pipe)
       Mem mem;
       mem.append("n", 1);
       int res = -5;
-      u_long n_res = htonl(u_long(res + 128));
+      uint32_t n_res = htonl((uint32_t)(res + 128));
       mem.append(&n_res, sizeof(n_res));
       Message m(RA_PASTE_OBJECT_RESPONSE, (char *)mem.data, mem.size);
       pipe.send_message(m);
@@ -1829,7 +1836,7 @@ void do_paste_object(const char *str, MessagePipe &pipe)
   if (res) {
     Mem mem;
     mem.append("n", 1);
-    u_long n_res = htonl(u_long(res + 128));
+    uint32_t n_res = htonl((uint32_t)(res + 128));
     mem.append(&n_res, sizeof(n_res));
     Message m(RA_PASTE_OBJECT_RESPONSE, (char *)mem.data, mem.size);
     pipe.send_message(m);

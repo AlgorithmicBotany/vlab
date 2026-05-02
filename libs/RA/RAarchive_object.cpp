@@ -177,9 +177,9 @@ int RA::Archive_object(RA_Connection *connection, const char *oofs_dir,
   }
 
   // extract the length of the archive
-  size_t archive_length;
-  memcpy(&archive_length, response->data + 1, sizeof(u_int32_t));
-  archive_length = ntohl(archive_length);
+  u_int32_t archive_length_net;
+  memcpy(&archive_length_net, response->data + 1, sizeof(u_int32_t));
+  size_t archive_length = ntohl(archive_length_net);
   if (__DEBUG__)
     fprintf(stderr, "RA::Archive_object(): archive_length=%ld\n",
             archive_length);
@@ -320,7 +320,7 @@ int RA::Dearchive_object(RA_Connection *connection, const char *local_file,
   }
 
   // convert the archive_size into a network format
-  size_t n_archive_size = htonl(archive_size);
+  u_int32_t n_archive_size = htonl((u_int32_t)archive_size);
 
   // compose a message to the server requesting a DEARCHIVE operation
   //
@@ -331,7 +331,7 @@ int RA::Dearchive_object(RA_Connection *connection, const char *local_file,
   data.append_string0(oofs_dir);
   data.append_string0(destination);
   data.append_byte(0);
-  data.append_ulong(n_archive_size);
+  data.append(&n_archive_size, sizeof(n_archive_size));
   Message request(RA_DEARCHIVE_OBJECT_REQUEST, (char *)data.data, data.size);
 
   // send the message to the server
