@@ -227,6 +227,7 @@ int start_browser(int argc, char **argv, bool cleanTMP) {
       msgBox.setDetailedText(folder_str);
       msgBox.setStandardButtons(QMessageBox::Save | QMessageBox::Discard | QMessageBox::Cancel);
       msgBox.setDefaultButton(QMessageBox::Save);
+      msgBox.button(QMessageBox::Discard)->setText("Discard");
       int ret = msgBox.exec();
       if (ret == QMessageBox::Cancel) {
         // exit and don't do anything
