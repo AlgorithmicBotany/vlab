@@ -128,8 +128,25 @@ int ReadSocket(int socketid, Queue *queue)
 
     read_size = recv(socketid, buf, 1024, 0);
 
-    if (read_size == 0)
+    if (read_size <= 0)
     {
+	return 0;
+    }
+
+    /*
+     * Guard against queue overflow before inserting.  The queue is a fixed
+     * STRLEN-byte circular buffer; if inserting read_size more bytes would
+     * fill it, insert() would print "MAJOR ERROR, QUEUE IS FULL" and call
+     * exit(-1), crashing the entire daemon.  Instead, drop this client by
+     * returning 0, which causes the caller (main loop) to call RemoveProcess()
+     * -- the same clean path taken on a normal disconnect.
+     */
+    if (size(queue) + read_size >= STRLEN - 1)
+    {
+	fprintf(stderr,
+		"vlabd: receive queue full for socket %d (%d bytes used, "
+		"%d incoming) -- dropping client\n",
+		socketid, size(queue), read_size);
 	return 0;
     }
 
