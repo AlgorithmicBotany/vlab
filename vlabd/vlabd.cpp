@@ -211,8 +211,14 @@ int main( void)
 
     LOG( "lock created");
 
-    // assign a 'callback' to the 'quit' signal
+    // Signal handling:
+    // - SIGQUIT / SIGTERM: clean shutdown with file/lock cleanup
+    // - SIGPIPE: ignore — without this, writing to a client socket that closed
+    //   between select() and send() would silently kill the daemon. With SIG_IGN,
+    //   send() returns -1/EPIPE instead, which SendData() already handles.
     (void) signal( SIGQUIT, Quit);
+    (void) signal( SIGTERM, Quit);
+    (void) signal( SIGPIPE, SIG_IGN);
 
     // initialize the process list
     processList = lst_init();
@@ -530,12 +536,15 @@ void RemoveProcess(processInfo *process)
 	    currentObject = p;
     }
 
-    /* If there aren't any processes in the list, the server Quits. */
+    /*
+     * Never auto-exit when the process list becomes empty.
+     * The daemon runs until explicitly killed (SIGTERM/SIGQUIT).
+     * The lock-file mechanism already prevents duplicate daemons, so there
+     * is no risk of two vlabd instances running simultaneously.
+     */
     if (LST_EMPTY(processList))
     {
-	LOG( "process list empty - quitting");
-	Quit( 0);
-	return;
+	LOG( "process list empty — staying alive, waiting for new connections");
     }
 
     process = NULL;
@@ -551,7 +560,6 @@ void RemoveProcess(processInfo *process)
  */
 int BounceToken(processInfo *, int token, char *data)
 {
-    processInfo *p;
     int found = 0;
 
     if (token < 0)
@@ -559,27 +567,31 @@ int BounceToken(processInfo *, int token, char *data)
 	return found;
     }
 
-    for( p = (processInfo *) lst_first(processList);
-	 p != NULL;
-	 p = (processInfo *) lst_next(p))
+    /*
+     * Iterate with an explicit saved-next pointer so that RemoveProcess(p)
+     * (which frees p) does not invalidate the loop cursor.  The original
+     * for-loop called lst_next(p) AFTER p had been freed — undefined behaviour
+     * that could corrupt the heap or segfault.
+     */
+    processInfo *p = (processInfo *) lst_first(processList);
+    while (p != NULL)
     {
+	/* Save the successor BEFORE any possible removal of p. */
+	processInfo *next = (processInfo *) lst_next(p);
+
 	if (FindToken(p, token))
 	{
 	    /*
-	     * Check to make sure the process is really running, if the
-	     * process doesn't really exist, it is removed from the 
-	     * process list.
+	     * Check to make sure the process is really running; if not,
+	     * remove it from the list.  RemoveProcess may call Quit()/exit()
+	     * if the list becomes empty — that is safe because we have
+	     * already captured 'next' and will not access 'p' afterwards.
 	     */
 	    if (kill(p->id, 0) < 0)
 	    {
-		switch (errno)
-		{
-		case ESRCH:
+		if (errno == ESRCH)
 		    RemoveProcess(p);
-		    break;
-		default:
-		    break;
-		}
+		/* any other errno (EPERM etc.) means the process exists */
 	    }
 	    else
 	    {
@@ -587,6 +599,7 @@ int BounceToken(processInfo *, int token, char *data)
 		found++;
 	    }
 	}
+	p = next;
     }
     return found;
 }
