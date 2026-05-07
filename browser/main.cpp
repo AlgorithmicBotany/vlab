@@ -214,14 +214,14 @@ int start_browser(int argc, char **argv, bool cleanTMP) {
     dir.mkpath(sysInfo.tmpDir);
   } else {
     // temp dir exists; if it should be cleaned but isn't empty, ask user what to do
-    if (cleanTMP && !dir.isEmpty()) {
+    QString name_filter("VL*"); // all objects start with 'VL', see MakeTemp() in object.cpp
+    QStringList folder_list = dir.entryList(QStringList(name_filter), QDir::Dirs | QDir::NoDotAndDotDot);    
+    if (cleanTMP && !folder_list.isEmpty()) {
       QMessageBox msgBox;
       msgBox.setIcon(QMessageBox::Warning);
       msgBox.setText("An existing temporary folder for vlab was detected. Would you like to save or discard it?");
       msgBox.setInformativeText("Discarding the folder will remove all files within open objects. You will lose any unsaved work!");
       // write out the names of the objects contained in the temp folder
-      QString name_filter("VL*"); // all objects start with 'VL', see MakeTemp() in object.cpp
-      QStringList folder_list = dir.entryList(QStringList(name_filter), QDir::Dirs | QDir::NoDotAndDotDot);
       QString folder_names = folder_list.join("\n");
       QString folder_str = "Object folders to be deleted:\n" + folder_names;
       msgBox.setDetailedText(folder_str);

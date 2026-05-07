@@ -30,8 +30,7 @@
 
 void getObject( char * object_parameters)
 {
-    char command[ 4096];
-    char tmpStr[ 4096];
+    char command[ 8192];
     char * objectBin;
 
     /* create the command line for object */
@@ -41,15 +40,12 @@ void getObject( char * object_parameters)
 	fprintf( stderr, "getObject.c: The environment variable "
 		 "VLABOBJECTBIN is not set.\nUsing default 'object'.\n");
 	objectBin = (char*)"object";
-	sprintf( tmpStr, "VLABOBJECTBIN=%s", objectBin);
-	putenv( tmpStr);
+        setenv("VLABOBJECTBIN", objectBin, 1);
     }
     
-    sprintf( command, "%s %s &",
+    /* execute the line, and exit */
+    snprintf( command, sizeof(command), "%s %s &",
 	     objectBin,
 	     object_parameters);
-
-
-    /* execute the line, end exit */
     system( command);
 }

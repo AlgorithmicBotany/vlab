@@ -59,6 +59,26 @@ SaveStatus save_changes(void)
 //            - otherwiser return SAVE_ERROR
 // ......................................................................
 {
+  if (!obj.connection->check_connection()) {
+    QMessageBox msgBox(iconForm);
+    msgBox.setWindowTitle("Warning");
+    msgBox.setText("Object(s) cannot be saved because raserver is down.");
+    msgBox.setInformativeText("Note: you can Export the object from the Menu.");
+    msgBox.setIcon(QMessageBox::Warning);
+
+    QPushButton *quitButton = msgBox.addButton("Quit without Saving", QMessageBox::DestructiveRole);
+    QPushButton *laterButton = msgBox.addButton("Try saving later", QMessageBox::RejectRole);
+    msgBox.setDefaultButton(laterButton);
+
+    msgBox.exec();
+
+    if (msgBox.clickedButton() == (QAbstractButton*)quitButton) {
+      return SAVE_QUIT_NOSAVE;
+    } else {
+      return SAVE_CANCEL;
+    }
+  }
+
   // try to save to storage
   SaveStatus s = save_to_storage();
 
