@@ -962,6 +962,28 @@ void QTGLObject::QuitCb()
 // removed ( RemoveTemp( )), and the process exits.
 // ---------------------------------------------------------------------------
 {
+  if (!obj.connection->check_connection()) {
+    QMessageBox msgBox(this);
+    msgBox.setWindowTitle("Warning");
+    msgBox.setText("Object(s) cannot be saved because raserver is down.");
+    msgBox.setInformativeText("Note: you can Export the object from the Menu.");
+    msgBox.setIcon(QMessageBox::Warning);
+
+    QPushButton *quitButton = msgBox.addButton("Quit without Saving", QMessageBox::DestructiveRole);
+    QPushButton *laterButton = msgBox.addButton("Try saving later", QMessageBox::RejectRole);
+    msgBox.setDefaultButton(laterButton);
+
+    msgBox.exec();
+
+    if (msgBox.clickedButton() == (QAbstractButton*)quitButton) {
+      RemoveTemp();
+      kill(0, SIGKILL);
+      ::exit(0);
+    } else {
+      return;
+    }
+  }
+
   bool removeTemp = true;
 
   // get the changes made to the object
@@ -1066,6 +1088,14 @@ void QTGLObject::QuitCb()
     if (option == QMessageBox::Ok) {
       // try to save changes
       SaveStatus status = save_changes();
+
+      if (status == SAVE_QUIT_NOSAVE) {
+        if (removeTemp)
+          RemoveTemp();
+        kill(0, SIGKILL);
+        ::exit(0);
+      }
+
       // but make sure the pie chart is finished before quitting
       //obj.progressFadeTime = 0;
       iconPicture.fill(obj.bgColor);
@@ -1409,6 +1439,13 @@ void QTGLObject::saveChangesCb() {
 
   // try to save changes
   SaveStatus status = save_changes();
+
+  if (status == SAVE_QUIT_NOSAVE) {
+    RemoveTemp();
+    kill(0, SIGKILL);
+    ::exit(0);
+  }
+
   // if the changes were not saved, give the user
   // some options
   if (status == SAVE_ERROR) {

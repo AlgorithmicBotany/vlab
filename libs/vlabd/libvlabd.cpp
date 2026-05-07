@@ -400,11 +400,15 @@ int VlabD::va_send_message(long type, const char *fmt_str, ...)
   if (DEBUG)
     printf("Sending Message : %s \n", fmt_str);
   // prepare the message into 'buff'
-  char buff[4096];
+  char buff[8192];
   va_list ap;
   va_start(ap, fmt_str);
-  vsprintf(buff, fmt_str, ap);
+  int n = vsnprintf(buff, sizeof(buff), fmt_str, ap);
   va_end(ap);
+
+  if (n < 0 || (size_t)n >= sizeof(buff)) {
+    fprintf(stderr, "va_send_message: message too long and was truncated\n");
+  }
 
   // send the message
   int res = send_message(type, buff);

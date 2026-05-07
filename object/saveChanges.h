@@ -23,7 +23,7 @@
 
 #include "object.h"
 
-typedef enum { SAVE_CANCEL, SAVE_OK, SAVE_ERROR } SaveStatus;
+typedef enum { SAVE_CANCEL, SAVE_OK, SAVE_ERROR, SAVE_QUIT_NOSAVE } SaveStatus;
 
 SaveStatus save_changes( void);
 SaveStatus save_to_lost_found( void);
