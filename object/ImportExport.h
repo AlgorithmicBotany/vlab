@@ -101,7 +101,7 @@ private:
     int baseArchiveType;
     QString settingsFile;
     int previousOutputFormat;
-
+    bool _isLightTheme;
 
 };
 

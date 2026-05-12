@@ -112,7 +112,7 @@ private:
     int previousOutputFormat;
     int saveHyperLinks;
     NODE* _root;
-
+    bool _isLightTheme;
 
 };
 

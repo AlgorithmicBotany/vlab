@@ -74,8 +74,9 @@ Import::Import(QWidget *parent, QString objName, QString basePath,
   ui->directory_2->setCurrentIndex(0);
   exportPath = ui->directory_2->currentText();
 
-  connect(ui->directory_2, SIGNAL(activated(QString)),
-          SLOT(selectingPath(QString)));
+  //connect(ui->directory_2, SIGNAL(activated(QString)),
+  //        SLOT(selectingPath(QString)));
+  connect(ui->directory_2, &QComboBox::currentTextChanged, this, &Import::selectingPath);
 
   this->setWindowTitle("Import");
 }
@@ -244,8 +245,8 @@ void Import::ok() {
 
 void Import::nodeList(RA_Connection *conn, QString path,
                       bool recursive = false) {
-  fprintf(stderr, "ImportImport::fileList() input path: %s\n",
-          path.toStdString().c_str());
+  //fprintf(stderr, "ImportImport::fileList() input path: %s\n",
+  //        path.toStdString().c_str());
   to->remoteDirs << path; // push the current directory on to the list, this way
                           // if we have to go 2 levels deep without files we
                           // still keep the names to create them later
@@ -337,63 +338,67 @@ int Import::importObject() {
         QMessageBox::Ok, QMessageBox::Ok);
     return 0;
   }
-   chdir(targetNode.toStdString()
-            .c_str()); // let's change into our temp directory")
+
+  // change to temp director: ~/.vlab/importTemp
+  //chdir(targetNode.toStdString().c_str()); 
+  QDir::setCurrent(targetNode);
+
   QString sysCommand;
   source = this->getPath();
   int status;
   QProcess process(this);
   int error;
   switch (this->getType()) {
-  case 0: // directory
-    // copy this->getPath() into source, then check to make sure it has a
-    // trailing slash or else the cp -R can make an extra level of directory
-    source = QDir::fromNativeSeparators(source);
-    if (!source.endsWith("/"))
-      source.append("/");
-    source = QDir::toNativeSeparators(source);
-    sysCommand = QString("cp -R \"").append(source).append("\" ./");
-    error = QProcess::execute(sysCommand);
-    if (error)
-      QMessageBox::critical(
-          this, QString("Error copying source object"),
-          QString("Unable to copy object to temporary directory:\n") +
-              targetNode,
-          QMessageBox::Abort, QMessageBox::Abort);
-    break;
-  case 1: // tarred gzip
-    source = QDir::toNativeSeparators(source);
-    if (!source.endsWith(".tgz"))
-      fprintf(stderr, "ImportExport::Import() asked to decompress a .tgz file "
-                      "which does not end in .tgz\n");
-    sysCommand =
-        QString("tar -xzf \"").append(source).append("\""); //.append(" ./");
-    fprintf(stderr, "Executing system call: %s\n",
-            sysCommand.toStdString().c_str());
-    status = process.execute(sysCommand);
+    case 0: { // directory
+      // copy this->getPath() into source, then check to make sure it has a
+      // trailing slash or else the cp -R can make an extra level of directory
+      source = QDir::fromNativeSeparators(source);
+      if (!source.endsWith("/"))
+        source.append("/");
+      source = QDir::toNativeSeparators(source);
+      //sysCommand = QString("cp -R \"").append(source).append("\" ./");
+      //error = QProcess::execute(sysCommand);
+      QStringList arguments;
+      arguments << "-R" << source << "./";
+      error = QProcess::execute("cp", arguments);
+      if (error)
+        QMessageBox::critical(
+            this, QString("Error copying source object"),
+            QString("Unable to copy object to temporary directory:\n") +
+                targetNode,
+            QMessageBox::Abort, QMessageBox::Abort);
+      break;
+    }
+    case 1: { // tarred gzip
+      source = QDir::toNativeSeparators(source);
+      if (!source.endsWith(".tgz"))
+        fprintf(stderr, "ImportExport::Import() asked to decompress a .tgz file "
+                        "which does not end in .tgz\n");
+      QStringList arguments;
+      arguments << "-xzf" << source;
+      status = QProcess::execute("tar", arguments);
+      if (status < 0)
+        QMessageBox::critical(this, QString("Error decompressing archive"),
+                              QString("Unable to decompress archive:\n") + source,
+                              QMessageBox::Abort, QMessageBox::Abort);
+      break;
+    }
+    case 2: { // zip archive
+      source = QDir::toNativeSeparators(source);
+      if (!source.endsWith(".zip"))
+        fprintf(stderr, "ImportExport::Import() asked to decompress a .zip file "
+                        "which does not end in .zip\n");
+      QStringList arguments;
+      arguments << "-q" << source;
+      status = QProcess::execute("unzip", arguments);
+      if (status)
+        QMessageBox::critical(this, QString("Error decompressing archive"),
+                              QString("Unable to decompress archive:\n") + source,
+                              QMessageBox::Abort, QMessageBox::Abort);
+      break;
+    }
+  } // end of switch
 
-    if (status < 0)
-      QMessageBox::critical(this, QString("Error decompressing archive"),
-                            QString("Unable to decompress archive:\n") + source,
-                            QMessageBox::Abort, QMessageBox::Abort);
-    break;
-  case 2: // zip archive
-    source = QDir::toNativeSeparators(source);
-    if (!source.endsWith(".zip"))
-      fprintf(stderr, "ImportExport::Import() asked to decompress a .zip file "
-                      "which does not end in .zip\n");
-    sysCommand = QString("unzip -q \"")
-                     .append(source)
-                     .append("\"")
-                     .append(" -d \"")
-                     .append(targetNode)
-                     .append("/\"");
-     if (QProcess::execute(sysCommand))
-      QMessageBox::critical(this, QString("Error decompressing archive"),
-                            QString("Unable to decompress archive:\n") + source,
-                            QMessageBox::Abort, QMessageBox::Abort);
-    break;
-  }
   // now that we have our working files in /tmp/importTemp/ we need to take a
   // look at what we have and build some structures for it all
 
@@ -448,13 +453,15 @@ int Import::importObject() {
         remoteName.prepend("/").prepend(sysInfo.selNode->name);
       to->remoteFiles.push_back(remoteName);
     }
-    for (int i = 0; i < to->remoteDirs.size(); i++) {
-      fprintf(stderr, "%s\n", to->remoteDirs.at(i).toStdString().c_str());
-    }
-    for (int i = 0; i < to->remoteFiles.size(); i++) {
-      fprintf(stderr, "%s-->%s\n", to->localFiles.at(i).toStdString().c_str(),
-              to->remoteFiles.at(i).toStdString().c_str());
-    }
+
+    // for debugging 
+    // for (int i = 0; i < to->remoteDirs.size(); i++) {
+    //   fprintf(stderr, "%s\n", to->remoteDirs.at(i).toStdString().c_str());
+    // }
+    // for (int i = 0; i < to->remoteFiles.size(); i++) {
+    //   fprintf(stderr, "%s-->%s\n", to->localFiles.at(i).toStdString().c_str(),
+    //           to->remoteFiles.at(i).toStdString().c_str());
+    // }
 
     // test if we have permission to write to the directory we are trying to
     // import into
@@ -664,7 +671,7 @@ int Import::importObject() {
 
 void Import::receiveTransferObject(TransferObject *inObject) {
   to = inObject;
-  fprintf(stderr, "received the transfer object\n");
+  //fprintf(stderr, "received the transfer object\n");
 }
 
 void Import::grabConflicts(TransferObject *to) {

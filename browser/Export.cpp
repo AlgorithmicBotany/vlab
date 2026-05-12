@@ -37,6 +37,13 @@
 Export::Export(QWidget *parent, NODE *root, QString objName, QString basePath,
                int baseArchiveType, int hyperLinks)
     : QDialog(parent), ui(new Ui::Export), _root(root) {
+
+  // check if the OS theme is light or dark 
+  const QPalette defaultPalette;
+  const auto text = defaultPalette.color(QPalette::WindowText);
+  const auto window = defaultPalette.color(QPalette::Window);
+  _isLightTheme = text.lightness() < window.lightness();
+
   changeFormat = false;
   nodeName = objName;
   exportPath = basePath;
@@ -90,8 +97,10 @@ Export::Export(QWidget *parent, NODE *root, QString objName, QString basePath,
 
   connect(ui->comboBox, SIGNAL(currentIndexChanged(int)),
           SLOT(changeExtension(int)));
-  connect(ui->directory_2, SIGNAL(activated(QString)),
-          SLOT(selectingPath(QString)));
+  //connect(ui->directory_2, SIGNAL(activated(QString)),
+  //        SLOT(selectingPath(QString)));
+  connect(ui->directory_2, &QComboBox::currentTextChanged, this, &Export::selectingPath);
+
 
   this->setWindowTitle("Export");
 }
@@ -150,11 +159,15 @@ Export::~Export() { delete ui; }
 void Export::changeEvent(QEvent *e) {
   QDialog::changeEvent(e);
   switch (e->type()) {
-  case QEvent::LanguageChange:
-    ui->retranslateUi(this);
-    break;
-  default:
-    break;
+    case QEvent::LanguageChange:
+      ui->retranslateUi(this);
+      break;
+    case QEvent::PaletteChange:
+      _isLightTheme = !_isLightTheme;
+      this->setLineEdit();
+      break;
+    default:
+      break;
   }
 }
 
@@ -235,8 +248,9 @@ void Export::setPaths(QStringList inPaths) {
 }
 
 void Export::setLineEdit() {
+  QString textColor = _isLightTheme ? "#000000" : "#FFFFFF";
   QString formatedNodeName =
-      QString("<span style= color:#000000;> %1</span>").arg(nodeName);
+      QString("<span style='color:" + textColor + ";'>" + nodeName + "</span>");
   QString ext =
       QString("<span style= color:#999999;>%1</span>").arg(getExtension());
   ui->textEdit->setHtml("<span style= color:#000000;>" + formatedNodeName +
@@ -571,7 +585,7 @@ int Export::exportObject() {
   int ret, status;
   QProcess process(this);
   switch (this->getType()) {
-  case 0: // directory
+  case 0: { // directory
     target.append("/");
     localNameBytes = QDir::toNativeSeparators(target).toLatin1();
     if (access(localNameBytes.data(), F_OK))
@@ -591,14 +605,17 @@ int Export::exportObject() {
         mkdir(target.toStdString().c_str(), 0755);
       }
     }
-    sysCommand = QString("cp -R \"")
-                     .append(tmpDir)
-                     .append("/\" \"")
-                     .append(target)
-                     .append("\"");
-    fprintf(stderr, "Executing system call: %s\n",
-            sysCommand.toStdString().c_str());
-    status = process.execute(sysCommand);
+    if (!tmpDir.endsWith('/')) {
+      tmpDir.append('/');
+    }
+    if (!target.endsWith('/')) {
+      target.append('/');
+    }
+    QString nativeTmp = QDir::toNativeSeparators(tmpDir);
+    QString nativeTarget = QDir::toNativeSeparators(target);
+    QStringList arguments;
+    arguments << "-R" << nativeTmp << nativeTarget;
+    status = QProcess::execute("cp", arguments);
     if (status) {
       QMessageBox::critical(
           this, QString("Error copying package"),
@@ -608,8 +625,9 @@ int Export::exportObject() {
       return 0;
     }
     break;
-  case 1: // tarred gzip
-    fprintf(stderr, "Creating archive %s\n", target.toStdString().c_str());
+  }
+  case 1: { // tarred gzip
+    //fprintf(stderr, "Creating archive %s\n", target.toStdString().c_str());
     localNameBytes = QDir::toNativeSeparators(target).toLatin1();
     if (!access(localNameBytes.data(),
                 F_OK)) { // we want an error here.. no error means it exists
@@ -625,23 +643,26 @@ int Export::exportObject() {
         unlink(target.toStdString().c_str());
       }
     }
-    target.prepend("\"").append("\"");
-    sysCommand = QString("tar -cPzf ")
-                     .append(target)
-                     .append(" -C ")
-                     .append(tmpDir)
-                     .append(" .");
-
-    status = process.execute(sysCommand);
+    // Prepare target path
+    QString nativeTarget = QDir::toNativeSeparators(target);
+    // detup the argument list
+    QStringList arguments;
+    arguments << "-cPzf" << nativeTarget << "-C" << tmpDir << ".";
+    // Execute
+    // Note: In Qt 6, execute() returns the exit code of the process.
+    // If the process fails to start, it returns -2.
+    status = QProcess::execute("tar", arguments);
     if (status < 0) {
       QMessageBox::critical(this, "Error creating archive",
                             QString("Unable to create archive:\n") +
-                                target.left(target.length() - 2),
+                                target + //.left(target.length() - 2) + 
+                            QString("\nError status: ") + QString::number(status),
                             QMessageBox::Abort, QMessageBox::Abort);
       return 0;
     }
     break;
-  case 2: // zip archive
+  }
+  case 2: { // zip archive
      localNameBytes = QDir::toNativeSeparators(target).toLatin1();
      if (!access(localNameBytes.data(), F_OK)) {
       ret = QMessageBox::warning(
@@ -658,8 +679,10 @@ int Export::exportObject() {
     }
     QString current_path = QDir::currentPath();
     QDir::setCurrent(tmpDir);
-    sysCommand = QString("zip -r -q ").append(target).append(" . ");
-    status = process.execute(sysCommand);
+    QString nativeTarget = QDir::toNativeSeparators(target);
+    QStringList arguments;
+    arguments << "-qr" << nativeTarget << ".";
+    status = QProcess::execute("zip", arguments);
     QDir::setCurrent(current_path);
     if (status) {
       QMessageBox::critical(this, "Error creating archive",
@@ -669,6 +692,7 @@ int Export::exportObject() {
     }
     break;
   }
+  } // end of switch
   chdir("/");
   delete to;
   return 0;

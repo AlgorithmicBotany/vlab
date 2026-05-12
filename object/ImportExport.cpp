@@ -33,6 +33,13 @@
 ImportExport::ImportExport(QWidget *parent, QString objName, QString basePath,
                            int baseArchiveType)
     : QDialog(parent), ui(new Ui::ImportExport) {
+
+  // check if the OS theme is light or dark 
+  const QPalette defaultPalette;
+  const auto text = defaultPalette.color(QPalette::WindowText);
+  const auto window = defaultPalette.color(QPalette::Window);
+  _isLightTheme = text.lightness() < window.lightness();
+
   changeFormat = false;
   nodeName = objName;
   exportPath = basePath;
@@ -83,8 +90,9 @@ ImportExport::ImportExport(QWidget *parent, QString objName, QString basePath,
 
   connect(ui->comboBox, SIGNAL(currentIndexChanged(int)),
           SLOT(changeExtension(int)));
-  connect(ui->directory_2, SIGNAL(activated(QString)),
-          SLOT(selectingPath(QString)));
+  //connect(ui->directory_2, SIGNAL(activated(QString)),
+  //        SLOT(selectingPath(QString)));
+  connect(ui->directory_2, &QComboBox::currentTextChanged, this, &ImportExport::selectingPath);
 
   this->setWindowTitle("Export");
 }
@@ -145,6 +153,10 @@ void ImportExport::changeEvent(QEvent *e) {
   switch (e->type()) {
   case QEvent::LanguageChange:
     ui->retranslateUi(this);
+    break;
+  case QEvent::PaletteChange:
+    _isLightTheme = !_isLightTheme;
+    this->setLineEdit();
     break;
   default:
     break;
@@ -228,13 +240,13 @@ void ImportExport::setPaths(QStringList inPaths) {
 }
 
 void ImportExport::setLineEdit() {
+  QString textColor = _isLightTheme ? "#000000" : "#FFFFFF";
   QString formatedNodeName =
-      QString("<span style= color:#000000;> %1</span>").arg(nodeName);
+      QString("<span style='color:" + textColor + ";'>" + nodeName + "</span>");
   QString ext =
       QString("<span style= color:#999999;>%1</span>").arg(getExtension());
   ui->textEdit->setHtml("<span style= color:#000000;>" + formatedNodeName +
                         "</span>" + ext);
-
 }
 
 QString ImportExport::getExtension() {
@@ -321,7 +333,8 @@ int ImportExport::Export() {
     to->remoteFiles << QString(tableList[i].c_str());
   }
 
-  QString tmpDir = "/tmp";
+  QByteArray vlabTmpDir = qgetenv("VLABTMPDIR");
+  QString tmpDir = QString::fromLocal8Bit(vlabTmpDir);
   tmpDir.append("/exportTemp");
   QByteArray tmpDirBytes = tmpDir.toLatin1();
   if (access(tmpDirBytes.data(), F_OK) == 0)
@@ -393,16 +406,12 @@ int ImportExport::Export() {
     }
     localName.prepend(tmpDir);
     localNameBytes = QDir::toNativeSeparators(localName).toLatin1();
-    QString sysCommand = QString("cp -R ")
-                             .append(QString(obj.tmpDir.c_str()))
-                             .append("/")
-                             .append(to->remoteFiles.at(i))
-                             .append(" ")
-                             .append(tmpDir);
-    fprintf(stderr, "Executing system call: %s\n",
-            sysCommand.toStdString().c_str());
-    QProcess process;
-    int status = process.execute(sysCommand);
+    QString srcPath = QString::fromStdString(obj.tmpDir).append("/").append(to->remoteFiles.at(i));
+    QString nativeSrcPath = QDir::toNativeSeparators(srcPath);
+    QString nativeTmpDir = QDir::toNativeSeparators(tmpDir);
+    QStringList arguments;
+    arguments << "-R" << nativeSrcPath << nativeTmpDir;
+    int status = QProcess::execute("cp", arguments);
     if (status < 0) {
       QMessageBox::critical(
           this, tr("Error copying package"),
@@ -451,116 +460,120 @@ int ImportExport::Export() {
   int ret, status;
   QProcess process;
   switch (this->getType()) {
-  case 0: // directory
-    fprintf(stderr, "Copying object to target directory: %s\n",
-            this->getPath().append(target).toStdString().c_str());
-    target.append("/");
-    localNameBytes = QDir::toNativeSeparators(target).toLatin1();
-    if (access(localNameBytes.data(), F_OK))
-      mkdir(target.toStdString().c_str(), 0755);
-    else {
-      // some kind of popup telling the user they are writing into an existing
-      // directory
-      ret = QMessageBox::warning(
-          this, tr("Target directory exists"),
-          tr("The target directory: ") + target +
-              "\nAlready exists, all contents will be lost if you continue",
-          QMessageBox::Ok | QMessageBox::Cancel, QMessageBox::Ok);
-      if (ret == QMessageBox::Cancel) {
-        delete_recursive(tmpDirBytes.data());
-        return -1;
-      } else {
-        QByteArray targetBytes = target.toLocal8Bit();
-        delete_recursive(targetBytes);
+    case 0: { // directory
+      //fprintf(stderr, "Copying object to target directory: %s\n",
+      //        this->getPath().append(target).toStdString().c_str());
+      target.append("/");
+      localNameBytes = QDir::toNativeSeparators(target).toLatin1();
+      if (access(localNameBytes.data(), F_OK))
         mkdir(target.toStdString().c_str(), 0755);
+      else {
+        // some kind of popup telling the user they are writing into an existing
+        // directory
+        ret = QMessageBox::warning(
+            this, tr("Target directory exists"),
+            tr("The target directory: ") + target +
+                "\nAlready exists, all contents will be lost if you continue",
+            QMessageBox::Ok | QMessageBox::Cancel, QMessageBox::Ok);
+        if (ret == QMessageBox::Cancel) {
+          delete_recursive(tmpDirBytes.data());
+          return -1;
+        } else {
+          QByteArray targetBytes = target.toLocal8Bit();
+          delete_recursive(targetBytes);
+          mkdir(target.toStdString().c_str(), 0755);
+        }
       }
-    }
-    sysCommand = QString("cp -R ./* \"")
-                     .append(tmpDir)
-                     .append("/\" \"")
-                     .append(target)
-                     .append("\"");
-    fprintf(stderr, "Executing system call: %s\n",
-            sysCommand.toStdString().c_str());
-    status = process.execute(sysCommand);
-    if (status < 0) {
-      QMessageBox::critical(
-          this, tr("Error copying package"),
-          tr("Unable to copy package to destination directory:\n") + target,
-          QMessageBox::Abort, QMessageBox::Abort);
-      delete_recursive(tmpDirBytes.data());
-      return 0;
-    }
-    break;
-  case 1: // tarred gzip
-    fprintf(stderr, "Creating archive %s\n", target.toStdString().c_str());
-    localNameBytes = QDir::toNativeSeparators(target).toLatin1();
-    fprintf(stderr, "Executing system call %s from directory %s\n",
-            sysCommand.toStdString().c_str(), tmpDir.toStdString().c_str());
-    if (!access(localNameBytes.data(),
-                F_OK)) { // we want an error here.. no error means it exists
-      ret = QMessageBox::warning(
-          this, tr("Target file exists"),
-          tr("The target file: ") + target +
-              "\nAlready exists, it will be overwritten if you continue",
-          QMessageBox::Ok | QMessageBox::Cancel, QMessageBox::Ok);
-      if (ret == QMessageBox::Cancel) {
+      if (!tmpDir.endsWith('/')) {
+        tmpDir.append('/');
+      }
+      if (!target.endsWith('/')) {
+        target.append('/');
+      }
+      QString nativeTmp = QDir::toNativeSeparators(tmpDir);
+      QString nativeTarget = QDir::toNativeSeparators(target);
+      QStringList arguments;
+      arguments << "-R" << nativeTmp << nativeTarget;
+      status = QProcess::execute("cp", arguments);
+      if (status < 0) {
+        QMessageBox::critical(
+            this, tr("Error copying package"),
+            tr("Unable to copy package to destination directory:\n") + target,
+            QMessageBox::Abort, QMessageBox::Abort);
         delete_recursive(tmpDirBytes.data());
-        return -1;
-      } else {
-        unlink(target.toStdString().c_str());
+        return 0;
       }
+      break;
     }
-    target.prepend("\"").append("\" ");
-    sysCommand = QString("tar -czf ")
-                     .append(target)
-                     .append(" -C ")
-                     .append(tmpDir)
-                     .append(" .");
-    status = process.execute(sysCommand);
-
-    if (status < 0) {
-      QMessageBox::critical(this, tr("Error creating archive"),
-                            tr("Unable to create archive:\n") +
-                                target.left(target.length() - 2),
-                            QMessageBox::Abort, QMessageBox::Abort);
-      delete_recursive(tmpDirBytes.data());
-      return 0;
-    }
-    break;
-  case 2: // zip archive
-    fprintf(stderr, "Creating archive %s.zip\n",
-            this->getPath().append(target).toStdString().c_str());
-    localNameBytes = QDir::toNativeSeparators(target).toLatin1();
-    fprintf(stderr, "Executing system call %s from directory %s\n",
-            sysCommand.toStdString().c_str(), tmpDir.toStdString().c_str());
-    if (!access(localNameBytes.data(), F_OK)) {
-      ret = QMessageBox::warning(
-          this, tr("Target file exists"),
-          tr("The target file: ") + target +
-              "\nAlready exists, it will be overwritten if you continue",
-          QMessageBox::Ok | QMessageBox::Cancel, QMessageBox::Ok);
-      if (ret == QMessageBox::Cancel) {
+    case 1: { // tarred gzip
+      fprintf(stderr, "Creating archive %s\n", target.toStdString().c_str());
+      localNameBytes = QDir::toNativeSeparators(target).toLatin1();
+      fprintf(stderr, "Executing system call %s from directory %s\n",
+              sysCommand.toStdString().c_str(), tmpDir.toStdString().c_str());
+      if (!access(localNameBytes.data(),
+                  F_OK)) { // we want an error here.. no error means it exists
+        ret = QMessageBox::warning(
+            this, tr("Target file exists"),
+            tr("The target file: ") + target +
+                "\nAlready exists, it will be overwritten if you continue",
+            QMessageBox::Ok | QMessageBox::Cancel, QMessageBox::Ok);
+        if (ret == QMessageBox::Cancel) {
+          delete_recursive(tmpDirBytes.data());
+          return -1;
+        } else {
+          unlink(target.toStdString().c_str());
+        }
+      }
+      QString nativeTarget = QDir::toNativeSeparators(target);
+      QStringList arguments;
+      arguments << "-cPzf" << nativeTarget << "-C" << tmpDir << ".";
+      status = QProcess::execute("tar", arguments);
+      if (status < 0) {
+        QMessageBox::critical(this, tr("Error creating archive"),
+                              tr("Unable to create archive:\n") +
+                                  target.left(target.length() - 2),
+                              QMessageBox::Abort, QMessageBox::Abort);
         delete_recursive(tmpDirBytes.data());
-        return -1;
-      } else {
-        unlink(target.toStdString().c_str());
+        return 0;
       }
+      break;
     }
-    QString current_path = QDir::currentPath();
-    QDir::setCurrent(tmpDir);
-    sysCommand = QString("zip -r -q ").append(target).append(" . ");
-    status = process.execute(sysCommand);
-    QDir::setCurrent(current_path);
-    if (status) {
-      QMessageBox::critical(this, tr("Error creating archive"),
-                            tr("Unable to create archive:\n") +
-                                target.left(target.length() - 2),
-                            QMessageBox::Abort, QMessageBox::Abort);
-      delete_recursive(tmpDirBytes.data());
-      return 0;
+    case 2: { // zip archive
+      fprintf(stderr, "Creating archive %s.zip\n",
+              this->getPath().append(target).toStdString().c_str());
+      localNameBytes = QDir::toNativeSeparators(target).toLatin1();
+      fprintf(stderr, "Executing system call %s from directory %s\n",
+              sysCommand.toStdString().c_str(), tmpDir.toStdString().c_str());
+      if (!access(localNameBytes.data(), F_OK)) {
+        ret = QMessageBox::warning(
+            this, tr("Target file exists"),
+            tr("The target file: ") + target +
+                "\nAlready exists, it will be overwritten if you continue",
+            QMessageBox::Ok | QMessageBox::Cancel, QMessageBox::Ok);
+        if (ret == QMessageBox::Cancel) {
+          delete_recursive(tmpDirBytes.data());
+          return -1;
+        } else {
+          unlink(target.toStdString().c_str());
+        }
+      }
+      QString current_path = QDir::currentPath();
+      QDir::setCurrent(tmpDir);
+      QString nativeTarget = QDir::toNativeSeparators(target);
+      QStringList arguments;
+      arguments << "-qr" << nativeTarget << ".";
+      status = QProcess::execute("zip", arguments);
+      QDir::setCurrent(current_path);
+      if (status) {
+        QMessageBox::critical(this, tr("Error creating archive"),
+                              tr("Unable to create archive:\n") +
+                                  target.left(target.length() - 2),
+                              QMessageBox::Abort, QMessageBox::Abort);
+        delete_recursive(tmpDirBytes.data());
+        return 0;
+      }
+      break;
     }
-    break;
   }
   chdir("/");
   delete_recursive(tmpDirBytes.data()); // clean up now that we are done
