@@ -32,11 +32,11 @@
 
 Preferences::Preferences(QWidget *parent, QString fileName)
     : QDialog(parent), _fileName(fileName) {
+  // if there is a local config file, open that instead of the one in ~/.vlab
   QString fName = "./snapicon.cfg";
   QFile file(fName);
   if (file.open(QFile::ReadOnly | QFile::Text))
     _fileName = fName;
-
 
   setupUi(this);
   if (!_fileName.isEmpty()) {
@@ -226,11 +226,11 @@ void Preferences::loadConfig() {
   // 2nd read other options
   std::string line;
 
-  const char *bf = _fileName.toStdString().c_str();
+  //const char *bf = _fileName.toStdString();//.c_str();
+  std::string fName = _fileName.toStdString();
 
-  std::ifstream myfile(bf);
   // Attempt to open and parse the config file
-
+  std::ifstream myfile(fName);
   if (myfile.is_open()) {
     // Set up regexes to parse lines of the config file
     std::regex borderWidthRegex("border width: [+-]?([[:digit:]]+)");
@@ -263,11 +263,13 @@ void Preferences::loadConfig() {
     }
     myfile.close();
   } else {
-    std::cerr << "Unable to open config file, using default configuration"
+    std::cerr << "Unable to open config file. " 
+              << "Creating a new default configuration file: " << fName
               << std::endl;
     _color = QColor(200, 0, 0);
     _borderWidth = FRAME_BORDER;
     _backgroundColor = QColor(128, 128, 128, 50);
+    WriteColors(fName);
   }
 
   // set Buttons

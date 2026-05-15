@@ -21,11 +21,19 @@
 #include <iostream>
 #include <sstream>
 #include <algorithm>
+#include <platform.h>
 #include "SaveAs.h"
 #include "dirList.h"
 #include <QSettings>
+
 SaveAs::SaveAs(QWidget *parent, QString objName, QString currentPath, QString pix_format)
     : QDialog(parent) {
+
+  // check if the OS theme is light or dark 
+  const QPalette defaultPalette;
+  const auto text = defaultPalette.color(QPalette::WindowText);
+  const auto window = defaultPalette.color(QPalette::Window);
+  _isLightTheme = text.lightness() < window.lightness();
 
   nodeName = objName;
   saveName = currentPath;
@@ -44,10 +52,23 @@ SaveAs::SaveAs(QWidget *parent, QString objName, QString currentPath, QString pi
   comboBox->setCurrentText(pix_format);
   previousPixFormat = pix_format;
   
-  settingsFile = QString(QDir::homePath()) + "/.vlab/snapicon.ini";
-
-
+  QString userConfigDir = Vlab::getUserConfigDir(false);
+  if (userConfigDir.isEmpty()) {
+    std::cerr << "snapicon: Cannot find your config folder (~/.vlab). SaveAs settings will not be set.\n";
+    return;
+  }
+  // QDir::filePath joins strings with the correct '/' automatically
+  settingsFile = QDir(userConfigDir).filePath("snapicon.ini");
+  
   directory->addItem(saveName);
+
+  // create the snapicon.ini file if it doesn't exist, and add the above item (saveName)
+  QFile file(settingsFile);
+  if (file.open(QIODevice::WriteOnly | QIODevice::NewOnly)) {
+    // File created successfully
+    file.close();
+    writeSettings();
+  } // else File already exists or could not be created
 
   loadSettings();
 
@@ -136,18 +157,32 @@ void SaveAs::writeSettings() {
   }
 }
 
-void SaveAs::closeEvent(QCloseEvent *) { writeSettings(); }
+// it's unsafe to call writeSettings() in closeEvent. You can not assume closeEvent will get called
+void SaveAs::closeEvent(QCloseEvent *) { } // writeSettings(); } 
+
+void SaveAs::changeEvent(QEvent *e) {
+  QDialog::changeEvent(e);
+  switch (e->type()) {
+  case QEvent::PaletteChange:
+    _isLightTheme = !_isLightTheme;
+    this->setLineEdit();
+    break;
+  default:
+    break;
+  }
+}
 
 SaveAs::~SaveAs() {}
 
 void SaveAs::setLineEdit() {
+  QString textColor = _isLightTheme ? "#000000" : "#FFFFFF";
   QString formatedNodeName =
-      QString("<span style= color:#000000;> %1</span>").arg(nodeName);
-    decay = 0;
-    QString ext = QString("<span style= color:#999999;>%1</span>")
-                      .arg("." + getExtension());
-    lineEdit->setHtml("<span style= color:#000000;>" + formatedNodeName +
-                      "</span>" + ext);
+      QString("<span style='color:" + textColor + ";'>" + nodeName + "</span>");
+  QString ext =
+      QString("<span style= color:#999999;>%1</span>").arg("." + getExtension());
+  lineEdit->setHtml("<span style= color:#000000;>" + formatedNodeName +
+                        "</span>" + ext);
+  decay = 0;
 }
 
 void SaveAs::preserveFormat() {

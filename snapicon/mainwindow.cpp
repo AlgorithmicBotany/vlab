@@ -24,7 +24,6 @@
 #include "icon.h"
 #include "resources.h"
 #include "SaveAs.h"
-#include <QDesktopServices>
 
 #include <QDesktopServices>
 #include <QUrl>
@@ -596,22 +595,20 @@ void MainWindow::save_as() {
 
 void MainWindow::save_as(){
 
-  SaveAs *window = new SaveAs(this, basename,
-                              currentPath, pix_format);
+  SaveAs window(this, basename, currentPath, pix_format);
   QPoint snapiconPosition = this->pos();
-  window->move(snapiconPosition);
-  QString savePath;
-  window->setAttribute(Qt::WA_DeleteOnClose, false);
+  window.move(snapiconPosition);
 
-  int result = window->exec();
-  window->setAttribute(Qt::WA_DeleteOnClose, true);
-  window->close();
+  int result = window.exec();
   if (result) {
-    QString pathToSave = window->getPath();
+    // only write settings if OK was clicked
+    window.writeSettings();
+
+    QString pathToSave = window.getPath();
     currentPath = pathToSave;
-    int imageType = window->getImageType();
-    basename =  window->getImageBaseName();
-    name = pathToSave + QString("/") +  window->getImageBaseName() + QString(".") +  window->getExtension();
+    int imageType = window.getImageType();
+    basename =  window.getImageBaseName();
+    name = pathToSave + QString("/") +  window.getImageBaseName() + QString(".") +  window.getExtension();
     switch (imageType) {
       case 0:
         pix_format = "BMP";
@@ -789,23 +786,14 @@ void MainWindow::exit() {
 
 void MainWindow::setPreferences() {
 
-  QString userConfigDir = "";
-#ifdef __APPLE__
-  userConfigDir = Vlab::getUserConfigDir(false);
-#else
-#endif
-
-  char bf[PATH_MAX + 1];
-  const char *cdir = userConfigDir.toStdString().c_str();
-  if (NULL == cdir)
-    return;
-  else {
-    strcpy(bf, cdir);
-    strcat(bf, "/");
+  QString userConfigDir = Vlab::getUserConfigDir(false);
+  if (userConfigDir.isEmpty()) {
+    std::cerr << "snapicon: Cannot find your config folder (~/.vlab). Preferences will not be set.\n";
+      return;
   }
-  strcat(bf, "snapicon.cfg");
+  // QDir::filePath joins strings with the correct '/' automatically
+  QString filePreferences = QDir(userConfigDir).filePath("snapicon.cfg");
 
-  QString filePreferences = QString(bf);
   preferences = new Preferences(this, filePreferences);
   preferences->setModal(false);
   preferences->loadConfig();
