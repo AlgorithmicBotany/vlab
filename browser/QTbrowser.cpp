@@ -58,8 +58,9 @@
 #include <QTextStream>
 #include <QTimer>
 #include <QUrl>
-#include <QtGui> // lazy
+#include <QtGui>
 #include <QTextBrowser>
+#include <QStyleHints>
 
 using namespace Qt;
 
@@ -1876,16 +1877,28 @@ void QTbrowser::delete_cb() {
     return;
   }
 
+  // detect if dark theme
+  auto scheme = QGuiApplication::styleHints()->colorScheme();
+  bool isLightTheme = scheme == Qt::ColorScheme::Dark ? false : true;
+
   // ask user to confirm
-  std::string msg = "<qt>Do you really want to delete this object?<br>"
-                    "<font color=darkblue><center>";
+  std::string msg = "<qt>Do you really want to delete this object?<br>";
+  if (isLightTheme)
+    msg += "<font color=darkblue><center>";
+  else
+    msg += "<font color=#A8DADC><center>";
+
   if (sysInfo.selNode->isHObj)
     msg += sysInfo.selNode->screenName;
   else
     msg += sysInfo.selNode->baseName;
   msg += "</font></center>";
-  if (sysInfo.selNode->expandable)
-    msg += "<br><font color=darkred>It has extensions.</font>";
+  if (sysInfo.selNode->expandable) {
+    if (isLightTheme)
+      msg += "<br><font color=darkred>It has extensions.</font>";
+    else
+      msg += "<br><font color=#B44A52>It has extensions.</font>";
+  }
   if (!vlabxutils::askYesNo(this, msg, "Please confirm")) {
     return;
   }
