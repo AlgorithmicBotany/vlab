@@ -20,6 +20,7 @@
 #include "Import.h"
 #include "dirList.h"
 #include "ui_Import.h"
+#include <platform.h>
 
 #include <QDesktopServices>
 #include <QFileInfo>
@@ -69,7 +70,22 @@ Import::Import(QWidget *parent, QString objName, QString basePath,
   ui->directory_2->setDuplicatesEnabled(false);
   ui->directory_2->setInsertPolicy(QComboBox::InsertAtTop);
   ui->directory_2->setEditText(exportPath);
-  settingsFile = QString(QDir::homePath()) + "/.vlab/lpfgsettings.ini";
+
+  // get the list of folders for exporting and importing
+  QString userConfigDir = Vlab::getUserConfigDir(false);
+  if (userConfigDir.isEmpty()) {
+    std::cerr << "browser: Cannot find your config folder (~/.vlab). Import settings will not be set.\n";
+    return;
+  }
+  settingsFile = QDir(userConfigDir).filePath("exportimport.ini");
+  // create the exportimport.ini file if it doesn't exist, and add the above item 
+  QFile file(settingsFile);
+  if (file.open(QIODevice::WriteOnly | QIODevice::NewOnly)) {
+    // File created successfully
+    file.close();
+    writeSettings();
+  } // else File already exists or could not be created
+
   loadSettings();
   ui->directory_2->setCurrentIndex(0);
   exportPath = ui->directory_2->currentText();
@@ -126,9 +142,7 @@ void Import::writeSettings() {
   }
 }
 
-void Import::closeEvent(QCloseEvent*) {
-  writeSettings();
-}
+void Import::closeEvent(QCloseEvent*) {}
 
 Import::~Import() { delete ui; }
 

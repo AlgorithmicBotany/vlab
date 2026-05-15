@@ -1453,36 +1453,26 @@ void QTbrowser::exportObject() {
   // if no node is selected, return
   if (sysInfo.selNode == NULL)
     return;
-  // 1) Open dialog to confirm export parameters
-  Export *window = new Export(this, sysInfo.selNode,
-                              QString(sysInfo.selNode->baseName), exportPath);
-  QString savePath;
-  // window->setTab(2);
-  window->setAttribute(Qt::WA_DeleteOnClose,
-                       false); // make sure we can get our information after the
-                               // dialog is finished interacting with the user
-
+  // Open dialog to confirm export parameters
+  Export window(this, sysInfo.selNode, QString(sysInfo.selNode->baseName), QString(QDir::homePath()));
   BrowserSettings bset; // let's get some browser-wide settings!!
-  window->setRecursive(bset.recentExportRecursive());
-  window->setFormat(bset.recentExportFormat()); // mac or windows?
-  // we don't want to keep the same path ...
-  //    window->setPaths(bset.recentExportPath());
-  window->setType(bset.recentExportType()); // archive type?
-  int result = window->exec();
+  window.setRecursive(bset.recentExportRecursive());
+  window.setFormat(bset.recentExportFormat()); // mac or windows?
+  window.setType(bset.recentExportType()); // archive type?
+  int result = window.exec();
   if (result == QDialog::Accepted) { // only proceed if the user did not press
                                      // cancel, obviously
-    exportPath = window->getPath();
-    exportArchiveType = window->getType();
+    window.writeSettings();
+    exportPath = window.getPath();
+    exportArchiveType = window.getType();
     bset.setRecentExportFormat(
-        window->getFormat()); // cache the last settings for the next use
-    bset.setRecentExportRecursive(window->getRecursive());
-    bset.setRecentExportType(window->getType());
+        window.getFormat()); // cache the last settings for the next use
+    bset.setRecentExportRecursive(window.getRecursive());
+    bset.setRecentExportType(window.getType());
   } else {
     return;
   }
-  // 2->5) are handled within the window
-  window->setAttribute(Qt::WA_DeleteOnClose, true);
-  window->close();
+  window.close();
 }
 
 /******************************************************************************
@@ -1503,22 +1493,19 @@ void QTbrowser::importObject() {
     return;
 
   // ImportExport* window = new ImportExport(this);
-  Import *window = new Import(this, QString(sysInfo.selNode->name));
-  window->setAttribute(Qt::WA_DeleteOnClose,
-                       false); // make sure we can get our information after the
-                               // dialog is finished interacting with the user
+  Import window(this, QString(sysInfo.selNode->name), QString(QDir::homePath()));
   BrowserSettings bset;        // let's get some browser-wide settings!!
-  window->setFormat(bset.recentExportFormat());
-  window->setType(bset.recentExportType());
-  int result = window->exec();
+  window.setFormat(bset.recentExportFormat());
+  window.setType(bset.recentExportType());
+  int result = window.exec();
   if (result == QDialog::Accepted) { // only proceed if the user did not press
                                      // cancel, obviously
+    window.writeSettings();
     bset.setRecentExportFormat(
-        window->getFormat()); // cache the last settings for the next use
-    bset.setRecentExportType(window->getType());
+        window.getFormat()); // cache the last settings for the next use
+    bset.setRecentExportType(window.getType());
   }
-  window->setAttribute(Qt::WA_DeleteOnClose, true);
-  window->close();
+  window.close();
   char message[4096];
   QByteArray userNameData = sysInfo.login_name.toLatin1();
   const char *userNameChar = userNameData.constData();

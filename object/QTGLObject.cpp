@@ -1470,22 +1470,15 @@ void QTGLObject::saveChangesCb() {
  *
  */
 void QTGLObject::exportObject() {
-
-  // 1) Open dialog to confirm export parameters
   exportName = QString(obj.objName.c_str());
-  ImportExport *window =
-      new ImportExport(this, exportName, exportPath, exportArchiveType);
-  //    window->setTab(2);
-  window->setAttribute(Qt::WA_DeleteOnClose,
-                       false); // make sure we can get our information after the
-                               // dialog is finished interacting with the user
-  window->exec();
-  exportPath = window->getPath();
-  exportArchiveType = window->getType();
-  exportName = window->getNodeName();
- // 2->5) are handled within the window
-  window->setAttribute(Qt::WA_DeleteOnClose, true);
-  window->close();
+  ImportExport window(this, exportName, exportPath, exportArchiveType);
+  if (window.exec()) {
+    window.writeSettings();
+    exportPath = window.getPath();
+    exportArchiveType = window.getType();
+    exportName = window.getNodeName();
+  }
+  window.close();
 }
 
 /******************************************************************************
