@@ -29,9 +29,6 @@
 #include <vector>
 
 namespace Vlab {
-#ifdef ___PRETEND_TO_CLOSE_THIS_NAMESPACE_TO_FOOL_EMACS_INDENTATION___LOL___
-}
-#endif
 
 void display_report_cerr(const Report &r) { std::cerr << r.get_log(); }
 
@@ -173,16 +170,19 @@ const QString &getApplicationPath() {
 // - an exception is thrown if ROOT cannot be established
 const QString &getVlabRoot() {
   //    static QString cache = "./";
-  static QString cache;
+  static QString cache = QString();
   // check cache first
-  if (!cache.isNull())
+  if (!cache.isNull()) {
     return cache;
+  }
+
   // if VLABROOT environment is set, we are done
   char *env = getenv("VLABROOT");
   if (env) {
     cache = QString(env);
     return cache;
   }
+
   // determine the application file path
   QString appPath = getApplicationPath();
 
@@ -337,7 +337,8 @@ UpdateBinLog updateBin() {
     }
     QFile script(dst);
     if (!script.open(QIODevice::WriteOnly)) {
-      log.push_back("ERROR: could not create script for " + prog.toStdString());
+      QString errorMsg = script.errorString();
+      log.push_back("ERROR: could not create script for " + prog.toStdString() + " | Reason: " + errorMsg.toStdString());
       continue;
     }
     QTextStream out(&script);

@@ -60,6 +60,10 @@ fi
 echo "OK"
 
 # mark the root directory
+# Cannot do this anymore because Apple's codesign utility is strict about the contents of the app bundle
+# The top level can only be browser.app/Contents, with nothing else
+# getVlabRoot in libs/platform/platform.cpp was using this marker to find the vlab root path,
+# so the code in there should been changed to look for browser.app using Qt calls instead.
 echo -n "Marking root directory..."
 $touchbin $rootdir/browser.app/TopLevelMarker
 echo 'OK'
@@ -109,19 +113,21 @@ for cfg in $config_files_os; do
 done
 echo "OK"
 
+# why were the oofs copied into the browser.app bundle if the deploy script just moved them back out?
+# I changed the vlab-macdeployqt.sh script to copy them instead.
 # copy oofs
-echo -n "copying oofs..."
+#echo -n "copying oofs..."
 #$gunzipbin < ../data/oofs.tar.gz | ( cd $resourcedir ; $tarbin xf - )
 #$gunzipbin < ../data/OOFS.tgz | ( cd $oofsdir ; $tarbin xf - )
-$cpbin -Rp ../oofs $resourcedir
-echo "done"
+#$cpbin -Rp ../oofs $resourcedir
+#echo "done"
 
 # copy oofs
-echo -n "copying Gifts ..."
+#echo -n "copying Gifts ..."
 #echo "$cpbin -r ./Gifts $oofsdir/../"
 #pwd
-$cpbin -r ./Gifts $oofsdir/../
-echo "done"
+#$cpbin -r ./Gifts $oofsdir/../
+#echo "done"
 
 
 system_programs="object.app version.app vlab-splash.app vlabd.app"
@@ -145,7 +151,7 @@ done
 echo "OK"
 
 # copy libraries
-echo -n "copying plugin libraries ..."
+echo -n "copying plugin libraries..."
 for prg in $plugin_librairies; do
   if $cpbin -Rp ../.libraries/$prg $plugindir/. ; then
     echo -n '.'
@@ -170,9 +176,10 @@ done
 echo "OK"
 
 # Creating symbolic link for environment programming
-echo -n 'Creating symbolic link for environment programming:'
-(cd $plugindir ; ln -s ecosystem ecosystemR )
-echo " OK"
+# this doesn't work! the symbolic link should be to the binary file in the ecosystem.app
+#echo -n 'Creating symbolic link for environment programming:'
+#(cd $plugindir ; ln -s ecosystem ecosystemR )
+#echo " OK"
 
 # Copying awkped
 echo -n "copying awkped: "
@@ -182,7 +189,7 @@ else
   echo " FAILED"
   exit 1
 fi
-echo " OK"
+echo "OK"
 
 # setting up the Info.plist
 keys[0]="CFBundleShortVersionString"
@@ -242,26 +249,26 @@ $rmbin -f $vlabbindir/updatebin
 echo "  temporary updatebin removed"
 echo "OK"
 
-#  # copy all scripts
-  echo -n "copying lpfg scripts..."
-  scripts="cmpl.sh preproc.sh "
-  for script in $scripts ; do
-      if $cpbin ../.binaries/lpfg.app/Contents/MacOs/$script $vlabbindir/. ; then
-	$chmodbin 755 $vlabbindir/$script
-  	echo -n '.'
-      else
-  	echo "FAILED to copy $script"
-  	exit 1
-      fi
-      if $cpbin ../.binaries/lpfg.app/Contents/MacOs/$script $vlabdbindir/. ; then
-	$chmodbin 755 $vlabdbindir/$script
-  	echo -n '.'
-      else
-  	echo "FAILED to copy $script"
-  	exit 1
-      fi
-  done
-  echo "OK"
+# copy lpfg scripts
+echo -n "copying lpfg scripts..."
+scripts="cmpl.sh preproc.sh "
+for script in $scripts ; do
+    if $cpbin ../.binaries/lpfg.app/Contents/MacOs/$script $vlabbindir/. ; then
+$chmodbin 755 $vlabbindir/$script
+  echo -n '.'
+    else
+  echo "FAILED to copy $script"
+  exit 1
+    fi
+    if $cpbin ../.binaries/lpfg.app/Contents/MacOs/$script $vlabdbindir/. ; then
+$chmodbin 755 $vlabdbindir/$script
+  echo -n '.'
+    else
+  echo "FAILED to copy $script"
+  exit 1
+    fi
+done
+echo "OK"
 
 # clean up
 echo -n "cleaning up distribution directory..."

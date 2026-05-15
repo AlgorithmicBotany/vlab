@@ -85,7 +85,7 @@ function help() {
   echo "Usage: $0 [OPTION]"
   echo "    -A x Architecture setting: x should be one of 'arm64', 'x86', 'x86_64' or 'both' (x86 and x86_64). If not specified, will default to your compiler.'"
   echo "    -c   Clean all compilations"
-  echo "    -M x Version of Max OS X to compile the system for (default: 10.15)"
+  echo "    -M x Version of Max OS X to compile the system for (default: 13)"
   echo "    -h   Show this help"
 }
 
@@ -107,7 +107,7 @@ function cleanCompile() {
 }
 
 
-macVersion="10.15"
+macVersion="13"
 
 wantClean=""
 
