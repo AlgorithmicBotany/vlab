@@ -1344,28 +1344,23 @@ bool View::OverwriteDialogBox(const char *sfilename) {
 
 void View::saveAs() {
 
-  SaveAs *window = new SaveAs(this, QString::fromStdString(_imageBaseName),
-                              QString::fromStdString(_pathToSave),
-                              QString(QDir::currentPath()), _numberingImageName,
-                              getFilenameId(), _outputFormat, _pixFormat);
-  QString savePath;
-  window->setAttribute(Qt::WA_DeleteOnClose, false);
-  window->setAlphaChannel(_alphaChannel);
-
-  int result = window->exec();
-  window->setAttribute(Qt::WA_DeleteOnClose, true);
-  window->close();
+  SaveAs window (this, QString::fromStdString(_imageBaseName),
+                 QString::fromStdString(_pathToSave),
+                 QString(QDir::currentPath()), _numberingImageName,
+                 getFilenameId(), _outputFormat, _pixFormat);
+  window.setAlphaChannel(_alphaChannel);
+  int result = window.exec();
   if (result) {
-    int id = window->getId();
+    window.writeSettings();
+    int id = window.getId();
     setFileNameId(id);
-    _outputFormat = window->getFormat();
-    _pathToSave = window->getPath().toStdString();
-    _alphaChannel = window->getAlphaChannel();
+    _outputFormat = window.getFormat();
+    _pathToSave = window.getPath().toStdString();
+    _alphaChannel = window.getAlphaChannel();
     setPathToSave(_pathToSave);
-    int imageType = window->getImageType();
-    _imageBaseName = window->getImageBaseName().toStdString();
-    _numberingImageName = window->getNumbering();
-    //setNumberingImage(_numberingImageName);
+    int imageType = window.getImageType();
+    _imageBaseName = window.getImageBaseName().toStdString();
+    _numberingImageName = window.getNumbering();
     setImageName(_imageBaseName);
     if (_outputFormat == 0) {
       switch (imageType) {
@@ -1397,6 +1392,7 @@ void View::saveAs() {
     }
     save();
   }
+  window.close();
 }
 
 void View::updateFilename() {

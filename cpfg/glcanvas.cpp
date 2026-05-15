@@ -2834,32 +2834,30 @@ void glcanvas::MakeEnoughRoom(unsigned long len) {
 }
 
 void glcanvas::saveAs() {
-  SaveAs *window = new SaveAs(this, QString::fromStdString(_imageBaseName),
-                              QString::fromStdString(_pathToSave),
-                              QString(QDir::currentPath()), _numberingImageName,
-                              _id, _outputFormat, _pix_format);
+  SaveAs window (this, QString::fromStdString(_imageBaseName),
+                 QString::fromStdString(_pathToSave),
+                 QString(QDir::currentPath()), _numberingImageName,
+                 _id, _outputFormat, _pix_format);
   QString savePath;
-  window->setAttribute(Qt::WA_DeleteOnClose, false);
-  window->setAlphaChannel(_alphaChannel);
-  int result = window->exec();
-  window->setAttribute(Qt::WA_DeleteOnClose, true);
-  window->close();
-
+  window.setAlphaChannel(_alphaChannel);
+  int result = window.exec();
   if (result) {
-    _id = window->getId();
-    _outputFormat = window->getFormat();
-    _pathToSave = window->getPath().toStdString();
-    int imageType = window->getImageType();
+    window.writeSettings();
+    _id = window.getId();
+    _outputFormat = window.getFormat();
+    _pathToSave = window.getPath().toStdString();
+    int imageType = window.getImageType();
 
-    _imageBaseName = window->getImageBaseName().toStdString();
-    _numberingImageName = window->getNumbering();
-    _alphaChannel = window->getAlphaChannel();
+    _imageBaseName = window.getImageBaseName().toStdString();
+    _numberingImageName = window.getNumbering();
+    _alphaChannel = window.getAlphaChannel();
     _pix_format = imageType;
     if (_alphaChannel) {
       _backGroundIsTransparent = true;
     }
     save();
   }
+  window.close();
 }
 
 std::string glcanvas::getExtension() {

@@ -65,7 +65,7 @@ FORMS +=  SaveAs.ui
 RESOURCES = cpfg.qrc ../libs/misc/about.qrc
 
 MY_BASE  = ..
-MY_LIBS  = image comm misc directoryWatcher
+MY_LIBS  = image comm misc platform directoryWatcher
 include( $${MY_BASE}/common.pri )
 
 

@@ -24,6 +24,8 @@
 #include "SaveAs.h"
 #include "dirList.h"
 #include <QSettings>
+#include <platform.h>
+
 SaveAs::SaveAs(QWidget *parent, QString objName, QString currentPath,
                QString labTablePath, int number, int id, int outputFormat,
                int pix_format, bool enableAlphaChannel)
@@ -66,7 +68,22 @@ SaveAs::SaveAs(QWidget *parent, QString objName, QString currentPath,
   }
   comboBox_2->setCurrentIndex(pix_format);
   previousPixFormat = pix_format;
-  settingsFile = QString(QDir::homePath()) + "/.vlab/lpfgsettings.ini";
+
+  // get the list of folders for SaveAs
+  QString userConfigDir = Vlab::getUserConfigDir(false);
+  if (userConfigDir.isEmpty()) {
+    std::cerr << "lpfg: Cannot find your config folder (~/.vlab). SaveAs settings will not be set.\n";
+    return;
+  }
+  settingsFile = QDir(userConfigDir).filePath("lpfgsettings.ini");
+  // create the ini file if it doesn't exist, and add the above item (exportPath)
+  QFile file(settingsFile);
+  if (file.open(QIODevice::WriteOnly | QIODevice::NewOnly)) {
+    // File created successfully
+    file.close();
+    writeSettings();
+  } // else File already exists or could not be created
+
   directory_2->addItem(saveName);
   if (saveName != labTablePath)
     directory_2->addItem(labTablePath);
@@ -186,7 +203,7 @@ void SaveAs::writeSettings() {
   }
 }
 
-void SaveAs::closeEvent(QCloseEvent *) { writeSettings(); }
+void SaveAs::closeEvent(QCloseEvent *) {}
 
 void SaveAs::changeEvent(QEvent *event) {
   // check if the OS theme has changed (tested on macOS)
