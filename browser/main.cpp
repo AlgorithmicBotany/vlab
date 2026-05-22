@@ -233,10 +233,12 @@ int start_browser(int argc, char **argv, bool cleanTMP) {
         // exit and don't do anything
         exit(-1);
       } else if (ret == QMessageBox::Discard) {
-        QDir dir(sysInfo.tmpDir);
-        bool a = dir.removeRecursively();
-        if (!dir.exists()) {
-          a = dir.mkpath(sysInfo.tmpDir);
+        // remove only the vlab objects (because the vlabd lock file could be in the tmp folder)
+        for (const QString &folder : folder_list) {
+          QDir vlab_object_dir(dir.absoluteFilePath(folder));
+          if (vlab_object_dir.exists()) {
+            vlab_object_dir.removeRecursively();
+          }
         }
       } // else ... keep the temp folder
     }
