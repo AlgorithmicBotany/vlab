@@ -111,6 +111,7 @@ public slots:
     void delete_menu_cb();
     void add_object_menu_cb();
     void add_Hobject_menu_cb();
+    void remove_object_keep_children_menu_cb();
     void hypercopy_node_cb();
     void hypercopy_subtree_cb();
     void links_button_cb();
@@ -154,6 +155,7 @@ private:
     void delete_cb();
     void new_object_cb();
     void new_Hobject_cb();
+    void remove_object_keep_children_cb();
     void hyperpaste_cb();
     char* genName(NODE* node);
 #ifdef USE_PLUGINS

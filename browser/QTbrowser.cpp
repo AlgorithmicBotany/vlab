@@ -223,6 +223,7 @@ QTbrowser::QTbrowser(QWidget *parent)
   sysInfo.addButtonP = objectMenu;
   sysInfo.addButtonID =
       objectMenu->addAction("New object", this, SLOT(add_object_menu_cb()));
+  // hyperobjects are not supported anymore
   //  sysInfo.addHButtonP = objectMenu;
   //  sysInfo.addHButtonID = objectMenu->addAction("New hyperobject", this,
   //                                             SLOT(add_Hobject_menu_cb()));
@@ -253,6 +254,8 @@ QTbrowser::QTbrowser(QWidget *parent)
   sysInfo.deleteButtonP = objectMenu;
   sysInfo.deleteButtonID = objectMenu->addAction(
       "Delete", this, SLOT(delete_menu_cb()), Qt::CTRL | Qt::Key_K);
+  sysInfo.deleteBetweenButtonP = objectMenu;
+  sysInfo.deleteBetweenButtonID = objectMenu->addAction("Delete (keep children)", this, SLOT(remove_object_keep_children_menu_cb()));
   objectMenu->addSeparator();
   sysInfo.links_buttonP = objectMenu;
   sysInfo.links_buttonID =
@@ -1027,6 +1030,7 @@ void QTbrowser::update_menus() {
     sysInfo.copyNodeButtonID->setEnabled(false);
     sysInfo.copySubtreeButtonID->setEnabled(false);
     sysInfo.deleteButtonID->setEnabled(false);
+    sysInfo.deleteBetweenButtonID->setEnabled(false);
     sysInfo.addButtonID->setEnabled(false);
     //    sysInfo.addHButtonID->setEnabled(false);
     sysInfo.hypercopyNodeButtonID->setEnabled(false);
@@ -1046,6 +1050,7 @@ void QTbrowser::update_menus() {
     sysInfo.getButtonID->setEnabled(true);
     sysInfo.renameButtonID->setEnabled(true);
     sysInfo.deleteButtonID->setEnabled(true);
+    sysInfo.deleteBetweenButtonID->setEnabled(true);
     sysInfo.addButtonID->setEnabled(true);
     //    sysInfo.addHButtonID->setEnabled(true);
     sysInfo.cutButtonID->setEnabled(true);
@@ -1086,10 +1091,11 @@ void QTbrowser::update_menus() {
     }
 
     /* set the paste button */
-    if ((sysInfo.pasteReady) || (sysInfo.pasteLinkReady))
+    if ((sysInfo.pasteReady) || (sysInfo.pasteLinkReady)) {
       sysInfo.pasteButtonID->setEnabled(true);
-    else
+    } else {
       sysInfo.pasteButtonID->setEnabled(false);
+    }
 
     /* set the show/hide extensions button */
     if (sysInfo.selNode->nChildren == 0)
@@ -2452,3 +2458,245 @@ void QTbrowser::pluginsChanged() {
   // working correctly as moc will ignore preprocessing directives
 }
 #endif
+
+void QTbrowser::remove_object_keep_children_menu_cb() { remove_object_keep_children_cb(); update_menus(); updateDisplay(); }
+
+void QTbrowser::remove_object_keep_children_cb() {
+  if (sysInfo.selNode == NULL) return;
+  if (sysInfo.selNode->parent == NULL) {
+    vlabxutils::infoBox(this, "Cannot remove root object.", "Warning");
+    return;
+  }
+  if (!sysInfo.connection->check_connection()) {
+      vlabxutils::infoBox(
+          this,
+          "Delete object (keep children) failed.\n"
+          "\n"
+          "Most likely cause: raserver connection failed.",
+          "Error");
+    return;
+  }
+
+  QMessageBox msgBox;
+  msgBox.setText("Remove object and keep its children?");
+  msgBox.setInformativeText("Do you want to permanently delete this object or move it to the Recycle Bin?");
+  QPushButton *recycleButton = msgBox.addButton("Move to Recycle Bin", QMessageBox::AcceptRole);
+  QPushButton *deleteButton = msgBox.addButton("Permanently Delete", QMessageBox::DestructiveRole);
+  QPushButton *cancelButton = msgBox.addButton(QMessageBox::Cancel);
+  msgBox.exec();
+
+  if (msgBox.clickedButton() == cancelButton) return;
+  bool recycle = (msgBox.clickedButton() == recycleButton);
+
+  if (sysInfo.beginTree == sysInfo.selNode) {
+      sysInfo.beginTree = sysInfo.selNode->parent;
+  }
+
+  vlabxutils::tempBoxPopUp(topX(), topY(), this, "Removing object...");
+  sysInfo.vlabd->send_message(GETBUSY);
+
+  char parent_ext_dir[4096];
+  sprintf(parent_ext_dir, "%s/ext", sysInfo.selNode->parent->name);
+  RA::Mkdir(sysInfo.connection, parent_ext_dir);
+
+  // Before moving children, fix up symlink inheritance:
+  // When B is deleted, its children move under B's parent (A). Each child's
+  // relative symlinks ("../../<filename>") will then resolve against A instead
+  // of B. This is only safe if B inherited that file from A (i.e., B's file
+  // is itself a symlink to "../../<filename>"). In all other cases — B has a
+  // real (modified) file, or B has a file that A doesn't have at all — the
+  // child's symlink would either resolve to the wrong content or break
+  // entirely. We fix this by copying B's version into the child.
+  //
+  // Note: We use RA::Readlink instead of RA::Is_link to detect symlinks,
+  // because Is_link has an inconsistency between local and remote connections
+  // (local Stat sets is_link to 0/1 but Is_link compares against 'l').
+  {
+      char **del_files = NULL;
+      int n_del_files = RA::Get_dir(sysInfo.connection,
+                                    sysInfo.selNode->name, &del_files);
+      if (n_del_files > 0 && del_files != NULL) {
+          for (int f = 0; f < n_del_files; f++) {
+              // Build full path to this file in the object being deleted
+              char del_file_path[4096];
+              sprintf(del_file_path, "%s/%s",
+                      sysInfo.selNode->name, del_files[f]);
+
+              // Skip directories (e.g. "ext") and non-regular files
+              // (Stat follows symlinks, so symlinks to regular files
+              // will report RA_REG_TYPE — that's what we want)
+              RA_Stat_Struc st;
+              if (RA::Stat(sysInfo.connection, del_file_path, &st) != 0)
+                  continue;
+              if (st.type != RA_REG_TYPE)
+                  continue;
+
+              // Check if B's file is a symlink to "../../<filename>",
+              // meaning B inherits it from A. If so, the child's symlink
+              // will still resolve correctly after the move — skip it.
+              char *b_link_target = NULL;
+              if (RA::Readlink(sysInfo.connection,
+                               del_file_path, b_link_target) == 0) {
+                  // It is a symlink — check if it points to the parent
+                  char parent_target[4096];
+                  sprintf(parent_target, "../../%s", del_files[f]);
+                  bool inherits_from_parent =
+                      (strcmp(b_link_target, parent_target) == 0);
+                  xfree(b_link_target);
+                  if (inherits_from_parent)
+                      continue;
+              }
+
+              // This file in B is either a real file or a symlink that does
+              // NOT point to the parent. Children that inherit it via
+              // "../../<filename>" would lose it after the move.
+              for (int i = 0; i < sysInfo.selNode->nChildren; i++) {
+                  NODE *child = sysInfo.selNode->child[i];
+                  char child_file_path[4096];
+                  sprintf(child_file_path, "%s/%s",
+                          child->name, del_files[f]);
+
+                  // Check if the child has this file
+                  if (RA::Access(sysInfo.connection, child_file_path, F_OK) != 0)
+                      continue;
+
+                  // Try to read the child's file as a symlink.
+                  // If Readlink fails, it's not a symlink — skip it.
+                  char *link_target = NULL;
+                  if (RA::Readlink(sysInfo.connection,
+                                   child_file_path, link_target) != 0)
+                      continue;
+
+                  char expected_target[4096];
+                  sprintf(expected_target, "../../%s", del_files[f]);
+
+                  if (strcmp(link_target, expected_target) == 0) {
+                      // Child inherits this file from B — replace the
+                      // symlink with a real copy to preserve it
+                      RA::Unlink(sysInfo.connection, child_file_path);
+                      RA::Copy_file(sysInfo.connection, del_file_path,
+                                    sysInfo.connection, child_file_path);
+                  }
+
+                  xfree(link_target);
+              }
+          }
+
+          // Free the file list
+          for (int f = 0; f < n_del_files; f++)
+              xfree(del_files[f]);
+          xfree(del_files);
+      }
+  }
+  // rename the object to be deleted to avoid name conflicts with children
+  char new_name[4096];
+  snprintf(new_name, 4096, "%s_to_be_deleted", sysInfo.selNode->name);
+  if (RA::Rename_object(sysInfo.connection, sysInfo.oofs_dir_rp, sysInfo.selNode->name, new_name) != 0) {
+    // rename failed
+    vlabxutils::infoBox(
+        this,
+        "Delete object (keep children) failed.\n"
+        "\n"
+        "Most likely cause: name collision in parent directory.",
+        "Error");
+    return;
+  }
+  // keep the temporary rename hidden from the user, by updating th internal name only
+  sysInfo.selNode->name = strdup(new_name);
+
+  // move children to parent but rename children to avoid conflicts with selNode's old name
+  for (int i = 0; i < sysInfo.selNode->nChildren; i++) {
+      NODE *child = sysInfo.selNode->child[i];
+      char newDest[4096];
+      sprintf(newDest, "%s/%s", parent_ext_dir, child->baseName);
+      // construct child path using the parent object's new name
+      char childName[4096];
+      sprintf(childName, "%s/ext/%s", new_name, child->baseName);
+      
+      // Only generate a suffixed name if there is a name conflict
+      if (RA::Access(sysInfo.connection, newDest, F_OK) == 0) {
+          char child_base_name[4096];
+          int count = 0;
+          do {
+              count++;
+              sprintf(child_base_name, "%s_%d%d%d", child->baseName, count / 100, (count / 10) % 10, (count % 10));
+              sprintf(newDest, "%s/%s", parent_ext_dir, child_base_name);
+          } while (RA::Access(sysInfo.connection, newDest, F_OK) == 0);
+      }
+
+      if (RA::Rename_object(sysInfo.connection, sysInfo.oofs_dir_rp, childName, newDest) != 0) {
+        // rename failed
+        char message[4096];
+        snprintf(message, 4096, "Delete object (keep children) failed.\n Unable to rename child %s to %s.", childName, newDest);
+        vlabxutils::infoBox(this, message, "Error");
+        break;
+        //return;
+      }
+  }
+
+  if (recycle) {
+      char root_ext_dir[PATH_MAX + 1];
+      sprintf(root_ext_dir, "%s/ext", sysInfo.oofs_dir_rp);
+      RA::Mkdir(sysInfo.connection, root_ext_dir);
+
+      char recycle_dir[4096];
+      sprintf(recycle_dir, "%s/RecycleBin", root_ext_dir);
+      if (RA::Access(sysInfo.connection, recycle_dir, F_OK) != 0) {
+          RA::Mkdir(sysInfo.connection, recycle_dir);
+          char specs_fname[4096];
+          sprintf(specs_fname, "%s/specifications", recycle_dir);
+          const char *buf1 = "description.txt\nignore:\n*\nDescription:\n\tEDIT description.txt\n";
+          RA::Write_file(sysInfo.connection, specs_fname, buf1, xstrlen(buf1));
+          
+          char desc_fname[4096];
+          sprintf(desc_fname, "%s/description.txt", recycle_dir);
+          const char *buf2 = "Recycle Bin for deleted objects.\n";
+          RA::Write_file(sysInfo.connection, desc_fname, buf2, xstrlen(buf2));
+      }
+
+      char recycle_ext_dir[4096];
+      sprintf(recycle_ext_dir, "%s/ext", recycle_dir);
+      RA::Mkdir(sysInfo.connection, recycle_ext_dir);
+
+      char node_base_name[4096];
+      strcpy(node_base_name, sysInfo.selNode->baseName);
+      char newDest[4096];
+      int count = 0;
+      while (true) {
+          sprintf(newDest, "%s/%s", recycle_ext_dir, node_base_name);
+          if (RA::Access(sysInfo.connection, newDest, F_OK) != 0) break;
+          count++;
+          sprintf(node_base_name, "%s_%d%d%d", sysInfo.selNode->baseName, count / 100, (count / 10) % 10, (count % 10));
+      }
+
+      if (RA::Rename_object(sysInfo.connection, sysInfo.oofs_dir_rp, sysInfo.selNode->name, newDest) != 0 ){
+        vlabxutils::infoBox(
+            this,
+            "Delete object (keep children) failed.\n"
+            "\n"
+            "Could not move the object to the recycle bin. Likely, permissions do not exist to create a Recycle Bin.",
+            "Error");
+      }
+  } else {
+      if (RA::Delete_object(sysInfo.connection, sysInfo.oofs_dir_rp, sysInfo.selNode->name) != 0) {
+        vlabxutils::infoBox(
+            this,
+            "Delete object (keep children) failed.\n"
+            "\n"
+            "Could not delete the object!",
+            "Error");
+      }
+  }
+
+  QByteArray userNameData = sysInfo.login_name.toLatin1();
+  if (sysInfo.connection->reconnect()) return;
+  sysInfo.vlabd->send_message(GETREADY);
+  vlabxutils::tempBoxPopDown(this);
+
+  sysInfo.vlabd->va_send_message(UPDATE, "%s@%s:%s", userNameData.constData(), sysInfo.host_name, sysInfo.selNode->parent->name);
+  sysInfo.vlabd->va_send_message(UPDATE, "%s@%s:%s", userNameData.constData(), sysInfo.host_name, sysInfo.oofs_dir_rp);
+  sysInfo.selNode = NULL;
+  
+  sysInfo.connection->Disconnect();
+}
+
