@@ -148,6 +148,8 @@ struct SystemInfo {
     QAction*          deleteButtonID;
     QMenu*     addButtonP;
     QAction*          addButtonID;
+    QMenu*     deleteBetweenButtonP;
+    QAction*          deleteBetweenButtonID;
     QMenu*     addHButtonP;
     QAction*          addHButtonID;
     QMenu*     hypercopyNodeButtonP;
