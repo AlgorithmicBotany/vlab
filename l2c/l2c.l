@@ -212,6 +212,7 @@ void SetCurLine(const char* bf)
 
 <INCONTEXT>[a-zA-Z_][0-9a-zA-Z_]* {
 		strncpy(l2clval.Ident, l2ctext, __lc_eMaxIdentifierLength);
+                l2clval.Ident[__lc_eMaxIdentifierLength] = 0;
 		if (moduleTable.IsModuleIdent(l2ctext))
 		{
 			return tMODULEIDENT;

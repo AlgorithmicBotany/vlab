@@ -388,21 +388,21 @@ CallParameters: CallParameters { EndParameterCast(); } tCOMMA { ParameterCast();
 
 Parameters: Parameters tCOMMA tIDENT
 	{ 
-	  if ($1.count == __lc_eMaxParams)
+	  if ($1.count >= __lc_eMaxParams)
 	    l2cerror("Too many parameters");
-	  strcpy($1.Params[$1.count], $3);
+          memcpy($1.Params[$1.count], $3, __lc_eMaxIdentifierLength + 1);
 	  $1.count++;
 	  $$ = $1;
 	}
 	| tIDENT
-	{ 
-    strcpy($$.Params[0], $1);
+	{
+          memcpy($$.Params[0], $1, __lc_eMaxIdentifierLength + 1);
 	  $$.count = 1;
 	}
 	|
 	{ 
-	$$.count = 0; 
-}
+          $$.count = 0;
+        }
 	;
 
 GroupStart: tGROUP tINTEGER tCOLON

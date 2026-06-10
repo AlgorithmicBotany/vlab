@@ -29,7 +29,7 @@
 #include <vector>
 
 struct ParametersList {
-  char Params[__lc_eMaxIdentifierLength + 1][__lc_eMaxParams];
+  char Params[__lc_eMaxParams][__lc_eMaxIdentifierLength + 1];
   int count;
 };
 
