@@ -108,13 +108,14 @@ extern char FileName[];
 
 void l2cerror(const char *fmt, ...) {
   static char aux[1025];
-  static char msg[1025];
+  static char msg[2049];
   va_list args;
   va_start(args, fmt);
   vsprintf(aux, fmt, args);
   va_end(args);
-  sprintf(msg, "Error: %s in %s line %d. Current token: %s\n", aux, FileName,
-          lineno, l2ctext);
+  snprintf(msg, 2049, "Error: %s in %s line %d. Current token: %s\n", aux, FileName,
+           lineno, l2ctext);
+  msg[2048] = 0;
   throw msg;
 }
 
