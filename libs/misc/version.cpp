@@ -34,14 +34,14 @@
 
 namespace vlab {
 
-int version_major() { return 5; }
+int version_major() { return 6; }
 
-int version_minor() { return 1; }
+int version_minor() { return 0; }
 
 int version_minor_minor() { return 0; }
 
 int build_number() {
-  return 3617; // this build number is changed manually 
+  return 3618; // this build number is changed manually 
 }
 
 std::string build_date_string() {
