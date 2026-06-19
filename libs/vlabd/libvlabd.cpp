@@ -44,6 +44,9 @@ static const int DEBUG = 0;
 VlabD::VlabD(void) {
   sock = -1;
   _valid = false;
+  vlabd_version_major = 0;
+  vlabd_version_minor = 0;
+  vlabd_build_number = 0;
 }
 
 // Initializes a connection to vlabd. If vlabd is not running, it will be
@@ -225,13 +228,19 @@ reconnect:
               length, str.data);
 
     long version_major, version_minor;
-    if (2 !=
-        sscanf((char *)str.data, "%ld %ld", &version_major, &version_minor)) {
+    long build_number = 0;
+    int parsed = sscanf((char *)str.data, "%ld %ld %ld", &version_major, &version_minor, &build_number);
+    if (parsed < 2) {
       sprintf(err_buff, "Cannot synchronize with vlabd - bad ACK response.");
       if (DEBUG)
         fprintf(stderr, "VlabD::init(): %s\n", err_buff);
       return -1;
     }
+    
+    vlabd_version_major = version_major;
+    vlabd_version_minor = version_minor;
+    vlabd_build_number = build_number;
+    
     if (version_major < 4 || (version_major == 4 && version_minor < 0)) {
       sprintf(err_buff, "Old version of vlabd (%ld.%ld). Need >= 4.0.",
               version_major, version_minor);

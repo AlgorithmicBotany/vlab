@@ -48,6 +48,7 @@
 #include "utilities.h"
 #include "xstring.h"
 #include "xutils.h"
+#include "version.h"
 
 #include <QtPlugin>
 
@@ -489,6 +490,21 @@ int vlab_open(void)
   }
   if (DEBUG)
     fprintf(stderr, "browser: connected to vlabd.\n");
+
+  if (sysInfo.vlabd->get_vlabd_version_major() != vlab::version_major() ||
+      sysInfo.vlabd->get_vlabd_version_minor() != vlab::version_minor() ||
+      sysInfo.vlabd->get_vlabd_build_number() != vlab::build_number()) {
+      QString warn_msg = QString("You have connected to a vlab daemon (vlabd) from a different version of the Virtual Laboratory.\n\n"
+                                 "Browser version: %1.%2 build %3\n"
+                                 "Daemon version: %4.%5 build %6\n\n"
+                                 "This can happen if you start a new browser while an old vlabd process is still running. "
+                                 "You may experience instability or missing features. "
+                                 "It is recommended to close all VLAB applications and restart. "
+                                 "You may need to kill the old vlabd process manually.")
+                         .arg(vlab::version_major()).arg(vlab::version_minor()).arg(vlab::build_number())
+                         .arg(sysInfo.vlabd->get_vlabd_version_major()).arg(sysInfo.vlabd->get_vlabd_version_minor()).arg(sysInfo.vlabd->get_vlabd_build_number());
+      QMessageBox::warning(0, "VLAB Version Mismatch", warn_msg);
+  }
 
   // send in the registration string
   std::ostringstream buff;

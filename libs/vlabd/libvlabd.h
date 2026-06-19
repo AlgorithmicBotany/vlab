@@ -66,11 +66,18 @@ public:
     // access to the socket
     int get_sock( void);
 
+    long get_vlabd_version_major() const { return vlabd_version_major; }
+    long get_vlabd_version_minor() const { return vlabd_version_minor; }
+    long get_vlabd_build_number() const { return vlabd_build_number; }
+
 private:
     
     int sock;			// the socket connected to VLABD
     char err_buff[ 4096];	// description of the last error
     bool _valid;		// is the connection valid?
+    long vlabd_version_major;
+    long vlabd_version_minor;
+    long vlabd_build_number;
 
     // get the next size bytes from the socket
     int receive_n_bytes( char * buffer, long size);

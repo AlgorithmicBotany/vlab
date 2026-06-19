@@ -36,6 +36,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include "version.h"
 #include <fcntl.h>
 #include <sys/types.h>
 #include <unistd.h>
@@ -695,8 +696,12 @@ int ProcessMessage(processInfo *process, char *message)
 	break;
 
     case ACK_REQUEST:
-	SendData( process-> socket, ACK_RESPONSE, (char*)"4 0");
-	process-> s_queue-> nextsize = -1;
+	{
+	    char ver_buf[64];
+	    sprintf(ver_buf, "%d %d %d", vlab::version_major(), vlab::version_minor(), vlab::build_number());
+	    SendData( process-> socket, ACK_RESPONSE, ver_buf);
+	    process-> s_queue-> nextsize = -1;
+	}
 	break;
 	
     default:
