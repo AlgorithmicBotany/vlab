@@ -73,7 +73,7 @@ MainWindow::MainWindow() : QMainWindow() {
   ctrl_y = 400;
   ctrl_w = ACTUAL_W + 2 * rubberBandBorderSize;
   ctrl_h = ACTUAL_H + 2 * rubberBandBorderSize;
-  resize(ctrl_w, ctrl_h);
+  setFixedSize(ctrl_w, ctrl_h);
   move(ctrl_x, ctrl_y);
 
   rubberband = new RubberBand(this, defaultColor, defaultBackgroundColor,

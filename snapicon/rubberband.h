@@ -60,6 +60,8 @@ public:
   void setToFreeSize() {
     aspectSize = false;
     freeSize = true;
+    parentWidget()->setMinimumSize(0, 0);
+    parentWidget()->setMaximumSize(QWIDGETSIZE_MAX, QWIDGETSIZE_MAX);
   }
   void setToAspectSize();
 

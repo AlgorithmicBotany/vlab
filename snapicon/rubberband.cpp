@@ -441,6 +441,8 @@ void RubberBand::setToAspectSize() {
 
   width = best;
   height = best;
+  parentWidget()->setMinimumSize(0, 0);
+  parentWidget()->setMaximumSize(QWIDGETSIZE_MAX, QWIDGETSIZE_MAX);
   resize(width, height);
   parentWidget()->resize(width, height);
 }
@@ -453,7 +455,7 @@ void RubberBand::setToActualSize() {
   width = ACTUAL_W + 2 * rubberBandBorderSize;
   height = ACTUAL_H + 2 * rubberBandBorderSize;
   resize(width, height);
-  parentWidget()->resize(width, height);
+  parentWidget()->setFixedSize(width, height);
 }
 
 void RubberBand::setToDoubleSize() {
@@ -463,7 +465,7 @@ void RubberBand::setToDoubleSize() {
   width = ACTUAL_W * 2 + 2 * rubberBandBorderSize;
   height = ACTUAL_H * 2 + 2 * rubberBandBorderSize;
   resize(width, height);
-  parentWidget()->resize(width, height);
+  parentWidget()->setFixedSize(width, height);
 }
 
 void RubberBand::setToQuadrupleSize() {
@@ -473,7 +475,7 @@ void RubberBand::setToQuadrupleSize() {
   width = ACTUAL_W * 4 + 2 * rubberBandBorderSize;
   height = ACTUAL_H * 4 + 2 * rubberBandBorderSize;
   resize(width, height);
-  parentWidget()->resize(width, height);
+  parentWidget()->setFixedSize(width, height);
 }
 
 void RubberBand::changeColor() {
