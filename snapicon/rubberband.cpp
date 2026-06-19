@@ -414,7 +414,7 @@ void RubberBand::mouseMoveEvent(QMouseEvent *) {
   }
   width = r.width();
   height = r.height();
-  resize(width, height);
+  parentWidget()->setFixedSize(width, height);
   parentWidget()->setGeometry(r);
 
   return;
@@ -445,10 +445,7 @@ void RubberBand::setToAspectSize() {
 
   width = best;
   height = best;
-  parentWidget()->setMinimumSize(0, 0);
-  parentWidget()->setMaximumSize(QWIDGETSIZE_MAX, QWIDGETSIZE_MAX);
-  resize(width, height);
-  parentWidget()->resize(width, height);
+  parentWidget()->setFixedSize(width, height);
 }
 
 
