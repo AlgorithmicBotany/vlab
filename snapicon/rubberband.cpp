@@ -421,7 +421,11 @@ void RubberBand::mouseMoveEvent(QMouseEvent *) {
 }
 
 // Mouse release handler
-void RubberBand::resizeEvent(QResizeEvent *) {
+void RubberBand::resizeEvent(QResizeEvent *ev) {
+  if (ev) {
+    width = ev->size().width();
+    height = ev->size().height();
+  }
   setCursor(Qt::PointingHandCursor);
 }
 // Mouse release handler
