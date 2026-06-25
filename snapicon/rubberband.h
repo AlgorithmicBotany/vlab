@@ -88,11 +88,11 @@ public slots:
     update();
   }
   void setWidth(int value) {
-    width = width - 2 * (rubberBandBorderSize - value);
-    height = height - 2 * (rubberBandBorderSize - value);
+    //width = width - 2 * (rubberBandBorderSize - value);
+    //height = height - 2 * (rubberBandBorderSize - value);
     rubberBandBorderSize = value;
     update();
-    parentWidget()->resize(width, height);
+    //parentWidget()->resize(width, height);
   }
 
 protected:

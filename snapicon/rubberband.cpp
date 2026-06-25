@@ -29,13 +29,17 @@ void RubberBand::paintEvent(QPaintEvent *) {
   pm.fill(rubberBandBackGround);
 
   p.begin(&pm);
+  QPen pen(Qt::black);
 
-  QPen pen(rubberBandColor);
-  pen.setWidth(rubberBandBorderSize);
-  pen.setJoinStyle(Qt::MiterJoin);
-  p.setPen(pen);
-  p.drawRect(rubberBandBorderSize / 2, rubberBandBorderSize / 2,
-             width - rubberBandBorderSize, height - rubberBandBorderSize);
+  // Do not draw the rubberband border if its size is zero
+  if (rubberBandBorderSize > 0) {
+    pen.setColor(rubberBandColor);
+    pen.setWidth(rubberBandBorderSize);
+    pen.setJoinStyle(Qt::MiterJoin);
+    p.setPen(pen);
+    p.drawRect(rubberBandBorderSize / 2, rubberBandBorderSize / 2,
+               width - rubberBandBorderSize, height - rubberBandBorderSize);
+  }
 
   pen.setColor(Qt::black);
   pen.setWidth(1);
