@@ -1278,18 +1278,13 @@ void Timeline::createFunceditProcess(QString fileName) {
   processList.push_back(process);
   std::string path = (QDir::currentPath()).toStdString() + "/" + _tmpDir + "/";
   QString fileNamePath = QString(path.c_str()) + fileName;
-  std::string command = std::string("funcedit");
-  if (_savingMode == OFF) {
-    command += " \"" + fileNamePath.toStdString() + "\" &" ;
+  QStringList args;
+  if (_savingMode == CONTINUOUS) {
+    args << "-rmode" << "cont";
+  } else if (_savingMode != OFF) {
+    args << "-rmode" << "trig";
   }
-  else if  (_savingMode == CONTINUOUS){
-    command += " -rmode cont \"" +  fileNamePath.toStdString() + "\" &" ;
-  }
-  else  {
-    command += " -rmode trig \""  +  fileNamePath.toStdString() + "\" &";
-  }
-
-  //QString file = "funcedit " + QString(path.c_str()) + fileName;
+  args << fileNamePath;
   
-  process->start(QString(command.c_str()));
+  process->start("funcedit", args);
 }
