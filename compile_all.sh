@@ -34,7 +34,7 @@ function cleanCompile() {
   IFS=$'\n' qmakefiles=($($findbin . -name \*.pro))
   for qm in ${qmakefiles[@]}; do
     m=$(dirname $qm)/Makefile
-    if [ -e $pm ]; then
+    if [ -e $m ]; then
       rm -f $m
     fi
   done
