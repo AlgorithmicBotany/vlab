@@ -44,7 +44,8 @@ add_executables "$systembundles"
 
 # Execute the final macdeplotqt command
 echo "Running: $cmd"
-eval $cmd
+deploylog="deploy.log"
+eval $cmd > $deploylog 2>&1
 
 # copy extra items to the distributable
 echo "Copying oofs :"

@@ -1653,8 +1653,6 @@ void QTbrowser::paste_cb() {
 
     // prepare a full path of the source object
     char src_path[4096];
-    fprintf(stderr, "sysInfo.paste_info->prefix: %s\n",
-            sysInfo.paste_info->prefix);
     strcpy(src_path, sysInfo.paste_info->prefix);
 
     char *ptr = sysInfo.paste_info->node_path;

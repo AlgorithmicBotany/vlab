@@ -9,7 +9,7 @@
 	<key>CFBundleIconFile</key>
 	<string></string>
 	<key>CFBundleIdentifier</key>
-	<string>org.algorithmicbotany.CPFG</string>
+	<string>org.algorithmicbotany.medit</string>
 	<key>CFBundleName</key>
 	<string>Medit</string>
 	<key>CFBundlePackageType</key>
