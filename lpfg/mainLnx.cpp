@@ -65,7 +65,10 @@ int main(int argc, char **argv) {
     painter.fillRect(0, icon.height() - 53, 53, 53,
                      QColor::fromRgbF(0, 0, 0, 1));
     painter.setPen(Qt::red);
-    painter.setFont(QFont("Times", 50));
+    QFont defaultFont;
+    defaultFont.setStyleHint(QFont::SansSerif);
+    defaultFont.setPointSize(50);
+    painter.setFont(defaultFont);
     painter.drawText(3, icon.height() - 3, QString("L"));
     //a.setWindowIcon(QIcon(icon));
     pApp->setWindowIcon(QIcon(icon));
